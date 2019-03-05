@@ -13,6 +13,16 @@ public class DataTest {
 
   @org.junit.Test
   public void fitLine() {
+
+    Point a = new Point(1,1);
+    Point b = new Point(2,2);
+    Point c = new Point(3,3);
+
+    Data linearData = new Data();
+
+
+
+
   }
 
   @org.junit.Test

@@ -1,20 +1,15 @@
 import java.util.LinkedList;
 
-//TODO 1. Write a class that stores and operates upon the data.
-// Again, the data for this assignment is in the form of (x,y) points.
-// Write a constructor with no parameters that initializes it. Write a method to add a
-// single point to the data. Write a method that returns the data entered thus far, as a list.
-
 /**
- * TODO write java doc.
+ * Stores and operates upon data in a 2D graph space.
  */
 public class Data {
   private LinkedList<Point> dataList;
 
 
   /**
-   * A constructor with no parameters that initializes a data object. A data object is a list of
-   * points.
+   * A constructor with no parameters that initializes a data object.
+   * A data object is a list of points.
    */
   public Data() {
     this.dataList = new LinkedList();
@@ -29,6 +24,15 @@ public class Data {
   public void addPoint(int x, int y) {
     Point datum = new Point(x, y);
     this.dataList.add(datum);
+  }
+
+  /**
+   * An alternative method to add a single point to the data list
+   *
+   * @param input the Point to add
+   */
+  public void addPoint(Point input) {
+    this.dataList.add(input);
   }
 
   /**
@@ -49,7 +53,8 @@ public class Data {
 // TODO 2. Write a method fitLine() in the above class that returns a best-fit line.
 //  You will need to represent a line suitably.
 
-    Line bestFit = new Line(0, 0, 0, 0);
+    Line bestFit = new Line(this.dataList);
+
     return bestFit;
   }
 
