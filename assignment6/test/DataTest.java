@@ -1,5 +1,16 @@
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
 public class DataTest {
-  @org.junit.Before
+
+  Point a;
+  Point b;
+  Point c;
+
+
+  @Before
   public void setUp() throws Exception {
   }
 
@@ -11,17 +22,21 @@ public class DataTest {
 // perfectly or nearly perfectly (start from a point that lies on a line and move it a
 // little bit), this method returns the correct line.
 
-  @org.junit.Test
+  @Test
   public void fitLine() {
 
-    Point a = new Point(1,1);
-    Point b = new Point(2,2);
-    Point c = new Point(3,3);
 
-    Data linearData = new Data();
+    // Create the set of data made up of points
+    Data dataOne = new Data();
+    dataOne.addPoint(new Point(1,1));
+    dataOne.addPoint(new Point(2,20));
+    dataOne.addPoint(new Point(3,38));
+    dataOne.addPoint(new Point(4,50));
+    dataOne.addPoint(new Point(5,80));
 
+    // Calculate line of best fit
 
-
+    assertEquals("-18.8x + 1y + 18.6 = 0", dataOne.fitLine().toString());
 
   }
 

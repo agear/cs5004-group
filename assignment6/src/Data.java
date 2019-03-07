@@ -5,6 +5,7 @@ import java.util.LinkedList;
  */
 public class Data {
   private LinkedList<Point> dataList;
+  private Line bestFitLine;
 
 
   /**
@@ -12,7 +13,7 @@ public class Data {
    * A data object is a list of points.
    */
   public Data() {
-    this.dataList = new LinkedList();
+    this.dataList = new LinkedList<Point>();
   }
 
   /**
@@ -50,12 +51,12 @@ public class Data {
    * @return a line representing the best-fit of the data.
    */
   public Line fitLine() {
-// TODO 2. Write a method fitLine() in the above class that returns a best-fit line.
-//  You will need to represent a line suitably.
 
-    Line bestFit = new Line(this.dataList);
+    // Calculates best fit line and saves it as an attribute
+    this.bestFitLine = new Line(this.dataList);
 
-    return bestFit;
+    // Returns the line of best fit
+    return this.bestFitLine;
   }
 
   /**
