@@ -33,18 +33,12 @@ public class Line {
 
     // Setup initialized variables
     double sumX = 0;
-    double meanX = 0;
     double sumY = 0;
-    double meanY = 0;
-    double Syy = 0;
-    double Sxx = 0;
-    double Sxy = 0;
 
     // Calculate n (number of points)
     double n = inputData.size();
 
-
-    // For all points, iterate through them and get sum of each
+    // For all points, iterate through them and get sum of all x and all y
     Iterator<Point> iterator = inputData.iterator();
     while (iterator.hasNext()) {
 
@@ -59,30 +53,54 @@ public class Line {
 
     }
 
-    // Compute means
-    meanX = (sumX)/n;
-    meanY = (sumY)/n;
+    // Compute average for both
+    double meanX = (sumX) / n;
+    double meanY = (sumY) / n;
+    System.out.println("meanX is " + meanX);
+    System.out.println("meanY is " + meanY);
 
 
-    // Compute squares to find minimum
-    Syy = (sumY - meanY) * (sumY - meanY);
-    Sxx = (sumX - meanX) * (sumX - meanX);
-    Sxy = (sumX - meanX) * (sumY - meanY);
+    double Sxx = 0;
+    double Syy = 0;
+    double Sxy = 0;
 
 
-    // Step 2: get the distance
+    // For all points, iterate through them and get sum of all x and all y
+    Iterator<Point> iterator2 = inputData.iterator();
+    while (iterator2.hasNext()) {
+
+      // Access the current point's details
+      Point currentPoint = iterator2.next();
+      double currentX = currentPoint.getX();
+      double currentY = currentPoint.getY();
+
+      Sxx = Sxx + (currentX - meanX) * (currentX - meanX);
+      Syy = Syy + (currentY - meanY) * (currentY - meanY);
+      Sxy = Sxy + (currentX - meanX) * (currentY - meanY);
+
+    }
+
+    System.out.println("Syy is " + Syy);
+    System.out.println("Sxx is " + Sxx);
+    System.out.println("Sxy is " + Sxy);
+
+
+    // Step 2: get the distance (radians)
     double distance = (2 * Sxy) / (Sxx - Syy);
+    System.out.println("distance is " + distance);
 
     // Step 3: Get the theta
-    double theta = 1.0/Math.tan(distance);
+    double theta = Math.atan(distance);
+    System.out.println("theta is " + theta);
+
 
     // Step 4: Compute f(t)
     double fta = (Syy - Sxx) * (Math.cos(theta)) - 2 * (Sxy * Math.sin(theta));
-    double ftb = (Syy - Sxx) * (Math.cos(theta+180)) - 2 * (Sxy * Math.sin(theta+180));
-
-    double tPositive;
+    double ftb = (Syy - Sxx) * (Math.cos(theta+Math.PI)) - 2 * (Sxy * Math.sin(theta+Math.PI));
 
     // Get the positive one to use in final calculation
+    double tPositive;
+
     if (fta > ftb){
       tPositive = fta;
     }
@@ -91,9 +109,12 @@ public class Line {
       tPositive = ftb;
     }
 
+    System.out.println("tPositive is " + tPositive);
+
+
     // Step 5: Compute a,b,c to get the best fit line.
     double a = Math.cos(tPositive/2);
-    double b= Math.sin(tPositive/2);
+    double b = Math.sin(tPositive/2);
     double c = (-a * meanX) - (b * meanY);
 
 
@@ -101,7 +122,9 @@ public class Line {
     this.a = a;
     this.b = b;
     this.c = c;
+
   }
+
 
 
   /** Creates a string of this line in the format "ax + by + c = 0".
