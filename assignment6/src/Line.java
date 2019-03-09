@@ -86,54 +86,38 @@ public class Line {
     System.out.println("Sxx is " + Sxx);
     System.out.println("Sxy is " + Sxy);
 
-
-    // Step 2: get the distance (radians)
+    // Step 2: get the distance
     double distance = (2 * Sxy) / (Sxx - Syy);
     System.out.println("distance is " + distance);
 
     // Step 3: Get the theta
     double theta = Math.atan(distance);
-    double thetaDeg = Math.toDegrees(theta);
-    System.out.println("theta in radians is " + theta);
-    System.out.println("theta in degrees is " + thetaDeg);
+    System.out.println("theta is " + theta);
 
 
     // Step 4: Compute f(t)
     double sqDiff = Syy - Sxx;
-//    double fta = sqDiff * Math.cos(theta) - 2 * Sxy * Math.sin(theta);
-//    double ftb = sqDiff * Math.cos(theta+Math.PI) - 2 * Sxy * Math.sin(theta+Math.PI);
-//    System.out.println("fta is " + fta);
-//    System.out.println("ftb is " + ftb);
-
-    double fta = sqDiff * Math.cos(thetaDeg) - 2 * Sxy * Math.sin(thetaDeg);
-    double ftb = sqDiff * Math.cos(thetaDeg+180) - 2 * Sxy * Math.sin(thetaDeg+180);
+    double fta = sqDiff * Math.cos(theta) - 2 * Sxy * Math.sin(theta);
+    double ftb = sqDiff * Math.cos(theta+Math.PI) - 2 * Sxy * Math.sin(theta+Math.PI);
     System.out.println("fta is " + fta);
     System.out.println("ftb is " + ftb);
 
-    // Get the positive theta to use in final calculation
+    // Get the theta that made f(t) positive to use in final calculation
     double tPositive;
-    if (fta > ftb){ tPositive = thetaDeg; }
-    else { tPositive = thetaDeg + 180; }
+    if (fta > ftb){ tPositive = theta; }
+    else { tPositive = theta + Math.PI; }
     System.out.println("tPositive is " + tPositive);
 
 
     // Step 5: Compute a,b,c to get the best fit line in standard form.
-    double a = Math.cos(Math.toRadians(tPositive)/2);
-    double b = Math.sin(Math.toRadians(tPositive)/2);
+    double a = Math.cos(tPositive/2);
+    double b = Math.sin(tPositive/2);
     double c = (-a * meanX) - (b * meanY);
 
     // Assign values to this line object
     this.a = a;
     this.b = b;
     this.c = c;
-
-
-    double degrees = 1.0;
-    double radians = Math.toRadians(degrees);
-
-    System.out.format("The value of pi is %.4f%n", Math.PI);
-    System.out.format("The cosine of %.1f degrees is %.4f%n", degrees, Math.cos(radians));
-
   }
 
 
