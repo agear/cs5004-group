@@ -28,15 +28,15 @@ public class DataTest {
 
     // Create the set of data made up of points
     Data dataOne = new Data();
-    dataOne.addPoint(new Point(1,1));
-    dataOne.addPoint(new Point(2,2));
-    dataOne.addPoint(new Point(3,3));
-    dataOne.addPoint(new Point(4,4));
-    dataOne.addPoint(new Point(5,5));
+    dataOne.addPoint(new Point(1,5));
+    dataOne.addPoint(new Point(2,10));
+    dataOne.addPoint(new Point(3,15));
+    dataOne.addPoint(new Point(4,25));
+    dataOne.addPoint(new Point(5,40));
 
     // Calculate line of best fit
 
-    assertEquals("-1x + 1y + 0 = 0", dataOne.fitLine().toString());
+    assertEquals("-8.5x + 1y + 6.5 = 0", dataOne.fitLine().toString());
 
   }
 
