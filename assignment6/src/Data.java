@@ -51,6 +51,8 @@ public class Data {
    * @return a line representing the best-fit of the data.
    */
   public Line fitLine() {
+    // TODO Throw exception if there's only one point in the data
+
 
     // Calculates best fit line and saves it as an attribute
     this.bestFitLine = new Line(this.dataList);
