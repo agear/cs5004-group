@@ -128,18 +128,59 @@ public class Data {
 
   }
 
+
+  //Compute the center of each cluster by taking the average of all data points assigned
+  // to that cluster (the average of x-coordinates, the average of y-coordinates)
+  private void updateClusterPoints(HashMap<Point,Integer> centroidAssignments) {
+
+    // For each centroid-
+    for (Map.Entry<Integer,Point> entry : clusters.entrySet()) {
+      Integer currentCentroid = entry.getKey();
+
+      // Initialize sums and number of points assigned to it
+      double sumX = 0;
+      double sumY = 0;
+      int numPointsAssigned = 0;
+
+      // Find all data points assigned to it (key=?find this. value=currentCentroid)
+      // Iterate through every data point.
+      // then add x and y.
+      for (Map.Entry<Point,Integer> dataEntry : centroidAssignments.entrySet()) {
+
+        // If the current datapoint is assigned to the current centroid,
+        if (dataEntry.getValue() == currentCentroid){
+          numPointsAssigned++;
+
+          // Accumulate this point's X and Y values
+          sumX = sumX + dataEntry.getKey().getX();
+          sumY = sumY + dataEntry.getKey().getY();
+        }
+
+      }
+
+      // When finished iterating through each data point, the mean of X and Y can be calculated
+      double meanX = sumX/numPointsAssigned;
+      double meanY = sumY/numPointsAssigned;
+      Point newCenter = new Point(meanX, meanY);
+
+      // Update the centroid's new location!
+      this.clusters.put(currentCentroid, newCenter);
+
+    }
+  }
+
+
   private double findAverageDistance(HashMap<Point,Integer> centroidAssignments) {
 
     // Initialize average distance
     double totalDistance = 0;
 
-    // For each point in the assignment, find the distance
-    for (Map.Entry<Point, Integer> entry : centroidAssignments.entrySet()){
-      Point currentPoint = entry.getKey();
-      Integer currentCentroid = entry.getValue();
+    // For each data point, find the distance from its assignment
+    for (Point p : this.dataList){
+      Integer currentCentroid = centroidAssignments.get(p);
       Point currentCentroidCoordinates = clusters.get(currentCentroid);
 
-      double currentDistance = currentPoint.getDistance(currentCentroidCoordinates);
+      double currentDistance = p.getDistance(currentCentroidCoordinates);
       totalDistance += currentDistance;
     }
 
@@ -176,6 +217,9 @@ public class Data {
 
       // One iteration of centroid assignment
       centroidAssignments = findClosestCentroids(k);
+
+      // Update the cluster point coordinates to be the average of x and y of assignments
+      updateClusterPoints(centroidAssignments);
 
       // One average-distance calculation
       double averageDistance = findAverageDistance(centroidAssignments);
