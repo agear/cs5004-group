@@ -1,8 +1,11 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.TreeMap;
 import java.lang.Math;
 import java.util.Iterator;
+import java.util.HashMap;
+
 
 /**
  * Stores and operates upon data in a 2D graph space.
@@ -83,15 +86,80 @@ public class Data {
     return this.bestFitLine;
   }
 
+
+
+
+  private HashMap<Point,Integer> findClosestCentroids(int numCentroids){
+
+    // Initialize closest cluster list
+    HashMap<Point,Integer> clusterAssignments = new HashMap<>();
+
+    // Get the number of data points
+    int numData = this.dataList.size();
+
+    // Compare each data point to each cluster center and make a list
+    for (int i = 0; i < numData; i++) {
+      // Capture datapoint
+      Point currentDataPoint = this.dataList.get(i);
+
+      // Initialize variable that contains the smallest distance for this datapoint
+      double smallestDistance = currentDataPoint.getDistance(this.clusters.get(0));
+      Integer closestCentroid = 0;
+
+      // For each centroid, calculate the distance between current point and that centroid
+      for (int j = 0; j < numCentroids; j++) {
+
+        Point currentClusterPoint = this.clusters.get(j);
+        double currentDistance = currentDataPoint.getDistance(currentClusterPoint);
+
+        // If this distance is smaller than saved distance, than update the smallest distance
+        if (currentDistance < smallestDistance) {
+          smallestDistance = currentDistance;
+          closestCentroid = j;
+        }
+
+      }
+
+      // After finding the smallest distance for the current point, assign it
+      clusterAssignments.put(currentDataPoint, closestCentroid);
+    }
+
+    return clusterAssignments;
+
+  }
+
+  private double findAverageDistance(HashMap<Point,Integer> centroidAssignments) {
+
+    // Initialize average distance
+    double totalDistance = 0;
+
+    // For each point in the assignment, find the distance
+    for (Map.Entry<Point, Integer> entry : centroidAssignments.entrySet()){
+      Point currentPoint = entry.getKey();
+      Integer currentCentroid = entry.getValue();
+      Point currentCentroidCoordinates = clusters.get(currentCentroid);
+
+      double currentDistance = currentPoint.getDistance(currentCentroidCoordinates);
+      totalDistance += currentDistance;
+    }
+
+    // Return the average distance
+    return totalDistance/centroidAssignments.size();
+
+  }
+
   /**
    * Verifies that it is positive, performs k-means clustering on the data and returns a list of
    * integers. The ith element of this list is the cluster number assigned to the ith data point.
    * This list should align with the list of data points returned above.
    */
-  LinkedList kmeans(int k) throws IllegalArgumentException {
+  private HashMap<Point,Integer> kmeans(int k) throws IllegalArgumentException {
+
     if (k < 0) {
       throw new IllegalArgumentException("K must be positive.");
     }
+
+    // Get the number of data points
     int numData = this.dataList.size();
 
     // Select k random centers
@@ -100,37 +168,32 @@ public class Data {
       clusters.put(i, this.dataList.get(centerIndex));
     }
 
-    // Compare each data point to each cluster center and make a list
-    for (int i = 0; i < numData; i++) {
+    // One iteration of centroid assignment
+    HashMap<Point,Integer> centroidAssignments = findClosestCentroids(k);
 
-      double smallestDistance = this.dataList.get(i).getDistance(clusters.get(k));
-      for (int j = 0; j < k; j++) {
-        double currentDistance = this.dataList.get(i).getDistance(clusters.get(k));
-        if (currentDistance < smallestDistance) {
-          smallestDistance = currentDistance;
-        }
+    // Do up to 100 iterations of centroid assignments.
+    for (int i = 0; i < 100; i++){
+
+      // One iteration of centroid assignment
+      centroidAssignments = findClosestCentroids(k);
+
+      // One average-distance calculation
+      double averageDistance = findAverageDistance(centroidAssignments);
+
+      // If the percentage error is less than a small amount, then finish.
+      double errorDelta = .01;
+
+      double percentageError = (Math.abs(averageDistance - Double.POSITIVE_INFINITY))
+              /Double.POSITIVE_INFINITY;
+
+      if (percentageError < errorDelta) {
+        return centroidAssignments;
       }
+
+
     }
-    // TODO 3. Write method for kmeans. Think through how you will implement the algorithm before you
-    //  write code. It will help you work through the various loops you may need.
-
-    // TODO When planning think about whether having helper methods or other classes will help you
-    //  to implement it. All helper methods must be private.
-
-    // TODO Use 0.01% as the error threshold in the algorithm.
-
-    // TODO Use a total of 10 RANSAC iterations. One iteration of RANSAC is an entire
-    //  k-means clustering algorithm. Run it 10 times and choose the best of the 10 results
-    //  as your final result.
-
-    // TODO A drawback of the above k-means clustering algorithm is that it may take too long to
-    //  converge. In your implementation, you should stop the algorithm it has not converged in
-    //  100 iterations.
-
-    // TODO You may find Math.random() useful to implement the algorithm.
-
-    // TODO You can represent infinity in Java as Double.POSITIVE_INFINITY.
-    //  Look at the Double and Integer classes.
-    return this.dataList;
+    // If we go through all 100 iterations and still have too-high error-delta,
+    // return current assignment anyway
+    return centroidAssignments;
   }
 }
