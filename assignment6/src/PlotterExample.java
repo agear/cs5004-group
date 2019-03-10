@@ -25,26 +25,43 @@ import java.io.IOException;
  * Created by ashesh on 2/16/2017.
  */
 public class PlotterExample {
+
   public static void main(String[] args) {
     ImagePlotter plotter = new ImagePlotter();
     plotter.setWidth(400);
     plotter.setHeight(400);
 
     plotter.setDimensions(-300, 300, -350, 350);
-    for (int x = -200; x < 200; x += 20) {
-      for (int y = 0; y <= x; y += 20) {
-        plotter.addCircle(x, y, 10);
-        plotter.addPoint(x, y);
-        plotter.addLine(x, y, x + 20, y);
-        plotter.addLine(x, y, x, y + 20);
-      }
-    }
+//    for (int x = -200; x < 200; x += 20) {
+//      for (int y = 0; y <= x; y += 20) {
+//        plotter.addCircle(x, y, 10);
+//        plotter.addPoint(x, y);
+//        plotter.addLine(x, y, x + 20, y);
+//        plotter.addLine(x, y, x, y + 20);
+//      }
+//    }
+
+    // Creating a line and data
+    plotter.addPoint(1,5);
+    plotter.addPoint(2,10);
+    plotter.addPoint(3,15);
+    plotter.addPoint(4,25);
+    plotter.addPoint(5,40);
+
 
     try {
       plotter.write("example.png");
     } catch (IOException e) {
 
     }
+
+
+
+
+
+
+
+
   }
 }
 

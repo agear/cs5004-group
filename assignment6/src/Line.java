@@ -31,6 +31,8 @@ public class Line {
    */
   public Line(LinkedList<Point> inputData) {
 
+    // TODO Throw exception if there's only one point in the data
+
     // Setup initialized variables
     double sumX = 0;
     double sumY = 0;
@@ -84,8 +86,7 @@ public class Line {
     System.out.println("Sxx is " + Sxx);
     System.out.println("Sxy is " + Sxy);
 
-
-    // Step 2: get the distance (radians)
+    // Step 2: get the distance
     double distance = (2 * Sxy) / (Sxx - Syy);
     System.out.println("distance is " + distance);
 
@@ -95,34 +96,28 @@ public class Line {
 
 
     // Step 4: Compute f(t)
-    double fta = (Syy - Sxx) * (Math.cos(theta)) - 2 * (Sxy * Math.sin(theta));
-    double ftb = (Syy - Sxx) * (Math.cos(theta+Math.PI)) - 2 * (Sxy * Math.sin(theta+Math.PI));
+    double sqDiff = Syy - Sxx;
+    double fta = sqDiff * Math.cos(theta) - 2 * Sxy * Math.sin(theta);
+    double ftb = sqDiff * Math.cos(theta+Math.PI) - 2 * Sxy * Math.sin(theta+Math.PI);
+    System.out.println("fta is " + fta);
+    System.out.println("ftb is " + ftb);
 
-    // Get the positive one to use in final calculation
+    // Get the theta that made f(t) positive to use in final calculation
     double tPositive;
-
-    if (fta > ftb){
-      tPositive = fta;
-    }
-
-    else {
-      tPositive = ftb;
-    }
-
+    if (fta > ftb){ tPositive = theta; }
+    else { tPositive = theta + Math.PI; }
     System.out.println("tPositive is " + tPositive);
 
 
-    // Step 5: Compute a,b,c to get the best fit line.
+    // Step 5: Compute a,b,c to get the best fit line in standard form.
     double a = Math.cos(tPositive/2);
     double b = Math.sin(tPositive/2);
     double c = (-a * meanX) - (b * meanY);
-
 
     // Assign values to this line object
     this.a = a;
     this.b = b;
     this.c = c;
-
   }
 
 
