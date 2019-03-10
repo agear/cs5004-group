@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class Data {
   private LinkedList<Point> dataList;
   private Line bestFitLine;
-  private TreeMap<Integer,Point> clusters;
+  private TreeMap<Integer,Point> clusters = new TreeMap<>();
   private ArrayList distances;
 
   /**
@@ -205,11 +205,13 @@ public class Data {
 
     // Select k random centers
     for (int i = 0; i < k; i++ ){
-      System.out.println("i is" + i);
-      int centerIndex = (int)(Math.random() * ((numData + 1)));
-      System.out.println("center index is" + centerIndex);
 
-      clusters.put(i, this.dataList.get(centerIndex));
+      // Finds a random index between 0 and # of data points
+      int centerIndex = (int)(Math.random() * ((numData)));
+      Point centroidPoint = this.dataList.get(centerIndex);
+
+      // Assigns it to our cluster list
+      this.clusters.put(i, centroidPoint);
     }
 
     // One iteration of centroid assignment
@@ -241,6 +243,7 @@ public class Data {
     }
     // If we go through all 100 iterations and still have too-high error-delta,
     // return current assignment anyway
+    System.out.println(printCentroidAssignments(centroidAssignments));
     return centroidAssignments;
   }
 
@@ -252,7 +255,7 @@ public class Data {
       Point currentPoint = assignment.getKey();
       Integer currentCentroid = assignment.getValue();
       Point currentCentroidCoordinates = clusters.get(currentCentroid);
-      currentAssignment+= currentPoint.toString() + "is assigned to" + currentCentroidCoordinates.toString();
+      currentAssignment+= "\n" + currentPoint.toString() + "is assigned to" + currentCentroidCoordinates.toString();
     }
     return currentAssignment;
   }
