@@ -26,8 +26,17 @@ public class Data {
    *
    * @param x position of the point.
    * @param y position of the point.
+   * @throws IllegalArgumentException If the x-coordinate already exists in the data
    */
-  public void addPoint(int x, int y) {
+  public void addPoint(int x, int y) throws IllegalArgumentException {
+
+    // For each point, check to see if the x already exists
+    for (Point p : dataList){
+      if (p.getX() == x) {
+        throw new IllegalArgumentException("That x-coordinate already exists in this dataset.");
+      }
+    }
+
     Point datum = new Point(x, y);
     this.dataList.add(datum);
   }
@@ -36,8 +45,17 @@ public class Data {
    * An alternative method to add a single point to the data list
    *
    * @param input the Point to add
+   * @throws IllegalArgumentException If the x-coordinate already exists in the data
    */
-  public void addPoint(Point input) {
+  public void addPoint(Point input) throws IllegalArgumentException {
+
+    // For each point, check to see if the x already exists
+    for (Point p : dataList){
+      if (p.getX() == input.getX()) {
+        throw new IllegalArgumentException("That x-coordinate already exists in this dataset.");
+      }
+    }
+
     this.dataList.add(input);
   }
 
@@ -54,10 +72,9 @@ public class Data {
    * Returns a best-fit line. You will need to represent a line suitably.
    *
    * @return a line representing the best-fit of the data.
+   * @throws IllegalArgumentException if there's < 2 points in the data
    */
-  public Line fitLine() {
-    // TODO Throw exception if there's only one point in the data
-
+  public Line fitLine() throws IllegalArgumentException {
 
     // Calculates best fit line and saves it as an attribute
     this.bestFitLine = new Line(this.dataList);
