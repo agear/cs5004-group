@@ -194,7 +194,7 @@ public class Data {
    * integers. The ith element of this list is the cluster number assigned to the ith data point.
    * This list should align with the list of data points returned above.
    */
-  private HashMap<Point,Integer> kmeans(int k) throws IllegalArgumentException {
+  public HashMap<Point,Integer> kmeans(int k) throws IllegalArgumentException {
 
     if (k < 0) {
       throw new IllegalArgumentException("K must be positive.");
@@ -205,7 +205,10 @@ public class Data {
 
     // Select k random centers
     for (int i = 0; i < k; i++ ){
+      System.out.println("i is" + i);
       int centerIndex = (int)(Math.random() * ((numData + 1)));
+      System.out.println("center index is" + centerIndex);
+
       clusters.put(i, this.dataList.get(centerIndex));
     }
 
@@ -240,4 +243,20 @@ public class Data {
     // return current assignment anyway
     return centroidAssignments;
   }
+
+
+  public String printCentroidAssignments(HashMap<Point,Integer> assignments){
+
+    String currentAssignment = "";
+    for(Map.Entry<Point,Integer> assignment : assignments.entrySet()){
+      Point currentPoint = assignment.getKey();
+      Integer currentCentroid = assignment.getValue();
+      Point currentCentroidCoordinates = clusters.get(currentCentroid);
+      currentAssignment+= currentPoint.toString() + "is assigned to" + currentCentroidCoordinates.toString();
+    }
+    return currentAssignment;
+  }
+
+
+
 }

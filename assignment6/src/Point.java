@@ -47,4 +47,11 @@ public class Point {
   public double getDistance(Point other) {
     return Math.sqrt(Math.pow((this.getX() - other.getX()), 2) + Math.pow((this.getY() - other.getY()), 2));
   }
+
+
+  public String toString(){
+    return "(" + this.x + ", " + this.y + ")";
+  }
+
+
 }

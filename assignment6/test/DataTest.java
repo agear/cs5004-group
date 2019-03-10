@@ -119,6 +119,17 @@ public class DataTest {
 
   @org.junit.Test
   public void kmeans() {
+
+    // Create a set of data made up of points
+    Data dataOne = new Data();
+    dataOne.addPoint(new Point(1,1));
+    dataOne.addPoint(new Point(2,2));
+    dataOne.addPoint(new Point(30,50));
+    dataOne.addPoint(new Point(31,51));
+
+    dataOne.printCentroidAssignments(dataOne.kmeans(2));
+
+
   }
 }
 
