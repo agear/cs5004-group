@@ -29,9 +29,13 @@ public class Line {
    *  the sum of the squares of distances of the points from the line.
    * @param inputData A list of points scattered on a grid
    */
-  public Line(LinkedList<Point> inputData) {
+  public Line(LinkedList<Point> inputData) throws IllegalArgumentException {
 
-    // TODO Throw exception if there's only one point in the data
+    // Throw exception if there's only one point in the data
+    if (inputData.size() < 2 ) {
+      throw new IllegalArgumentException("More data needed to create a line of best fit.");
+    }
+
 
     // Setup initialized variables
     double sumX = 0;
@@ -58,9 +62,6 @@ public class Line {
     // Compute average for both
     double meanX = (sumX) / n;
     double meanY = (sumY) / n;
-    System.out.println("meanX is " + meanX);
-    System.out.println("meanY is " + meanY);
-
 
     double Sxx = 0;
     double Syy = 0;
@@ -82,32 +83,21 @@ public class Line {
 
     }
 
-    System.out.println("Syy is " + Syy);
-    System.out.println("Sxx is " + Sxx);
-    System.out.println("Sxy is " + Sxy);
-
     // Step 2: get the distance
     double distance = (2 * Sxy) / (Sxx - Syy);
-    System.out.println("distance is " + distance);
 
     // Step 3: Get the theta
     double theta = Math.atan(distance);
-    System.out.println("theta is " + theta);
-
 
     // Step 4: Compute f(t)
     double sqDiff = Syy - Sxx;
     double fta = sqDiff * Math.cos(theta) - 2 * Sxy * Math.sin(theta);
     double ftb = sqDiff * Math.cos(theta+Math.PI) - 2 * Sxy * Math.sin(theta+Math.PI);
-    System.out.println("fta is " + fta);
-    System.out.println("ftb is " + ftb);
 
     // Get the theta that made f(t) positive to use in final calculation
     double tPositive;
     if (fta > ftb){ tPositive = theta; }
     else { tPositive = theta + Math.PI; }
-    System.out.println("tPositive is " + tPositive);
-
 
     // Step 5: Compute a,b,c to get the best fit line in standard form.
     double a = Math.cos(tPositive/2);
@@ -123,11 +113,16 @@ public class Line {
 
 
   /** Creates a string of this line in the format "ax + by + c = 0".
-   * @return
+   * a, b, and c are truncated to the thousands place
+   * @return A printable string in the format ax + by + c = 0
    */
   @Override
   public String toString(){
-    return this.a + "x + " + this.b + "y + " + this.c + " = 0";
+    String aTrunc = String.format("%.3f", this.a);
+    String bTrunc = String.format("%.3f", this.b);
+    String cTrunc = String.format("%.3f", this.c);
+
+    return aTrunc + "x + " + bTrunc + "y + " + cTrunc + " = 0";
   }
 
 
