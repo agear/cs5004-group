@@ -1,4 +1,8 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.TreeMap;
+import java.lang.Math;
+import java.util.Iterator;
 
 /**
  * Stores and operates upon data in a 2D graph space.
@@ -6,7 +10,8 @@ import java.util.LinkedList;
 public class Data {
   private LinkedList<Point> dataList;
   private Line bestFitLine;
-
+  private TreeMap<Integer,Point> clusters;
+  private ArrayList distances;
 
   /**
    * A constructor with no parameters that initializes a data object.
@@ -70,14 +75,30 @@ public class Data {
     if (k < 0) {
       throw new IllegalArgumentException("K must be positive.");
     }
+    int numData = this.dataList.size();
+
+    // Select k random centers
+    for (int i = 0; i < k; i++ ){
+      int centerIndex = (int)(Math.random() * ((numData + 1)));
+      clusters.put(i, this.dataList.get(centerIndex));
+    }
+
+    // Compare each data point to each cluster center and make a list
+    for (int i = 0; i < numData; i++) {
+
+      double smallestDistance = this.dataList.get(i).getDistance(clusters.get(k));
+      for (int j = 0; j < k; j++) {
+        double currentDistance = this.dataList.get(i).getDistance(clusters.get(k));
+        if (currentDistance < smallestDistance) {
+          smallestDistance = currentDistance;
+        }
+      }
+    }
     // TODO 3. Write method for kmeans. Think through how you will implement the algorithm before you
     //  write code. It will help you work through the various loops you may need.
 
     // TODO When planning think about whether having helper methods or other classes will help you
     //  to implement it. All helper methods must be private.
-
-    // TODO Compute the distance between two points as the Euclidean distance:
-    //  d(p, q) = Math.sqrt((p_x - q_x)^2 + (p_y - q_y)^2)
 
     // TODO Use 0.01% as the error threshold in the algorithm.
 
@@ -93,7 +114,6 @@ public class Data {
 
     // TODO You can represent infinity in Java as Double.POSITIVE_INFINITY.
     //  Look at the Double and Integer classes.
-
-    return new LinkedList();
+    return this.dataList;
   }
 }

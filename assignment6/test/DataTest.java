@@ -56,6 +56,16 @@ public class DataTest {
 
   }
 
+  @Test
+  public void getDistanceTest(){
+  Point point1 = new Point(1,1);
+  Point point2 = new Point(1,1);
+  Point point3 = new Point(2,1);
+  assertEquals(0, point1.getDistance(point2), 0.001);
+  assertEquals(1, point1.getDistance(point3), 0.001);
+
+  }
+
   @org.junit.Test
   public void kmeans() {
   }
