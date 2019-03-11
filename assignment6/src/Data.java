@@ -72,7 +72,7 @@ public class Data {
   }
 
   /**
-   * Returns a best-fit line. You will need to represent a line suitably.
+   * Returns a best-fit line.
    *
    * @return a line representing the best-fit of the data.
    * @throws IllegalArgumentException if there's < 2 points in the data
@@ -197,7 +197,7 @@ public class Data {
   public HashMap<Point,Integer> kmeans(int k) throws IllegalArgumentException {
 
     if (k < 0) {
-      throw new IllegalArgumentException("K must be positive.");
+      throw new IllegalArgumentException("k must be positive.");
     }
 
     // Get the number of data points
@@ -247,7 +247,7 @@ public class Data {
     return centroidAssignments;
   }
 
-
+  // TODO Is this needed?
   public String printCentroidAssignments(HashMap<Point,Integer> assignments){
 
     String currentAssignment = "";
