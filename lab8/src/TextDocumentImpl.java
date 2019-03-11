@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Represents a text document (e.g., a .doc file)
  */
@@ -6,13 +8,14 @@ public class TextDocumentImpl implements TextDocument {
   private String text;
 
 
-  /** Initializes a text document object by assigning input to the text file field
+  /**
+   * Initializes a text document object by assigning input to the text file field
+   *
    * @param input The text that the document contains
    */
-  public TextDocumentImpl(String input){
-
+  public TextDocumentImpl(String input) {
+    this.text = input;
   }
-
 
 
   /**
@@ -20,9 +23,14 @@ public class TextDocumentImpl implements TextDocument {
    *
    * @return the number of words in this document
    */
-  @Override
   public int getWordCount() {
-    return 0;
+    int wordCount = 0;
+    Scanner s = new Scanner(this.text);
+    while (s.hasNext()) {
+      wordCount += 1;
+    }
+    s.close();
+    return wordCount;
   }
 
   /**
@@ -30,9 +38,8 @@ public class TextDocumentImpl implements TextDocument {
    *
    * @return the text in this document as a String
    */
-  @Override
   public String getText() {
-    return null;
+    return this.text;
   }
 
   /**
@@ -42,7 +49,6 @@ public class TextDocumentImpl implements TextDocument {
    *
    * @return returns the wrapped version of the text in this document
    */
-  @Override
   public TextDocument wrap(int columnWidth) {
     return null;
   }
