@@ -126,4 +126,13 @@ public class Line {
   }
 
 
+
+  public double solveLine(double x){
+//    ax + by + c = 0.
+    double ax = this.a * x;
+    return (0 - ax - this.c)/this.b;
+
+  }
+
+
 }

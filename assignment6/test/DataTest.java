@@ -1,6 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 
 public class DataTest {
@@ -79,6 +81,9 @@ public class DataTest {
     // Calculate line of best fit
     assertEquals("-0.707x + 0.707y + -0.000 = 0", dataOne.fitLine().toString());
 
+    assertEquals(10, dataOne.fitLine().solveLine(10), 0.001);
+
+
   }
 
   // TEST FIVE: One point (illegal data)
@@ -93,17 +98,6 @@ public class DataTest {
   }
 
 
-  // TEST SIX: Vertical line (illegal data)
-  @Test(expected=IllegalArgumentException.class)
-  public void illegalDuplicateXValue(){
-
-    // Create the set of data made up of points
-    Data dataOne = new Data();
-    dataOne.addPoint(new Point(1,5));
-    dataOne.addPoint(new Point(2,5));
-    dataOne.addPoint(new Point(1,10));
-
-  }
 
   @Test
   public void getDistanceTest(){
@@ -127,9 +121,17 @@ public class DataTest {
     dataOne.addPoint(new Point(30,50));
     dataOne.addPoint(new Point(31,51));
 
-    dataOne.printCentroidAssignments(dataOne.kmeans(2));
+    //dataOne.printCentroidAssignments(dataOne.kmeans(2));
 
 
   }
+
+
+
+  @Test
+  public void readFromFile() throws IOException {
+    Data testData = new Data("./data/clusterdata-2.txt");
+  }
+
 }
 

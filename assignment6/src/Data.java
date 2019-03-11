@@ -5,13 +5,17 @@ import java.util.TreeMap;
 import java.lang.Math;
 import java.util.Iterator;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 
 /**
  * Stores and operates upon data in a 2D graph space.
  */
 public class Data {
-  private LinkedList<Point> dataList;
+  private LinkedList<Point> dataList = new LinkedList<Point>();
   private Line bestFitLine;
   private TreeMap<Integer,Point> clusters = new TreeMap<>();
   private ArrayList distances;
@@ -24,6 +28,31 @@ public class Data {
     this.dataList = new LinkedList<Point>();
   }
 
+
+  public Data(String filePath) throws IOException,IllegalArgumentException {
+
+    try {
+      Scanner sc = new Scanner(new FileInputStream(filePath));
+
+      while (sc.hasNextDouble()) {
+
+        double x = sc.nextDouble();
+
+        if (!sc.hasNextDouble()) {
+          throw new IllegalArgumentException("File has uneven number of x,y coordinates.");
+        }
+        double y = sc.nextDouble();
+
+        this.addPoint(x,y);
+
+      }
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+  }
+
   /**
    * A method to add a single point to the data list
    *
@@ -31,18 +60,20 @@ public class Data {
    * @param y position of the point.
    * @throws IllegalArgumentException If the x-coordinate already exists in the data
    */
-  public void addPoint(int x, int y) throws IllegalArgumentException {
+  public void addPoint(double x, double y) throws IllegalArgumentException {
 
-    // For each point, check to see if the x already exists
-    for (Point p : dataList){
-      if (p.getX() == x) {
-        throw new IllegalArgumentException("That x-coordinate already exists in this dataset.");
-      }
-    }
+//    // For each point, check to see if the x already exists
+//    for (Point p : dataList){
+//      if (p.getX() == x) {
+//        throw new IllegalArgumentException("That x-coordinate already exists in this dataset.");
+//      }
+//    }
 
     Point datum = new Point(x, y);
     this.dataList.add(datum);
   }
+
+
 
   /**
    * An alternative method to add a single point to the data list
@@ -52,12 +83,12 @@ public class Data {
    */
   public void addPoint(Point input) throws IllegalArgumentException {
 
-    // For each point, check to see if the x already exists
-    for (Point p : dataList){
-      if (p.getX() == input.getX()) {
-        throw new IllegalArgumentException("That x-coordinate already exists in this dataset.");
-      }
-    }
+//    // For each point, check to see if the x already exists
+//    for (Point p : dataList){
+//      if (p.getX() == input.getX()) {
+//        throw new IllegalArgumentException("That x-coordinate already exists in this dataset.");
+//      }
+//    }
 
     this.dataList.add(input);
   }
