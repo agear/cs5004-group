@@ -1,12 +1,9 @@
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 import java.lang.Math;
-import java.util.Iterator;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -18,7 +15,6 @@ public class Data {
   private LinkedList<Point> dataList = new LinkedList<Point>();
   private Line bestFitLine;
   private TreeMap<Integer,Point> clusters = new TreeMap<>();
-  private ArrayList distances;
 
   /**
    * A constructor with no parameters that initializes a data object.
@@ -71,8 +67,6 @@ public class Data {
   }
 
 
-
-
   /**
    * An alternative method to add a single point to the data list
    *
@@ -108,18 +102,17 @@ public class Data {
   }
 
 
-
-
   private HashMap<Point,Integer> findClosestCentroids(int numCentroids){
 
-    // Initialize closest cluster list
+    // Initialize cluster assignment list
     HashMap<Point,Integer> clusterAssignments = new HashMap<>();
 
     // Get the number of data points
     int numData = this.dataList.size();
 
-    // Compare each data point to each cluster center and make a list
+    // Compare each data point to each cluster center
     for (int i = 0; i < numData; i++) {
+
       // Capture datapoint
       Point currentDataPoint = this.dataList.get(i);
 
@@ -190,7 +183,15 @@ public class Data {
     }
   }
 
+  public TreeMap<Integer,Point> getClusters(){
+    return this.clusters;
+  }
 
+  /** Computes the new error 'ne' as the average distance of each data point from
+   * the new center of its cluster
+   * @param centroidAssignments The pairings of data points and centroids
+   * @return ne, the avg distance
+   */
   private double findAverageDistance(HashMap<Point,Integer> centroidAssignments) {
 
     // Initialize average distance
@@ -201,6 +202,7 @@ public class Data {
       Integer currentCentroid = centroidAssignments.get(p);
       Point currentCentroidCoordinates = clusters.get(currentCentroid);
 
+      // Add the distance to the total distance
       double currentDistance = p.getDistance(currentCentroidCoordinates);
       totalDistance += currentDistance;
     }
@@ -211,12 +213,15 @@ public class Data {
   }
 
   /**
-   * Verifies that it is positive, performs k-means clustering on the data and returns a list of
+   * Performs k-means clustering on the data and returns a list of
    * integers. The ith element of this list is the cluster number assigned to the ith data point.
    * This list should align with the list of data points returned above.
+   *
+   * TODO Convert our HashMap to an indexible list as explain in the spec and return the list
    */
   public HashMap<Point,Integer> kmeans(int k) throws IllegalArgumentException {
 
+    // Verifies that k (num clusters) is positive
     if (k < 0) {
       throw new IllegalArgumentException("k must be positive.");
     }
@@ -224,47 +229,80 @@ public class Data {
     // Get the number of data points
     int numData = this.dataList.size();
 
-    // Select k random centers
-    for (int i = 0; i < k; i++ ){
+    // Initialize centroidAssignments and error
+    HashMap<Point, Integer> centroidAssignments;
+    LinkedList<Double> percentageErrorList = new LinkedList<Double>();
+    LinkedList<HashMap<Point,Integer>> assignmentList = new LinkedList<HashMap<Point,Integer>>();
 
-      // Finds a random index between 0 and # of data points
-      int centerIndex = (int)(Math.random() * ((numData)));
-      Point centroidPoint = this.dataList.get(centerIndex);
 
-      // Assigns it to our cluster list
-      this.clusters.put(i, centroidPoint);
-    }
+    // Do kmeans 10 times (RANSAC method)
+    for (int l = 0; l < 10; l++ ) {
 
-    // One iteration of centroid assignment
-    HashMap<Point,Integer> centroidAssignments = findClosestCentroids(k);
+      // Select k random centers
+      for (int i = 0; i < k; i++) {
 
-    // Do up to 100 iterations of centroid assignments.
-    for (int i = 0; i < 100; i++){
+        // Finds a random index between 0 and # of data points
+        int centerIndex = (int) (Math.random() * ((numData)));
+        Point centroidPoint = this.dataList.get(centerIndex);
+
+        // Assigns it to our cluster list
+        this.clusters.put(i, centroidPoint);
+      }
 
       // One iteration of centroid assignment
       centroidAssignments = findClosestCentroids(k);
 
-      // Update the cluster point coordinates to be the average of x and y of assignments
-      updateClusterPoints(centroidAssignments);
+      double e = Double.POSITIVE_INFINITY;
 
-      // One average-distance calculation
-      double averageDistance = findAverageDistance(centroidAssignments);
+      // Do up to 100 iterations of centroid assignments.
+      for (int i = 0; i < 100; i++) {
 
-      // If the percentage error is less than a small amount, then finish.
-      double errorDelta = .01;
+        // One iteration of centroid assignment
+        centroidAssignments = findClosestCentroids(k);
 
-      double percentageError = (Math.abs(averageDistance - Double.POSITIVE_INFINITY))
-              /Double.POSITIVE_INFINITY;
+        // Update the cluster point coordinates to be the average of x and y of assignments
+        updateClusterPoints(centroidAssignments);
 
-      if (percentageError < errorDelta) {
-        return centroidAssignments;
+        // One average-distance calculation
+        double averageDistance = findAverageDistance(centroidAssignments);
+
+        // If the percentage error is less than a small amount, then finish.
+        double errorDelta = .01;
+        double percentageError = (Math.abs(averageDistance - e)) / e;
+
+
+        // If the percentage error is less than .01, stop here
+        if (percentageError < errorDelta) {
+          // Add current percentage error and centroid to lists for RANSAC
+          percentageErrorList.add(percentageError);
+          assignmentList.add(centroidAssignments);
+          continue;
+        }
+        else {
+          e = averageDistance;
+        }
+
+
       }
-
-
+      // If we go through all 100 iterations and still have too-high error-delta,
+      // return current assignment anyway
+      // Add current percentage error and centroid to lists for RANSAC
+      percentageErrorList.add((Math.abs(findAverageDistance(centroidAssignments) - e)) / e);
+      assignmentList.add(centroidAssignments);
+      continue;
     }
-    // If we go through all 100 iterations and still have too-high error-delta,
-    // return current assignment anyway
-    return centroidAssignments;
+
+    // Find the smallest percentage error
+    double smallestPercentageError = percentageErrorList.get(0);
+    int smallestErrorIndex = 0;
+
+    for (int m = 0; m < percentageErrorList.size(); m++){
+      if (percentageErrorList.get(m) < smallestPercentageError){
+        smallestErrorIndex = m;
+      }
+    }
+
+    return assignmentList.get(smallestErrorIndex);
   }
 
   // TODO Is this needed? <<  I just did this for our convenience; I made it private
@@ -280,7 +318,6 @@ public class Data {
     }
     return currentAssignment;
   }
-
 
 
 }
