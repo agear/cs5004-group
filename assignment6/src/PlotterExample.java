@@ -11,9 +11,7 @@ import java.util.LinkedList;
 public class PlotterExample {
 // TODO 5. Use the provided ImagePlotter.java to plot your results! Look at the provided
 //  PlotterExample.java to see an example of how to use the ImagePlotter class.
-//  Write a main method that creates a few data points and plots them along with the best fit line
-//  to visualize your results. You can visualize the clusters by giving all points in a cluster
-//  the same color.
+//  You can visualize the clusters by giving all points in a cluster the same color.
 
 
   public static void main(String[] args) {

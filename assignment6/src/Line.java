@@ -117,7 +117,7 @@ public class Line {
   }
 
   /** Creates a string of this line in the format "ax + by + c = 0".
-   * a, b, and c are truncated to the thousands place
+   * a, b, and c are truncated to the thousandths place
    * @return A printable string in the format ax + by + c = 0
    */
   @Override

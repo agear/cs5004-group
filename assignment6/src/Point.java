@@ -49,11 +49,14 @@ public class Point {
   }
 
   /** Creates a string of this point in the format "(x, y)".
+   * x and y are truncated to the thousandths place.
    * @return A printable string in the format (x, y).
    */
   @Override
   public String toString(){
-    return "(" + this.x + ", " + this.y + ")";
+    String xTrunc = String.format("%.3f", this.x);
+    String yTrunc = String.format("%.3f", this.y);
+    return "(" + xTrunc + ", " + yTrunc + ")";
   }
 
 
