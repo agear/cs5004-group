@@ -16,14 +16,6 @@ public class DataTest {
   public void setUp() throws Exception {
   }
 
-  // TODO 4. Write tests for these two methods:
-// For the kmeans(int k) method you must test whether each point is assigned to the correct
-// cluster (i.e. it is closest to the cluster to which it is assigned).
-//
-// For the fitLine() method you can test that when given data points that fit a line
-// perfectly or nearly perfectly (start from a point that lies on a line and move it a
-// little bit), this method returns the correct line.
-
   @Test
   public void fitLine() {
 
