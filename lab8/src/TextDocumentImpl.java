@@ -39,7 +39,7 @@ public class TextDocumentImpl implements TextDocument {
    * @return the text in this document as a String
    */
   public String getText() {
-    return null;
+    return this.text;
   }
 
   /**
