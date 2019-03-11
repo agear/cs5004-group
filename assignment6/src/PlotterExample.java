@@ -15,43 +15,18 @@ public class PlotterExample {
 
 
   public static void main(String[] args) {
+
+    clusterData2();
+
+  }
+
+  private static void clusterData2(){
+
+
     ImagePlotter plotter = new ImagePlotter();
-    plotter.setWidth(400);
-    plotter.setHeight(400);
-
-    Data data = new Data();
-    plotter.setDimensions(-300, 300, -350, 350);
-
-    // Creating a line and data
-
-    plotter.addPoint(1, 5);
-    plotter.addPoint(2, 10);
-    plotter.addPoint(3, 15);
-    plotter.addPoint(4, 25);
-    plotter.addPoint(5, 40);
-    data.addPoint(1, 5);
-    data.addPoint(2, 10);
-    data.addPoint(3, 15);
-    data.addPoint(4, 25);
-    data.addPoint(5, 40);
-    Line fit = data.fitLine();
-    plotter.addLine(-300, (int) Math.round(fit.solveLine(-300)), 300, (int) Math.round(fit.solveLine(300)));
-
-
-    try {
-      plotter.write("example.png");
-    } catch (IOException e) { }
-
-
-
-
-
-
-    ImagePlotter plotter2 = new ImagePlotter();
-    plotter2.setWidth(600);
-    plotter2.setHeight(600);
-    plotter2.setDimensions(-300, 300, -300, 300);
-
+    plotter.setWidth(600);
+    plotter.setHeight(600);
+    plotter.setDimensions(-100, 500, -420, 180);
 
 
     try {
@@ -64,10 +39,10 @@ public class PlotterExample {
 
         int x = (int)Math.round(p.getX());
         int y = (int)Math.round(p.getY());
-        plotter2.addPoint(x,y);
+        plotter.addPoint(x,y);
 
       }
-      plotter2.addPoint(0,0);
+      plotter.addPoint(0,0);
 
     }
     catch (IOException e) {
@@ -75,10 +50,12 @@ public class PlotterExample {
     }
 
     try {
-      plotter2.write("example2.png");
+      plotter.write("clusterdata-2.png");
     } catch (IOException e) { }
 
-
   }
+
+
+
 }
 
