@@ -56,9 +56,9 @@ public class PlotterExample {
 
 
     ImagePlotter plotter2 = new ImagePlotter();
-    plotter.setWidth(600);
-    plotter.setHeight(600);
-    plotter.setDimensions(-300, 300, -300, 300);
+    plotter2.setWidth(600);
+    plotter2.setHeight(600);
+    plotter2.setDimensions(-300, 300, -300, 300);
 
 
 
@@ -75,6 +75,7 @@ public class PlotterExample {
         plotter2.addPoint(x,y);
 
       }
+      plotter2.addPoint(0,0);
 
     }
     catch (IOException e) {
