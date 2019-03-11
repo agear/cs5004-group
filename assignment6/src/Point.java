@@ -2,7 +2,7 @@
 // the form of (x,y) points.
 
 /**
- * TODO Write Java doc.
+ * Represents a point on a 2D graph as an x and y coordinate.
  */
 public class Point {
   double x;
@@ -48,7 +48,10 @@ public class Point {
     return Math.sqrt(Math.pow((this.getX() - other.getX()), 2) + Math.pow((this.getY() - other.getY()), 2));
   }
 
-
+  /** Creates a string of this point in the format "(x, y)".
+   * @return A printable string in the format (x, y).
+   */
+  @Override
   public String toString(){
     return "(" + this.x + ", " + this.y + ")";
   }

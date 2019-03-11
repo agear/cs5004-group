@@ -110,7 +110,11 @@ public class Line {
     this.c = c;
   }
 
-
+  public double solveLine(double x){
+    // ax + by + c = 0.
+    double ax = this.a * x;
+    return (0 - ax - this.c)/this.b;
+  }
 
   /** Creates a string of this line in the format "ax + by + c = 0".
    * a, b, and c are truncated to the thousands place

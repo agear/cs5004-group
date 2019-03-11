@@ -62,12 +62,12 @@ public class Data {
    */
   public void addPoint(double x, double y) throws IllegalArgumentException {
 
-//    // For each point, check to see if the x already exists
-//    for (Point p : dataList){
-//      if (p.getX() == x) {
-//        throw new IllegalArgumentException("That x-coordinate already exists in this dataset.");
-//      }
-//    }
+    // For each point, check to see if the x already exists
+    for (Point p : dataList){
+      if (p.getX() == x) {
+        throw new IllegalArgumentException("That x-coordinate already exists in this dataset.");
+      }
+    }
 
     Point datum = new Point(x, y);
     this.dataList.add(datum);
@@ -83,12 +83,12 @@ public class Data {
    */
   public void addPoint(Point input) throws IllegalArgumentException {
 
-//    // For each point, check to see if the x already exists
-//    for (Point p : dataList){
-//      if (p.getX() == input.getX()) {
-//        throw new IllegalArgumentException("That x-coordinate already exists in this dataset.");
-//      }
-//    }
+    // For each point, check to see if the x already exists
+    for (Point p : dataList){
+      if (p.getX() == input.getX()) {
+        throw new IllegalArgumentException("That x-coordinate already exists in this dataset.");
+      }
+    }
 
     this.dataList.add(input);
   }
@@ -103,7 +103,7 @@ public class Data {
   }
 
   /**
-   * Returns a best-fit line. You will need to represent a line suitably.
+   * Returns a best-fit line.
    *
    * @return a line representing the best-fit of the data.
    * @throws IllegalArgumentException if there's < 2 points in the data
@@ -228,7 +228,7 @@ public class Data {
   public HashMap<Point,Integer> kmeans(int k) throws IllegalArgumentException {
 
     if (k < 0) {
-      throw new IllegalArgumentException("K must be positive.");
+      throw new IllegalArgumentException("k must be positive.");
     }
 
     // Get the number of data points
@@ -278,7 +278,7 @@ public class Data {
     return centroidAssignments;
   }
 
-
+  // TODO Is this needed?
   public String printCentroidAssignments(HashMap<Point,Integer> assignments){
 
     String currentAssignment = "";
