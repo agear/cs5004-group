@@ -29,6 +29,11 @@ public class Data {
   }
 
 
+  /** Constructor to create data from a file set up in x,y columns.
+   * @param filePath The path to the nicely-formatted data
+   * @throws IOException If the path cannot be found
+   * @throws IllegalArgumentException If the file contains an odd amount of numbers
+   */
   public Data(String filePath) throws IOException,IllegalArgumentException {
 
     try {
@@ -60,18 +65,11 @@ public class Data {
    * @param y position of the point.
    * @throws IllegalArgumentException If the x-coordinate already exists in the data
    */
-  public void addPoint(double x, double y) throws IllegalArgumentException {
-
-    // For each point, check to see if the x already exists
-    for (Point p : dataList){
-      if (p.getX() == x) {
-        throw new IllegalArgumentException("That x-coordinate already exists in this dataset.");
-      }
-    }
-
+  public void addPoint(double x, double y) {
     Point datum = new Point(x, y);
     this.dataList.add(datum);
   }
+
 
 
 
@@ -79,16 +77,8 @@ public class Data {
    * An alternative method to add a single point to the data list
    *
    * @param input the Point to add
-   * @throws IllegalArgumentException If the x-coordinate already exists in the data
    */
-  public void addPoint(Point input) throws IllegalArgumentException {
-
-    // For each point, check to see if the x already exists
-    for (Point p : dataList){
-      if (p.getX() == input.getX()) {
-        throw new IllegalArgumentException("That x-coordinate already exists in this dataset.");
-      }
-    }
+  public void addPoint(Point input) {
 
     this.dataList.add(input);
   }
@@ -98,7 +88,7 @@ public class Data {
    *
    * @return data entered thus far, as a list of points.
    */
-  public LinkedList getData() {
+  public LinkedList<Point> getData() {
     return this.dataList;
   }
 
@@ -274,12 +264,12 @@ public class Data {
     }
     // If we go through all 100 iterations and still have too-high error-delta,
     // return current assignment anyway
-    System.out.println(printCentroidAssignments(centroidAssignments));
     return centroidAssignments;
   }
 
-  // TODO Is this needed?
-  public String printCentroidAssignments(HashMap<Point,Integer> assignments){
+  // TODO Is this needed? <<  I just did this for our convenience; I made it private
+  //  but maybe we can delete later
+  private String printCentroidAssignments(HashMap<Point,Integer> assignments){
 
     String currentAssignment = "";
     for(Map.Entry<Point,Integer> assignment : assignments.entrySet()){

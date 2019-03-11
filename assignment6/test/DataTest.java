@@ -121,8 +121,7 @@ public class DataTest {
     dataOne.addPoint(new Point(30,50));
     dataOne.addPoint(new Point(31,51));
 
-    //dataOne.printCentroidAssignments(dataOne.kmeans(2));
-
+    dataOne.kmeans(2);
 
   }
 
@@ -131,6 +130,7 @@ public class DataTest {
   @Test
   public void readFromFile() throws IOException {
     Data testData = new Data("./data/clusterdata-2.txt");
+
   }
 
 }
