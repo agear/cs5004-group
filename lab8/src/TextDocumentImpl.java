@@ -42,6 +42,10 @@ public class TextDocumentImpl implements TextDocument {
     return this.text;
   }
 
+  //TODO Step 3 has a potential problem. What if the word is longer than the specified line width?
+  // In this case you should break the word into multiple lines (each such line except the one that
+  // has the last part of the word will end with - as is normal in such situations).
+
   /**
    * the algorithm attempts to fit as many words as possible on a line without breaking them. When
    * it runs out of space it breaks into a new line and continues this process until all the words
@@ -63,7 +67,7 @@ public class TextDocumentImpl implements TextDocument {
       w = s.next();
       //Keep track of the current Width of the line.
       int potentialWidth = currentLineWidth + w.length();
-
+      //TODO Step 3
       //If the word does not fit in the current line, add a new line character to the output and reset line width to 0.
       if (potentialWidth > columnWidth) {
         modifiedText = modifiedText + "\n" + w;
@@ -73,7 +77,7 @@ public class TextDocumentImpl implements TextDocument {
           modifiedText = modifiedText + " ";
           currentLineWidth += 1;
 
-        }
+        }//TODO New line (alice understands this.)
         //Add the word to the current line and update the length of the line.
         else {
           modifiedText = modifiedText + w;
