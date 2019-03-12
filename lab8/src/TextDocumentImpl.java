@@ -50,6 +50,46 @@ public class TextDocumentImpl implements TextDocument {
    * @return returns the wrapped version of the text in this document
    */
   public TextDocument wrap(int columnWidth) {
-    return null;
+    // Initialize an empty string that will be the TextWrapped document.
+    String modifiedText = "";
+
+    //Start at the first line.
+    //
+    //Let w = next word in the input text.
+    String w;
+    int currentLineWidth = 0;
+    Scanner s = new Scanner(this.text);
+    while (s.hasNext()) {
+      w = s.next();
+      //Keep track of the current Width of the line.
+      int potentialWidth = currentLineWidth + w.length();
+
+      //If the word does not fit in the current line, add a new line character to the output and reset line width to 0.
+      if (potentialWidth > columnWidth) {
+        modifiedText = modifiedText + "\n" + w;
+        currentLineWidth = w.length();
+        //If a space can fit in the current line then add it (and update the length of the line).
+        if (!(currentLineWidth + 1 > columnWidth)) {
+          modifiedText = modifiedText + " ";
+          currentLineWidth += 1;
+
+        }
+        //Add the word to the current line and update the length of the line.
+        else {
+          modifiedText = modifiedText + w;
+          currentLineWidth += w.length();
+          //If a space can fit in the current line then add it (and update the length of the line).
+          if (!(currentLineWidth + 1 > columnWidth)) {
+            modifiedText = modifiedText + " ";
+            currentLineWidth += 1;
+          }
+        }
+      }
+    }
+
+    //Return the processed output after removing trailing spaces if any.
+    modifiedText.trim();
+    TextDocument modifiedTextDocument = new TextDocumentImpl(modifiedText);
+    return modifiedTextDocument;
   }
 }
