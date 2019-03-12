@@ -1,13 +1,12 @@
 import org.junit.Before;
 import org.junit.Test;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.Map;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import java.util.List;
 
 public class DataTest {
 
@@ -108,29 +107,31 @@ public class DataTest {
 
 
   @org.junit.Test
-  public void kmeans() throws IOException {
+  public void kmeansMap() throws IOException {
 
     // Create a set of data made up of points and get the centroids
     Data testData = new Data("./data/clusterdata-6.txt");
-    HashMap<Point,Integer> centroidAssignments = testData.kmeans(6);
+    HashMap<Point, Integer> centroidAssignments = testData.kmeansMapOutput(6);
 
     /*
-    For the kmeans(int k) method you must test whether each point is assigned to the
+    For the kmeansMapOutput(int k) method you must test whether each point is assigned to the
     correct cluster (i.e. it is closest to the cluster to which it is assigned).
      */
 
     // For each point,
-    for (Point p : testData.getData()){
+    for (Point p : testData.getData()) {
       System.out.println("Testing point ..." + p.toString());
 
       // Get the centroid it is assigned to and this point's distance from it
       Integer centroidAssigned = centroidAssignments.get(p);
-      TreeMap<Integer,Point> clusters = testData.getClusters();
+      TreeMap<Integer, Point> clusters = testData.getClusters();
       Point centroidPoint = clusters.get(centroidAssigned);
+      //System.out.println("...Assigned to:" + centroidPoint.toString());
+
       double distanceFromCentroidAssignment = p.getDistance(centroidPoint);
 
       // Get the distance between this point and all centroids
-      for (Map.Entry<Integer,Point> centroid : clusters.entrySet()) {
+      for (Map.Entry<Integer, Point> centroid : clusters.entrySet()) {
 
         double currentDistance = p.getDistance(centroid.getValue());
 
@@ -139,6 +140,48 @@ public class DataTest {
         assertTrue(distanceFromCentroidAssignment <= currentDistance);
       }
 
+
+    }
+  }
+  @org.junit.Test
+  public void kmeansCluster6Map() throws IOException {
+
+    // Create a set of data made up of points and get the centroids
+    Data testData = new Data("./data/clusterdata-6.txt");
+    HashMap<Point,Integer> centroidAssignments = testData.kmeansMapOutput(6);
+
+    // Create a set of data made up of points and get the centroids
+    List<Integer> centroidAssignments2 = testData.kmeans(6);
+    System.out.println(centroidAssignments2.toString());
+
+    /*
+    For the kmeansMapOutput(int k) method you must test whether each point is assigned to the
+    correct cluster (i.e. it is closest to the cluster to which it is assigned).
+     */
+
+    // For each point,
+    int i = 0;
+    for (Point p : testData.getData()){
+
+      //System.out.println("xTesting point ..." + p.toString());
+
+      // Get the centroid it is assigned to and this point's distance from it
+      Integer centroidAssigned = centroidAssignments2.get(i);
+      TreeMap<Integer,Point> clusters = testData.getClusters();
+      Point centroidPoint = testData.getClusters().get(centroidAssigned);
+      //System.out.println("Assigned to:" + centroidPoint.toString());
+      double distanceFromCentroidAssignment = p.getDistance(centroidPoint);
+
+      // Get the distance between this point and all centroids
+      for (Map.Entry<Integer,Point> centroid : clusters.entrySet()) {
+        double currentDistance = p.getDistance(centroid.getValue());
+
+        // The distance between this point and any other point
+        // is greater or equal to the centroid it is assigned to...hopefully!!
+        assertTrue(distanceFromCentroidAssignment <= currentDistance);
+      }
+
+      i++;
 
     }
 
@@ -152,6 +195,46 @@ public class DataTest {
     Data testData = new Data("./data/clusterdata-2.txt");
 
   }
+
+
+  @org.junit.Test
+  public void kmeansMapCluster2() throws IOException {
+
+    // Create a set of data made up of points and get the centroids
+    Data testData = new Data("./data/clusterdata-2.txt");
+    HashMap<Point, Integer> centroidAssignments = testData.kmeansMapOutput(2);
+
+    /*
+    For the kmeansMapOutput(int k) method you must test whether each point is assigned to the
+    correct cluster (i.e. it is closest to the cluster to which it is assigned).
+     */
+
+    // For each point,
+    for (Point p : testData.getData()) {
+      System.out.println("Testing point ..." + p.toString());
+
+      // Get the centroid it is assigned to and this point's distance from it
+      Integer centroidAssigned = centroidAssignments.get(p);
+      TreeMap<Integer, Point> clusters = testData.getClusters();
+      Point centroidPoint = clusters.get(centroidAssigned);
+      //System.out.println("...Assigned to:" + centroidPoint.toString());
+
+      double distanceFromCentroidAssignment = p.getDistance(centroidPoint);
+
+      // Get the distance between this point and all centroids
+      for (Map.Entry<Integer, Point> centroid : clusters.entrySet()) {
+
+        double currentDistance = p.getDistance(centroid.getValue());
+
+        // The distance between this point and any other point
+        // is greater or equal to the centroid it is assigned to...hopefully!!
+        assertTrue(distanceFromCentroidAssignment <= currentDistance);
+      }
+
+
+    }
+  }
+
 
 }
 

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 /**
@@ -59,7 +60,6 @@ public class Data {
    *
    * @param x position of the point.
    * @param y position of the point.
-   * @throws IllegalArgumentException If the x-coordinate already exists in the data
    */
   public void addPoint(double x, double y) {
     Point datum = new Point(x, y);
@@ -68,7 +68,7 @@ public class Data {
 
 
   /**
-   * An alternative method to add a single point to the data list
+   * An alternative method to add a single point to the data list, using Point objects
    *
    * @param input the Point to add
    */
@@ -87,7 +87,7 @@ public class Data {
   }
 
   /**
-   * Returns a best-fit line.
+   * Returns a best-fit line in the format ax+by+c=0 using a List object.
    *
    * @return a line representing the best-fit of the data.
    * @throws IllegalArgumentException if there's < 2 points in the data
@@ -102,6 +102,12 @@ public class Data {
   }
 
 
+  /** Pairs up a list of data points to the centroids that each one is closest to
+   * using the Euclid distance formula.
+   *
+   * @param numCentroids The number of centroids to assign data points to
+   * @return A key,value set of the assignments
+   */
   private HashMap<Point,Integer> findClosestCentroids(int numCentroids){
 
     // Initialize cluster assignment list
@@ -113,7 +119,7 @@ public class Data {
     // Compare each data point to each cluster center
     for (int i = 0; i < numData; i++) {
 
-      // Capture datapoint
+      // Capture data point
       Point currentDataPoint = this.dataList.get(i);
 
       // Initialize variable that contains the smallest distance for this datapoint
@@ -143,11 +149,15 @@ public class Data {
   }
 
 
-  //Compute the center of each cluster by taking the average of all data points assigned
-  // to that cluster (the average of x-coordinates, the average of y-coordinates)
+  /**
+   * Compute the center of each cluster by taking the average of all data points assigned
+   * to that cluster (the average of x-coordinates, the average of y-coordinates)
+   *
+   * @param centroidAssignments The key-value pair of every point to a cluster
+   */
   private void updateClusterPoints(HashMap<Point,Integer> centroidAssignments) {
 
-    // For each centroid-
+    // For each centroid,
     for (Map.Entry<Integer,Point> entry : clusters.entrySet()) {
       Integer currentCentroid = entry.getKey();
 
@@ -183,6 +193,9 @@ public class Data {
     }
   }
 
+  /** Returns the current clusters associated with the data.
+   * @return A list of clusters and their coordinates
+   */
   public TreeMap<Integer,Point> getClusters(){
     return this.clusters;
   }
@@ -213,13 +226,12 @@ public class Data {
   }
 
   /**
-   * Performs k-means clustering on the data and returns a list of
-   * integers. The ith element of this list is the cluster number assigned to the ith data point.
-   * This list should align with the list of data points returned above.
+   * Performs k-means clustering on the data, using RANSAC
    *
-   * TODO Convert our HashMap to an indexible list as explain in the spec and return the list
+   * @param k The number of clusters
+   * @return A map of every point and its assigned cluster
    */
-  public HashMap<Point,Integer> kmeans(int k) throws IllegalArgumentException {
+  public HashMap<Point,Integer> kmeansMapOutput(int k) throws IllegalArgumentException {
 
     // Verifies that k (num clusters) is positive
     if (k < 0) {
@@ -235,7 +247,7 @@ public class Data {
     LinkedList<HashMap<Point,Integer>> assignmentList = new LinkedList<HashMap<Point,Integer>>();
 
 
-    // Do kmeans 10 times (RANSAC method)
+    // Do kmeansMapOutput 10 times (RANSAC method)
     for (int l = 0; l < 10; l++ ) {
 
       // Select k random centers
@@ -305,19 +317,41 @@ public class Data {
     return assignmentList.get(smallestErrorIndex);
   }
 
-  // TODO Is this needed? <<  I just did this for our convenience; I made it private
-  //  but maybe we can delete later
-  private String printCentroidAssignments(HashMap<Point,Integer> assignments){
 
-    String currentAssignment = "";
-    for(Map.Entry<Point,Integer> assignment : assignments.entrySet()){
-      Point currentPoint = assignment.getKey();
-      Integer currentCentroid = assignment.getValue();
-      Point currentCentroidCoordinates = clusters.get(currentCentroid);
-      currentAssignment+= "\n" + currentPoint.toString() + "is assigned to" + currentCentroidCoordinates.toString();
+  /** Uses kmeans to assign every data point to a cluster/centroid.
+   *
+   * @param k the number of clusters
+   * @return An ArrayList of cluster assignments
+   * @throws IllegalArgumentException If k is less than 2
+   */
+  public LinkedList<Integer> kmeans(int k) throws IllegalArgumentException {
+
+
+    // Do kmeans on data
+    HashMap<Point,Integer> mappedOutput = this.kmeansMapOutput(k);
+
+    // Initialize output
+    LinkedList<Integer> output = new LinkedList<>();
+
+
+    // Convert Hashmap to arraylists with just the integers
+    for (Point p : this.dataList) {
+      Integer assignedCentroid = mappedOutput.get(p);
+      output.add(assignedCentroid);
     }
-    return currentAssignment;
+
+
+//    for (Map.Entry<Point,Integer> entry : mappedOutput.entrySet()){
+//      Integer currentInt = entry.getValue();
+//      output.add(currentInt);
+//    }
+
+    // Return the list of integers that maps data to cluster assignments
+    return output;
+
   }
 
 
-}
+
+
+  }

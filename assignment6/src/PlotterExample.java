@@ -160,7 +160,7 @@ public class PlotterExample {
       // Gets data from file and initializes data variable with it
       Data testData = new Data("./data/clusterdata-2.txt");
       HashMap<Point, Integer> centroidAssignments;
-      centroidAssignments = testData.kmeans(2);
+      centroidAssignments = testData.kmeansMapOutput(2);
 
       // For each point in the data, add it to the image
       for (Point p : testData.getData()) {
@@ -206,7 +206,7 @@ public class PlotterExample {
 
       // Gets data from file and initializes data variable with it
       Data testData = new Data("./data/clusterdata-3.txt");
-      HashMap<Point, Integer> centroidAssignments = testData.kmeans(3);
+      HashMap<Point, Integer> centroidAssignments = testData.kmeansMapOutput(3);
 
       // For each point in the data, add it to the image
       for (Point p : testData.getData()) {
@@ -255,7 +255,7 @@ public class PlotterExample {
 
       // Gets data from file and initializes data variable with it
       Data testData = new Data("./data/clusterdata-4.txt");
-      HashMap<Point, Integer> centroidAssignments = testData.kmeans(4);
+      HashMap<Point, Integer> centroidAssignments = testData.kmeansMapOutput(4);
 
       // For each point in the data, add it to the image
       for (Point p : testData.getData()) {
@@ -306,7 +306,7 @@ public class PlotterExample {
 
       // Gets data from file and initializes data variable with it
       Data testData = new Data("./data/clusterdata-6.txt");
-      HashMap<Point, Integer> centroidAssignments = testData.kmeans(6);
+      HashMap<Point, Integer> centroidAssignments = testData.kmeansMapOutput(6);
 
       // For each point in the data, add it to the image
       for (Point p : testData.getData()) {
