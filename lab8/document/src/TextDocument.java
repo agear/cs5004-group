@@ -16,17 +16,17 @@ public interface TextDocument {
 
 
   /**
-   *  Returns the text in this document as a String.
+   * Returns the text in this document as a String with whatever formatting it has.
    *
    * @return the text in this document as a String
    */
   String getText();
 
 
-  /**  the algorithm attempts to fit as many words as possible on a line without
-   * breaking them. When it runs out of space it breaks into a new line and continues
+  /** Method attempts to fit as many words as possible on a line of length input without
+   * breaking them. When it runs out of space it adds a newline character and continues
    * this process until all the words have been placed.
-   * @param columnWidth
+   * @param columnWidth The max length of each line in characters
    * @return returns the wrapped version of the text in this document
    */
   TextDocument wrap(int columnWidth);
