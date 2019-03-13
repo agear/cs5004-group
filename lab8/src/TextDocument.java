@@ -1,9 +1,9 @@
 /**
  * A text document, in its simplest form, stores text as a single long sequence of characters.
  * A text document can do several operations on the text, such as:
- *    finding its word count,
- *    counting the number of lines in it
- *    word-wrapping it for viewing in a document
+ * finding its word count,
+ * counting the number of lines in it
+ * word-wrapping it for viewing in a document
  *
  */
 public interface TextDocument {

@@ -27,6 +27,7 @@ public class TextDocumentImpl implements TextDocument {
     int wordCount = 0;
     Scanner s = new Scanner(this.text);
     while (s.hasNext()) {
+      s.next();
       wordCount += 1;
     }
     s.close();
@@ -47,13 +48,14 @@ public class TextDocumentImpl implements TextDocument {
   // has the last part of the word will end with - as is normal in such situations).
 
   /**
-   * the algorithm attempts to fit as many words as possible on a line without breaking them. When
+   * The algorithm attempts to fit as many words as possible on a line without breaking them. When
    * it runs out of space it breaks into a new line and continues this process until all the words
    * have been placed.
    *
    * @return returns the wrapped version of the text in this document
    */
   public TextDocument wrap(int columnWidth) {
+    //TODO Throw exception if columnWidth is not greater than 0 and test if exception is thrown?
     // Initialize an empty string that will be the TextWrapped document.
     String modifiedText = "";
 
@@ -78,22 +80,23 @@ public class TextDocumentImpl implements TextDocument {
           currentLineWidth += 1;
 
         }//TODO New line (alice understands this.)
-        //Add the word to the current line and update the length of the line.
-        else {
-          modifiedText = modifiedText + w;
-          currentLineWidth += w.length();
-          //If a space can fit in the current line then add it (and update the length of the line).
-          if (!(currentLineWidth + 1 > columnWidth)) {
-            modifiedText = modifiedText + " ";
-            currentLineWidth += 1;
-          }
+      }
+      //Add the word to the current line and update the length of the line.
+      else {
+        modifiedText = modifiedText + w;
+        currentLineWidth += w.length();
+        //If a space can fit in the current line then add it (and update the length of the line).
+        if (!(currentLineWidth + 1 > columnWidth)) {
+          modifiedText = modifiedText + " ";
+          currentLineWidth += 1;
         }
       }
     }
-
     //Return the processed output after removing trailing spaces if any.
-    modifiedText.trim();
+    modifiedText = modifiedText.trim();
     TextDocument modifiedTextDocument = new TextDocumentImpl(modifiedText);
     return modifiedTextDocument;
   }
+
 }
+
