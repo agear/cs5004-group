@@ -83,7 +83,7 @@ public class testExpressionTree {
 
     testTree = new ExpressionTree("a b + c *");
     assertEquals(9.0, testTree.evaluate(valueMap),.001);
-    
+
 
     testTree = new ExpressionTree("a b + c d + *");
     assertEquals(36.0, testTree.evaluate(valueMap),.001);
