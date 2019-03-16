@@ -7,6 +7,7 @@ import expression.ExpressionTree;
 
 public class testExpressionTree {
 
+  public void testConstructor() {
 
   // THIS will be marked as an error because you're supposed to assert something in junit tests.
   // soooo... TODO delete this when we don't need it anymore
