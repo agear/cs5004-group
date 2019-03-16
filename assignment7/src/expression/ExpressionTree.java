@@ -13,23 +13,26 @@ public class ExpressionTree implements Expression {
   // TODO make sure the fact that this is private doesnt fuck anything up
   private TreeNode rootNode;
 
-  /** There are four valid binary operators for this assignment, + - / *.
-   * This returns true if the input is one of those, false otherwise.
+  /**
+   * There are four valid binary operators for this assignment, + - / *. This returns true if the
+   * input is one of those, false otherwise.
    *
    * @param input the questionable operator
    * @return true if valid, false otherwise
    */
-  private boolean isOperator(String input){
+  private boolean isOperator(String input) {
+    // TODO Can this be converted to: "return (input.equals("+") || input.equals("/") ||
+    //            input.equals("*") || input.equals("-")"?
     if (input.equals("+") || input.equals("/") ||
-            input.equals("*") || input.equals("-") ) {
+            input.equals("*") || input.equals("-")) {
       return true;
     }
     return false;
   }
 
 
-
-  /** Constructs an Expression tree. The input is in postfix form.
+  /**
+   * Constructs an Expression tree. The input is in postfix form.
    *
    * @param input Postfix format of an expression
    * @throws IllegalArgumentException When the input is invalid
@@ -52,11 +55,11 @@ public class ExpressionTree implements Expression {
 
 
     // While the scanner has more in it,
-    while (tokenList.hasNext()){
+    while (tokenList.hasNext()) {
       String token = tokenList.next();
 
       // If it is an operand, push it onto the stack
-      if (!isOperator(token)){
+      if (!isOperator(token)) {
 
         stackOfTokens.push(token);
 
@@ -71,7 +74,7 @@ public class ExpressionTree implements Expression {
           throw new IllegalArgumentException("Failure: Not enough operands.");
         }
         right = stackOfTokens.pop();
-        if(stackOfTokens.empty()) {
+        if (stackOfTokens.empty()) {
           throw new IllegalArgumentException("Failure: Not enough operands.");
         }
         left = stackOfTokens.pop();

@@ -10,7 +10,12 @@ public class testExpressionTree {
 
   @Test
   public void testA(){
-    ExpressionTree testTree = new ExpressionTree("1 2 +");
+    ExpressionTree testTreeAdd = new ExpressionTree("1 2 +");
+    ExpressionTree testTreeMult = new ExpressionTree("2 3 *");
+    ExpressionTree testTreeSub = new ExpressionTree("2 3 -");
+    ExpressionTree testTreeDiv = new ExpressionTree("6 3 /");
+
+
     HashMap<String,Double> valueMap = new HashMap<>();
     valueMap.put("a",1.0);
     valueMap.put("b",2.0);
@@ -18,7 +23,13 @@ public class testExpressionTree {
     valueMap.put("d",4.0);
 
 
-    assertEquals(3.0, testTree.evaluate(valueMap), .001);
+    assertEquals(3.0, testTreeAdd.evaluate(valueMap), .001);
+    assertEquals(6.0, testTreeMult.evaluate(valueMap), .001);
+    assertEquals(-1.0, testTreeSub.evaluate(valueMap), .001);
+    assertEquals(2.0, testTreeDiv.evaluate(valueMap), .001);
+
+
+
   }
 
 

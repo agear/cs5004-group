@@ -43,7 +43,8 @@ public class Operator implements TreeNode  {
 
   }
 
-  //TODO decide how to make this private probably
+  //TODO decide how to make this private probably... From piazza: "the nodes can have public methods
+  // but you can't have separate public methods inside ExpressionTree itself"
   public double solve(){
     double leftSolved = this.left.solve();
     double rightSolved = this.right.solve();
