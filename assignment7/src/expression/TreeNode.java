@@ -13,5 +13,5 @@ public interface TreeNode {
    */
   double solve();
 
-
+  String getData();
 }

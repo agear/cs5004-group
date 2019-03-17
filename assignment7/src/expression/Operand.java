@@ -20,5 +20,6 @@ public class Operand implements TreeNode {
 
   }
 
+  public String getData() { return this.data; }
 
 }

@@ -52,4 +52,6 @@ public class Operator implements TreeNode  {
 
   }
 
+  public String getData() { return this.data; }
+
 }

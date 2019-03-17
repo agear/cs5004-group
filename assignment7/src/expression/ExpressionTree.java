@@ -14,24 +14,6 @@ public class ExpressionTree implements Expression {
   private TreeNode rootNode;
 
   /**
-   * There are four valid binary operators for this assignment, + - / *. This returns true if the
-   * input is one of those, false otherwise.
-   *
-   * @param input the questionable operator
-   * @return true if valid, false otherwise
-   */
-  private boolean isOperator(String input) {
-    // TODO Can this be converted to: "return (input.equals("+") || input.equals("/") ||
-    //            input.equals("*") || input.equals("-")"?
-    if (input.equals("+") || input.equals("/") ||
-            input.equals("*") || input.equals("-")) {
-      return true;
-    }
-    return false;
-  }
-
-
-  /**
    * Constructs an Expression tree. The input is in postfix form.
    *
    * @param input Postfix format of an expression
@@ -45,24 +27,27 @@ public class ExpressionTree implements Expression {
 
     // Initialize stack of data and useful variables for stack manipulation
     // Since the "data" field of all nodes is a string, that's why we're using strings here
-    Stack<String> stackOfTokens = new Stack<>();
-    String left;
-    String right;
+    Stack<TreeNode> stackOfNodes = new Stack<>();
+    TreeNode leftNode;
+    TreeNode rightNode;
 
     // This has to be initialized or else an error is made
     // TODO should we have a dummy "uninitialized" rootNode? smth to think about....
-    TreeNode rootNode = new Operand("Test");
+    // TODO I'm not sure this is necessary...
+    //TreeNode rootNode = new Operand("Test");
 
-
+    // TODO Remove debugging print statements..
     // While the scanner has more in it,
     while (tokenList.hasNext()) {
       String token = tokenList.next();
 
-      // If it is an operand, push it onto the stack
+      // If it is an operand, make an operand node and push it to the stack
       if (!isOperator(token)) {
 
-        stackOfTokens.push(token);
+        TreeNode operand = new Operand(token);
 
+        stackOfNodes.push(operand);
+        System.out.println("Pushing " + operand.getData());
       }
 
       // If it is an operator, create the node
@@ -70,39 +55,56 @@ public class ExpressionTree implements Expression {
 
         // Pops the two top-most operands which will be the children of the current operator.
         // Throw an error if those two operands never existed
-        if (stackOfTokens.empty()) {
+        if (stackOfNodes.empty()) {
           throw new IllegalArgumentException("Failure: Not enough operands.");
         }
-        right = stackOfTokens.pop();
-        if (stackOfTokens.empty()) {
+        // TODO Did Vido just completely confuse me or should this be the other way around? Or does
+        //  it even matter?
+        rightNode = stackOfNodes.pop();
+        System.out.println("Popping " + rightNode.getData());
+        if (stackOfNodes.empty()) {
           throw new IllegalArgumentException("Failure: Not enough operands.");
         }
-        left = stackOfTokens.pop();
+        leftNode = stackOfNodes.pop();
+        System.out.println("Popping " + leftNode.getData());
 
-        // Create the node using the items from the stack
-        TreeNode rightNode = new Operand(right);
-        TreeNode leftNode = new Operand(left);
-        TreeNode newNode = new Operator(token, leftNode, rightNode);
+        // Create the operator node using the items from the stack
+        TreeNode operator = new Operator(token, leftNode, rightNode);
 
-        // TODO this is where I stopped....
-        // TODO  I think the root node will end up being the very last thing on the stack
-        // TODO but havent thought about how that will work in implementation (basically translating
-        // TODO last assignment where last thing on stack was a double to be returned)
-        rootNode = newNode;
-        // TODO so that line ^ works for just one operator (e.g., "1 2 +")
-
+        //Push newNode to the stack
+        stackOfNodes.push(operator);
+        System.out.println("Pushing " + operator.getData());
 
       }
 
 
     }
-
-    // TODO  I think the root node will end up being the very last thing on the stack
-    this.rootNode = rootNode;
+    this.rootNode = stackOfNodes.pop();
+    System.out.println("Root node = " + this.rootNode.getData());
 
 
   }
 
+
+  /**
+   * There are four valid binary operators for this assignment, + - / *. This returns true if the
+   * input is one of those, false otherwise.
+   *
+   * @param input the questionable operator
+   * @return true if valid, false otherwise
+   */
+  private boolean isOperator(String input) {
+    // TODO Can this be converted to:
+    //
+    return (input.equals("+") || input.equals("/") || input.equals("*") || input.equals("-"));
+  }
+
+  //    if (input.equals("+") || input.equals("/") ||
+//            input.equals("*") || input.equals("-")) {
+//      return true;
+//    }
+//    return false;
+//  }
 
   /**
    * @return TODO add javadoc

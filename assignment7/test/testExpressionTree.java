@@ -1,37 +1,40 @@
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
+
 import java.util.HashMap;
 
-import expression.Expression;
 import expression.ExpressionTree;
+
+import static org.junit.Assert.assertEquals;
 
 public class testExpressionTree {
 
 
   @Test
-  public void testA(){
+  public void testA() {
     ExpressionTree testTreeAdd = new ExpressionTree("1 2 +");
     ExpressionTree testTreeMult = new ExpressionTree("2 3 *");
     ExpressionTree testTreeSub = new ExpressionTree("2 3 -");
     ExpressionTree testTreeDiv = new ExpressionTree("6 3 /");
+    ExpressionTree testLongerExpression = new ExpressionTree("4 5 6 * +");
 
 
-    HashMap<String,Double> valueMap = new HashMap<>();
-    valueMap.put("a",1.0);
-    valueMap.put("b",2.0);
-    valueMap.put("c",3.0);
-    valueMap.put("d",4.0);
+    HashMap<String, Double> valueMap = new HashMap<>();
+    valueMap.put("a", 1.0);
+    valueMap.put("b", 2.0);
+    valueMap.put("c", 3.0);
+    valueMap.put("d", 4.0);
 
 
     assertEquals(3.0, testTreeAdd.evaluate(valueMap), .001);
     assertEquals(6.0, testTreeMult.evaluate(valueMap), .001);
     assertEquals(-1.0, testTreeSub.evaluate(valueMap), .001);
     assertEquals(2.0, testTreeDiv.evaluate(valueMap), .001);
-
+    assertEquals(34, testLongerExpression.evaluate(valueMap), .001);
 
 
   }
 
+  //TODO Test that invalid expressions throw execeptions.
 
 
 //  public void testConstructor() {
@@ -120,7 +123,6 @@ public class testExpressionTree {
 //
 //  }
 //
-
 
 
 }
