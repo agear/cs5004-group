@@ -14,4 +14,8 @@ public interface TreeNode {
   double solve();
 
   String getData();
+
+  String infix();
+
+  String schemeExpression();
 }

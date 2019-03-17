@@ -22,4 +22,8 @@ public class Operand implements TreeNode {
 
   public String getData() { return this.data; }
 
+  public String infix() { return this.data; }
+
+  public String schemeExpression() { return this.data; }
+
 }

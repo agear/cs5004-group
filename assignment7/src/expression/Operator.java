@@ -54,4 +54,11 @@ public class Operator implements TreeNode  {
 
   public String getData() { return this.data; }
 
+  public String infix() {
+    return "( " + this.left.infix() + " " + this.data + " " + this.right.infix() + " )";
+  }
+
+  public String schemeExpression() {
+    return "(" + this.data + " " + this.left.schemeExpression() + " " + this.right.schemeExpression() + ")";
+  }
 }

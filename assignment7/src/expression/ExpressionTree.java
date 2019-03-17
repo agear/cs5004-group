@@ -111,7 +111,7 @@ public class ExpressionTree implements Expression {
    */
   @Override
   public String infix() {
-    return null;
+    return this.rootNode.infix();
   }
 
   /**
@@ -138,6 +138,6 @@ public class ExpressionTree implements Expression {
    */
   @Override
   public String schemeExpression() {
-    return null;
+    return this.rootNode.schemeExpression();
   }
 }

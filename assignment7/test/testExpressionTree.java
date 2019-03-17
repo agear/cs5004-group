@@ -36,7 +36,32 @@ public class testExpressionTree {
 
   //TODO Test that invalid expressions throw execeptions.
 
+  @Test
+  public void testInfix() {
+    ExpressionTree testInfix1 = new ExpressionTree("a b +");
+    ExpressionTree testInfix2 = new ExpressionTree("a b c * +");
+    ExpressionTree testInfix3 = new ExpressionTree("a b + c *");
+    ExpressionTree testInfix4 = new ExpressionTree("a b + c d + *");
 
+    assertEquals("( a + b )", testInfix1.infix());
+    assertEquals("( a + ( b * c ) )", testInfix2.infix());
+    assertEquals("( ( a + b ) * c )", testInfix3.infix());
+    assertEquals("( ( a + b ) * ( c + d ) )", testInfix4.infix());
+  }
+
+
+  @Test
+  public void testSchemeExpression() {
+    ExpressionTree testScheme1 = new ExpressionTree("1 3 2 * -");
+    ExpressionTree testScheme2 = new ExpressionTree("a b + c d + *");
+    ExpressionTree testScheme3 = new ExpressionTree("1 2 - 3 + 4 -");
+
+    assertEquals("( 1 - ( 3 * 2 ) )", testScheme1.infix());
+    assertEquals("(- 1 (* 3 2))", testScheme1.schemeExpression());
+    assertEquals("(* (+ a b) (+ c d))", testScheme2.schemeExpression());
+    assertEquals("(- (+ (- 1 2) 3) 4)", testScheme3.schemeExpression());
+
+  }
 //  public void testConstructor() {
 //
 //  // THIS will be marked as an error because you're supposed to assert something in junit tests.
