@@ -43,6 +43,6 @@ public class Leaf implements BSTNode {
    */
   @Override
   public int minimum() {
-    return 0;
+    return this.data;
   }
 }
