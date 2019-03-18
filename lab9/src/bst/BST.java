@@ -9,14 +9,14 @@ public interface BST {
    *
    * @param obj  The object to put in the tree
    */
-  public void add(int obj);
+  public void add(Integer obj);
 
 
   /** Counts the number of objects in this data structre.
    *
    * @return the number of objects
    */
-  public int getSize();
+  public Integer getSize();
 
 
   /** Iterates through the tree attempting to find the specified object.
@@ -24,7 +24,7 @@ public interface BST {
    * @param obj the object to find
    * @return true if object is in the tree, false otherwise
    */
-  public boolean present(int obj);
+  public boolean present(Integer obj);
 
 
   /** Returns the smallest object (defined by the ordering) in the tree,
@@ -32,5 +32,5 @@ public interface BST {
    *
    * @return the smallest object or null
    */
-  public int minimum();
+  public Integer minimum();
 }
