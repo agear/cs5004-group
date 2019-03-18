@@ -3,7 +3,7 @@ package bst;
 public class Leaf implements BSTNode {
 
   private int data;
-  
+
   /**
    * Inserts an object in the tree.
    *
