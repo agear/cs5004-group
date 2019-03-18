@@ -106,7 +106,7 @@ private BSTNode right;
    */
   @Override
   public int minimum() {
-    return 0;
+    return this.left.minimum();
   }
 
 
