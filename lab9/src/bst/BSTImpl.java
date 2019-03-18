@@ -6,8 +6,15 @@ package bst;
  */
 public class BSTImpl implements BST {
 
-  private
+  private Integer root;
 
+
+  /**
+   * Creates an empty BST.
+   */
+  public BSTImpl(){
+    // Does nothing
+  }
 
   /**
    * Adds a comparable object to the tree in its proper place.
@@ -15,7 +22,15 @@ public class BSTImpl implements BST {
    * @param obj The object to put in the tree
    */
   @Override
-  public void add(int obj) {
+  public void add(Integer obj) {
+
+    // If the tree is empty, this object is the root node
+    if (this.root == null) {
+      this.root = obj;
+      return;
+    }
+
+    this.root.add(obj);
 
   }
 
@@ -25,8 +40,14 @@ public class BSTImpl implements BST {
    * @return the number of objects
    */
   @Override
-  public int getSize() {
-    return 0;
+  public Integer getSize() {
+
+    // If the tree is empty, the tree is empty
+    if (this.root == null) {
+      return 0;
+    }
+
+    return this.root.getSize();
   }
 
   /**
@@ -36,8 +57,14 @@ public class BSTImpl implements BST {
    * @return true if object is in the tree, false otherwise
    */
   @Override
-  public boolean present(int obj) {
-    return false;
+  public boolean present(v obj) {
+
+    // If the tree is empty, the object is not in it
+    if (this.root == null) {
+      return false;
+    }
+
+    return this.root.present();
   }
 
   /** Returns the smallest object (defined by the ordering) in the tree,
@@ -46,7 +73,13 @@ public class BSTImpl implements BST {
    * @return the smallest object or null
    */
   @Override
-  public int minimum() {
-    return 0;
+  public Integer minimum() {
+
+    // If the tree is empty, there is no minnimum
+    if (this.root == null) {
+      return null;
+    }
+
+    return this.root.minimum();
   }
 }
