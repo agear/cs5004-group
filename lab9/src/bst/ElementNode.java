@@ -20,6 +20,10 @@ private BSTNode right;
 
   }
 
+  public Integer getData() {
+    return this.data;
+  }
+
   /**
    * Inserts an object in the tree.
    *
@@ -27,6 +31,8 @@ private BSTNode right;
    */
   @Override
   public BSTNode add(Integer object) {
+
+    System.out.println("Adding a node: " + object);
 
     // If object is less than current node, add to left
     if (object < this.data) {
@@ -110,9 +116,24 @@ private BSTNode right;
   }
 
 
-
+  @Override
   public String toString(){
-    return " " + this.data.toString() + this.left.toString() + this.right.toString();
+
+    if (this.left != null && this.right != null){
+      return " !!"+ this.data.toString() + this.left.toString() + this.right.toString();
+
+    }
+
+    else if ( this.left != null  ) {
+      return " _" + this.data.toString() + this.left.toString() ;
+
+    }
+
+    else {
+      return " ?" + this.data.toString();
+    }
+
+//  return "HELLO";
   }
 
 }

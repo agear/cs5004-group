@@ -21,6 +21,8 @@ public class Leaf implements BSTNode {
   @Override
   public BSTNode add(Integer object) {
 
+    System.out.println("Attempting to add " + object);
+
     if (object < this.data) {
       // Put the new object below
       BSTNode newNode = new Leaf(object);
@@ -70,7 +72,14 @@ public class Leaf implements BSTNode {
   }
 
 
+  @Override
   public String toString(){
-    return " " + this.data.toString();
+  return "HELLO";
+//    return "?? " + this.data.toString();
+  }
+
+
+  public Integer getData(){
+    return this.data;
   }
 }

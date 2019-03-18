@@ -39,4 +39,7 @@ public interface BST {
 
   public Integer minimum();
 
+  @Override
+  String toString();
+
 }

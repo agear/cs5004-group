@@ -33,4 +33,9 @@ public interface BSTNode {
    */
   int minimum();
 
+
+  Integer getData();
+
+  @Override
+  String toString();
 }

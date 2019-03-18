@@ -27,12 +27,14 @@ public class BSTImpl implements BST {
 
     // If the tree is empty, this object is the root node
     if (this.root == null) {
+      System.out.println("New root nodE!!!!!");
       BSTNode newNode = new Leaf(obj);
       this.root = newNode;
+      System.out.println("The root now is: " + this.root.getData());
       return;
     }
 
-    this.root.add(obj);
+    this.root = this.root.add(obj);
 
   }
 
@@ -86,7 +88,7 @@ public class BSTImpl implements BST {
     return this.root.minimum();
   }
 
-
+  @Override
   public String toString() {
     return this.root.toString();
   }
