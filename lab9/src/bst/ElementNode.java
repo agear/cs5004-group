@@ -2,9 +2,23 @@ package bst;
 
 public class ElementNode implements BSTNode {
 
-private int data;
+private Integer data;
 private BSTNode left;
 private BSTNode right;
+
+
+  /** TODO add this lol
+   * @param data
+   * @param left
+   * @param right
+   */
+  public ElementNode(int data, BSTNode left, BSTNode right){
+
+    this.data = data;
+    this.left = left;
+    this.right = right;
+
+  }
 
   /**
    * Inserts an object in the tree.
@@ -12,7 +26,47 @@ private BSTNode right;
    * @param object to insert
    */
   @Override
-  public void add(int object) {
+  public BSTNode add(Integer object) {
+
+    // If object is less than current node, add to left
+    if (object < this.data) {
+
+      // If left exists, add it over there
+      if (this.left != null ) {
+        this.left = this.left.add(object);
+        return this.left;
+      }
+
+      // If left doesn't exist, make a new leaf and
+      // put the object as this node's left child
+      else {
+        BSTNode newNode = new Leaf(object);
+        this.left = newNode;
+        return this.left;
+      }
+
+    }
+
+    // If we are adding something already in the tree, do nothing
+    if (this.data == object ) {
+      return this;
+    }
+
+    // Else, add to right
+    else {
+
+      if (this.left != null ) {
+        this.right = this.right.add(object);
+        return this.right;
+      }
+
+      else {
+        BSTNode newNode = new Leaf(object);
+        this.right = newNode;
+        return this.right;
+      }
+
+    }
 
   }
 
@@ -54,4 +108,11 @@ private BSTNode right;
   public int minimum() {
     return 0;
   }
+
+
+
+  public String toString(){
+    return " " + this.data.toString() + this.left.toString() + this.right.toString();
+  }
+
 }

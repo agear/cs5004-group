@@ -2,7 +2,16 @@ package bst;
 
 public class Leaf implements BSTNode {
 
-  private int data;
+  private Integer data;
+
+
+  /**
+   * @param data TODO add
+   */
+  public Leaf(int data){
+    this.data = data;
+  }
+
 
   /**
    * Inserts an object in the tree.
@@ -10,7 +19,21 @@ public class Leaf implements BSTNode {
    * @param object to insert
    */
   @Override
-  public void add(int object) {
+  public BSTNode add(Integer object) {
+
+    if (object < this.data) {
+      // Put the new object below
+      BSTNode newNode = new Leaf(object);
+      BSTNode convertedLead = new ElementNode(this.data, newNode, null);
+      return convertedLead;
+    }
+
+    else {
+      // Put the new object below
+      BSTNode newNode = new Leaf(object);
+      BSTNode convertedLead = new ElementNode(this.data, null, newNode);
+      return convertedLead;
+    }
 
   }
 
@@ -44,5 +67,10 @@ public class Leaf implements BSTNode {
   @Override
   public int minimum() {
     return 0;
+  }
+
+
+  public String toString(){
+    return " " + this.data.toString();
   }
 }

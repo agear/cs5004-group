@@ -7,7 +7,7 @@ public interface BSTNode {
    *
    * @param object to insert
    */
-  void add(int object);
+  BSTNode add(Integer object);
 
   /**
    * Return the size of this tree (i.e. the number of elements in this tree.

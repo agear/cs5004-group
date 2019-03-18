@@ -6,7 +6,7 @@ package bst;
  */
 public class BSTImpl implements BST {
 
-  private Integer root;
+  private BSTNode root;
 
 
   /**
@@ -24,9 +24,11 @@ public class BSTImpl implements BST {
   @Override
   public void add(Integer obj) {
 
+
     // If the tree is empty, this object is the root node
     if (this.root == null) {
-      this.root = obj;
+      BSTNode newNode = new Leaf(obj);
+      this.root = newNode;
       return;
     }
 
@@ -48,6 +50,7 @@ public class BSTImpl implements BST {
     }
 
     return this.root.getSize();
+
   }
 
   /**
@@ -57,14 +60,14 @@ public class BSTImpl implements BST {
    * @return true if object is in the tree, false otherwise
    */
   @Override
-  public boolean present(v obj) {
+  public boolean present(Integer obj) {
 
     // If the tree is empty, the object is not in it
     if (this.root == null) {
       return false;
     }
 
-    return this.root.present();
+    return this.root.present(obj);
   }
 
   /** Returns the smallest object (defined by the ordering) in the tree,
@@ -75,11 +78,16 @@ public class BSTImpl implements BST {
   @Override
   public Integer minimum() {
 
-    // If the tree is empty, there is no minnimum
+    // If the tree is empty, there is no minimum
     if (this.root == null) {
       return null;
     }
 
     return this.root.minimum();
+  }
+
+
+  public String toString() {
+    return this.root.toString();
   }
 }
