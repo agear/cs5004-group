@@ -4,7 +4,7 @@ public class ElementNode implements BSTNode {
 
 private int data;
 private BSTNode left;
-private BSTNode Right;
+private BSTNode right;
 
   /**
    * Inserts an object in the tree.
@@ -23,7 +23,9 @@ private BSTNode Right;
    */
   @Override
   public int getSize() {
-    return 0;
+    int sum = left.getSize();
+    sum += right.getSize();
+    return 1 + sum;
   }
 
   /**
@@ -33,7 +35,12 @@ private BSTNode Right;
    */
   @Override
   public boolean present(int present) {
-    return false;
+    if (this.data == present) {
+      return true;
+    }
+    else {
+      return (this.left.present(present) | this.right.present(present));
+    }
   }
 
   /**

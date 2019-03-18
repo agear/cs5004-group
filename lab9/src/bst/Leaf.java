@@ -21,7 +21,7 @@ public class Leaf implements BSTNode {
    */
   @Override
   public int getSize() {
-    return 0;
+    return 1;
   }
 
   /**
@@ -31,7 +31,7 @@ public class Leaf implements BSTNode {
    */
   @Override
   public boolean present(int present) {
-    return false;
+    return (this.data == present);
   }
 
   /**
