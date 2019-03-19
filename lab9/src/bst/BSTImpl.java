@@ -23,9 +23,9 @@ public class BSTImpl implements BST {
    */
   @Override
   public void add(Integer obj) {
+    System.out.println("Trying to add " + obj);
 
-
-    // If the tree is empty, this object is the root node
+    // If the tree is empty, this object is the root node.
     if (this.root == null) {
       System.out.println("New root nodE!!!!!");
       BSTNode newNode = new Leaf(obj);
@@ -33,9 +33,15 @@ public class BSTImpl implements BST {
       System.out.println("The root now is: " + this.root.getData());
       return;
     }
-
+    // If the tree already contains the node, do nothing.
+    if (this.root.present(obj)) {
+      System.out.println(obj + " is already in the tree!");
+      return;
+    }
+    System.out.println("Made it this far...");
     this.root = this.root.add(obj);
-
+    System.out.println("!!!The root is now: " + this.root.getData());
+    return;
   }
 
   /**

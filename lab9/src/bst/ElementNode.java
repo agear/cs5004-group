@@ -12,7 +12,7 @@ private BSTNode right;
    * @param left
    * @param right
    */
-  public ElementNode(int data, BSTNode left, BSTNode right){
+  public ElementNode(Integer data, BSTNode left, BSTNode right) {
 
     this.data = data;
     this.left = left;
@@ -41,7 +41,8 @@ private BSTNode right;
       if (this.left != null ) {
         System.out.println("Going left <<<");
         this.left = this.left.add(object);
-        return this.left;
+        //return this.left;
+        return this;
       }
 
       // If left doesn't exist, make a new leaf and
@@ -49,7 +50,8 @@ private BSTNode right;
       else {
         BSTNode newNode = new Leaf(object);
         this.left = newNode;
-        return this.left;
+        //return this.left;
+        return this;
       }
 
     }
@@ -64,14 +66,17 @@ private BSTNode right;
 
       if (this.right != null ) {
         System.out.println("Going right>>>");
-        this.right = this.right.add(object);
-        return this.right;
+//        this.right = this.right.add(object);
+//        return this.right;
+        this.right.add(object);
+        return this;
       }
 
       else {
         BSTNode newNode = new Leaf(object);
         this.right = newNode;
-        return this.right;
+//        return this.right;
+        return this;
       }
 
     }
@@ -84,7 +89,7 @@ private BSTNode right;
    * @return the the number of elements in this tree.
    */
   @Override
-  public int getSize() {
+  public Integer getSize() {
 
     // TODO figure out why this isn't working....
     // Return the size of this plus the size of the right and left sub BSTs.
@@ -108,14 +113,16 @@ private BSTNode right;
    * @param present@return true if this object is present in the tree, false otherwise.
    */
   @Override
-  public boolean present(int present) {
-    if (this.data == present) {
+  public boolean present(Integer present) {
+    if (this.data.equals(present)) {
       return true;
     }
-    //TODO fix for null leafs...
-    else {
+    else if (this.left != null && this.right != null){
       return (this.left.present(present) | this.right.present(present));
     }
+    else if (this.left!= null) { return this.left.present(present);}
+    else if (this.right!= null) { return this.right.present(present);}
+    else { return false; }
   }
 
   /**
@@ -126,7 +133,7 @@ private BSTNode right;
    * empty.
    */
   @Override
-  public int minimum() {
+  public Integer minimum() {
     if (this.left != null) {
       return this.left.minimum();
     }
@@ -140,20 +147,27 @@ private BSTNode right;
   public String toString(){
 
     if (this.left != null && this.right != null){
-      return " !!"+ this.data.toString() + this.left.toString() + this.right.toString();
+      return " !!"+ this.data//.toString()
+              + this.left.toString() + this.right.toString();
 
     }
 
     else if ( this.left != null  ) {
-      return " _" + this.data.toString() + this.left.toString() ;
+      return " _" + this.data//.toString()
+              + this.left.toString() ;
 
     }
 
+    else if ( this.right != null ) {
+      return " _" + this.data + this.right.toString();
+    }
+
     else {
-      return " ?" + this.data.toString();
+      return " ?" + this.data;//.toString();
     }
 
 //  return "HELLO";
   }
 
+  public Integer getRight() { return this.right.getData(); }
 }

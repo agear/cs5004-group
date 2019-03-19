@@ -14,7 +14,7 @@ public interface BSTNode {
    *
    * @return the the number of elements in this tree.
    */
-  int getSize();
+  Integer getSize();
 
   /**
    * Returns true if this object is present in the tree, false otherwise.
@@ -22,7 +22,7 @@ public interface BSTNode {
    * @param present, the object to search for.
    * @return true if this object is present in the tree, false otherwise.
    */
-  boolean present(int present);
+  boolean present(Integer present);
 
   /**
    * Returns the smallest object (defined by the ordering) in the tree, and null if the tree is
@@ -31,11 +31,13 @@ public interface BSTNode {
    * @return the smallest object (defined by the ordering) in the tree, and null if the tree is
    * empty.
    */
-  int minimum();
+  Integer minimum();
 
 
   Integer getData();
 
   @Override
   String toString();
+
+  Integer getRight();
 }

@@ -8,7 +8,7 @@ public class Leaf implements BSTNode {
   /**
    * @param data TODO add
    */
-  public Leaf(int data){
+  public Leaf(Integer data){
     this.data = data;
   }
 
@@ -22,20 +22,24 @@ public class Leaf implements BSTNode {
   public BSTNode add(Integer object) {
 
     System.out.println("Attempting to add " + object);
+    BSTNode newNode = new Leaf(object);
 
     if (object < this.data) {
-      // Put the new object below
-      System.out.println("Adding " + object + " left... <-");
-      BSTNode newNode = new Leaf(object);
+      // Put the new object below to the left.
+      System.out.println("Adding " + newNode.getData() + " left... <-");
+      //BSTNode newNode = new Leaf(object);
       BSTNode convertedLead = new ElementNode(this.data, newNode, null);
       return convertedLead;
     }
 
     else {
-      // Put the new object below
-      System.out.println("Adding " + object + " right ->");
-      BSTNode newNode = new Leaf(object);
+      // Put the new object below to the right.
+      System.out.println("Adding " + newNode.getData() + " right ->");
+      //BSTNode newNode = new Leaf(object);
       BSTNode convertedLead = new ElementNode(this.data, null, newNode);
+      System.out.println("New node = " + newNode.getData());
+      System.out.println("ConvertedLead = " + convertedLead.getData());
+      System.out.println("New right = " + convertedLead.getRight());
       return convertedLead;
     }
 
@@ -47,8 +51,8 @@ public class Leaf implements BSTNode {
    * @return the the number of elements in this tree.
    */
   @Override
-  public int getSize() {
-    System.out.println("Counting Leaf 1");
+  public Integer getSize() {
+    System.out.println("Counting Leaf " + this.data);
     return 1;
   }
 
@@ -58,8 +62,8 @@ public class Leaf implements BSTNode {
    * @param present@return true if this object is present in the tree, false otherwise.
    */
   @Override
-  public boolean present(int present) {
-    return (this.data == present);
+  public boolean present(Integer present) {
+    return (this.data.equals(present));
   }
 
   /**
@@ -70,7 +74,7 @@ public class Leaf implements BSTNode {
    * empty.
    */
   @Override
-  public int minimum() {
+  public Integer minimum() {
     return this.data;
   }
 
@@ -78,11 +82,13 @@ public class Leaf implements BSTNode {
   @Override
   public String toString(){
   //return "HELLO";
-  return "?? " + this.data.toString();
+  return "?? " + this.data;//.toString();
   }
 
 
   public Integer getData(){
     return this.data;
   }
+
+  public Integer getRight() {return null;}
 }
