@@ -39,6 +39,7 @@ private BSTNode right;
 
       // If left exists, add it over there
       if (this.left != null ) {
+        System.out.println("Going left <<<");
         this.left = this.left.add(object);
         return this.left;
       }
@@ -52,16 +53,17 @@ private BSTNode right;
       }
 
     }
-
+    // TODO can we use present() for this? Maybe in BSTImpl...
     // If we are adding something already in the tree, do nothing
-    if (this.data == object ) {
-      return this;
-    }
+//    if (this.data == object ) {
+//      return this;
+//    }
 
     // Else, add to right
     else {
 
-      if (this.left != null ) {
+      if (this.right != null ) {
+        System.out.println("Going right>>>");
         this.right = this.right.add(object);
         return this.right;
       }
@@ -83,9 +85,21 @@ private BSTNode right;
    */
   @Override
   public int getSize() {
-    int sum = left.getSize();
-    sum += right.getSize();
-    return 1 + sum;
+
+    // TODO figure out why this isn't working....
+    // Return the size of this plus the size of the right and left sub BSTs.
+    if (this.left != null && this.right != null) {
+      System.out.println("Counting left & right");
+      return this.left.getSize() + this.right.getSize() + 1;}
+    else if (this.left != null) {
+      System.out.println("Counting left");
+      return this.left.getSize() + 1; }
+    else if (this.right != null) {
+      System.out.println("Counting right");
+      return this.right.getSize() + 1; }
+    else {
+      System.out.println("Counting 1");
+      return 1; }
   }
 
   /**
@@ -98,6 +112,7 @@ private BSTNode right;
     if (this.data == present) {
       return true;
     }
+    //TODO fix for null leafs...
     else {
       return (this.left.present(present) | this.right.present(present));
     }
@@ -112,7 +127,12 @@ private BSTNode right;
    */
   @Override
   public int minimum() {
-    return this.left.minimum();
+    if (this.left != null) {
+      return this.left.minimum();
+    }
+    else {
+      return this.data;
+    }
   }
 
 

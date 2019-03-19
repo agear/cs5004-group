@@ -25,6 +25,7 @@ public class Leaf implements BSTNode {
 
     if (object < this.data) {
       // Put the new object below
+      System.out.println("Adding " + object + " left... <-");
       BSTNode newNode = new Leaf(object);
       BSTNode convertedLead = new ElementNode(this.data, newNode, null);
       return convertedLead;
@@ -32,6 +33,7 @@ public class Leaf implements BSTNode {
 
     else {
       // Put the new object below
+      System.out.println("Adding " + object + " right ->");
       BSTNode newNode = new Leaf(object);
       BSTNode convertedLead = new ElementNode(this.data, null, newNode);
       return convertedLead;
@@ -46,6 +48,7 @@ public class Leaf implements BSTNode {
    */
   @Override
   public int getSize() {
+    System.out.println("Counting Leaf 1");
     return 1;
   }
 
@@ -74,8 +77,8 @@ public class Leaf implements BSTNode {
 
   @Override
   public String toString(){
-  return "HELLO";
-//    return "?? " + this.data.toString();
+  //return "HELLO";
+  return "?? " + this.data.toString();
   }
 
 
