@@ -21,21 +21,19 @@ public class Leaf implements BSTNode {
   @Override
   public BSTNode add(Integer object) {
 
-    System.out.println("Attempting to add " + object);
+    System.out.println("Entered leaf node [" + this.data + "] with this input: " + object);
     BSTNode newNode = new Leaf(object);
 
     if (object < this.data) {
       // Put the new object below to the left.
-      System.out.println("Adding " + newNode.getData() + " left... <-");
-      //BSTNode newNode = new Leaf(object);
+      System.out.println("Input is less than this node. Adding left: " + newNode.getData());
       BSTNode convertedLead = new ElementNode(this.data, newNode, null);
       return convertedLead;
     }
 
     else {
       // Put the new object below to the right.
-      System.out.println("Adding " + newNode.getData() + " right ->");
-      //BSTNode newNode = new Leaf(object);
+      System.out.println("Input is more than this node. Adding right: " + newNode.getData());
       BSTNode convertedLead = new ElementNode(this.data, null, newNode);
       System.out.println("New node = " + newNode.getData());
       System.out.println("ConvertedLead = " + convertedLead.getData());

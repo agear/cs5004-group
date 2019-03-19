@@ -27,10 +27,9 @@ public class BSTImpl implements BST {
 
     // If the tree is empty, this object is the root node.
     if (this.root == null) {
-      System.out.println("New root nodE!!!!!");
       BSTNode newNode = new Leaf(obj);
       this.root = newNode;
-      System.out.println("The root now is: " + this.root.getData());
+      System.out.println("New root node. The root now is: " + this.root.getData());
       return;
     }
     // If the tree already contains the node, do nothing.
@@ -38,9 +37,9 @@ public class BSTImpl implements BST {
       System.out.println(obj + " is already in the tree!");
       return;
     }
-    System.out.println("Made it this far...");
+
     this.root = this.root.add(obj);
-    System.out.println("!!!The root is now: " + this.root.getData());
+    System.out.println("The root after adding is: " + this.root.getData() + "\n");
     return;
   }
 

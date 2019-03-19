@@ -32,50 +32,46 @@ private BSTNode right;
   @Override
   public BSTNode add(Integer object) {
 
-    System.out.println("Adding a node: " + object);
+    System.out.println("Entered BSTNode [" +this.data + "] add with input: " + object);
 
     // If object is less than current node, add to left
     if (object < this.data) {
+      System.out.println("Input is less than current node.");
 
       // If left exists, add it over there
       if (this.left != null ) {
-        System.out.println("Going left <<<");
+        System.out.println(this.data + " node has a left child, which is " + left.getData());
         this.left = this.left.add(object);
-        //return this.left;
+        System.out.println("Returning " + this.data);
         return this;
       }
 
       // If left doesn't exist, make a new leaf and
       // put the object as this node's left child
       else {
+        System.out.println(this.data + " node doesn't have a left child. Creating a new leaf.");
         BSTNode newNode = new Leaf(object);
         this.left = newNode;
-        //return this.left;
+        System.out.println("Returning " + this.data);
         return this;
       }
 
     }
-    // TODO can we use present() for this? Maybe in BSTImpl...
-    // If we are adding something already in the tree, do nothing
-//    if (this.data == object ) {
-//      return this;
-//    }
+
 
     // Else, add to right
     else {
+      System.out.println("Input is more than than current node.");
 
       if (this.right != null ) {
-        System.out.println("Going right>>>");
-//        this.right = this.right.add(object);
-//        return this.right;
-        this.right.add(object);
+        System.out.println("This node has a right child. Going right >>>");
+        this.right = this.right.add(object);
         return this;
       }
 
       else {
         BSTNode newNode = new Leaf(object);
         this.right = newNode;
-//        return this.right;
         return this;
       }
 
