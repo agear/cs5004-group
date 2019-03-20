@@ -40,28 +40,22 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
   @Override
   public BSTNode add(T object) {
 
-    System.out.println("Entered BSTNode [" + this.data + "] add with input: " + object);
     // Increase the number of progeny
     this.progeny += 1;
 
     // If object is less than current node, add to left
     if (object.compareTo(this.data) < 0) {
-      System.out.println("Input is less than current node.");
       // If left exists, add it over there
       if (this.left != null) {
-        System.out.println(this.data + " node has a left child, which is " + left.getData());
         this.left = this.left.add(object);
-        System.out.println("Returning " + this.data);
         return this;
       }
 
       // If left doesn't exist, make a new leaf and
       // put the object as this node's left child
       else {
-        System.out.println(this.data + " node doesn't have a left child. Creating a new leaf.");
         BSTNode newNode = new Leaf(object);
         this.left = newNode;
-        System.out.println("Returning " + this.data);
         return this;
       }
 
@@ -70,10 +64,8 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
 
     // Else, add to right
     else {
-      System.out.println("Input is more than than current node.");
 
       if (this.right != null) {
-        System.out.println("This node has a right child. Going right >>>");
         this.right = this.right.add(object);
         return this;
       } else {
@@ -166,30 +158,95 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
   }
 
 
-  //TODO we can find the rank of an element p in the tree rooted at node T as follows:
-  // If T contains p as its data, its rank in this tree is 1+size of left subtree of T.
-  // If p is in the left subtree of T, then its rank in T would be whatever its rank is in the left
-  // subtree of T.
-  // If p is in the right subtree of T, then its rank in T would be whatever its rank in the right
-  // subtree of T, plus the number of elements before it in T which is 1 + size of left subtree of T.
-  // If T is an empty node, p is not present in the tree, so its rank cannot be computed. In this
-  // case, return 0 as its rank.
-  public int rank(T obj) {
+  public int rank(T p) {
+
+
+    // (1) If T contains p as its data, its rank in this tree is 1+size of left subtree of T.
+    if (this.data == p) {
+
+      if (this.left == null) {
+        return 1;
+      }
+
+      return 1 + left.getSize();
+    }
+
+    // (2) If p is in the left subtree of T,
+    // then its rank in T would be whatever its rank is in the left subtree of T.
+    if (this.left != null ) {
+      if (this.left.present(p)) {
+        return left.rank(p);
+      }
+    }
+
+    // (3) If p is in the right subtree of T, then its rank in T would be whatever its rank
+    // in the right subtree of T, plus the number of elements before it in T which is 1 + size of
+    // left subtree of T.
+
+    if (this.right != null ) {
+      if (this.right.present(p)) {
+
+        // Get the size of the left  - it depends on if it exists or not!
+        int leftSize;
+        if (this.left == null) {
+          leftSize = 0;
+        } else {
+          leftSize = left.getSize();
+        }
+
+        int numElementsBefore = 1 + leftSize;
+        return numElementsBefore + right.rank(p);
+      }
+    }
+
+    // (4) If T is an empty node, p is not present in the tree, so its rank cannot be computed.
+    // In this case, return 0 as its rank.
+
     return 0;
+
   }
 
-  // TODO let size(T) be the size of the tree T. Then the element at a specific rank x in tree
-  //  rooted at node T can be found as follows: Compute r=1+size of left subtree of T.
-  //  If r=x then return the data at this node and exit.
-  //  If r<x then the element of rank x must be in the right subtree of T. However its rank
-  //  there would be x-r. So look for element of rank x-r in the right subtree of T.
-  //  If r>x then the element of rank x must be in the left subtree of T. So look for element of
-  //  rank x in the left subtree of T.
-  //  If T is an empty node, the rank x is invalid. Return null as the result.
-  public T select(int rank) {
-    Integer empty = 0;
-    return (T) empty;
+  public T select(int x) {
+
+    // r = 1 + size of left subtree
+    int r;
+
+    // If the left subtree exists and has no children,
+    // or it doesn't exist, its size is 0:
+    if ( this.left == null || this.left.getSize() == 0 ) {
+      r = 1;
+    }
+
+    else {
+      r = 1 + this.left.getSize();
+    }
+
+    // If r is equal to x, then return the data at this node and exit
+    if ( r == x ){
+      return this.data;
+    }
+
+    // (3) If r<x, then element must be in right subtree of this
+    // But its rank there would be x-r
+    else if ( r < x ) {
+      return this.right.select(x - r);
+    }
+
+    // (4) If r>x then the element of rank x must be in the left subtree of T.
+    // So look for element of rank x in the left subtree of T.
+    else if ( r > x ) {
+      return this.left.select(x);
+    }
+
+    // If T is an empty node, the rank x is invalid. Return null as the result.
+    else {
+      return null;
+    }
+
   }
 
   private int getProgeny() { return this.progeny; }
+
+
+
 }

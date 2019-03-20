@@ -91,4 +91,96 @@ public class testBST {
 
   }
 
+
+  @Test
+  public void testSelectNodeAtRank(){
+
+
+    // Create a new tree with negatives and a zero and in not chronological order
+    BST testTree = new BSTImpl();
+    testTree.add(-100);
+    testTree.add(-50);
+    testTree.add(0);
+    testTree.add(4);
+    testTree.add(-10);
+    testTree.add(100);
+
+    Integer expected = -100;
+    assertEquals(expected, testTree.select(1));
+
+    expected = -50;
+    assertEquals(expected, testTree.select(2));
+
+    expected = -10;
+    assertEquals(expected, testTree.select(3));
+
+    expected = 0;
+    assertEquals(expected, testTree.select(4));
+
+    expected = 4;
+    assertEquals(expected, testTree.select(5));
+
+    expected = 100;
+    assertEquals(expected, testTree.select(6));
+
+    testTree.add(-5);
+    testTree.add(-7);
+
+    expected = -5;
+    assertEquals(expected, testTree.select(5));
+
+
+  }
+
+  @Test
+  public void testFindRankOfElement(){
+
+
+    // Create a new tree with negatives and a zero and in not chronological order
+    BST testTree = new BSTImpl();
+    testTree.add(-100);
+    testTree.add(-50);
+    testTree.add(0);
+    testTree.add(4);
+    testTree.add(-10);
+    testTree.add(100);
+
+    Integer input = -100;
+    assertEquals(1, testTree.rank(input));
+
+    input = -50;
+    assertEquals(2, testTree.rank(input));
+
+    input = -10;
+    assertEquals(3, testTree.rank(input));
+
+    input = 0;
+    assertEquals(4, testTree.rank(input));
+
+    System.out.println("\n\n\n\n");
+
+    assertTrue(testTree.present(4));
+
+    input = 4;
+    assertEquals(5, testTree.rank(input));
+
+    input = 100;
+    assertEquals(6, testTree.rank(input));
+
+    testTree.add(-5);
+    input = -5;
+    assertEquals(4, testTree.rank(input));
+
+    testTree.add(-7);
+    input = -7;
+    assertEquals(4, testTree.rank(input));
+
+
+
+  }
+
+
+
+  // TODO Test different types of elements besides Integer (Character, Double, .. ?)
+
 }

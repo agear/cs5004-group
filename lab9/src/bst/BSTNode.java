@@ -47,13 +47,8 @@ public interface BSTNode <T extends Comparable<T>> {
   // case, return 0 as its rank.
   int rank(T obj);
 
-  // TODO let size(T) be the size of the tree T. Then the element at a specific rank x in tree
-  //  rooted at node T can be found as follows: Compute r=1+size of left subtree of T.
-  //  If r=x then return the data at this node and exit.
-  //  If r<x then the element of rank x must be in the right subtree of T. However its rank
-  //  there would be x-r. So look for element of rank x-r in the right subtree of T.
-  //  If r>x then the element of rank x must be in the left subtree of T. So look for element of
-  //  rank x in the left subtree of T.
-  //  If T is an empty node, the rank x is invalid. Return null as the result.
+  // TODO write javadoc
   T select(int rank);
+
+
 }
