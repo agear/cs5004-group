@@ -37,9 +37,23 @@ public interface BSTNode <T extends Comparable<T>> {
   // TODO remove this method before submitting
   T getData();
 
-  //TODO
+  //TODO we can find the rank of an element p in the tree rooted at node T as follows:
+  // If T contains p as its data, its rank in this tree is 1+size of left subtree of T.
+  // If p is in the left subtree of T, then its rank in T would be whatever its rank is in the left
+  // subtree of T.
+  // If p is in the right subtree of T, then its rank in T would be whatever its rank in the right
+  // subtree of T, plus the number of elements before it in T which is 1 + size of left subtree of T.
+  // If T is an empty node, p is not present in the tree, so its rank cannot be computed. In this
+  // case, return 0 as its rank.
   int rank(T obj);
 
-  //TODO
+  // TODO let size(T) be the size of the tree T. Then the element at a specific rank x in tree
+  //  rooted at node T can be found as follows: Compute r=1+size of left subtree of T.
+  //  If r=x then return the data at this node and exit.
+  //  If r<x then the element of rank x must be in the right subtree of T. However its rank
+  //  there would be x-r. So look for element of rank x-r in the right subtree of T.
+  //  If r>x then the element of rank x must be in the left subtree of T. So look for element of
+  //  rank x in the left subtree of T.
+  //  If T is an empty node, the rank x is invalid. Return null as the result.
   T select(int rank);
 }
