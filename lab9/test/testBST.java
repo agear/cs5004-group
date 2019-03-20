@@ -14,39 +14,38 @@ public class testBST {
 
     // Create a new tree
     BST testTree = new BSTImpl();
-    assertEquals(0, (int) testTree.getSize());
+    assertEquals(0, testTree.getSize());
 
     // Size == 1
     testTree.add(1);
-    assertEquals(1, (int) testTree.getSize());
-    assertEquals(1, (int) testTree.minimum());
+    assertEquals(1, testTree.getSize());
+    assertEquals(1, testTree.minimum());
 
     // Size == 2
     testTree.add(2);
-    assertEquals(2, (int) testTree.getSize());
+    assertEquals(2, testTree.getSize());
 
     // Size == 3
     testTree.add(3);
-    assertEquals(3, (int) testTree.getSize());
+    assertEquals(3, testTree.getSize());
 
     // Size == 4
     testTree.add(4);
-    assertEquals(4, (int) testTree.getSize());
+    assertEquals(4, testTree.getSize());
 
     // Size == 5
     testTree.add(30);
-    assertEquals(5, (int) testTree.getSize());
+    assertEquals(5, testTree.getSize());
 
-
+    // Size == 6
     testTree.add(10);
-    assertEquals(6, (int) testTree.getSize());
+    assertEquals(6, testTree.getSize());
 
-    // Size == 5
+    // Size == 7
     testTree.add(19);
-    assertEquals(7, (int) testTree.getSize());
+    assertEquals(7, testTree.getSize());
 
   }
-
 
 
   @Test
@@ -66,9 +65,8 @@ public class testBST {
   }
 
 
-
   @Test
-  public void testPresent(){
+  public void testPresent() {
     BST testTree = new BSTImpl();
     testTree.add(-100);
     testTree.add(-50);
@@ -89,9 +87,6 @@ public class testBST {
 
     obj = -1;
     assertFalse(testTree.present(obj));
-
-
-
 
 
   }

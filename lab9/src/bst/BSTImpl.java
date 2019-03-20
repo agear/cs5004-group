@@ -1,8 +1,8 @@
 package bst;
 
 /**
- * This class represents a binary search tree. It can add, it can get its size, it can detect
- * if an inputted object is present, and it can find the minimum object.
+ * This class represents a binary search tree. It can add, it can get its size, it can detect if an
+ * inputted object is present, and it can find the minimum object.
  */
 public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
@@ -23,7 +23,8 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
    */
   @Override
   public void add(T obj) {
-//    System.out.println("Trying to add " + obj);
+    // TODO Delete debugging print statements.
+    //    System.out.println("Trying to add " + obj);
 
     // If the tree is empty, this object is the root node.
     if (this.root == null) {
@@ -77,20 +78,21 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
     return this.root.present(obj);
   }
 
-  /** Returns the smallest object (defined by the ordering) in the tree,
-   * and null if the tree is empty.
+  /**
+   * Returns the smallest object (defined by the ordering) in the tree, and null if the tree is
+   * empty.
    *
    * @return the smallest object or null
    */
   @Override //TODO this aint rite dawg
-  public java.lang.Object minimum() {
+  public T minimum() {
 
     // If the tree is empty, there is no minimum
     if (this.root == null) {
       return null;
     }
-
-    return this.root.minimum();
+    // TODO I'm sure there is a better way to solve this but at least it compiles...
+    return (T) this.root.minimum();
   }
 
 
