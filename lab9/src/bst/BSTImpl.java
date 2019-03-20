@@ -105,4 +105,10 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
   public String toString() {
     return this.root.toString();
   }
+
+  //TODO
+  public int rank(T obj) { return 0; }
+
+  //TODO
+  public T select(int rank) { return; }
 }

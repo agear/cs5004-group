@@ -96,5 +96,9 @@ public class Leaf<T extends Comparable<T>> implements BSTNode<T> {
     return this.data;
   }
 
+  //TODO
+  public int rank(T obj) { return 0; }
 
+  //TODO
+  public T select(int rank) { return; }
 }

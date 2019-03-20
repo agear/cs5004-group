@@ -49,4 +49,9 @@ public interface BST<T extends Comparable<T>> {
   @Override
   String toString();
 
+  //TODO
+  int rank(T obj);
+
+  //TODO
+  T select(int rank);
 }

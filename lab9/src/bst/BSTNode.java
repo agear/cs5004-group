@@ -37,5 +37,9 @@ public interface BSTNode <T extends Comparable<T>> {
   // TODO remove this method before submitting
   T getData();
 
+  //TODO
+  int rank(T obj);
 
+  //TODO
+  T select(int rank);
 }
