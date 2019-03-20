@@ -120,4 +120,8 @@ public class Leaf<T extends Comparable<T>> implements BSTNode<T> {
     Integer empty = 0;
     return (T) empty;
   }
+
+  private int getProgeny() {
+    return this.progeny;
+  }
 }

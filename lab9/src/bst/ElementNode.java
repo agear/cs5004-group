@@ -191,5 +191,5 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
     return (T) empty;
   }
 
-
+  private int getProgeny() { return this.progeny; }
 }
