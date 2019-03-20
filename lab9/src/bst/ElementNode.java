@@ -1,18 +1,24 @@
 package bst;
 
-public class ElementNode implements BSTNode {
+/**
+ * This class represents a node in the tree that isn't a leaf.
+ * It has the capacity to contain 0-2 children nodes.
+ * Node data must be Comparable as this node is part of a BST.
+ */
+public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
 
-private Integer data;
-private BSTNode left;
-private BSTNode right;
+private T data;
+private BSTNode<T> left;
+private BSTNode<T> right;
 
 
-  /** TODO add this lol
-   * @param data
-   * @param left
-   * @param right
+  /** Creates a node in the tree that isn't a leaf- i.e., it has the capacity to have 0-2 children.
+   *
+   * @param data Information stored in the node
+   * @param left left child
+   * @param right right child
    */
-  public ElementNode(Integer data, BSTNode left, BSTNode right) {
+  public ElementNode(T data, BSTNode<T> left, BSTNode<T> right) {
 
     this.data = data;
     this.left = left;
@@ -20,7 +26,8 @@ private BSTNode right;
 
   }
 
-  public Integer getData() {
+  //TODO delete this method before handing in
+  public T getData() {
     return this.data;
   }
 
@@ -30,12 +37,12 @@ private BSTNode right;
    * @param object to insert
    */
   @Override
-  public BSTNode add(Integer object) {
+  public BSTNode add(T object) {
 
     System.out.println("Entered BSTNode [" +this.data + "] add with input: " + object);
 
     // If object is less than current node, add to left
-    if (object < this.data) {
+    if (object.compareTo(this.data) < 0) {
       System.out.println("Input is less than current node.");
 
       // If left exists, add it over there
@@ -80,45 +87,52 @@ private BSTNode right;
   }
 
   /**
-   * Return the size of this tree (i.e. the number of elements in this tree.
+   * Return the size of this tree (i.e. the number of elements in this tree)
+   * by accumulating the number of nodes while traversing through tree.
    *
    * @return the the number of elements in this tree.
    */
   @Override
-  public Integer getSize() {
+  public int getSize() {
 
-    // TODO figure out why this isn't working....
     // Return the size of this plus the size of the right and left sub BSTs.
     if (this.left != null && this.right != null) {
-      System.out.println("Counting left & right");
-      return this.left.getSize() + this.right.getSize() + 1;}
+      return this.left.getSize() + this.right.getSize() + 1;
+    }
     else if (this.left != null) {
-      System.out.println("Counting left");
-      return this.left.getSize() + 1; }
+      return this.left.getSize() + 1;
+    }
     else if (this.right != null) {
-      System.out.println("Counting right");
-      return this.right.getSize() + 1; }
+      return this.right.getSize() + 1;
+    }
     else {
-      System.out.println("Counting 1");
-      return 1; }
+      return 1;
+    }
   }
 
   /**
    * Returns true if this object is present in the tree, false otherwise.
    *
-   * @param present@return true if this object is present in the tree, false otherwise.
+   * @param present
+   * @return true if this object is present in the tree, false otherwise
    */
   @Override
-  public boolean present(Integer present) {
+  public boolean present(T present) {
     if (this.data.equals(present)) {
       return true;
     }
-    else if (this.left != null && this.right != null){
+    else if (this.left != null && this.right != null) {
       return (this.left.present(present) | this.right.present(present));
     }
-    else if (this.left!= null) { return this.left.present(present);}
-    else if (this.right!= null) { return this.right.present(present);}
-    else { return false; }
+    else if (this.left!= null) {
+      return this.left.present(present);
+    }
+    else if (this.right!= null) {
+      return this.right.present(present);
+    }
+    else {
+      return false;
+    }
   }
 
   /**
@@ -129,7 +143,7 @@ private BSTNode right;
    * empty.
    */
   @Override
-  public Integer minimum() {
+  public T minimum() {
     if (this.left != null) {
       return this.left.minimum();
     }
@@ -139,31 +153,30 @@ private BSTNode right;
   }
 
 
+  /**
+   * To string method that does a breadth-first list of element data.
+   *
+   * @return a printable representation of the tree
+   */
   @Override
-  public String toString(){
+  public String toString() {
 
-    if (this.left != null && this.right != null){
-      return " !!"+ this.data//.toString()
-              + this.left.toString() + this.right.toString();
-
+    if (this.left != null && this.right != null) {
+      return " "+ this.data + this.left.toString() + this.right.toString();
     }
 
     else if ( this.left != null  ) {
-      return " _" + this.data//.toString()
-              + this.left.toString() ;
+      return " " + this.data + this.left.toString() ;
 
     }
 
     else if ( this.right != null ) {
-      return " _" + this.data + this.right.toString();
+      return " " + this.data + this.right.toString();
     }
 
     else {
-      return " ?" + this.data;//.toString();
+      return " " + this.data;
     }
 
-//  return "HELLO";
   }
-
-  public Integer getRight() { return this.right.getData(); }
 }

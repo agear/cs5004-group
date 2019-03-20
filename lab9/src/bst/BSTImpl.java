@@ -4,7 +4,7 @@ package bst;
  * This class represents a binary search tree. It can add, it can get its size, it can detect
  * if an inputted object is present, and it can find the minimum object.
  */
-public class BSTImpl implements BST {
+public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
   private BSTNode root;
 
@@ -12,8 +12,8 @@ public class BSTImpl implements BST {
   /**
    * Creates an empty BST.
    */
-  public BSTImpl(){
-    // Does nothing
+  public BSTImpl() {
+    // No data initialization needed
   }
 
   /**
@@ -22,19 +22,19 @@ public class BSTImpl implements BST {
    * @param obj The object to put in the tree
    */
   @Override
-  public void add(Integer obj) {
-    System.out.println("Trying to add " + obj);
+  public void add(T obj) {
+//    System.out.println("Trying to add " + obj);
 
     // If the tree is empty, this object is the root node.
     if (this.root == null) {
       BSTNode newNode = new Leaf(obj);
       this.root = newNode;
-      System.out.println("New root node. The root now is: " + this.root.getData());
+//      System.out.println("New root node. The root now is: " + this.root.getData());
       return;
     }
     // If the tree already contains the node, do nothing.
     if (this.root.present(obj)) {
-      System.out.println(obj + " is already in the tree!");
+//      System.out.println(obj + " is already in the tree!");
       return;
     }
 
@@ -49,7 +49,7 @@ public class BSTImpl implements BST {
    * @return the number of objects
    */
   @Override
-  public Integer getSize() {
+  public int getSize() {
 
     // If the tree is empty, the tree is empty
     if (this.root == null) {
@@ -67,7 +67,7 @@ public class BSTImpl implements BST {
    * @return true if object is in the tree, false otherwise
    */
   @Override
-  public boolean present(Integer obj) {
+  public boolean present(T obj) {
 
     // If the tree is empty, the object is not in it
     if (this.root == null) {
@@ -82,8 +82,8 @@ public class BSTImpl implements BST {
    *
    * @return the smallest object or null
    */
-  @Override
-  public Integer minimum() {
+  @Override //TODO this aint rite dawg
+  public java.lang.Object minimum() {
 
     // If the tree is empty, there is no minimum
     if (this.root == null) {
@@ -93,6 +93,12 @@ public class BSTImpl implements BST {
     return this.root.minimum();
   }
 
+
+  /**
+   * Traverses the tree and returns printable data stored in each node.
+   *
+   * @return a printable representation of the tree
+   */
   @Override
   public String toString() {
     return this.root.toString();

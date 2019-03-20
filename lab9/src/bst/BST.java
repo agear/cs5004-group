@@ -1,16 +1,19 @@
 package bst;
 
+
 /**
  * This interface represents a Binary Search Tree of a generic object.
  */
-public interface BST {
+public interface BST<T extends Comparable<T>> {
+
+
 
   /**
    * Adds a comparable object to the tree in its proper place.
    *
    * @param obj The object to put in the tree
    */
-  public void add(Integer obj);
+  public void add(T obj);
 
 
   /**
@@ -18,7 +21,7 @@ public interface BST {
    *
    * @return the number of objects
    */
-  public Integer getSize();
+  public int getSize();
 
 
   /**
@@ -27,7 +30,7 @@ public interface BST {
    * @param obj the object to find
    * @return true if object is in the tree, false otherwise
    */
-  public boolean present(Integer obj);
+  public boolean present(T obj);
 
 
   /**
@@ -36,9 +39,14 @@ public interface BST {
    *
    * @return the smallest object or null
    */
+  public java.lang.Object minimum();
 
-  public Integer minimum();
 
+  /**
+   * Traverses the tree and returns printable data stored in each node.
+   *
+   * @return a printable representation of the tree
+   */
   @Override
   String toString();
 
