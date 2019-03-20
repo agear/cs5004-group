@@ -110,5 +110,7 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
   public int rank(T obj) { return 0; }
 
   //TODO
-  public T select(int rank) { return; }
+  public T select(int rank) {
+    Integer empty = 0;
+    return (T) empty; }
 }

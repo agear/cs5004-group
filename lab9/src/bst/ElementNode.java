@@ -9,7 +9,7 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
   private T data;
   private BSTNode<T> left;
   private BSTNode<T> right;
-
+  private int progeny;
 
   /**
    * Creates a node in the tree that isn't a leaf- i.e., it has the capacity to have 0-2 children.
@@ -23,6 +23,7 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
     this.data = data;
     this.left = left;
     this.right = right;
+    this.progeny = 2;
 
   }
 
@@ -40,11 +41,12 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
   public BSTNode add(T object) {
 
     System.out.println("Entered BSTNode [" + this.data + "] add with input: " + object);
+    // Increase the number of progeny
+    this.progeny += 1;
 
     // If object is less than current node, add to left
     if (object.compareTo(this.data) < 0) {
       System.out.println("Input is less than current node.");
-
       // If left exists, add it over there
       if (this.left != null) {
         System.out.println(this.data + " node has a left child, which is " + left.getData());
@@ -163,6 +165,7 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
 
   }
 
+
   //TODO
   public int rank(T obj) {
     return 0;
@@ -170,6 +173,9 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
 
   //TODO
   public T select(int rank) {
-    return;
+    Integer empty = 0;
+    return (T) empty;
   }
+
+
 }

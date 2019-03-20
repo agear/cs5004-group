@@ -1,19 +1,22 @@
 package bst;
 
 /**
- *  Leaf represents a node with no children in a binary search tree.
+ * Leaf represents a node with no children in a binary search tree.
  */
 public class Leaf<T extends Comparable<T>> implements BSTNode<T> {
 
   private T data;
+  private int progeny;
 
 
-  /** Creates a leaf in a binary search tree. It must be initialized with data to hold.
+  /**
+   * Creates a leaf in a binary search tree. It must be initialized with data to hold.
    *
    * @param data information to store in this node
    */
-  public Leaf(T data){
+  public Leaf(T data) {
     this.data = data;
+    this.progeny = 1;
   }
 
 
@@ -34,9 +37,7 @@ public class Leaf<T extends Comparable<T>> implements BSTNode<T> {
       System.out.println("Input is less than this node. Adding left: " + newNode.getData());
       BSTNode convertedLead = new ElementNode(this.data, newNode, null);
       return convertedLead;
-    }
-
-    else {
+    } else {
       // Put the new object below to the right.
 //      System.out.println("Input is more than this node. Adding right: " + newNode.getData());
       BSTNode convertedLead = new ElementNode(this.data, null, newNode);
@@ -83,22 +84,26 @@ public class Leaf<T extends Comparable<T>> implements BSTNode<T> {
 
   /**
    * Represents a printable string with no fancy formatting, just the data that is stored.
-   * @return
    */
   @Override
-  public String toString(){
+  public String toString() {
     return " " + this.data;
   }
 
 
   //TODO delete this before handing it in
-  public T getData(){
+  public T getData() {
     return this.data;
   }
 
   //TODO
-  public int rank(T obj) { return 0; }
+  public int rank(T obj) {
+    return 0;
+  }
 
   //TODO
-  public T select(int rank) { return; }
+  public T select(int rank) {
+    Integer empty = 0;
+    return (T) empty;
+  }
 }
