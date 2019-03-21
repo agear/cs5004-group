@@ -56,7 +56,8 @@ public class Leaf<T extends Comparable<T>> implements BSTNode<T> {
   /**
    * Returns true if this object is present in the tree, false otherwise.
    *
-   * @param present@return true if this object is present in the tree, false otherwise.
+   * @param present the object to check whether or not is present in the tree.
+   * @return true if this object is present in the tree, false otherwise.
    */
   @Override
   public boolean present(T present) {
@@ -86,9 +87,10 @@ public class Leaf<T extends Comparable<T>> implements BSTNode<T> {
 
   /**
    * Finds the rank of an element in the tree. If the element does not exist in the tree, return 0.
-   * @param obj Element to find the rank of.
-   * @return an int representing the rank of an element in the tree.
-   *  If the element does not exist in the tree, returns 0.
+   *
+   * @param p the element to find the rank of.
+   * @return an int representing the rank of an element in the tree. If the element does not exist
+   * in the tree, returns 0.
    */
   public int rank(T p) {
 
@@ -106,8 +108,9 @@ public class Leaf<T extends Comparable<T>> implements BSTNode<T> {
 
   /**
    * Returns the object at a specific rank in the tree. If no object exists with the given rank,
-   *  return null as the result.
-   * @param rank of the object to return.
+   * return null as the result.
+   *
+   * @param x the rank of the object to return.
    * @return Object of the specified rank. If no object exists with given rank, return null.
    */
   public T select(int x) {

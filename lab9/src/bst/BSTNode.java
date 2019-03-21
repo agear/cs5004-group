@@ -1,6 +1,10 @@
 package bst;
 
-public interface BSTNode <T extends Comparable<T>> {
+/**
+ * Interface to represent a Binary Search Tree Node of generic element type.
+ * @param <T>
+ */
+public interface BSTNode<T extends Comparable<T>> {
 
   /**
    * Inserts an object in the tree.
@@ -19,7 +23,7 @@ public interface BSTNode <T extends Comparable<T>> {
   /**
    * Returns true if this object is present in the tree, false otherwise.
    *
-   * @param present, the object to search for.
+   * @param present the object to search for.
    * @return true if this object is present in the tree, false otherwise.
    */
   boolean present(T present);

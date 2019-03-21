@@ -208,7 +208,7 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
   /**
    * Returns the object at a specific rank in the tree. If no object exists with the given rank,
    *  return null as the result.
-   * @param rank of the object to return.
+   * @param x the rank of the object to return.
    * @return Object of the specified rank. If no object exists with given rank, return null.
    */
   public T select(int x) {
@@ -227,7 +227,7 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
     }
 
     // If r is equal to x, then return the data at this node and exit
-    if ( r == x ){
+    if ( r == x ) {
       return this.data;
     }
 
@@ -254,7 +254,9 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
    * Gets the size of the subtree of a node.
    * @return the size of the subtree this node.
    */
-  public int getProgeny() { return this.progeny; }
+  public int getProgeny() {
+    return this.progeny;
+  }
 
 
 
