@@ -27,11 +27,6 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
 
   }
 
-  //TODO delete this method before handing in
-  public T getData() {
-    return this.data;
-  }
-
   /**
    * Inserts an object in the tree.
    *
@@ -213,12 +208,12 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
 
     // If the left subtree exists and has no children,
     // or it doesn't exist, its size is 0:
-    if ( this.left == null || this.left.getSize() == 0 ) {
+    if ( this.left == null || this.left.getProgeny() == 0 ) {
       r = 1;
     }
 
     else {
-      r = 1 + this.left.getSize();
+      r = 1 + this.left.getProgeny();
     }
 
     // If r is equal to x, then return the data at this node and exit
@@ -245,7 +240,11 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
 
   }
 
-  private int getProgeny() { return this.progeny; }
+  /**
+   * Gets the size of the subtree of a node.
+   * @return the size of the subtree this node.
+   */
+  public int getProgeny() { return this.progeny; }
 
 
 

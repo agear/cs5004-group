@@ -84,13 +84,6 @@ public class Leaf<T extends Comparable<T>> implements BSTNode<T> {
     return " " + this.data;
   }
 
-
-  //TODO delete this before handing it in
-  public T getData() {
-    return this.data;
-  }
-
-
   public int rank(T p) {
 
     // (1) If T contains p as its data, its rank in this tree is 1+size of left subtree of T.
@@ -109,13 +102,14 @@ public class Leaf<T extends Comparable<T>> implements BSTNode<T> {
   public T select(int x) {
 
     // Let size(T) be the size of the tree
-    int treeSize = this.getSize();
+    // TODO Is this needed? It says treeSize is never used...
+    int treeSize = this.progeny;
 
     // r = 1 + size of left subtree
     int r = 1;
 
     // If rSize is equal to x, then return the data at this node and exit
-    if ( r == x ){
+    if (r == x) {
       return this.data;
     }
 
@@ -127,17 +121,13 @@ public class Leaf<T extends Comparable<T>> implements BSTNode<T> {
   }
 
 
-  // TODO what is this???
-  private int getProgeny() {
+  /**
+   * Gets the size of the subtree of a node.
+   *
+   * @return the size of the subtree this node.
+   */
+  public int getProgeny() {
     return this.progeny;
-  }
-
-  public BSTNode<T> getLeftChild() {
-    return null;
-  }
-
-  public BSTNode<T> getRightChild() {
-    return null;
   }
 
 }

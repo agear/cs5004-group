@@ -49,24 +49,20 @@ public interface BST<T extends Comparable<T>> {
   @Override
   String toString();
 
-  //TODO we can find the rank of an element p in the tree rooted at node T as follows:
-  // If T contains p as its data, its rank in this tree is 1+size of left subtree of T.
-  // If p is in the left subtree of T, then its rank in T would be whatever its rank is in the left
-  // subtree of T.
-  // If p is in the right subtree of T, then its rank in T would be whatever its rank in the right
-  // subtree of T, plus the number of elements before it in T which is 1 + size of left subtree of T.
-  // If T is an empty node, p is not present in the tree, so its rank cannot be computed. In this
-  // case, return 0 as its rank.
+  /**
+   * Finds the rank of an element in the tree. If the element does not exist in the tree, return 0.
+   * @param obj Element to find the rank of.
+   * @return an int representing the rank of an element in the tree.
+   *  If the element does not exist in the tree, returns 0.
+   */
   int rank(T obj);
 
-  // TODO let size(T) be the size of the tree T. Then the element at a specific rank x in tree
-  //  rooted at node T can be found as follows: Compute r=1+size of left subtree of T.
-  //  If r=x then return the data at this node and exit.
-  //  If r<x then the element of rank x must be in the right subtree of T. However its rank
-  //  there would be x-r. So look for element of rank x-r in the right subtree of T.
-  //  If r>x then the element of rank x must be in the left subtree of T. So look for element of
-  //  rank x in the left subtree of T.
-  //  If T is an empty node, the rank x is invalid. Return null as the result.
+  /**
+   * Returns the object at a specific rank in the tree. If no object exists with the given rank,
+   *  return null as the result.
+   * @param rank of the object to return.
+   * @return Object of the specified rank. If no object exists with given rank, return null.
+   */
   T select(int rank);
 
 }

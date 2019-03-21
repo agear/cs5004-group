@@ -33,22 +33,25 @@ public interface BSTNode <T extends Comparable<T>> {
    */
   T minimum();
 
-
-  // TODO remove this method before submitting
-  T getData();
-
-  //TODO we can find the rank of an element p in the tree rooted at node T as follows:
-  // If T contains p as its data, its rank in this tree is 1+size of left subtree of T.
-  // If p is in the left subtree of T, then its rank in T would be whatever its rank is in the left
-  // subtree of T.
-  // If p is in the right subtree of T, then its rank in T would be whatever its rank in the right
-  // subtree of T, plus the number of elements before it in T which is 1 + size of left subtree of T.
-  // If T is an empty node, p is not present in the tree, so its rank cannot be computed. In this
-  // case, return 0 as its rank.
+  /**
+   * Finds the rank of an element in the tree. If the element does not exist in the tree, return 0.
+   * @param obj Element to find the rank of.
+   * @return an int representing the rank of an element in the tree.
+   *  If the element does not exist in the tree, returns 0.
+   */
   int rank(T obj);
 
-  // TODO write javadoc
+  /**
+   * Returns the object at a specific rank in the tree. If no object exists with the given rank,
+   *  return null as the result.
+   * @param rank of the object to return.
+   * @return Object of the specified rank. If no object exists with given rank, return null.
+   */
   T select(int rank);
 
-
+  /**
+   * Gets the size of the subtree of a node.
+   * @return the size of the subtree this node.
+   */
+  int getProgeny();
 }
