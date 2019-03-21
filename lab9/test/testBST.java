@@ -157,9 +157,6 @@ public class testBST {
     input = 0;
     assertEquals(4, testTree.rank(input));
 
-    // TODO Delete ???
-    //System.out.println("\n\n\n\n");
-
     assertTrue(testTree.present(4));
 
     input = 4;
@@ -317,7 +314,7 @@ public class testBST {
     testTree.add(100.6);
 
     double input = -100.1;
-//    assertEquals(1, testTree.rank(input));
+    assertEquals(1, testTree.rank(input));
 
     input = -50.2;
     assertEquals(2, testTree.rank(input));
@@ -327,9 +324,6 @@ public class testBST {
 
     input = 0.3;
     assertEquals(4, testTree.rank(input));
-
-    // TODO Delete ???
-    //System.out.println("\n\n\n\n");
 
     assertTrue(testTree.present(4.4));
 
@@ -348,6 +342,19 @@ public class testBST {
     assertEquals(4, testTree.rank(input));
 
 
+
   }
 
+
+  @Test
+  public void emptyTree(){
+    //TODO finish these
+    BSTImpl<Double> emptyTree = new BSTImpl<Double>();
+    assertEquals(0, emptyTree.rank(1.0));
+    assertEquals(0, emptyTree.getSize());
+    assertEquals(null, emptyTree.minimum());
+
+
+
+  }
 }

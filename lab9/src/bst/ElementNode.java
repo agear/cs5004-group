@@ -154,10 +154,13 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
 
 
   public int rank(T p) {
+    System.out.println("Finding rank of " + p + " in " + this.data);
 
 
     // (1) If T contains p as its data, its rank in this tree is 1+size of left subtree of T.
-    if (this.data == p) {
+    if (this.data.equals(p)) {
+
+      System.out.println("hi");
 
       if (this.left == null) {
         return 1;

@@ -109,6 +109,10 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
    */
   public int rank(T obj) {
 
+    if (this.root == null) {
+      return 0;
+    }
+
     return root.rank(obj);
 
   }
@@ -122,7 +126,14 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
    */
   public T select(int rank) {
 
+    // Empty tree
+    if (this.root == null) {
+      return null;
+    }
+
     return (T) root.select(rank);
+
+
 
   }
 }

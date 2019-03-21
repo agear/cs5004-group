@@ -87,7 +87,7 @@ public class Leaf<T extends Comparable<T>> implements BSTNode<T> {
   public int rank(T p) {
 
     // (1) If T contains p as its data, its rank in this tree is 1+size of left subtree of T.
-    if (this.data == p) {
+    if (this.data.equals(p)) {
       return 1;
     }
 
