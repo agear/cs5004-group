@@ -152,15 +152,16 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
 
   }
 
-
+  /**
+   * Finds the rank of an element in the tree. If the element does not exist in the tree, return 0.
+   * @param p Element to find the rank of.
+   * @return an int representing the rank of an element in the tree.
+   *  If the element does not exist in the tree, returns 0.
+   */
   public int rank(T p) {
-    System.out.println("Finding rank of " + p + " in " + this.data);
-
 
     // (1) If T contains p as its data, its rank in this tree is 1+size of left subtree of T.
     if (this.data.equals(p)) {
-
-      System.out.println("hi");
 
       if (this.left == null) {
         return 1;
@@ -204,6 +205,12 @@ public class ElementNode<T extends Comparable<T>> implements BSTNode<T> {
 
   }
 
+  /**
+   * Returns the object at a specific rank in the tree. If no object exists with the given rank,
+   *  return null as the result.
+   * @param rank of the object to return.
+   * @return Object of the specified rank. If no object exists with given rank, return null.
+   */
   public T select(int x) {
 
     // r = 1 + size of left subtree

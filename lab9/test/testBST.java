@@ -265,7 +265,7 @@ public class testBST {
 
 
     // Create a new tree with negatives and a zero and in not chronological order
-    BST testTree = new BSTImpl();
+    BST testTree = new BSTImpl<>();
     testTree.add(-100.1);
     testTree.add(-50.2);
     testTree.add(0.3);
@@ -305,7 +305,7 @@ public class testBST {
 
 
     // Create a new tree with negatives and a zero and in not chronological order
-    BST testTree = new BSTImpl();
+    BST testTree = new BSTImpl<>();
     testTree.add(-100.1);
     testTree.add(-50.2);
     testTree.add(0.3);
@@ -348,13 +348,13 @@ public class testBST {
 
   @Test
   public void emptyTree(){
-    //TODO finish these
-    BSTImpl<Double> emptyTree = new BSTImpl<Double>();
+    BSTImpl<Double> emptyTree = new BSTImpl<>();
     assertEquals(0, emptyTree.rank(1.0));
     assertEquals(0, emptyTree.getSize());
     assertEquals(null, emptyTree.minimum());
-
-
+    double input = 4;
+    assertFalse(emptyTree.present(input));
+    assertEquals(null, emptyTree.select(3));
 
   }
 }

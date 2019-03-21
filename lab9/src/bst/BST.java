@@ -16,7 +16,7 @@ public interface BST<T extends Comparable<T>> {
 
 
   /**
-   * Counts the number of objects in this data structre.
+   * Counts the number of objects in this data structure.
    *
    * @return the number of objects
    */
@@ -38,7 +38,7 @@ public interface BST<T extends Comparable<T>> {
    *
    * @return the smallest object or null
    */
-  java.lang.Object minimum();
+  T minimum();
 
 
   /**
