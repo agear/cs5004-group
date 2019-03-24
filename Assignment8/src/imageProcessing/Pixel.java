@@ -2,14 +2,38 @@ package imageProcessing;
 
 public class Pixel {
 
-  private int red;
-  private int green;
-  private int blue;
+  int red;
+  int green;
+  int blue;
+  int min = 0;
+  int max = 255;
 
   public Pixel(int red, int green, int blue) {
+
+
     this.red = red;
     this.green = green;
     this.blue = blue;
+
+    if (red < min) {
+      this.red = min;
+    }
+    if (blue < min) {
+      this.blue = min;
+    }
+    if (green < min) {
+      this.green = min;
+    }
+    if (red > max) {
+      this.red = max;
+    }
+    if (blue > max) {
+      this.blue = max;
+    }
+    if (green > max) {
+      this.green = max;
+    }
+
   }
 
 

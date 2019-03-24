@@ -10,7 +10,6 @@ public class Image {
   // Takes data of the type outputted by ImageUtil class (TODO describe better)
   public Image(int[][][] data)  {
 
-
     // Initialize data field to input length
     this.data = new Pixel[data.length][data[0].length];
 
@@ -33,7 +32,7 @@ public class Image {
 
   private boolean isValidPixelPosition(int x, int y) {
 
-    if (x < this.data.length && y < this.data[0].length && x > 0 && y > 0 ) {
+    if (x < this.data.length && y < this.data[0].length && x >= 0 && y >= 0 ) {
       return true;
     }
 
@@ -44,42 +43,40 @@ public class Image {
 
   private Pixel applyFilterToPixel(Filter inputFilter, Pixel inputPixel, int x, int y) {
 
-    System.out.println("Filter: " + Arrays.deepToString(inputFilter.kernel));
-
-
     // Get the kernel of the filter
-    double[][] filterKernel = inputFilter.kernel;
-    int filterLength = filterKernel.length;
-    int xStart = x - (filterLength/2) - 1;
-    int yStart = y - filterLength - 1;
+    double[][] filterKernel = inputFilter.getData();
+    int filterLength = (filterKernel.length - 1 ) / 2;
+    int xStart = x-filterLength;
+    int yStart = y-filterLength;
+
     double redSum = 0;
     double greenSum = 0;
     double blueSum = 0;
 
-    // For each slot in the filter
-    for (int a = 0; a < filterKernel.length; a++) {
-      for (int b = 0; b < filterKernel[a].length; b++) {
+
+    // For each entry in the filter kernel
+    for (int b = 0; b < filterKernel.length; b++) {
+      xStart = x-filterLength;
+      for (int a = 0; a < filterKernel.length; a++) {
 
         // Gets the current filter
         double currentFilter = filterKernel[a][b];
-        System.out.println("Current filter: " + currentFilter);
-        System.out.println("With coordinate in data: "  + xStart +  " " + yStart);
 
         // Get the pixel to be altered
         if (this.isValidPixelPosition(xStart,yStart)) {
           Pixel currentPixel = this.data[xStart][yStart];
-          System.out.println("Valid pixel position, adding sum");
           redSum = redSum + (currentPixel.vectorRed(currentFilter));
           greenSum = greenSum + (currentPixel.vectorGreen(currentFilter));
           blueSum = blueSum + (currentPixel.vectorBlue(currentFilter));
         }
+        xStart++;
 
-        yStart++;
       }
-      xStart++;
+      yStart++;
+
     }
 
-    Pixel newPixel = new Pixel((int)redSum,(int)greenSum,(int)blueSum);
+    Pixel newPixel = new Pixel((int)Math.round(redSum),(int)Math.round(greenSum),(int)Math.round(blueSum));
     return newPixel;
 
   }
@@ -95,13 +92,13 @@ public class Image {
     for (int i = 0; i < data.length; i++) {
       for (int j = 0; j < data[i].length; j++) {
 
+        //Pixel filteredPixel = new Pixel(data[i][j].red, 0, data[i][j].blue);
+
         // Apply the filter, and receive new value
         Pixel filteredPixel = this.applyFilterToPixel(inputFilter, data[i][j], i, j);
 
         // Put the new pixel in the output image
         output[i][j] = filteredPixel;
-
-
       }
     }
 
@@ -122,6 +119,19 @@ public class Image {
     }
     return output;
   }
+
+  public int[][][] get3Ddata() {
+    int[][][] output = new int[data.length][data[0].length][3];
+    for (int i = 0; i < data.length; i++ ) {
+      for (int j = 0; j < data[0].length; j++ ) {
+        output[i][j][0] = this.data[i][j].red;
+        output[i][j][1] = this.data[i][j].green;
+        output[i][j][2] = this.data[i][j].blue;
+      }
+    }
+    return output;
+  }
+
 
 
 }
