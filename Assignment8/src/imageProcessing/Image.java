@@ -1,9 +1,6 @@
 package imageProcessing;
 
 //TODO delete?
-import java.util.Arrays;
-import java.io.IOException;
-
 
 /**
  * This class represents and image. An image is 2D array of pixel objects.
@@ -13,11 +10,13 @@ public class Image {
   public Pixel[][] data;
 
   // Takes data of the type outputted by ImageUtil class (TODO describe better)
+
   /**
    * Constructs an image object using 3D array of integer values.
+   *
    * @param data A 3D array of integer values.
    */
-  public Image(int[][][] data)  {
+  public Image(int[][][] data) {
 
     // Initialize data field to input length
     this.data = new Pixel[data.length][data[0].length];
@@ -36,6 +35,7 @@ public class Image {
 
   /**
    * Constructs an image a 2D array of pixel objects.
+   *
    * @param data A 2D array of pixel objects.
    */
   // Alternate way of creating data
@@ -45,13 +45,14 @@ public class Image {
 
   /**
    * Checks if the image contains the given pixel position.
+   *
    * @param x Position of the pixel to check.
    * @param y Position of the pixel to check.
    * @return True if x, and y values exist in this image. False otherwise.
    */
   private boolean isValidPixelPosition(int x, int y) {
 
-    return (x < this.data.length && y < this.data[0].length && x >= 0 && y >= 0 );
+    return (x < this.data.length && y < this.data[0].length && x >= 0 && y >= 0);
   }
 
   // TODO Delete?
@@ -65,19 +66,16 @@ public class Image {
 
   /**
    * TODO Javadoc. and general clean up. Helper method for applyFilter()?
-   * @param inputFilter
-   * @param inputPixel
-   * @param x
-   * @param y
+   *
    * @return A new pixel object that is the result of applying this filter to a pixel.
    */
   private Pixel applyFilterToPixel(Filter inputFilter, Pixel inputPixel, int x, int y) {
 
     // Get the kernel of the filter
     double[][] filterKernel = inputFilter.getData();
-    int filterLength = (filterKernel.length - 1 ) / 2;
-    int xStart = x-filterLength;
-    int yStart = y-filterLength;
+    int filterLength = (filterKernel.length - 1) / 2;
+    int xStart = x - filterLength;
+    int yStart = y - filterLength;
 
     double redSum = 0;
     double greenSum = 0;
@@ -86,14 +84,14 @@ public class Image {
 
     // For each entry in the filter kernel
     for (int b = 0; b < filterKernel.length; b++) {
-      xStart = x-filterLength;
+      xStart = x - filterLength;
       for (int a = 0; a < filterKernel.length; a++) {
 
         // Gets the current filter
         double currentFilter = filterKernel[a][b];
 
         // Get the pixel to be altered
-        if (this.isValidPixelPosition(xStart,yStart)) {
+        if (this.isValidPixelPosition(xStart, yStart)) {
           Pixel currentPixel = this.data[xStart][yStart];
           redSum = redSum + (currentPixel.vectorRed(currentFilter));
           greenSum = greenSum + (currentPixel.vectorGreen(currentFilter));
@@ -107,13 +105,14 @@ public class Image {
     }
 
     // Round double values and cast to ints.
-    Pixel newPixel = new Pixel((int)Math.round(redSum),(int)Math.round(greenSum),(int)Math.round(blueSum));
+    Pixel newPixel = new Pixel((int) Math.round(redSum), (int) Math.round(greenSum), (int) Math.round(blueSum));
     return newPixel;
 
   }
 
   /**
    * Applies the given filter to this image.
+   *
    * @param inputFilter The filter to apply to this image.
    * @return A copy of this image with the given filter applied.
    */
@@ -144,10 +143,9 @@ public class Image {
 
 
   /**
-   * TODO Javadoc.
-   * @return
+   * TODO Javadoc. Are we using this or just for trouble shooting?
    */
-  public String toString(){
+  public String toString() {
     String output = "";
     for (int i = 0; i < this.data.length; i++) {
       for (int j = 0; j < this.data[i].length; j++) {
@@ -159,13 +157,14 @@ public class Image {
   }
 
   /**
-   * TODO Javadoc.
-   * @return
+   * Method to return this image as a 3D array of integers. // TODO More detailed explanation?
+   *
+   * @return This image as a 3D array of integers.
    */
   public int[][][] get3Ddata() {
     int[][][] output = new int[data.length][data[0].length][3];
-    for (int i = 0; i < data.length; i++ ) {
-      for (int j = 0; j < data[0].length; j++ ) {
+    for (int i = 0; i < data.length; i++) {
+      for (int j = 0; j < data[0].length; j++) {
         output[i][j][0] = this.data[i][j].getRed();
         output[i][j][1] = this.data[i][j].getGreen();
         output[i][j][2] = this.data[i][j].getBlue();
@@ -173,7 +172,6 @@ public class Image {
     }
     return output;
   }
-
 
 
 }
