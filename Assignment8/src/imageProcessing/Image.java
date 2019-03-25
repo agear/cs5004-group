@@ -1,7 +1,5 @@
 package imageProcessing;
 
-//TODO delete?
-
 /**
  * This class represents and image. An image is 2D array of pixel objects.
  */
@@ -34,13 +32,49 @@ public class Image {
   }
 
   /**
-   * Constructs an image a 2D array of pixel objects.
+   * Constructs an image with a 2D array of pixel objects.
    *
    * @param data A 2D array of pixel objects.
    */
   // Alternate way of creating data
   public Image(Pixel[][] data) {
     this.data = data;
+  }
+
+  //TODO This creates a NullPointerException.
+
+  /**
+   * Constructor for an empty image. Use for generative images.
+   */
+  public Image() {
+    for (int x = 0; x < 300; x++)
+      for (int y = 0; y < 300; y++) {
+        Pixel newPixel = new Pixel(255, 255, 255);
+        this.data[x][y] = newPixel;
+      }
+  }
+
+  //TODO This creates a NullPointerException.
+  public Image horizontalStripes() {
+    //Pixel[][] rainbow;
+
+    for (int x = 0; x < 300; x++)
+      for (int y = 0; y < 100; y++) {
+        Pixel newPixel = new Pixel(0, 0, 255);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 0; x < 300; x++)
+      for (int y = 101; y < 200; y++) {
+        Pixel newPixel = new Pixel(0, 255, 0);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 0; x < 300; x++)
+      for (int y = 201; y < 300; y++) {
+        Pixel newPixel = new Pixel(255, 0, 0);
+        this.data[x][y] = newPixel;
+      }
+    Image generatedImage = new Image(this.data);
+    return generatedImage;
   }
 
   /**
@@ -112,6 +146,7 @@ public class Image {
   }
 
   // TODO Move to filter class? I.e. public Image applyFilter(Image unfilteredImage)?
+
   /**
    * Applies the given filter to this image.
    *
@@ -144,10 +179,9 @@ public class Image {
   }
 
   // TODO Move to Transformation class? I.e. public Image Transform(Image untransformedImage)?
+
   /**
    * // TODO Java doc
-   * @param inputTransformation
-   * @return
    */
   public Image Transform(Transformation inputTransformation) {
 
@@ -173,6 +207,7 @@ public class Image {
     Image transformedImage = new Image(output);
     return transformedImage;
   }
+
   /**
    * TODO Javadoc. Helper method for Transform()? Move to Transformation class?
    *
@@ -183,12 +218,12 @@ public class Image {
     // Get the matrix of the transformation.
     double[][] matrix = inputTransformation.getData();
 
-    double redPrime = (matrix[0][0]*inputPixel.getRed() + matrix[0][1]*inputPixel.getGreen()
-            + matrix[0][2]*inputPixel.getBlue());
-    double greenPrime = (matrix[1][0]*inputPixel.getRed() + matrix[1][1]*inputPixel.getGreen()
-            + matrix[1][2]*inputPixel.getBlue());
-    double bluePrime = (matrix[2][0]*inputPixel.getRed() + matrix[2][1]*inputPixel.getGreen()
-            + matrix[2][2]*inputPixel.getBlue());
+    double redPrime = (matrix[0][0] * inputPixel.getRed() + matrix[0][1] * inputPixel.getGreen()
+            + matrix[0][2] * inputPixel.getBlue());
+    double greenPrime = (matrix[1][0] * inputPixel.getRed() + matrix[1][1] * inputPixel.getGreen()
+            + matrix[1][2] * inputPixel.getBlue());
+    double bluePrime = (matrix[2][0] * inputPixel.getRed() + matrix[2][1] * inputPixel.getGreen()
+            + matrix[2][2] * inputPixel.getBlue());
 
     // Round double values and cast to ints.
     Pixel newPixel = new Pixel((int) Math.round(redPrime), (int) Math.round(greenPrime),
@@ -212,7 +247,8 @@ public class Image {
   }
 
   /**
-   * Method to return this image as a 3D array of integers. // TODO More detailed explanation? I.e. what is stored in each dimension of the array?
+   * Method to return this image as a 3D array of integers. // TODO More detailed explanation? I.e.
+   * what is stored in each dimension of the array?
    *
    * @return This image as a 3D array of integers.
    */
