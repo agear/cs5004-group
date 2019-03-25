@@ -3,6 +3,10 @@ package imageProcessing;
 import java.util.Arrays;
 import java.io.IOException;
 
+
+/**
+ * TODO Javadoc.
+ */
 public class Image {
 
   public Pixel[][] data;
@@ -25,11 +29,21 @@ public class Image {
 
   }
 
+  /**
+   * TODO Javadoc.
+   * @param data
+   */
   // Alternate way of creating data
   public Image(Pixel[][] data) {
     this.data = data;
   }
 
+  /**
+   * TODO Javadoc.
+   * @param x
+   * @param y
+   * @return
+   */
   private boolean isValidPixelPosition(int x, int y) {
 
     if (x < this.data.length && y < this.data[0].length && x >= 0 && y >= 0 ) {
@@ -40,7 +54,14 @@ public class Image {
 
   }
 
-
+  /**
+   * TODO Javadoc.
+   * @param inputFilter
+   * @param inputPixel
+   * @param x
+   * @param y
+   * @return
+   */
   private Pixel applyFilterToPixel(Filter inputFilter, Pixel inputPixel, int x, int y) {
 
     // Get the kernel of the filter
@@ -81,7 +102,11 @@ public class Image {
 
   }
 
-
+  /**
+   * TODO Javadoc.
+   * @param inputFilter
+   * @return
+   */
   public Image applyFilter(Filter inputFilter) {
 
     // Initialize output object
@@ -108,7 +133,10 @@ public class Image {
   }
 
 
-
+  /**
+   * TODO Javadoc.
+   * @return
+   */
   public String toString(){
     String output = "";
     for (int i = 0; i < this.data.length; i++) {
@@ -120,6 +148,10 @@ public class Image {
     return output;
   }
 
+  /**
+   * TODO Javadoc.
+   * @return
+   */
   public int[][][] get3Ddata() {
     int[][][] output = new int[data.length][data[0].length][3];
     for (int i = 0; i < data.length; i++ ) {

@@ -1,5 +1,8 @@
 package imageProcessing;
 
+/**
+ * TODO Javadoc.
+ */
 public class Pixel {
 
   int red;
@@ -8,6 +11,12 @@ public class Pixel {
   int min = 0;
   int max = 255;
 
+  /**
+   * TODO Javadoc.
+   * @param red
+   * @param green
+   * @param blue
+   */
   public Pixel(int red, int green, int blue) {
 
 
@@ -55,18 +64,37 @@ public class Pixel {
 //    this.blue = (int) (this.blue * coefficient);
 //  }
 
+  /**
+   * TODO Javadoc.
+   * @param coefficient
+   * @return
+   */
   public double vectorRed(double coefficient) {
     return this.red * coefficient;
   }
 
+  /**
+   * TODO Javadoc.
+   * @param coefficient
+   * @return
+   */
   public double vectorBlue(double coefficient) {
     return this.blue * coefficient;
   }
 
+  /**
+   * TODO Javadoc.
+   * @param coefficient
+   * @return
+   */
   public double vectorGreen(double coefficient) {
     return this.green * coefficient;
   }
 
+  /**
+   * TODO Javadoc.
+   * @return
+   */
   public String toString() {
     String output = "[R:" + this.red + " G:" + this.green + " B:" + this.blue + "]";
     return output;
