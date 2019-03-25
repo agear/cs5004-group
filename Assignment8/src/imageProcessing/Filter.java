@@ -24,7 +24,7 @@ public class Filter {
   /**
    * Returns a copy of the Kernel of this Filter.
    *
-   * @return 2D array of doubles.
+   * @return A 2D array of doubles.
    */
   public double[][] getData() {
     return this.kernel.clone();

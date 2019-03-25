@@ -1,21 +1,25 @@
 package imageProcessing;
 
 /**
- * TODO Javadoc.
+ * This class represents a pixel. A Pixel has red, green and blue values which can take integer
+ * values between 0 and 255.
  */
 public class Pixel {
 
-  int red;
-  int green;
-  int blue;
-  int min = 0;
-  int max = 255;
+  private int red;
+  private int green;
+  private int blue;
+  final int MIN = 0;
+  final int MAX = 255;
 
   /**
-   * TODO Javadoc.
-   * @param red
-   * @param green
-   * @param blue
+   * Constructs a pixel object. Takes three integers between 0 and 255 to represent it's red, green,
+   * and blue values. Values less than 0 will be "clamped" to 0 and values greater than 255 will be
+   * "clamped" to 255.
+   *
+   * @param red   Integer value between 0 and 255.
+   * @param green Integer value between 0 and 255.
+   * @param blue  Integer value between 0 and 255.
    */
   public Pixel(int red, int green, int blue) {
 
@@ -24,28 +28,29 @@ public class Pixel {
     this.green = green;
     this.blue = blue;
 
-    if (red < min) {
-      this.red = min;
+    //Clamp values between 0 and 255.
+    if (red < MIN) {
+      this.red = MIN;
     }
-    if (blue < min) {
-      this.blue = min;
+    if (blue < MIN) {
+      this.blue = MIN;
     }
-    if (green < min) {
-      this.green = min;
+    if (green < MIN) {
+      this.green = MIN;
     }
-    if (red > max) {
-      this.red = max;
+    if (red > MAX) {
+      this.red = MAX;
     }
-    if (blue > max) {
-      this.blue = max;
+    if (blue > MAX) {
+      this.blue = MAX;
     }
-    if (green > max) {
-      this.green = max;
+    if (green > MAX) {
+      this.green = MAX;
     }
 
   }
 
-
+// TODO Delete?
 //  public void filterRed(double coefficient) {
 //    this.red = (int) (this.red * coefficient);
 //  }
@@ -65,35 +70,39 @@ public class Pixel {
 //  }
 
   /**
-   * TODO Javadoc.
-   * @param coefficient
-   * @return
+   * Returns the red value of this pixel, scaled by a coefficient.
+   *
+   * @param coefficient To scale the red value of this pixel by.
+   * @return A double representing the red value of this pixel, scaled by a coefficient.
    */
   public double vectorRed(double coefficient) {
     return this.red * coefficient;
   }
 
   /**
-   * TODO Javadoc.
-   * @param coefficient
-   * @return
+   * Returns the blue value of this pixel, scaled by a coefficient.
+   *
+   * @param coefficient To scale the blue value of this pixel by.
+   * @return A double representing the blue value of this pixel, scaled by a coefficient.
    */
   public double vectorBlue(double coefficient) {
     return this.blue * coefficient;
   }
 
   /**
-   * TODO Javadoc.
-   * @param coefficient
-   * @return
+   * Returns the green value of this pixel, scaled by a coefficient.
+   *
+   * @param coefficient To scale the green value of this pixel by.
+   * @return A double representing the green value of this pixel, scaled by a coefficient.
    */
   public double vectorGreen(double coefficient) {
     return this.green * coefficient;
   }
 
   /**
-   * TODO Javadoc.
-   * @return
+   * Returns the red, green and blue values as a string, formatted: "[R: red, G: green, B: blue]".
+   *
+   * @return A string in the format: "[R: red, G: green, B: blue]".
    */
   public String toString() {
     String output = "[R:" + this.red + " G:" + this.green + " B:" + this.blue + "]";
