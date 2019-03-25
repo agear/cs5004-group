@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import imageProcessing.*;
 
+//TODO should we have a driver class to output all these images?
 public class test {
 
 //  @Test
@@ -136,6 +137,37 @@ public class test {
   }
 
 
+  @Test
+  public void testSepia() throws IOException {
+    ImageUtil manhattan = new ImageUtil();
+    int[][][] result = manhattan.readImage("./images/manhattan-small.png");
+    Image testImage = new Image(result);
 
+    double[][] sepiaMatrix =  { {0.393, 0.769, 0.189},
+            {0.349, 0.686, 0.168},
+            {0.272, 0.534, 0.131} };
+    Transformation sepia = new Transformation(sepiaMatrix);
+    testImage = testImage.Transform(sepia);
+    manhattan.writeImage(testImage.get3Ddata(),
+            manhattan.getWidth("./images/manhattan-small.png"),
+            manhattan.getHeight("./images/manhattan-small.png"),
+            "makeManhattanSepia.png");
+  }
 
+  @Test
+  public void testGreyScale() throws IOException {
+    ImageUtil manhattan = new ImageUtil();
+    int[][][] result = manhattan.readImage("./images/manhattan-small.png");
+    Image testImage = new Image(result);
+
+    double[][] grayscaleMatrix =  { {0.2126, 0.7152, 0.0722},
+            {0.2126, 0.7152, 0.0722},
+            {0.2126, 0.7152, 0.0722} };
+    Transformation greyscale = new Transformation(grayscaleMatrix);
+    testImage = testImage.Transform(greyscale);
+    manhattan.writeImage(testImage.get3Ddata(),
+            manhattan.getWidth("./images/manhattan-small.png"),
+            manhattan.getHeight("./images/manhattan-small.png"),
+            "makeManhattanGreyscale.png");
+  }
 }

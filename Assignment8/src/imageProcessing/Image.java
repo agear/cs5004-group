@@ -105,7 +105,8 @@ public class Image {
     }
 
     // Round double values and cast to ints.
-    Pixel newPixel = new Pixel((int) Math.round(redSum), (int) Math.round(greenSum), (int) Math.round(blueSum));
+    Pixel newPixel = new Pixel((int) Math.round(redSum), (int) Math.round(greenSum),
+            (int) Math.round(blueSum));
     return newPixel;
 
   }
@@ -142,6 +143,59 @@ public class Image {
 
   }
 
+  // TODO Move to Transformation class? I.e. public Image Transform(Image untransformedImage)?
+  /**
+   * // TODO Java doc
+   * @param inputTransformation
+   * @return
+   */
+  public Image Transform(Transformation inputTransformation) {
+
+    // Initialize output object
+    Pixel[][] output = new Pixel[this.data.length][this.data[0].length];
+
+    // For each pixel in the image, apply the transformation. Add that new value to the
+    // corresponding value
+    // in a new set of data, and then create a new Image object from that. Return the resulting obj.
+    for (int x = 0; x < data.length; x++) {
+      for (int y = 0; y < data[x].length; y++) {
+
+        //Pixel filteredPixel = new Pixel(data[i][j].red, 0, data[i][j].blue);
+
+        // Apply the transformation, and receive new value
+        Pixel transformedPixel = this.TransformPixel(inputTransformation, data[x][y], x, y);
+
+        // Put the new pixel in the output image
+        output[x][y] = transformedPixel;
+      }
+    }
+
+    Image transformedImage = new Image(output);
+    return transformedImage;
+  }
+  /**
+   * TODO Javadoc. Helper method for Transform()? Move to Transformation class?
+   *
+   * @return A new pixel object that is the result of applying this filter to a pixel.
+   */
+  private Pixel TransformPixel(Transformation inputTransformation, Pixel inputPixel, int x, int y) {
+
+    // Get the matrix of the transformation.
+    double[][] matrix = inputTransformation.getData();
+
+    double redPrime = (matrix[0][0]*inputPixel.getRed() + matrix[0][1]*inputPixel.getGreen()
+            + matrix[0][2]*inputPixel.getBlue());
+    double greenPrime = (matrix[1][0]*inputPixel.getRed() + matrix[1][1]*inputPixel.getGreen()
+            + matrix[1][2]*inputPixel.getBlue());
+    double bluePrime = (matrix[2][0]*inputPixel.getRed() + matrix[2][1]*inputPixel.getGreen()
+            + matrix[2][2]*inputPixel.getBlue());
+
+    // Round double values and cast to ints.
+    Pixel newPixel = new Pixel((int) Math.round(redPrime), (int) Math.round(greenPrime),
+            (int) Math.round(bluePrime));
+    return newPixel;
+
+  }
 
   /**
    * TODO Javadoc. Are we using this or just for trouble shooting?
@@ -158,7 +212,7 @@ public class Image {
   }
 
   /**
-   * Method to return this image as a 3D array of integers. // TODO More detailed explanation?
+   * Method to return this image as a 3D array of integers. // TODO More detailed explanation? I.e. what is stored in each dimension of the array?
    *
    * @return This image as a 3D array of integers.
    */

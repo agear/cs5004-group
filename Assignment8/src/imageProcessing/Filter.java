@@ -1,5 +1,7 @@
 package imageProcessing;
 
+//TODO Should this be an interface with Blur and Sharpen as concrete classes? I.e. each class
+// should do one thing only?
 /**
  * This class represents a filter to apply to an image. A filter has a "Kernel" which is a 2D array
  * of numbers with odd dimensions (3x3, 5x5, etc).
