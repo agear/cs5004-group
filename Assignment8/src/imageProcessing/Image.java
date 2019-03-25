@@ -1,17 +1,22 @@
 package imageProcessing;
 
+//TODO delete?
 import java.util.Arrays;
 import java.io.IOException;
 
 
 /**
- * TODO Javadoc.
+ * This class represents and image. An image is 2D array of pixel objects.
  */
 public class Image {
 
   public Pixel[][] data;
 
   // Takes data of the type outputted by ImageUtil class (TODO describe better)
+  /**
+   * Constructs an image object using 3D array of integer values.
+   * @param data A 3D array of integer values.
+   */
   public Image(int[][][] data)  {
 
     // Initialize data field to input length
@@ -30,8 +35,8 @@ public class Image {
   }
 
   /**
-   * TODO Javadoc.
-   * @param data
+   * Constructs an image a 2D array of pixel objects.
+   * @param data A 2D array of pixel objects.
    */
   // Alternate way of creating data
   public Image(Pixel[][] data) {
@@ -39,28 +44,32 @@ public class Image {
   }
 
   /**
-   * TODO Javadoc.
-   * @param x
-   * @param y
-   * @return
+   * Checks if the image contains the given pixel position.
+   * @param x Position of the pixel to check.
+   * @param y Position of the pixel to check.
+   * @return True if x, and y values exist in this image. False otherwise.
    */
   private boolean isValidPixelPosition(int x, int y) {
 
-    if (x < this.data.length && y < this.data[0].length && x >= 0 && y >= 0 ) {
-      return true;
-    }
-
-    return false;
-
+    return (x < this.data.length && y < this.data[0].length && x >= 0 && y >= 0 );
   }
 
+  // TODO Delete?
+//    if (x < this.data.length && y < this.data[0].length && x >= 0 && y >= 0 ) {
+//      return true;
+//    }
+//
+//    return false;
+//
+//  }
+
   /**
-   * TODO Javadoc.
+   * TODO Javadoc. and general clean up. Helper method for applyFilter()?
    * @param inputFilter
    * @param inputPixel
    * @param x
    * @param y
-   * @return
+   * @return A new pixel object that is the result of applying this filter to a pixel.
    */
   private Pixel applyFilterToPixel(Filter inputFilter, Pixel inputPixel, int x, int y) {
 
@@ -97,15 +106,16 @@ public class Image {
 
     }
 
+    // Round double values and cast to ints.
     Pixel newPixel = new Pixel((int)Math.round(redSum),(int)Math.round(greenSum),(int)Math.round(blueSum));
     return newPixel;
 
   }
 
   /**
-   * TODO Javadoc.
-   * @param inputFilter
-   * @return
+   * Applies the given filter to this image.
+   * @param inputFilter The filter to apply to this image.
+   * @return A copy of this image with the given filter applied.
    */
   public Image applyFilter(Filter inputFilter) {
 
@@ -156,9 +166,9 @@ public class Image {
     int[][][] output = new int[data.length][data[0].length][3];
     for (int i = 0; i < data.length; i++ ) {
       for (int j = 0; j < data[0].length; j++ ) {
-        output[i][j][0] = this.data[i][j].red;
-        output[i][j][1] = this.data[i][j].green;
-        output[i][j][2] = this.data[i][j].blue;
+        output[i][j][0] = this.data[i][j].getRed();
+        output[i][j][1] = this.data[i][j].getGreen();
+        output[i][j][2] = this.data[i][j].getBlue();
       }
     }
     return output;

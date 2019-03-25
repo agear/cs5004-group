@@ -50,6 +50,33 @@ public class Pixel {
 
   }
 
+  /**
+   * Method to get this pixels red value.
+   *
+   * @return An int representing this pixel's red value.
+   */
+  public int getRed() {
+    return this.red;
+  }
+
+  /**
+   * Method to get this pixels green value.
+   *
+   * @return An int representing this pixel's green value.
+   */
+  public int getGreen() {
+    return this.green;
+  }
+
+  /**
+   * Method to get this pixels blue value.
+   *
+   * @return An int representing this pixel's blue value.
+   */
+  public int getBlue() {
+    return this.blue;
+  }
+
 // TODO Delete?
 //  public void filterRed(double coefficient) {
 //    this.red = (int) (this.red * coefficient);
