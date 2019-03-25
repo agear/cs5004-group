@@ -15,7 +15,7 @@ public class Filter {
    * Constructs a filter object. A filter has a "Kernel" which is a 2D array of doubles with odd
    * dimensions (3x3, 5x5, etc).
    *
-   * @param kernel A 2D array of numbers with odd dimensions (3x3, 5x5, etc).
+   * @param kernel A 2D array of doubles with odd dimensions (3x3, 5x5, etc).
    */
   public Filter(double kernel[][]) {
     this.kernel = kernel;

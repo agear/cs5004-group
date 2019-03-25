@@ -65,7 +65,7 @@ public class Image {
 //  }
 
   /**
-   * TODO Javadoc. and general clean up. Helper method for applyFilter()?
+   * TODO Javadoc. and general clean up. Helper method for applyFilter()? Move to Filter class?
    *
    * @return A new pixel object that is the result of applying this filter to a pixel.
    */
@@ -110,6 +110,7 @@ public class Image {
 
   }
 
+  // TODO Move to filter class? I.e. public Image applyFilter(Image unfilteredImage)?
   /**
    * Applies the given filter to this image.
    *
