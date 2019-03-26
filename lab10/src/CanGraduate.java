@@ -7,7 +7,7 @@ public class CanGraduate implements Observer {
    */
   @Override
   public void notifyObserver() {
-
+    this.CoreGPA = GradeRecord.getCoreGPA();
   }
 
   //A student must have a GPA of at least 3.0 in all core courses combined
@@ -18,6 +18,6 @@ public class CanGraduate implements Observer {
    * TODO Javadoc
    */
   public boolean getStatus() {
-    return (CoreGPA >= 3.0);
+    return (this.CoreGPA >= 3.0);
   }
 }

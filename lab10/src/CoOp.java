@@ -7,7 +7,8 @@ public class CoOp implements Observer {
    */
   @Override
   public void notifyObserver() {
-
+    this.GPA = GradeRecord.getGPA();
+    this.credits = GradeRecord.getTotalHours();
   }
 
   //A student is eligible to go on co-op at any time after taking at least 16 credits and maintaining
@@ -17,6 +18,6 @@ public class CoOp implements Observer {
    * @return
    */
   public boolean getStatus() {
-    return (credits >= 16 && GPA >= 3.0);
+    return (this.credits >= 16 && this.GPA >= 3.0);
   }
 }
