@@ -2,11 +2,21 @@ public class CoOp implements Observer {
 
   private double GPA;
   private int credits;
+  Subject gradeRecord;
+
+  /** Constructor.
+   * TODO Javadoc
+   * @param gradeRecord
+   */
+  public CoOp(Subject gradeRecord){
+    this.gradeRecord = gradeRecord;
+    gradeRecord.add(this);
+  }
   /**
    * TODO Javadoc
    */
   @Override
-  public void notifyObserver() {
+  public void update() {
     this.GPA = GradeRecord.getGPA();
     this.credits = GradeRecord.getTotalHours();
   }

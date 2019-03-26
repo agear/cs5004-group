@@ -52,10 +52,14 @@ public class GradeRecord implements Subject {
   /**
    * TODO Javadoc.
    */
-  @Override
-  public void register(Observer registree) {
+  public void add(Observer registree) {
     this.observerList.add(registree);
   }
+
+  public void remove(Observer deregistree) {
+    this.observerList.remove(deregistree);
+  }
+
 
   /**
    * TODO Javadoc.
@@ -72,7 +76,7 @@ public class GradeRecord implements Subject {
     this.GPA = totalQualityPoints / totalHours;
     // Notify all observers of update
     for (Observer observer : observerList) {
-      observer.notifyObserver();
+      observer.update();
     }
   }
 

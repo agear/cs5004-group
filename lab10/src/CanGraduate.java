@@ -1,12 +1,21 @@
 public class CanGraduate implements Observer {
 
   private double CoreGPA;
+  Subject gradeRecord;
 
+  /** Constructor.
+   * TODO Javadoc
+   * @param gradeRecord
+   */
+  public CanGraduate(Subject gradeRecord) {
+    this.gradeRecord = gradeRecord;
+    gradeRecord.add(this);
+  }
   /**
    * TODO Javadoc
    */
   @Override
-  public void notifyObserver() {
+  public void update() {
     this.CoreGPA = GradeRecord.getCoreGPA();
   }
 
