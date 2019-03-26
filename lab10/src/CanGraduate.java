@@ -1,7 +1,7 @@
 public class CanGraduate implements Observer {
 
   private double CoreGPA;
-  Subject gradeRecord;
+  GradeRecord gradeRecord;
 
   /**
    * Constructor. TODO Javadoc

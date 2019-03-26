@@ -1,8 +1,8 @@
 public class CoOp implements Observer {
 
   private double GPA;
-  private int credits;
-  Subject gradeRecord;
+  private double credits;
+  GradeRecord gradeRecord;
 
   /**
    * Constructor. TODO Javadoc

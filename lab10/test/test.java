@@ -7,7 +7,7 @@ public class test {
 
   @Test
   public void testA() {
-    Subject testGradeRecord;
+    GradeRecord testGradeRecord;
     Observer testGoodStanding;
     Observer testCanGraduate;
     Observer testCoOp;

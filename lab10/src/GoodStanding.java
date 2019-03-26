@@ -19,8 +19,9 @@ public class GoodStanding implements Observer {
     this.GPA = this.gradeRecord.getGPA();
   }
 
-  //the cumulative GPA must be at 3.0 or above at any point in the program to be in good academic standing
 
+
+  //the cumulative GPA must be at 3.0 or above at any point in the program to be in good academic standing
   /**
    * TODO Javadoc
    */
