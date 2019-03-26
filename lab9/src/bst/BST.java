@@ -53,8 +53,7 @@ public interface BST<T extends Comparable<T>> {
    * Finds the rank of an element in the tree. If the element does not exist in the tree, return 0.
    *
    * @param obj Element to find the rank of.
-   * @return an int representing the rank of an element in the tree. If the element does not exist
-   * in the tree, returns 0.
+   * @return an int representing the rank of an element in the tree
    */
   int rank(T obj);
 

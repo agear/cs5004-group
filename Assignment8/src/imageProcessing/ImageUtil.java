@@ -40,6 +40,24 @@ public class ImageUtil {
     return result;
   }
 
+  public static int[][][] createWhiteImage(int width, int height)  {
+
+
+    int[][][] result = new int[height][width][3];
+
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        Color c = Color.WHITE;
+        result[i][j][0] = c.getRed();
+        result[i][j][1] = c.getGreen();
+        result[i][j][2] = c.getBlue();
+      }
+    }
+
+    return result;
+  }
+
+
   /**
    * Convenience function to get the width of an image.
    *
