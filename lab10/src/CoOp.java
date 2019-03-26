@@ -4,21 +4,20 @@ public class CoOp implements Observer {
   private int credits;
   Subject gradeRecord;
 
-  /** Constructor.
-   * TODO Javadoc
-   * @param gradeRecord
+  /**
+   * Constructor. TODO Javadoc
    */
-  public CoOp(Subject gradeRecord){
+  public CoOp(GradeRecord gradeRecord){
     this.gradeRecord = gradeRecord;
-    gradeRecord.add(this);
+    gradeRecord.register(this);
   }
   /**
    * TODO Javadoc
    */
   @Override
   public void update() {
-    this.GPA = GradeRecord.getGPA();
-    this.credits = GradeRecord.getTotalHours();
+    this.GPA = this.gradeRecord.getGPA();
+    this.credits = this.gradeRecord.getTotalHours();
   }
 
   //A student is eligible to go on co-op at any time after taking at least 16 credits and maintaining

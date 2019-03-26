@@ -1,5 +1,5 @@
 /**
- *  TODO Javadoc
+ * TODO Javadoc
  */
 public interface Observer {
 

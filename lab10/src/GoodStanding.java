@@ -1,15 +1,14 @@
-public class GoodStanding implements Observer{
+public class GoodStanding implements Observer {
 
   private double GPA;
-  private Subject gradeRecord;
+  private GradeRecord gradeRecord;
 
-  /** Constructor.
-   * TODO Javadoc
-   * @param gradeRecord
+  /**
+   * Constructor. TODO Javadoc
    */
-  public GoodStanding(Subject gradeRecord) {
-  this.gradeRecord = gradeRecord;
-  gradeRecord.add(this);
+  public GoodStanding(GradeRecord gradeRecord) {
+    this.gradeRecord = gradeRecord;
+    gradeRecord.register(this);
   }
 
   /**
@@ -21,9 +20,9 @@ public class GoodStanding implements Observer{
   }
 
   //the cumulative GPA must be at 3.0 or above at any point in the program to be in good academic standing
+
   /**
    * TODO Javadoc
-   * @return
    */
   public boolean getStatus() {
 

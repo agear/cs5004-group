@@ -10,7 +10,7 @@ public class GradeRecord implements Subject {
   private double CoreGPA;
   private double totalHours;
   private double totalQualityPoints;
-  private HashMap<String, Double> CREDITHOURS;
+  private final HashMap<String, Double> CREDITHOURS;
   private final HashMap<String, Double> GRADES;
 
   /**
@@ -19,6 +19,7 @@ public class GradeRecord implements Subject {
   public GradeRecord() {
     this.observerList = new ArrayList<Observer>();
     this.courses = new ArrayList<String>();
+    // Map courses to their number of credit hours.
     this.CREDITHOURS = new HashMap<>();
     this.CREDITHOURS.put("CS5010", 4.0);
     this.CREDITHOURS.put("CS5800", 4.0);
@@ -31,6 +32,7 @@ public class GradeRecord implements Subject {
     this.CREDITHOURS.put("CS5005", 4.0);
     this.CREDITHOURS.put("CS5006", 2.0);
     this.CREDITHOURS.put("CS5007", 2.0);
+    // Map letter grades to numerical equivalents.
     this.GRADES = new HashMap<>();
     this.GRADES.put("A", 4.000);
     this.GRADES.put("A-", 3.667);
@@ -52,19 +54,28 @@ public class GradeRecord implements Subject {
   /**
    * TODO Javadoc.
    */
-  public void add(Observer registree) {
+  public void register(Observer registree) {
     this.observerList.add(registree);
   }
 
+  /**
+   * TODO Javadoc.
+   */
   public void remove(Observer deregistree) {
     this.observerList.remove(deregistree);
   }
 
+  /**
+   * TODO Javadoc.
+   */
+  public void notifyObservers() {
+    for (Observer observer : observerList) {
+      observer.update();
+    }
+  }
 
   /**
    * TODO Javadoc.
-   * @param course
-   * @param grade
    */
   public void addCourseGrade(String course, String grade) {
     // TODO Add course grade data
@@ -74,10 +85,7 @@ public class GradeRecord implements Subject {
     double qualityPoints = hours * this.GRADES.get(grade);
     totalQualityPoints += qualityPoints;
     this.GPA = totalQualityPoints / totalHours;
-    // Notify all observers of update
-    for (Observer observer : observerList) {
-      observer.update();
-    }
+    notifyObservers();
   }
 
   public double calculateGPA() {

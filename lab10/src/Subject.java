@@ -5,14 +5,12 @@ public interface Subject {
 
   /**
    * TODO javadoc
-   * @param registree
    */
-  void add(Observer registree);
+  void register(Observer registree);
 
 
   /**
    * TODO javadoc
-   * @param registree
    */
   void remove(Observer registree);
 

@@ -3,20 +3,20 @@ public class CanGraduate implements Observer {
   private double CoreGPA;
   Subject gradeRecord;
 
-  /** Constructor.
-   * TODO Javadoc
-   * @param gradeRecord
+  /**
+   * Constructor. TODO Javadoc
    */
-  public CanGraduate(Subject gradeRecord) {
+  public CanGraduate(GradeRecord gradeRecord) {
     this.gradeRecord = gradeRecord;
-    gradeRecord.add(this);
+    gradeRecord.register(this);
   }
+
   /**
    * TODO Javadoc
    */
   @Override
   public void update() {
-    this.CoreGPA = GradeRecord.getCoreGPA();
+    this.CoreGPA = this.gradeRecord.getCoreGPA();
   }
 
   //A student must have a GPA of at least 3.0 in all core courses combined
