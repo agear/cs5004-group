@@ -2,23 +2,37 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Represents a student's transcript. A student can add a course, as long as it is
+ * in the course directory (CREDITHOURS). They add a course with a letter grade.
+ */
 public class GradeRecord implements Subject {
 
   private List<Observer> observerList;
   private List<String> courses;
-  private double GPA;
-  private double CoreGPA;
+  private double gpa;
+  private double coreGPA;
   private double totalHours;
-  private double totalQualityPoints;
+  private HashMap<String, String> studentGrades;
   private final HashMap<String, Double> CREDITHOURS;
-  private final HashMap<String, Double> GRADES;
+  private final HashMap<String, Double> GRADEVALUES;
+  private final List<String> CORECOURSESALIGN;
+  private final List<String> CORECOURSES;
+
+
 
   /**
-   * TODO Javadoc.
+   * Initializes a grade record. It stores the default values for credit hours,
+   * for the relationship between a grade letter and a GPA value, and lists of the
+   * core MSCS and ALIGN program courses.
    */
   public GradeRecord() {
+
+
     this.observerList = new ArrayList<Observer>();
     this.courses = new ArrayList<String>();
+    this.studentGrades = new HashMap<String, String>();
+
     // Map courses to their number of credit hours.
     this.CREDITHOURS = new HashMap<>();
     this.CREDITHOURS.put("CS5010", 4.0);
@@ -29,44 +43,65 @@ public class GradeRecord implements Subject {
     this.CREDITHOURS.put("CS5002", 4.0);
     this.CREDITHOURS.put("CS5003", 4.0);
     this.CREDITHOURS.put("CS5004", 4.0);
+    this.CREDITHOURS.put("CS5011", 4.0);
+    this.CREDITHOURS.put("CS5012", 4.0);
+    this.CREDITHOURS.put("CS5013", 4.0);
+    this.CREDITHOURS.put("CS5014", 4.0);
     this.CREDITHOURS.put("CS5005", 4.0);
     this.CREDITHOURS.put("CS5006", 2.0);
     this.CREDITHOURS.put("CS5007", 2.0);
-    // Map letter grades to numerical equivalents.
-    this.GRADES = new HashMap<>();
-    this.GRADES.put("A", 4.000);
-    this.GRADES.put("A-", 3.667);
-    this.GRADES.put("B+", 3.333);
-    this.GRADES.put("B", 3.000);
-    this.GRADES.put("B-", 2.667);
-    this.GRADES.put("C+", 2.333);
-    this.GRADES.put("C", 2.000);
-    this.GRADES.put("C-", 1.667);
-    this.GRADES.put("D+", 1.333);
-    this.GRADES.put("D", 1.000);
-    this.GRADES.put("D-", 0.667);
-    this.GRADES.put("F", 0.000);
 
+    // Map letter grades to numerical equivalents.
+    this.GRADEVALUES = new HashMap<>();
+    this.GRADEVALUES.put("A", 4.000);
+    this.GRADEVALUES.put("A-", 3.667);
+    this.GRADEVALUES.put("B+", 3.333);
+    this.GRADEVALUES.put("B", 3.000);
+    this.GRADEVALUES.put("B-", 2.667);
+    this.GRADEVALUES.put("C+", 2.333);
+    this.GRADEVALUES.put("C", 2.000);
+    this.GRADEVALUES.put("C-", 1.667);
+    this.GRADEVALUES.put("D+", 1.333);
+    this.GRADEVALUES.put("D", 1.000);
+    this.GRADEVALUES.put("D-", 0.667);
+    this.GRADEVALUES.put("F", 0.000);
+
+    this.CORECOURSESALIGN = new ArrayList<String>();
+    this.CORECOURSESALIGN.add("CS5004");
+    this.CORECOURSESALIGN.add("CS5800");
+    this.CORECOURSESALIGN.add("CS5600");
+    this.CORECOURSESALIGN.add("CS5500");
+
+    this.CORECOURSES = new ArrayList<String>();
+    this.CORECOURSES.add("CS5010");
+    this.CORECOURSES.add("CS5800");
+    this.CORECOURSES.add("CS5600");
+    this.CORECOURSES.add("CS5500");
 
   }
 
 
   /**
-   * TODO Javadoc.
+   * Signs up an observer object to be notified when certain things happen
+   * to this transcript, such as a course being taken.
+   * @param registree The object that wants to know what's going on
    */
   public void register(Observer registree) {
     this.observerList.add(registree);
   }
 
   /**
-   * TODO probably not strictly necessary for this assignment. TODO javadoc
+   * Removes an observer from the observer list so they don't get notified about
+   * changes/milestones to this grade record anymore.
+   * @param deregistree the object that will be removed from observer list
    */
   public void remove(Observer deregistree) {
     this.observerList.remove(deregistree);
   }
 
   /**
-   * TODO Javadoc.
+   * Sends an update to all observers when something happens (e.g., a course is added
+   * to the grade record).
    */
   public void notifyObservers() {
     for (Observer observer : observerList) {
@@ -75,85 +110,140 @@ public class GradeRecord implements Subject {
   }
 
   /**
-   * TODO Javadoc.
+   * Adds a course grade to this object, and recalculates GPA. Notifies observers.
+   * @param course The course that has been taken
+   * @param grade The grade earned in that course
+   * @throws IllegalArgumentException if the course doesn't exist at NEU
    */
-  public void addCourseGrade(String course, String grade) {
-    // TODO Add course grade data
-    this.courses.add(course);
-    double hours = this.CREDITHOURS.get(course);
-    this.totalHours += hours;
-    double qualityPoints = hours * this.GRADES.get(grade);
-    totalQualityPoints += qualityPoints;
-    this.GPA = totalQualityPoints / totalHours;
+  public void addCourseGrade(String course, String grade) throws IllegalArgumentException {
+
+    // If the course doesn't exist (i.e., have a # of hours), a student can't take it
+    if (!this.CREDITHOURS.containsKey(course)) {
+      throw new IllegalArgumentException("That course doesn't exist in our system.");
+    }
+
+
+    // Add the course to the list of taken courses if they haven't taken it before
+    if (!this.courses.contains(course)) {
+      this.courses.add(course);
+    }
+
+    // Add this student's grade to their transcript
+    this.studentGrades.put(course, grade);
+
+    // Calculate GPA and update
+    this.gpa = this.calculateGPA();
+
+    // Inform oberservers that the GPA has been updated
     notifyObservers();
   }
 
+  /** Calculates the student's GPA based on their grade and the weight of the course.
+   *
+   * @return the student's GPA (in a numeric value)
+   */
   public double calculateGPA() {
-    // 2. Cross out courses in which you received S, U, X, I, L, or W grades.
-    // Also, cross out courses with an E in the R column. These do not calculate into your QPA.
 
-    // 3. Write the numerical equivalent of the grade beside it on the transcript:
-    // A  = 4.000
-    // A- = 3.667
-    // B+ = 3.333
-    // B  = 3.000
-    // B- = 2.667
-    // C+ = 2.333
-    // C  = 2.000
-    // C- = 1.667
-    // D+ = 1.333
-    // D  = 1.000
-    // D- = 0.667
-    // F  = 0.000
+    // Accumulate a list of courses with grades
+    List<String> eligibleCourses = new ArrayList<String>();
 
-    // 4. Multiply the hours of each course by the numerical equivalent of the letter grade.
-    //   This is the quality-point number for the course.
 
-    // 5. Add all valid quality-point numbers.
+    // For each course, add it to the list of eligible courses
+    for (String course : this.courses) {
 
-    // 6. Add all hours taken at Northeastern—do not include transfer credit hours.
+      // Get the student's grade
+      String thisGrade = studentGrades.get(course);
 
-    // 7. Divide total quality points by total hours taken at Northeastern.
+      // If the student has a valid grade, add it to eligible list.
+      if (GRADEVALUES.keySet().contains(thisGrade)) {
+        eligibleCourses.add(course);
+      }
 
-    // 8. Result is your GPA or QPA.
+    }
 
-    return 0;
+    // Initialize variable to store total GPA points earned
+    double totalHours = 0;
+    double qualityPoints = 0;
+
+    // For each course, accumulate # hours and the grade value
+    for (String course : eligibleCourses) {
+
+      // Get # of credit hours the course is worth and accumulate that value
+      double hours = this.CREDITHOURS.get(course);
+      totalHours += hours;
+
+      // Convert the letter grade to a number grade
+      String letterGrade = this.studentGrades.get(course);
+
+      // Calculate GPA points
+      qualityPoints += hours * this.GRADEVALUES.get(letterGrade);
+
+    }
+
+    // Calculate core GPA, save it, return it
+    double gpa = qualityPoints / totalHours;
+    this.totalHours = totalHours;
+    this.gpa = gpa;
+    return this.gpa;
   }
 
+  /** The core corses for a regular MS student are: CS 5010, CS 5800 and one of CS 5500 and
+   * CS 5600. For ALIGN students, CS 5004 substitutes CS 5010 as a core course.
+   * These are the required courses for graduation with a GPA of 3.0+. This method
+   * calculates that GPA based on these courses.
+   *
+   * @return the core GPA of these important courses
+   */
   public double calculateCoreGPA() {
-    //A student must have a GPA of at least 3.0 in all core courses combined
-    // (CS 5010, CS 5800 and one of CS 5500 and CS 5600) in order to graduate.
-    // For ALIGN students, CS 5004 substitutes CS 5010 as a core course
 
-    // 2. Cross out courses in which you received S, U, X, I, L, or W grades.
-    // Also, cross out courses with an E in the R column. These do not calculate into your QPA.
+    // Accumulate a list of courses with grades
+    List<String> eligibleCourses = new ArrayList<String>();
 
-    // 3. Write the numerical equivalent of the grade beside it on the transcript:
-    // A  = 4.000
-    // A- = 3.667
-    // B+ = 3.333
-    // B  = 3.000
-    // B- = 2.667
-    // C+ = 2.333
-    // C  = 2.000
-    // C- = 1.667
-    // D+ = 1.333
-    // D  = 1.000
-    // D- = 0.667
-    // F  = 0.000
+    // For each course, maybe add it to the list of eligible courses
+    for (String course : this.courses ) {
 
-    // 4. Multiply the hours of each course by the numerical equivalent of the letter grade.
-    //   This is the quality-point number for the course.
+      // Get the student's grade
+      String thisGrade = studentGrades.get(course);
 
-    // 5. Add all valid quality-point numbers.
+      // If the student has a valid grade, add the course to eligible list.
+      if ( GRADEVALUES.keySet().contains(thisGrade)
+              && (this.CORECOURSESALIGN.contains(course)
+              || this.CORECOURSES.contains(course))) {
+        eligibleCourses.add(course);
+      }
 
-    // 6. Add all hours taken at Northeastern—do not include transfer credit hours.
+    }
 
-    // 7. Divide total quality points by total hours taken at Northeastern.
+    // Initialize variable to store total GPA points earned
+    double totalHours = 0;
+    double totalQualityPoints = 0;
 
-    // 8. Result is your GPA or QPA.
+    // For each course, accumulate # hours and the grade value
+    for (String course : eligibleCourses) {
 
-    return 0;
+      // Get # of credit hours the course is worth and accumulate that value
+      double hours = this.CREDITHOURS.get(course);
+      totalHours += hours;
+
+      // Convert the letter grade to a number grade
+      String letterGrade = this.studentGrades.get(course);
+
+
+      // Calculate GPA points
+      totalQualityPoints += hours * this.GRADEVALUES.get(letterGrade);
+
+
+    }
+
+    // If the student has done 0 core course hours, then their core GPA is 0.
+    if (totalHours == 0 ) {
+      return 0.0;
+    }
+
+    // Calculate core GPA, save it, return it
+    double coreGPA = totalQualityPoints / totalHours;
+    this.coreGPA = coreGPA;
+    return coreGPA;
   }
 
   /**
@@ -162,7 +252,11 @@ public class GradeRecord implements Subject {
    * @return A double representing this Grade Records GPA.
    */
   public double getGPA() {
-    return this.GPA;
+
+    // Make sure it is updated before returning the value.
+    this.gpa = this.calculateGPA();
+
+    return this.gpa;
   }
 
   /**
@@ -171,7 +265,11 @@ public class GradeRecord implements Subject {
    * @return A double representing this Grade Records Core GPA.
    */
   public double getCoreGPA() {
-    return this.CoreGPA;
+
+    // Make sure it is updated before returning the value.
+    this.coreGPA = this.calculateCoreGPA();
+
+    return this.coreGPA;
   }
 
   /**
@@ -182,4 +280,5 @@ public class GradeRecord implements Subject {
   public double getTotalHours() {
     return this.totalHours;
   }
+
 }

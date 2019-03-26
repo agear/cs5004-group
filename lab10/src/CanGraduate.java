@@ -1,13 +1,17 @@
 /**
- * TODO Javadoc.
+ * A student can graduate if they have a core GPA of 3.0+.
+ * This class keeps track of this metric.
+ * If the student has taken 0 core courses, they aren't eligible for graduation.
  */
 public class CanGraduate implements Observer {
 
-  private double CoreGPA;
+  private double coreGPA;
   GradeRecord gradeRecord;
 
   /**
-   * Constructor. TODO Javadoc
+   * Creates an observer that keeps track of the student's grade record
+   * in order to notify them if they need to retake a course, improve GPA, etc.
+   * @param gradeRecord The student in question's record
    */
   public CanGraduate(GradeRecord gradeRecord) {
     this.gradeRecord = gradeRecord;
@@ -15,21 +19,19 @@ public class CanGraduate implements Observer {
   }
 
   /**
-   * TODO Javadoc
+   * This method updates the only field relevant to graduation, the coreGPA.
    */
   @Override
   public void update() {
-    this.CoreGPA = this.gradeRecord.getCoreGPA();
+    this.coreGPA = this.gradeRecord.getCoreGPA();
   }
 
-  //A student must have a GPA of at least 3.0 in all core courses combined
-  // (CS 5010, CS 5800 and one of CS 5500 and CS 5600) in order to graduate.
-  // For ALIGN students, CS 5004 substitutes CS 5010 as a core course
-
   /**
-   * TODO Javadoc
+   * Returns true if the student can graduate, ie if their coreGPA is at least 3.0.
+   * Returns false otherwise.
+   * @return true if the student can graduate, false otherwise
    */
   public boolean getStatus() {
-    return (this.CoreGPA >= 3.0);
+    return (this.coreGPA >= 3.0);
   }
 }
