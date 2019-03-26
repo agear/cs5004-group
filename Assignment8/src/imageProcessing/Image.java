@@ -1,13 +1,41 @@
 package imageProcessing;
 
+import java.io.IOException;
+
 /**
  * This class represents and image. An image is 2D array of pixel objects.
  */
-public class Image {
+public class Image extends ImageUtil {
 
   public Pixel[][] data;
+  private String filename;
 
   // Takes data of the type outputted by ImageUtil class (TODO describe better)
+
+
+  public Image(String filename) throws IOException {
+
+
+
+    int[][][] imageRGBMap = this.readImage(filename);
+    this.data = new Pixel[imageRGBMap.length][imageRGBMap[0].length];
+
+    // Initialize data field to input length
+    //this.data = new Pixel[data.length][data[0].length];
+
+    // Loop through input, creating pixels and creating data field
+    for (int i = 0; i < this.data.length; i++) {
+      System.out.println("Creating an image....." + i);
+      for (int j = 0; j < this.data[i].length; j++) {
+
+        // Create a pixel with data
+        Pixel newPixel = new Pixel(imageRGBMap[i][j][0], imageRGBMap[i][j][1], imageRGBMap[i][j][2]);
+        this.data[i][j] = newPixel;
+      }
+    }
+    this.filename = filename;
+  }
+
 
   /**
    * Constructs an image object using 3D array of integer values.
@@ -39,6 +67,7 @@ public class Image {
   // Alternate way of creating data
   public Image(Pixel[][] data) {
     this.data = data;
+    System.out.println("Creating an image with 2D pixel data!");
   }
 
   //TODO This creates a NullPointerException.
@@ -46,12 +75,18 @@ public class Image {
   /**
    * Constructor for an empty image. Use for generative images.
    */
-  public Image() {
-    for (int x = 0; x < 300; x++)
-      for (int y = 0; y < 300; y++) {
-        Pixel newPixel = new Pixel(255, 255, 255);
+  public Image(int width, int height) {
+
+    int[][][] data = this.createWhiteImage(width, height);
+    this.data = new Pixel[width][height];
+
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        Pixel newPixel = new Pixel(data[x][y][0], data[x][y][1], data[x][y][2]);
         this.data[x][y] = newPixel;
       }
+    }
+
   }
 
   //TODO This creates a NullPointerException.
@@ -89,14 +124,6 @@ public class Image {
     return (x < this.data.length && y < this.data[0].length && x >= 0 && y >= 0);
   }
 
-  // TODO Delete?
-//    if (x < this.data.length && y < this.data[0].length && x >= 0 && y >= 0 ) {
-//      return true;
-//    }
-//
-//    return false;
-//
-//  }
 
   /**
    * TODO Javadoc. and general clean up. Helper method for applyFilter()? Move to Filter class?
@@ -262,6 +289,21 @@ public class Image {
       }
     }
     return output;
+  }
+
+
+  public Pixel[][] getData() {
+    return this.data.clone();
+  }
+
+  public void writeImageToFile(String filename) throws IOException {
+    if (this.filename != null ) {
+      this.writeImage(this.get3Ddata(), this.getWidth(this.filename), this.getHeight(this.filename), filename);
+    }
+    else {
+      System.out.println("Howd u make this image?");
+      throw new IOException("???");
+    }
   }
 
 

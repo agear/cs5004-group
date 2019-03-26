@@ -68,8 +68,7 @@ public class Leaf<T extends Comparable<T>> implements BSTNode<T> {
    * Returns the smallest object (defined by the ordering) in the tree, and null if the tree is
    * empty.
    *
-   * @return the smallest object (defined by the ordering) in the tree, and null if the tree is
-   * empty.
+   * @return the smallest object (defined by the ordering) in the tree
    */
   @Override
   public T minimum() {
@@ -89,8 +88,7 @@ public class Leaf<T extends Comparable<T>> implements BSTNode<T> {
    * Finds the rank of an element in the tree. If the element does not exist in the tree, return 0.
    *
    * @param p the element to find the rank of.
-   * @return an int representing the rank of an element in the tree. If the element does not exist
-   * in the tree, returns 0.
+   * @return an int representing the rank of an element in the tree.
    */
   public int rank(T p) {
 

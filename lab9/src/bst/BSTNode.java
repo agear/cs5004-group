@@ -2,7 +2,6 @@ package bst;
 
 /**
  * Interface to represent a Binary Search Tree Node of generic element type.
- * @param <T>
  */
 public interface BSTNode<T extends Comparable<T>> {
 
@@ -32,8 +31,7 @@ public interface BSTNode<T extends Comparable<T>> {
    * Returns the smallest object (defined by the ordering) in the tree, and null if the tree is
    * empty.
    *
-   * @return the smallest object (defined by the ordering) in the tree, and null if the tree is
-   * empty.
+   * @return the smallest object
    */
   T minimum();
 
@@ -41,8 +39,8 @@ public interface BSTNode<T extends Comparable<T>> {
    * Finds the rank of an element in the tree. If the element does not exist in the tree, return 0.
    * @param obj Element to find the rank of.
    * @return an int representing the rank of an element in the tree.
-   *  If the element does not exist in the tree, returns 0.
-   */
+   *
+   * */
   int rank(T obj);
 
   /**

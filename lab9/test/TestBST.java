@@ -7,7 +7,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class testBST {
+/**
+ * Tests methods in BSTImpl class.
+ */
+public class TestBST {
 
   @Test
   public void testGetSize() {
@@ -347,7 +350,7 @@ public class testBST {
 
 
   @Test
-  public void emptyTree(){
+  public void emptyTree() {
     BSTImpl<Double> emptyTree = new BSTImpl<>();
     assertEquals(0, emptyTree.rank(1.0));
     assertEquals(0, emptyTree.getSize());
