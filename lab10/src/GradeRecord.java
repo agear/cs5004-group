@@ -13,7 +13,7 @@ public class GradeRecord implements Subject {
    * TODO javadoc
    */
   @Override
-  public void register(Object registree) {
+  public void register(Observer registree) {
     this.observerList.add(registree);
   }
 

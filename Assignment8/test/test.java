@@ -173,20 +173,31 @@ public class test {
 //  }
   //TODO Uncomment above. and below
 
+//  @Test
+//  public void testHorizontalStripes() throws IOException {
+//    Image testImage = new Image(500,500);
+//    int[][][] newTestImageAllWhite = testImage.createWhiteImage(500,350);
+//
+//    testImage.writeImage(newTestImageAllWhite, 500, 350,
+//            "rainbow.png");
+//    testImage = testImage.horizontalStripes();
+//
+//    testImage.writeImage(testImage.get3Ddata(), 500, 350,
+//            "rainbow.png");
+//  }
+
   @Test
-  public void testHorizontalStripes() throws IOException {
-    Image testImage = new Image(500,500);
-    int[][][] newTestImageAllWhite = testImage.createWhiteImage(500,350);
+  public void testGreece() throws IOException {
+    Image testImage = new Image(700,700);
+    int[][][] newTestImageAllWhite = testImage.createWhiteImage(500,450);
 
-    testImage.writeImage(newTestImageAllWhite, 500, 350,
-            "rainbow.png");
-    testImage = testImage.horizontalStripes();
+    testImage.writeImage(newTestImageAllWhite, 500, 450,
+            "greece.png");
+    testImage = testImage.greece();
 
-    testImage.writeImage(testImage.get3Ddata(), 500, 350,
-            "rainbow.png");
+    testImage.writeImage(testImage.get3Ddata(), 500, 450,
+            "greece.png");
   }
-
-
 //  @Test
 //  public void testFilterArchitecture() throws IOException {
 //    Filter blur = new Filter("blur");

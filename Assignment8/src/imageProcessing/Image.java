@@ -132,6 +132,57 @@ public class Image extends ImageUtil {
     return generatedImage;
   }
 
+  public Image greece() {
+
+    for (int x = 0; x < 50; x++)
+      for (int y = 0; y < 700; y++) {
+        Pixel newPixel = new Pixel(13, 94, 175);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 51; x < 100; x++)
+      for (int y = 0; y < 700; y++) {
+        Pixel newPixel = new Pixel(255, 255, 255);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 101; x < 150; x++)
+      for (int y = 0; y < 700; y++) {
+        Pixel newPixel = new Pixel(13, 94, 175);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 151; x < 200; x++)
+      for (int y = 0; y < 700; y++) {
+        Pixel newPixel = new Pixel(255, 255, 255);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 201; x < 250; x++)
+      for (int y = 0; y < 700; y++) {
+        Pixel newPixel = new Pixel(13, 94, 175);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 251; x < 300; x++)
+      for (int y = 0; y < 700; y++) {
+        Pixel newPixel = new Pixel(255, 255, 255);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 301; x < 350; x++)
+      for (int y = 0; y < 700; y++) {
+        Pixel newPixel = new Pixel(13, 94, 175);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 351; x < 400; x++)
+      for (int y = 0; y < 700; y++) {
+        Pixel newPixel = new Pixel(255, 255, 255);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 401; x < 450; x++)
+      for (int y = 0; y < 700; y++) {
+        Pixel newPixel = new Pixel(13, 94, 175);
+        this.data[x][y] = newPixel;
+      }
+    Image generatedImage = new Image(this.data);
+    return generatedImage;
+  }
+
   /**
    * Checks if the image contains the given pixel position.
    *
