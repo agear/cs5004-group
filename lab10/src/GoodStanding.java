@@ -1,3 +1,6 @@
+/**
+ * TODO Javadoc.
+ */
 public class GoodStanding implements Observer {
 
   private double GPA;

@@ -1,3 +1,6 @@
+/**
+ * TODO Javadoc.
+ */
 public class CanGraduate implements Observer {
 
   private double CoreGPA;

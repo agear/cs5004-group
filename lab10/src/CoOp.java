@@ -1,3 +1,6 @@
+/**
+ * TODO Javadoc.
+ */
 public class CoOp implements Observer {
 
   private double GPA;
@@ -7,10 +10,11 @@ public class CoOp implements Observer {
   /**
    * Constructor. TODO Javadoc
    */
-  public CoOp(GradeRecord gradeRecord){
+  public CoOp(GradeRecord gradeRecord) {
     this.gradeRecord = gradeRecord;
     gradeRecord.register(this);
   }
+
   /**
    * TODO Javadoc
    */
@@ -22,9 +26,9 @@ public class CoOp implements Observer {
 
   //A student is eligible to go on co-op at any time after taking at least 16 credits and maintaining
   // a cumulative GPA of at least 3.0.
+
   /**
    * TODO Javadoc
-   * @return
    */
   public boolean getStatus() {
     return (this.credits >= 16 && this.GPA >= 3.0);
