@@ -7,5 +7,5 @@ public interface Subject {
    * TODO javadoc
    * @param registree
    */
-  void register(Object registree);
+  void register(Observer registree);
 }
