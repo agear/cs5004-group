@@ -10,7 +10,7 @@ public interface Subject {
 
 
   /**
-   * TODO javadoc
+   * TODO probably not strictly necessary for this assignment. TODO javadoc
    */
   void remove(Observer registree);
 

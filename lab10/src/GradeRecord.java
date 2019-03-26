@@ -59,7 +59,7 @@ public class GradeRecord implements Subject {
   }
 
   /**
-   * TODO Javadoc.
+   * TODO probably not strictly necessary for this assignment. TODO javadoc
    */
   public void remove(Observer deregistree) {
     this.observerList.remove(deregistree);
