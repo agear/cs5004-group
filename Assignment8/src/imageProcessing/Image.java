@@ -93,19 +93,39 @@ public class Image extends ImageUtil {
   public Image horizontalStripes() {
     //Pixel[][] rainbow;
 
-    for (int x = 0; x < 300; x++)
-      for (int y = 0; y < 100; y++) {
+    for (int x = 0; x < 50; x++)
+      for (int y = 0; y < 500; y++) {
+        Pixel newPixel = new Pixel(255, 0, 0);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 51; x < 100; x++)
+      for (int y = 0; y < 500; y++) {
+        Pixel newPixel = new Pixel(255, 165, 0);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 101; x < 150; x++)
+      for (int y = 0; y < 500; y++) {
+        Pixel newPixel = new Pixel(255, 255, 0);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 151; x < 200; x++)
+      for (int y = 0; y < 500; y++) {
+        Pixel newPixel = new Pixel(0, 128, 0);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 201; x < 250; x++)
+      for (int y = 0; y < 500; y++) {
         Pixel newPixel = new Pixel(0, 0, 255);
         this.data[x][y] = newPixel;
       }
-    for (int x = 0; x < 300; x++)
-      for (int y = 101; y < 200; y++) {
-        Pixel newPixel = new Pixel(0, 255, 0);
+    for (int x = 251; x < 300; x++)
+      for (int y = 0; y < 500; y++) {
+        Pixel newPixel = new Pixel(75, 0, 130);
         this.data[x][y] = newPixel;
       }
-    for (int x = 0; x < 300; x++)
-      for (int y = 201; y < 300; y++) {
-        Pixel newPixel = new Pixel(255, 0, 0);
+    for (int x = 301; x < 350; x++)
+      for (int y = 0; y < 500; y++) {
+        Pixel newPixel = new Pixel(238, 130, 238);
         this.data[x][y] = newPixel;
       }
     Image generatedImage = new Image(this.data);

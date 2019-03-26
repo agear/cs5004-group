@@ -17,7 +17,7 @@ public class GradeRecord implements Subject {
     this.observerList.add(registree);
   }
 
-  public void addCourseGrade(String course, String grade,) {
+  public void addCourseGrade(String course, String grade) {
     // TODO Add course grade data
 
     // Notify all observers of update

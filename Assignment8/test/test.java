@@ -173,26 +173,26 @@ public class test {
 //  }
   //TODO Uncomment above. and below
 
-//  @Test
-//  public void testHorizontalStripes() throws IOException {
-//    Image testImage = new Image(300,300);
-//    int[][][] newTestImageAllWhite = testImage.createWhiteImage(300,300);
-//
-//    testImage.writeImage(newTestImageAllWhite, 300, 300,
-//            "horizontalStripes.png");
-//    testImage = testImage.horizontalStripes();
-//
-//    testImage.writeImage(testImage.get3Ddata(), 300, 300,
-//            "horizontalStripes.png");
-//  }
-
-
   @Test
-  public void testFilterArchitecture() throws IOException {
-    Filter blur = new Filter("blur");
-    Image shadowOriginal = new Image("./images/shadowresize.jpg");
-    Image shadowFiltered = blur.apply(shadowOriginal);
-    shadowFiltered = blur.apply(shadowFiltered);
-    shadowFiltered.writeImageToFile("./images/shadowResizeBlurred.jpg");
+  public void testHorizontalStripes() throws IOException {
+    Image testImage = new Image(500,500);
+    int[][][] newTestImageAllWhite = testImage.createWhiteImage(500,350);
+
+    testImage.writeImage(newTestImageAllWhite, 500, 350,
+            "rainbow.png");
+    testImage = testImage.horizontalStripes();
+
+    testImage.writeImage(testImage.get3Ddata(), 500, 350,
+            "rainbow.png");
   }
+
+
+//  @Test
+//  public void testFilterArchitecture() throws IOException {
+//    Filter blur = new Filter("blur");
+//    Image shadowOriginal = new Image("./images/shadowresize.jpg");
+//    Image shadowFiltered = blur.apply(shadowOriginal);
+//    shadowFiltered = blur.apply(shadowFiltered);
+//    shadowFiltered.writeImageToFile("./images/shadowResizeBlurred.jpg");
+//  }
 }
