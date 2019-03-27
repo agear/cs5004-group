@@ -6,7 +6,7 @@ public class CoOp implements Observer {
 
   private double gpa;
   private double credits;
-  GradeRecord gradeRecord;
+  private GradeRecord gradeRecord;
 
   /**
    * Creates an observer that keeps track of the student's grade record
@@ -23,7 +23,6 @@ public class CoOp implements Observer {
    * This method updates the fields relevant to co-op eligibility, the # hours
    * and the gpa.
    */
-  @Override
   public void update() {
     this.gpa = this.gradeRecord.getGPA();
     this.credits = this.gradeRecord.getTotalHours();

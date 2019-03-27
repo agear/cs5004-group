@@ -27,9 +27,9 @@ public class GradeRecord implements Subject {
   public GradeRecord() {
 
 
-    this.observerList = new ArrayList<Observer>();
-    this.courses = new ArrayList<String>();
-    this.studentGrades = new HashMap<String, String>();
+    this.observerList = new ArrayList<>();
+    this.courses = new ArrayList<>();
+    this.studentGrades = new HashMap<>();
 
     // Map courses to their number of credit hours.
     this.CREDITHOURS = new HashMap<>();
@@ -64,13 +64,13 @@ public class GradeRecord implements Subject {
     this.GRADEVALUES.put("D-", 0.667);
     this.GRADEVALUES.put("F", 0.000);
 
-    this.CORECOURSESALIGN = new ArrayList<String>();
+    this.CORECOURSESALIGN = new ArrayList<>();
     this.CORECOURSESALIGN.add("CS5004");
     this.CORECOURSESALIGN.add("CS5800");
     this.CORECOURSESALIGN.add("CS5600");
     this.CORECOURSESALIGN.add("CS5500");
 
-    this.CORECOURSES = new ArrayList<String>();
+    this.CORECOURSES = new ArrayList<>();
     this.CORECOURSES.add("CS5010");
     this.CORECOURSES.add("CS5800");
     this.CORECOURSES.add("CS5600");
@@ -149,7 +149,7 @@ public class GradeRecord implements Subject {
   /**
    * Calculates the student's GPA based on their grade and the weight of the course.
    */
-  public void calculateGPA() {
+  private void calculateGPA() {
 
     // Accumulate a list of courses with grades
     List<String> eligibleCourses = new ArrayList<String>();
@@ -242,6 +242,7 @@ public class GradeRecord implements Subject {
    * @param totalHours      Number of total Credit Hours taken.
    * @return Total number of Quality Points earned.
    */
+
   private double calculateTotalQualityPoints(List<String> eligibleCourses, double totalHours) {
     double totalQualityPoints = 0;
 

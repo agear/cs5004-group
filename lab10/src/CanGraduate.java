@@ -6,7 +6,7 @@
 public class CanGraduate implements Observer {
 
   private double coreGPA;
-  GradeRecord gradeRecord;
+  private GradeRecord gradeRecord;
 
   /**
    * Creates an observer that keeps track of the student's grade record
@@ -21,7 +21,6 @@ public class CanGraduate implements Observer {
   /**
    * This method updates the only field relevant to graduation, the coreGPA.
    */
-  @Override
   public void update() {
     this.coreGPA = this.gradeRecord.getCoreGPA();
   }

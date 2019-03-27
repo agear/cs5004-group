@@ -22,7 +22,6 @@ public class IsInGoodStanding implements Observer {
    * This method updates the fields relevant to good academic standing,
    * which is only the GPA.
    */
-  @Override
   public void update() {
     this.gpa = this.gradeRecord.getGPA();
   }
