@@ -182,7 +182,7 @@ public class GradeRecord implements Subject {
    * courses for graduation with a GPA of 3.0+. This method calculates that GPA based on these
    * courses.
    */
-  public void calculateCoreGPA() {
+  private void calculateCoreGPA() {
 
     // Accumulate a list of courses with grades
     List<String> eligibleCourses = new ArrayList<String>();
@@ -216,9 +216,10 @@ public class GradeRecord implements Subject {
   }
 
   /**
-   * Helper method
-   * @param eligibleCourses
-   * @return
+   * Helper method to calculate the total credit hours taken.
+   *
+   * @param eligibleCourses A List of eligible courses.
+   * @return Total credit hours of all the courses in the given list.
    */
   private double calculateTotalHours(List<String> eligibleCourses) {
     // Initialize variable to store total GPA points earned
@@ -235,10 +236,11 @@ public class GradeRecord implements Subject {
   }
 
   /**
-   * Helper Method
-   * @param eligibleCourses
-   * @param totalHours
-   * @return
+   * Helper Method to calculate the total quality points.
+   *
+   * @param eligibleCourses List of eligible courses.
+   * @param totalHours      Number of total Credit Hours taken.
+   * @return Total number of Quality Points earned.
    */
   private double calculateTotalQualityPoints(List<String> eligibleCourses, double totalHours) {
     double totalQualityPoints = 0;
