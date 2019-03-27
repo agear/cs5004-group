@@ -139,7 +139,6 @@ public class GradeRecord implements Subject {
     this.calculateGPA();
 
     //Calculate and update Core GPA.
-    //this.coreGPA = this.calculateCoreGPA();
     this.calculateCoreGPA();
 
     // Inform observers of state change.
@@ -249,7 +248,6 @@ public class GradeRecord implements Subject {
     // For each course, accumulate # hours and the grade value
     for (String course : eligibleCourses) {
 
-
       // Convert the letter grade to a number grade
       String letterGrade = this.studentGrades.get(course);
 
@@ -272,6 +270,7 @@ public class GradeRecord implements Subject {
 
     // Make sure it is updated before returning the value.
     this.calculateGPA();
+
     // Return a copy of this.gpa.
     double gpa = this.gpa;
     return gpa;
@@ -285,8 +284,8 @@ public class GradeRecord implements Subject {
   public double getCoreGPA() {
 
     // Make sure it is updated before returning the value.
-    //this.coreGPA = this.calculateCoreGPA();
     this.calculateCoreGPA();
+    
     // Return a copy of this.coreGPA.
     double coreGPA = this.coreGPA;
     return coreGPA;
