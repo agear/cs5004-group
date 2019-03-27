@@ -167,29 +167,12 @@ public class GradeRecord implements Subject {
       }
 
     }
-    //TODO Duplicate code to new function:
-
     // Initialize variable to store total GPA points earned
-    double totalHours = 0;
-    double qualityPoints = 0;
-
-    // For each course, accumulate # hours and the grade value
-    for (String course : eligibleCourses) {
-
-      // Get # of credit hours the course is worth and accumulate that value
-      double hours = this.CREDITHOURS.get(course);
-      totalHours += hours;
-
-      // Convert the letter grade to a number grade
-      String letterGrade = this.studentGrades.get(course);
-
-      // Calculate GPA points
-      qualityPoints += hours * this.GRADEVALUES.get(letterGrade);
-
-    }
+    double totalHours = calculateTotalHours(eligibleCourses);
+    double totalQualityPoints = calculateTotalQualityPoints(eligibleCourses, totalHours);
 
     // Update GPA and total hours.
-    this.gpa = qualityPoints / totalHours;
+    this.gpa = totalQualityPoints / totalHours;
     this.totalHours = totalHours;
   }
 
@@ -218,27 +201,9 @@ public class GradeRecord implements Subject {
       }
 
     }
-    //TODO Duplicate code.
-    // Initialize variable to store total GPA points earned
-    double totalHours = 0;
-    double totalQualityPoints = 0;
-
-    // For each course, accumulate # hours and the grade value
-    for (String course : eligibleCourses) {
-
-      // Get # of credit hours the course is worth and accumulate that value
-      double hours = this.CREDITHOURS.get(course);
-      totalHours += hours;
-
-      // Convert the letter grade to a number grade
-      String letterGrade = this.studentGrades.get(course);
-
-
-      // Calculate GPA points
-      totalQualityPoints += hours * this.GRADEVALUES.get(letterGrade);
-
-
-    }
+    // Initialize variables to calculate total GPA points earned
+    double totalHours = calculateTotalHours(eligibleCourses);
+    double totalQualityPoints = calculateTotalQualityPoints(eligibleCourses, totalHours);
 
     // If the student has done 0 core course hours, then their core GPA is 0.
     if (totalHours == 0) {
@@ -248,6 +213,51 @@ public class GradeRecord implements Subject {
 
     // Calculate and update core GPA
     this.coreGPA = totalQualityPoints / totalHours;
+  }
+
+  /**
+   * Helper method
+   * @param eligibleCourses
+   * @return
+   */
+  private double calculateTotalHours(List<String> eligibleCourses) {
+    // Initialize variable to store total GPA points earned
+    double totalHours = 0;
+
+    // For each course, accumulate # hours and the grade value
+    for (String course : eligibleCourses) {
+
+      // Get # of credit hours the course is worth and accumulate that value
+      double hours = this.CREDITHOURS.get(course);
+      totalHours += hours;
+    }
+    return totalHours;
+  }
+
+  /**
+   * Helper Method
+   * @param eligibleCourses
+   * @param totalHours
+   * @return
+   */
+  private double calculateTotalQualityPoints(List<String> eligibleCourses, double totalHours) {
+    double totalQualityPoints = 0;
+
+    // For each course, accumulate # hours and the grade value
+    for (String course : eligibleCourses) {
+
+
+      // Convert the letter grade to a number grade
+      String letterGrade = this.studentGrades.get(course);
+
+      // Get # of credit hours the course is worth and accumulate that value
+      double hours = this.CREDITHOURS.get(course);
+
+      // Calculate GPA points
+      totalQualityPoints += hours * this.GRADEVALUES.get(letterGrade);
+
+    }
+    return totalQualityPoints;
   }
 
   /**
@@ -274,8 +284,9 @@ public class GradeRecord implements Subject {
     // Make sure it is updated before returning the value.
     //this.coreGPA = this.calculateCoreGPA();
     this.calculateCoreGPA();
-    //TODO Return duplicate.
-    return this.coreGPA;
+    // Return a copy of this.coreGPA.
+    double coreGPA = this.coreGPA;
+    return coreGPA;
   }
 
   /**
@@ -284,8 +295,9 @@ public class GradeRecord implements Subject {
    * @return A double representing this Grade Records total hours.
    */
   public double getTotalHours() {
-    //TODO Return duplicate.
-    return this.totalHours;
+    // Return a copy of this.totalHours.
+    double totalHours = this.totalHours;
+    return totalHours;
   }
 
 }
