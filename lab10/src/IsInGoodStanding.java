@@ -20,7 +20,7 @@ public class IsInGoodStanding implements Observer {
 
   /**
    * This method updates the fields relevant to good academic standing,
-   * which is only the cGPA.
+   * which is only the GPA.
    */
   @Override
   public void update() {
@@ -31,7 +31,7 @@ public class IsInGoodStanding implements Observer {
 
   /**
    * Returns true if the student is in good academic standing, i.e., a GPA of 3.0+.
-   * @return true if the student is in good academic standing, false otherwise
+   * @return true if the student is in good academic standing, false otherwise.
    */
   public boolean getStatus() {
     return (this.gpa >= 3.0);

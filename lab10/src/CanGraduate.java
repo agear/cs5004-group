@@ -11,7 +11,7 @@ public class CanGraduate implements Observer {
   /**
    * Creates an observer that keeps track of the student's grade record
    * in order to notify them if they need to retake a course, improve GPA, etc.
-   * @param gradeRecord The student in question's record
+   * @param gradeRecord The student in question's record.
    */
   public CanGraduate(GradeRecord gradeRecord) {
     this.gradeRecord = gradeRecord;
@@ -26,6 +26,7 @@ public class CanGraduate implements Observer {
     this.coreGPA = this.gradeRecord.getCoreGPA();
   }
 
+  //TODO must the student have taken all the core courses to graduate also?
   /**
    * Returns true if the student can graduate, ie if their coreGPA is at least 3.0.
    * Returns false otherwise.

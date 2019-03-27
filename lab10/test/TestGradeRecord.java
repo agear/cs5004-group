@@ -96,7 +96,7 @@ public class TestGradeRecord {
     assertEquals(false, testCoOp.getStatus());
 
 
-    // This student is NOT in good standing (2.4 cGPA),
+    // This student is NOT in good standing (2.4 cumulative GPA),
     // but has done well in their core courses (4.0 GPA) so can graduate.
     testGradeRecord.addCourseGrade("CS5010", "A");
     testGradeRecord.addCourseGrade("CS5600", "A");
@@ -107,7 +107,7 @@ public class TestGradeRecord {
     assertEquals(true, testCanGraduate.getStatus());
     assertEquals(false, testCoOp.getStatus());
 
-    // This student has a high cGPA (3.25) and core GPA (3.33)
+    // This student has a high cumulative GPA (3.25) and core GPA (3.33)
     // and has taken exactly 16 hours.
     testGradeRecord.addCourseGrade("CS5010", "B+");
     testGradeRecord.addCourseGrade("CS5600", "B");

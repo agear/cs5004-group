@@ -80,28 +80,27 @@ public class GradeRecord implements Subject {
 
   }
 
-
+//TODO What happens if the object is already in the list?
   /**
-   * Signs up an observer object to be notified when certain things happen
-   * to this transcript, such as a course being taken.
-   * @param registree The object that wants to know what's going on
+   * Signs up an observer object to be notified when the state of this GradeRecord changes.
+   * @param registree The object that wants to know what's going on.
    */
   public void register(Observer registree) {
     this.observerList.add(registree);
   }
 
+  //TODO what happens if the object isn't in the list?
   /**
    * Removes an observer from the observer list so they don't get notified about
-   * changes/milestones to this grade record anymore.
-   * @param deregistree the object that will be removed from observer list
+   * state changes to this grade record anymore.
+   * @param deregistree the object that will be removed from observer list.
    */
   public void remove(Observer deregistree) {
     this.observerList.remove(deregistree);
   }
 
   /**
-   * Sends an update to all observers when something happens (e.g., a course is added
-   * to the grade record).
+   * Sends an update to all observers when this GradeRecord's state changes.
    */
   public void notifyObservers() {
     for (Observer observer : observerList) {
@@ -109,11 +108,12 @@ public class GradeRecord implements Subject {
     }
   }
 
-  /**
-   * Adds a course grade to this object, and recalculates GPA. Notifies observers.
-   * @param course The course that has been taken
-   * @param grade The grade earned in that course
-   * @throws IllegalArgumentException if the course doesn't exist at NEU
+  /** //TODO What if the course has already been taken? Do we update the grade?
+   * Adds a course grade to this object, and recalculates GPA. Notifies observers that the state
+   * has changed.
+   * @param course The course that has been taken.
+   * @param grade The grade earned in that course.
+   * @throws IllegalArgumentException if the course doesn't exist at NEU.
    */
   public void addCourseGrade(String course, String grade) throws IllegalArgumentException {
 
@@ -128,19 +128,23 @@ public class GradeRecord implements Subject {
       this.courses.add(course);
     }
 
-    // Add this student's grade to their transcript
+    // Add this student's grade to their transcript.
     this.studentGrades.put(course, grade);
 
-    // Calculate GPA and update
+    // Calculate and update GPA.
     this.gpa = this.calculateGPA();
 
-    // Inform oberservers that the GPA has been updated
+    //Calculate and update Core GPA.
+    this.coreGPA = this.calculateCoreGPA();
+
+    // Inform observers of state change.
     notifyObservers();
   }
 
+  //TODO return void instead?
   /** Calculates the student's GPA based on their grade and the weight of the course.
    *
-   * @return the student's GPA (in a numeric value)
+   * @return the student's GPA (in a numeric value).
    */
   public double calculateGPA() {
 
@@ -160,7 +164,7 @@ public class GradeRecord implements Subject {
       }
 
     }
-
+    //TODO Duplicate code to new function
     // Initialize variable to store total GPA points earned
     double totalHours = 0;
     double qualityPoints = 0;
@@ -180,20 +184,20 @@ public class GradeRecord implements Subject {
 
     }
 
-    // Calculate core GPA, save it, return it
+    // Calculate GPA, save it, return it
     double gpa = qualityPoints / totalHours;
     this.totalHours = totalHours;
     this.gpa = gpa;
-    return this.gpa;
+    return this.gpa; //TODO return gpa?
   }
 
-  /** The core corses for a regular MS student are: CS 5010, CS 5800 and one of CS 5500 and
+  /** The core courses for a regular MS student are: CS 5010, CS 5800 and one of CS 5500 and
    * CS 5600. For ALIGN students, CS 5004 substitutes CS 5010 as a core course.
    * These are the required courses for graduation with a GPA of 3.0+. This method
    * calculates that GPA based on these courses.
    *
-   * @return the core GPA of these important courses
-   */
+   * @return the GPA of these core courses
+   */ //TODO Void return?
   public double calculateCoreGPA() {
 
     // Accumulate a list of courses with grades
@@ -213,7 +217,7 @@ public class GradeRecord implements Subject {
       }
 
     }
-
+  //TODO Duplicate code.
     // Initialize variable to store total GPA points earned
     double totalHours = 0;
     double totalQualityPoints = 0;
@@ -255,7 +259,7 @@ public class GradeRecord implements Subject {
 
     // Make sure it is updated before returning the value.
     this.gpa = this.calculateGPA();
-
+    //TODO Return duplicate.
     return this.gpa;
   }
 
@@ -268,7 +272,7 @@ public class GradeRecord implements Subject {
 
     // Make sure it is updated before returning the value.
     this.coreGPA = this.calculateCoreGPA();
-
+    //TODO Return duplicate.
     return this.coreGPA;
   }
 
@@ -278,6 +282,7 @@ public class GradeRecord implements Subject {
    * @return A double representing this Grade Records total hours.
    */
   public double getTotalHours() {
+    //TODO Return duplicate.
     return this.totalHours;
   }
 

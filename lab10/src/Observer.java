@@ -16,7 +16,7 @@ public interface Observer {
 
   /** Whatever the thing is that the observer is observing has a return value of
    * true or false -- this returns that value.
-   * @return If the thing being observed is true or not
+   * @return If the thing being observed is true or not.
    */
   boolean getStatus();
 
