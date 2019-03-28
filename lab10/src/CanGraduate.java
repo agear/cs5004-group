@@ -25,7 +25,6 @@ public class CanGraduate implements Observer {
     this.coreGPA = this.gradeRecord.getCoreGPA();
   }
 
-  //TODO must the student have taken all the core courses to graduate also?
   /**
    * Returns true if the student can graduate, ie if their coreGPA is at least 3.0.
    * Returns false otherwise.

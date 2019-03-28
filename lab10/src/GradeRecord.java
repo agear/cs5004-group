@@ -112,8 +112,8 @@ public class GradeRecord implements Subject {
   }
 
   /**
-   * //TODO What if the course has already been taken? Do we update the grade? Adds a course grade
-   * to this object, and recalculates GPA. Notifies observers that the state has changed.
+   * Adds a course grade to this object, and recalculates GPA. Notifies observers that the state has
+   * changed. If the course has been taken previously, the new grade will overwrite the old grade.
    *
    * @param course The course that has been taken.
    * @param grade  The grade earned in that course.
@@ -285,7 +285,7 @@ public class GradeRecord implements Subject {
 
     // Make sure it is updated before returning the value.
     this.calculateCoreGPA();
-    
+
     // Return a copy of this.coreGPA.
     double coreGPA = this.coreGPA;
     return coreGPA;

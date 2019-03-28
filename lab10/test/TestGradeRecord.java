@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 
 /**
- * Tests the observer/subject design between a student's record and information about
- * their record, such as if they're in good standing, etc.
+ * Tests the observer/subject design between a student's record and information about their record,
+ * such as if they're in good standing, etc.
  */
 public class TestGradeRecord {
 
@@ -33,7 +33,6 @@ public class TestGradeRecord {
     testGradeRecord.addCourseGrade("CS5000", "A");
   }
 
-
   @Test
   public void studentTest() {
 
@@ -46,7 +45,6 @@ public class TestGradeRecord {
     assertEquals(false, testGoodStanding.getStatus());
     assertEquals(false, testCanGraduate.getStatus());
     assertEquals(false, testCoOp.getStatus());
-
 
 
     // The student has only taken one course and they withdrew from it.
@@ -133,7 +131,6 @@ public class TestGradeRecord {
     assertEquals(true, testGoodStanding.getStatus());
     assertEquals(false, testCanGraduate.getStatus());
     assertEquals(true, testCoOp.getStatus());
-
 
 
   }
