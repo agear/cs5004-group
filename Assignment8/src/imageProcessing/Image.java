@@ -9,6 +9,8 @@ public class Image extends ImageUtil {
 
   public Pixel[][] data;
   private String filename;
+  private int height;
+  private int width;
 
   // Takes data of the type outputted by ImageUtil class (TODO describe better)
 
@@ -18,6 +20,8 @@ public class Image extends ImageUtil {
 
     int[][][] imageRGBMap = this.readImage(filename);
     this.data = new Pixel[imageRGBMap.length][imageRGBMap[0].length];
+    this.width = this.getWidth(filename);
+    this.height = this.getHeight(filename);
 
     // Initialize data field to input length
     //this.data = new Pixel[data.length][data[0].length];
@@ -56,6 +60,9 @@ public class Image extends ImageUtil {
       }
     }
 
+    this.height = data.length;
+    this.width = data[0].length;
+
   }
 
   /**
@@ -67,6 +74,8 @@ public class Image extends ImageUtil {
   public Image(Pixel[][] data) {
     this.data = data;
     System.out.println("Creating an image with 2D pixel data!");
+    this.height = data.length;
+    this.width = data[0].length;
   }
 
   //TODO This creates a NullPointerException.
@@ -407,12 +416,19 @@ public class Image extends ImageUtil {
     return this.data.clone();
   }
 
+
+
   public void writeImageToFile(String filename) throws IOException {
     if (this.filename != null) {
       this.writeImage(this.get3Ddata(), this.getWidth(this.filename), this.getHeight(this.filename), filename);
-    } else {
-      System.out.println("Howd u make this image?");
-      throw new IOException("???");
+//<<<<<<< HEAD
+//    } else {
+//      System.out.println("Howd u make this image?");
+//      throw new IOException("???");
+//=======
+    }
+    else {
+      this.writeImage(this.get3Ddata(), this.width, this.height, filename);
     }
   }
 
