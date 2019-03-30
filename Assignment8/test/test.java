@@ -1,9 +1,8 @@
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
-import imageProcessing.*;
+import imageProcessing.Image;
 
 //TODO should we have a driver class to output all these images?
 public class test {
@@ -68,7 +67,7 @@ public class test {
 //
 //
 
-    //TODO commented out to speed up:
+  //TODO commented out to speed up:
 //      double[][] testFilterKernel =  { {2.0, 1.0, 2.0}, {-1.0, 0.0, 2.0},
 //            {1.0, 1.0, 1.0} };
 //      Filter testFilter = new Filter(testFilterKernel);
@@ -184,6 +183,41 @@ public class test {
 //
 //    testImage.writeImage(testImage.get3Ddata(), 500, 350,
 //            "rainbow.png");
+//  }
+
+
+  @Test
+  public void testVerticalStripes() throws IOException {
+    Image testImage = new Image(500, 500);
+    int[][][] newTestImageAllWhite = testImage.createWhiteImage(350, 500);
+
+    testImage.writeImage(newTestImageAllWhite, 500, 350,
+            "rainbowv.png");
+    testImage = testImage.verticalStripes();
+
+    testImage.writeImage(testImage.get3Ddata(), 500, 350,
+            "rainbowv.png");
+  }
+
+//  @Test
+//  public void testGreece() throws IOException {
+//    Image testImage = new Image(700, 700);
+//    int[][][] newTestImageAllWhite = testImage.createWhiteImage(500, 450);
+//
+//    testImage.writeImage(newTestImageAllWhite, 500, 450,
+//            "greece.png");
+//    testImage = testImage.greece();
+//
+//    testImage.writeImage(testImage.get3Ddata(), 500, 450,
+//            "greece.png");
+//  }
+//  @Test
+//  public void testFilterArchitecture() throws IOException {
+//    Filter blur = new Filter("blur");
+//    Image shadowOriginal = new Image("./images/shadowresize.jpg");
+//    Image shadowFiltered = blur.apply(shadowOriginal);
+//    shadowFiltered = blur.apply(shadowFiltered);
+//    shadowFiltered.writeImageToFile("./images/shadowResizeBlurred.jpg");
 //  }
 
 //  @Test

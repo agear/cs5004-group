@@ -18,7 +18,6 @@ public class Image extends ImageUtil {
   public Image(String filename) throws IOException {
 
 
-
     int[][][] imageRGBMap = this.readImage(filename);
     this.data = new Pixel[imageRGBMap.length][imageRGBMap[0].length];
     this.width = this.getWidth(filename);
@@ -88,12 +87,11 @@ public class Image extends ImageUtil {
     int[][][] data = this.createWhiteImage(width, height);
     this.data = new Pixel[width][height];
 
-    for (int x = 0; x < width; x++) {
+    for (int x = 0; x < width; x++)
       for (int y = 0; y < height; y++) {
         Pixel newPixel = new Pixel(data[x][y][0], data[x][y][1], data[x][y][2]);
         this.data[x][y] = newPixel;
       }
-    }
 
   }
 
@@ -133,6 +131,48 @@ public class Image extends ImageUtil {
       }
     for (int x = 301; x < 350; x++)
       for (int y = 0; y < 500; y++) {
+        Pixel newPixel = new Pixel(238, 130, 238);
+        this.data[x][y] = newPixel;
+      }
+    Image generatedImage = new Image(this.data);
+    return generatedImage;
+  }
+
+  public Image verticalStripes() {
+    //Pixel[][] rainbow;
+
+    for (int x = 0; x < 350; x++)
+      for (int y = 0; y < 50; y++) {
+        Pixel newPixel = new Pixel(255, 0, 0);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 0; x < 350; x++)
+      for (int y = 51; y < 100; y++) {
+        Pixel newPixel = new Pixel(255, 165, 0);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 0; x < 350; x++)
+      for (int y = 101; y < 150; y++) {
+        Pixel newPixel = new Pixel(255, 255, 0);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 0; x < 350; x++)
+      for (int y = 151; y < 200; y++) {
+        Pixel newPixel = new Pixel(0, 128, 0);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 0; x < 350; x++)
+      for (int y = 201; y < 250; y++) {
+        Pixel newPixel = new Pixel(0, 0, 255);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 0; x < 350; x++)
+      for (int y = 251; y < 300; y++) {
+        Pixel newPixel = new Pixel(75, 0, 130);
+        this.data[x][y] = newPixel;
+      }
+    for (int x = 0; x < 350; x++)
+      for (int y = 301; y < 350; y++) {
         Pixel newPixel = new Pixel(238, 130, 238);
         this.data[x][y] = newPixel;
       }
@@ -378,8 +418,13 @@ public class Image extends ImageUtil {
 
 
   public void writeImageToFile(String filename) throws IOException {
-    if (this.filename != null ) {
+    if (this.filename != null) {
       this.writeImage(this.get3Ddata(), this.getWidth(this.filename), this.getHeight(this.filename), filename);
+//<<<<<<< HEAD
+//    } else {
+//      System.out.println("Howd u make this image?");
+//      throw new IOException("???");
+//=======
     }
     else {
       System.out.println("Calculatign hieght and width");
