@@ -106,6 +106,7 @@ public class ImageUtil {
           filename)
           throws IOException {
 
+    System.out.println("Writing image with width = " + width + ", height = " + height);
     BufferedImage output = new BufferedImage(
             width,
             height,

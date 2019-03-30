@@ -117,27 +117,27 @@ public class test {
 //
 //  }
 //
-//
-//  @Test
-//  public void testManhattan() throws IOException {
-//      ImageUtil manhattan = new ImageUtil();
-//      int[][][] result = manhattan.readImage("./images/manhattan-small.png");
-//      Image testImage = new Image(result);
-//
-//      double[][] sharpenKernel =  { {-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0},
-//                                    {-1.0/8.0, 1.0/4.0, 1.0/4.0, 1.0/4.0, -1.0/8.0},
-//                                    {-1.0/8.0, 1.0/4.0, 1.0, 1.0/4.0, -1.0/8.0},
-//                                    {-1.0/8.0, 1.0/4.0, 1.0/4.0, 1.0/4.0, -1.0/8.0},
-//                                    {-1.0/8.0, -1.0/8.0,  -1.0/8.0, -1.0/8.0, -1.0/8.0} };
-//      Filter sharpen = new Filter(sharpenKernel);
-//      testImage = testImage.applyFilter(sharpen);
-//      manhattan.writeImage(testImage.get3Ddata(),
-//              manhattan.getWidth("./images/manhattan-small.png"),
-//              manhattan.getHeight("./images/manhattan-small.png"),
-//              "makeManhattanSharp.png");
-//  }
-//
-//
+
+  @Test
+  public void testManhattan() throws IOException {
+      ImageUtil manhattan = new ImageUtil();
+      int[][][] result = manhattan.readImage("./images/manhattan-small.png");
+      Image testImage = new Image(result);
+
+      double[][] sharpenKernel =  { {-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0},
+                                    {-1.0/8.0, 1.0/4.0, 1.0/4.0, 1.0/4.0, -1.0/8.0},
+                                    {-1.0/8.0, 1.0/4.0, 1.0, 1.0/4.0, -1.0/8.0},
+                                    {-1.0/8.0, 1.0/4.0, 1.0/4.0, 1.0/4.0, -1.0/8.0},
+                                    {-1.0/8.0, -1.0/8.0,  -1.0/8.0, -1.0/8.0, -1.0/8.0} };
+      Filter sharpen = new Filter(sharpenKernel);
+      testImage = testImage.applyFilter(sharpen);
+      manhattan.writeImage(testImage.get3Ddata(),
+              manhattan.getWidth("./images/manhattan-small.png"),
+              manhattan.getHeight("./images/manhattan-small.png"),
+              "makeManhattanSharp.png");
+  }
+
+
 //  @Test
 //  public void testSepia() throws IOException {
 //    ImageUtil manhattan = new ImageUtil();
@@ -186,24 +186,28 @@ public class test {
 //            "rainbow.png");
 //  }
 
-  @Test
-  public void testGreece() throws IOException {
-    Image testImage = new Image(700,700);
-    int[][][] newTestImageAllWhite = testImage.createWhiteImage(500,450);
-
-    testImage.writeImage(newTestImageAllWhite, 500, 450,
-            "greece.png");
-    testImage = testImage.greece();
-
-    testImage.writeImage(testImage.get3Ddata(), 500, 450,
-            "greece.png");
-  }
 //  @Test
-//  public void testFilterArchitecture() throws IOException {
-//    Filter blur = new Filter("blur");
-//    Image shadowOriginal = new Image("./images/shadowresize.jpg");
-//    Image shadowFiltered = blur.apply(shadowOriginal);
-//    shadowFiltered = blur.apply(shadowFiltered);
-//    shadowFiltered.writeImageToFile("./images/shadowResizeBlurred.jpg");
+//  public void testGreece() throws IOException {
+//    Image testImage = new Image(700,700);
+//    int[][][] newTestImageAllWhite = testImage.createWhiteImage(500,450);
+//
+//    testImage.writeImage(newTestImageAllWhite, 500, 450,
+//            "greece.png");
+//    testImage = testImage.greece();
+//
+//    testImage.writeImage(testImage.get3Ddata(), 500, 450,
+//            "greece.png");
 //  }
+
+
+
+  @Test
+  public void testFilterArchitecture() throws IOException {
+    Adjustment blur = new Filter("blur");
+    Image shadowOriginal = new Image("./images/manhattan-small.png");
+    Image shadowFiltered = blur.apply(shadowOriginal);
+    shadowFiltered.writeImageToFile("./images/manhattan-blurry.png");
+  }
+
+
 }
