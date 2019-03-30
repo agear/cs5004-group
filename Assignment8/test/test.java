@@ -2,7 +2,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import imageProcessing.Image;
+import imageProcessing.*;
+
 
 //TODO should we have a driver class to output all these images?
 public class test {
@@ -191,11 +192,11 @@ public class test {
     Image testImage = new Image(500, 500);
     int[][][] newTestImageAllWhite = testImage.createWhiteImage(350, 500);
 
-    testImage.writeImage(newTestImageAllWhite, 500, 350,
+    testImage.writeImage(newTestImageAllWhite, 500, 350-1,
             "rainbowv.png");
     testImage = testImage.verticalStripes();
 
-    testImage.writeImage(testImage.get3Ddata(), 500, 350,
+    testImage.writeImage(testImage.get3Ddata(), 500, 350-1,
             "rainbowv.png");
   }
 
@@ -232,15 +233,23 @@ public class test {
 //    testImage.writeImage(testImage.get3Ddata(), 500, 450,
 //            "greece.png");
 //  }
-
+//
+//
+//
+//  @Test
+//  public void testFilterArchitecture() throws IOException {
+//    Adjustment blur = new Filter("blur");
+//    Image shadowOriginal = new Image("./images/manhattan-small.png");
+//    Image shadowFiltered = blur.apply(shadowOriginal);
+//    shadowFiltered.writeImageToFile("./images/manhattan-blurry.jpg");
+//  }
 
 
   @Test
-  public void testFilterArchitecture() throws IOException {
-    Adjustment blur = new Filter("blur");
-    Image shadowOriginal = new Image("./images/manhattan-small.png");
-    Image shadowFiltered = blur.apply(shadowOriginal);
-    shadowFiltered.writeImageToFile("./images/manhattan-blurry.jpg");
+  public void testCheckerboard() throws IOException {
+    CheckerBoard testChecker = new CheckerBoard(500,500, 50);
+    testChecker.writeImage(testChecker.get3Ddata(), 500, 500, "./images/testChecker.png");
+
   }
 
 
