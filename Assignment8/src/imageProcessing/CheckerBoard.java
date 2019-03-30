@@ -24,7 +24,9 @@ public class CheckerBoard extends ImageUtil implements IImage {
    *
    */
   private void draw() {
+    System.out.println("This.width " + this.width + " . divided by square size =  " + this.squareSize);
     int numHorizontal = this.width / this.squareSize;
+    System.out.println("numHorozontal = " + numHorizontal);
     int numVertical = this.height / this.squareSize;
     int leftStart = 0;
     int topStart = 0;
@@ -32,7 +34,7 @@ public class CheckerBoard extends ImageUtil implements IImage {
 
     for (int i=0; i < this.width; i++) {
       for (int j = 0; j < this.height; j++) {
-        Pixel uninitPixel = new Pixel(0,0,0);
+        Pixel uninitPixel = new Pixel(255,255,0);
         this.data[j][i] = uninitPixel;
       }
     }
@@ -40,11 +42,16 @@ public class CheckerBoard extends ImageUtil implements IImage {
 
 
     for (int horizontal = 0; horizontal < numHorizontal; horizontal++) {
+      System.out.println("\n NEW ROW!!!");
+      topStart = 0;
       for (int vertical = 0; vertical < numVertical; vertical++) {
         drawWhiteSquare(this.squareSize, leftStart, topStart);
+        System.out.println("After drawing white sq . topStart = " + topStart);
         topStart += this.squareSize;
         drawBlackSquare(this.squareSize, leftStart, topStart);
+        System.out.println(" after draw black sq: topStart = " + topStart);
         topStart += this.squareSize;
+        System.out.println("after topstart gets increased: topStart = " + topStart);
       }
       leftStart += this.squareSize;
     }
@@ -66,6 +73,9 @@ public class CheckerBoard extends ImageUtil implements IImage {
         this.data[x][y] = newPixel;
       }
   }
+
+
+
 
   public int getHeight() {
     return 0;

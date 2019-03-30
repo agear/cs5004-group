@@ -35,5 +35,4 @@ public class Transformation extends AbstractAdjustment {
   }
 
 
-
 }

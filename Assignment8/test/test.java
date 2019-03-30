@@ -189,14 +189,14 @@ public class test {
 
   @Test
   public void testVerticalStripes() throws IOException {
-    Image testImage = new Image(500, 500);
-    int[][][] newTestImageAllWhite = testImage.createWhiteImage(350, 500);
+    Image testImage = new Image(500, 350);
+    int[][][] newTestImageAllWhite = testImage.createWhiteImage(500, 350);
 
-    testImage.writeImage(newTestImageAllWhite, 500, 350-1,
+    testImage.writeImage(newTestImageAllWhite, 500, 350,
             "rainbowv.png");
     testImage = testImage.verticalStripes();
 
-    testImage.writeImage(testImage.get3Ddata(), 500, 350-1,
+    testImage.writeImage(testImage.get3Ddata(), 500, 350,
             "rainbowv.png");
   }
 
@@ -248,7 +248,7 @@ public class test {
   @Test
   public void testCheckerboard() throws IOException {
     CheckerBoard testChecker = new CheckerBoard(500,500, 50);
-    testChecker.writeImage(testChecker.get3Ddata(), 500, 500, "./images/testChecker.png");
+    testChecker.writeImage(testChecker.get3Ddata(), 500, 500, "testChecker.png");
 
   }
 
