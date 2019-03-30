@@ -29,7 +29,6 @@ public class Image extends ImageUtil {
 
     // Loop through input, creating pixels and creating data field
     for (int i = 0; i < this.data.length; i++) {
-      System.out.println("Creating an image....." + i);
       for (int j = 0; j < this.data[i].length; j++) {
 
         // Create a pixel with data
@@ -74,7 +73,7 @@ public class Image extends ImageUtil {
   // Alternate way of creating data
   public Image(Pixel[][] data) {
     this.data = data;
-    System.out.println("Creating an image with 2D pixel data!");
+//    System.out.println("Creating an image with 2D pixel data!");
     this.height = data.length;
     this.width = data[0].length;
   }
@@ -360,9 +359,9 @@ public class Image extends ImageUtil {
    * @return This image as a 3D array of integers.
    */
   public int[][][] get3Ddata() {
-    int[][][] output = new int[data.length][data[0].length][3];
-    for (int i = 0; i < data.length; i++) {
-      for (int j = 0; j < data[0].length; j++) {
+    int[][][] output = new int[this.data.length][this.data[0].length][3];
+    for (int i = 0; i < this.data.length; i++) {
+      for (int j = 0; j < this.data[0].length; j++) {
         output[i][j][0] = this.data[i][j].getRed();
         output[i][j][1] = this.data[i][j].getGreen();
         output[i][j][2] = this.data[i][j].getBlue();
@@ -383,6 +382,7 @@ public class Image extends ImageUtil {
       this.writeImage(this.get3Ddata(), this.getWidth(this.filename), this.getHeight(this.filename), filename);
     }
     else {
+      System.out.println("Calculatign hieght and width");
       this.writeImage(this.get3Ddata(), this.width, this.height, filename);
     }
   }

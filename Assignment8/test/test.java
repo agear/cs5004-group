@@ -116,7 +116,7 @@ public class test {
 //
 //
 //  }
-//
+////
 
   @Test
   public void testManhattan() throws IOException {
@@ -131,10 +131,10 @@ public class test {
                                     {-1.0/8.0, -1.0/8.0,  -1.0/8.0, -1.0/8.0, -1.0/8.0} };
       Filter sharpen = new Filter(sharpenKernel);
       testImage = testImage.applyFilter(sharpen);
-      manhattan.writeImage(testImage.get3Ddata(),
-              manhattan.getWidth("./images/manhattan-small.png"),
-              manhattan.getHeight("./images/manhattan-small.png"),
-              "makeManhattanSharp.png");
+//      manhattan.writeImage(testImage.get3Ddata(),
+//              manhattan.getWidth("./images/manhattan-small.png"),
+//              manhattan.getHeight("./images/manhattan-small.png"),
+//              "makeManhattanSharp.png");
   }
 
 
@@ -206,7 +206,7 @@ public class test {
     Adjustment blur = new Filter("blur");
     Image shadowOriginal = new Image("./images/manhattan-small.png");
     Image shadowFiltered = blur.apply(shadowOriginal);
-    shadowFiltered.writeImageToFile("./images/manhattan-blurry.png");
+    shadowFiltered.writeImageToFile("./images/manhattan-blurry.jpg");
   }
 
 
