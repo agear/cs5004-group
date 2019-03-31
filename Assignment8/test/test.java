@@ -187,18 +187,18 @@ public class test {
 //  }
 
 
-  @Test
-  public void testVerticalStripes() throws IOException {
-    Image testImage = new Image(500, 350);
-    int[][][] newTestImageAllWhite = testImage.createWhiteImage(500, 350);
-
-    testImage.writeImage(newTestImageAllWhite, 500, 350,
-            "rainbowv.png");
-    testImage = testImage.verticalStripes();
-
-    testImage.writeImage(testImage.get3Ddata(), 500, 350,
-            "rainbowv.png");
-  }
+//  @Test
+//  public void testVerticalStripes() throws IOException {
+//    Image testImage = new Image(500, 350);
+//    int[][][] newTestImageAllWhite = testImage.createWhiteImage(500, 350);
+//
+//    testImage.writeImage(newTestImageAllWhite, 500, 350,
+//            "rainbowv.png");
+//    testImage = testImage.verticalStripes();
+//
+//    testImage.writeImage(testImage.get3Ddata(), 500, 350,
+//            "rainbowv.png");
+//  }
 
 //  @Test
 //  public void testGreece() throws IOException {
@@ -245,12 +245,32 @@ public class test {
 //  }
 
 
+//  @Test
+//  public void testCheckerboard() throws IOException {
+//    CheckerBoard testChecker = new CheckerBoard(100);
+//    testChecker.writeImage(testChecker.get3Ddata(), testChecker.getWidth(), testChecker.getHeight(), "testChecker2.png");
+//
+//  }
+//
+//  @Test
+//  public void testCheckerboardSmall() throws IOException {
+//    CheckerBoard testChecker = new CheckerBoard(5);
+//    testChecker.writeImage(testChecker.get3Ddata(), testChecker.getWidth(), testChecker.getHeight(), "testCheckerSmall.png");
+//
+//  }
+
+//  @Test
+//  public void testRainbowHor() throws IOException {
+//    Rainbow testRainbow = new Rainbow(14,700, "Horizontal");
+//    testRainbow.writeImage(testRainbow.get3Ddata(), testRainbow.getWidth(), testRainbow.getHeight(), "testRainbowHor2.png");
+//
+//  }
+
   @Test
-  public void testCheckerboard() throws IOException {
-    CheckerBoard testChecker = new CheckerBoard(100);
-    testChecker.writeImage(testChecker.get3Ddata(), testChecker.getWidth(), testChecker.getHeight(), "testChecker2.png");
+  public void testRainbowVer() throws IOException {
+    Rainbow testRainbow = new Rainbow(70,140, "Horizontal");
+    System.out.println("Trying to write image....");
+    testRainbow.writeImage(testRainbow.get3Ddata(), testRainbow.getWidth(), testRainbow.getHeight(), "testRainbowHorLong.png");
 
   }
-
-
 }
