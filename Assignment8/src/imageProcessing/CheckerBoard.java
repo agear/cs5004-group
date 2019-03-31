@@ -13,8 +13,8 @@ public class CheckerBoard extends ImageUtil implements IImage {
    * Constructor
    */
   public CheckerBoard(int squareSize) {
-    this.height = (squareSize*8);
-    this.width = (squareSize*8);
+    this.height = (squareSize * 8);
+    this.width = (squareSize * 8);
     this.squareSize = squareSize;
     this.data = new Pixel[this.width][this.height];
     this.draw();
@@ -29,21 +29,30 @@ public class CheckerBoard extends ImageUtil implements IImage {
     int top = 0;
 
 
-    for (int i=0; i < this.width; i++) {
+    for (int i = 0; i < this.width; i++) {
       for (int j = 0; j < this.height; j++) {
-        Pixel uninitPixel = new Pixel(0,0,255);
+        Pixel uninitPixel = new Pixel(0, 0, 255);
         this.data[j][i] = uninitPixel;
       }
     }
 
-    for (int horizontal = 0; horizontal < 4; horizontal++) {
+    for (int horizontal = 0; horizontal < 8; horizontal++) {
       System.out.println("\n NEW ROW!!!");
       top = 0;
       //left = 0;
       for (int vertical = 0; vertical < 4; vertical++) {
-        drawWhiteSquare(left, top);
+        System.out.println("Row = " + vertical + ", Column = " + horizontal);
+        if (horizontal % 2 == 0) {
+          drawWhiteSquare(left, top);
+        } else {
+          drawBlackSquare(left, top);
+        }
         top += this.squareSize;
-        drawBlackSquare(left, top);
+        if ((horizontal + 1) % 2 == 0) {
+          drawWhiteSquare(left, top);
+        } else {
+          drawBlackSquare(left, top);
+        }
         top += this.squareSize;
       }
       left += this.squareSize;
@@ -54,8 +63,8 @@ public class CheckerBoard extends ImageUtil implements IImage {
 
   private void drawWhiteSquare(int left, int top) {
     System.out.println("White square at " + left + ", " + top);
-    for (int x = left; x < left+this.squareSize; x++)
-      for (int y = top; y < top+this.squareSize; y++) {
+    for (int x = left; x < left + this.squareSize; x++)
+      for (int y = top; y < top + this.squareSize; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
@@ -63,14 +72,12 @@ public class CheckerBoard extends ImageUtil implements IImage {
 
   private void drawBlackSquare(int left, int top) {
     System.out.println("Black square at " + left + ", " + top);
-    for (int x = left; x < left+this.squareSize; x++)
-      for (int y = top; y < top+this.squareSize; y++) {
+    for (int x = left; x < left + this.squareSize; x++)
+      for (int y = top; y < top + this.squareSize; y++) {
         Pixel newPixel = new Pixel(0, 0, 0);
         this.data[x][y] = newPixel;
       }
   }
-
-
 
 
   public int getHeight() {
