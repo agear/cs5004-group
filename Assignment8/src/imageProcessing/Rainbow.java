@@ -22,9 +22,14 @@ public class Rainbow extends ImageUtil implements IImage {
   }
 
   private void drawHorizontal() {
-    int stripeWidth = this.height/7;
+    double height = (double)this.height;
+    int stripeWidth = (int)Math.ceil(height/7);
+    System.out.println("stripeWidth = " + stripeWidth);
+    int lastStripe = this.height - (stripeWidth*6);
+    System.out.println("lastStripe = " + lastStripe);
 
-   // System.out.println("Initializing....");
+
+    // System.out.println("Initializing....");
 
     //initialization
     for (int i = 0; i < this.width; i++) {
@@ -85,7 +90,7 @@ public class Rainbow extends ImageUtil implements IImage {
 
   //  System.out.println("Drawing violet stripe");
 
-    for (int x = stripeWidth*6; x < stripeWidth*7; x++)
+    for (int x = stripeWidth*6; x < stripeWidth*6 + lastStripe; x++)
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(238, 130, 238);
         this.data[x][y] = newPixel;
@@ -93,7 +98,9 @@ public class Rainbow extends ImageUtil implements IImage {
   }
 
   private void drawVertical() {
-    int stripeWidth = this.width/7;
+    double width = (double)this.width;
+    int stripeWidth = (int)Math.ceil(this.width/7);
+    int lastStripe = this.width - (stripeWidth*6);
 
     //initialize
     for (int x = 0; x < this.height; x++) {
@@ -143,7 +150,7 @@ public class Rainbow extends ImageUtil implements IImage {
       }
 
     for (int x = 0; x < this.height; x++)
-      for (int y = stripeWidth*6; y < stripeWidth*7; y++) {
+      for (int y = stripeWidth*6; y < stripeWidth*6 + lastStripe; y++) {
   //      System.out.println("Drawing violet pixel at "+ x + ", " + y);
         Pixel newPixel = new Pixel(238, 130, 238);
         this.data[x][y] = newPixel;
