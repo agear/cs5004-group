@@ -247,8 +247,8 @@ public class test {
 
   @Test
   public void testCheckerboard() throws IOException {
-    CheckerBoard testChecker = new CheckerBoard(500,500, 50);
-    testChecker.writeImage(testChecker.get3Ddata(), 500, 500, "testChecker.png");
+    CheckerBoard testChecker = new CheckerBoard(100);
+    testChecker.writeImage(testChecker.get3Ddata(), testChecker.getWidth(), testChecker.getHeight(), "testChecker2.png");
 
   }
 
