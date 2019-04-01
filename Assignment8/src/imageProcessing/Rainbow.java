@@ -2,6 +2,9 @@ package imageProcessing;
 
 import java.io.IOException;
 
+/**
+ * This class creates and represents a Rainbow image object, with 7 colored stripes.
+ */
 public class Rainbow extends ImageUtil implements IImage {
   private Pixel[][] data;
   private int height;
@@ -38,6 +41,9 @@ public class Rainbow extends ImageUtil implements IImage {
 
   }
 
+  /**
+   * Creates a horizontal rainbow object.
+   */
   private void drawHorizontal() {
     double height = (double)this.height;
     int stripeWidth = (int)Math.ceil(height/7.0);
@@ -87,6 +93,9 @@ public class Rainbow extends ImageUtil implements IImage {
       }
   }
 
+  /**
+   * Creates a vertically-striped rainbow image object.
+   */
   private void drawVertical() {
     double width = (double)this.width;
     int stripeWidth = (int)Math.ceil(width/7.0);
@@ -137,8 +146,8 @@ public class Rainbow extends ImageUtil implements IImage {
   }
 
   /**
-   * //TODO Java doc
-   * @return
+   * Returns the height in pixels of this rainbow image object.
+   * @return the height in pixels of this rainbow image object
    */
   public int getHeight() {
     int heightClone = this.height;
@@ -146,17 +155,18 @@ public class Rainbow extends ImageUtil implements IImage {
   }
 
   /**
-   * //TODO Java doc
-   * @return
+   * Returns the width in pixels of this rainbow image object.
+   * @return the width in pixels of this rainbow image object
    */
   public int getWidth() {
     int widthClone = this.width;
     return widthClone;
   }
 
-  /**
-   * //TODO Java doc
-   * @return
+  /** Returns the data of this Flag image, by converting a 2D array of Pixel objects
+   * into a 3D array of int objects. The purpose of this method is to make the data readable
+   * by the ImageUtil class, or any 'outsiders' who do not have Pixel objects.
+   * @return A 3D array of values representing RGB values of this image
    */
   public int[][][] get3Ddata() {
     int[][][] output = new int[this.data.length][this.data[0].length][3];

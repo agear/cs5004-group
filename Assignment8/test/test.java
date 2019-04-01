@@ -349,16 +349,6 @@ public class test {
 //    Image myGreyscale = greyscale.apply(myImage);
 //    myGreyscale.writeImageToFile("manhattan-small-and-greyscale.png");
 //
-//    //Test Flags
-//    Flag greekFlag = new Flag(908,Country.GREECE);
-//    greekFlag.writeFlagToFile("GreekFlag.png");
-//
-//    Flag swissFlag = new Flag(777,Country.SWITZERLAND);
-//    swissFlag.writeFlagToFile("SwissFlag.png");
-//
-//    Flag frenchFlag = new Flag(800,Country.FRANCE);
-//    frenchFlag.writeFlagToFile("FrenchFlag.png");
-//
 //    //Test Rainbows
 //    Rainbow verticalRainbow = new Rainbow(300,500, Orientation.VERTICAL);
 //    verticalRainbow.writeToFile("VerticalRainbow.png");

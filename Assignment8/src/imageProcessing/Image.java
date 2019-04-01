@@ -204,8 +204,10 @@ public class Image extends ImageUtil {
 
   // TODO Move to Transformation class? I.e. public Image Transform(Image untransformedImage)?
 
-  /**
-   * // TODO Java doc
+  /** This applies a transformation to the image without modifying the image.
+   *
+   * @param inputTransformation The transformation to be applied
+   * @return The Image after the filter has been applied.
    */
   public Image Transform(Transformation inputTransformation) {
 
@@ -233,8 +235,11 @@ public class Image extends ImageUtil {
   }
 
   /**
-   * TODO Javadoc. Helper method for Transform()? Move to Transformation class?
-   *
+   * Applies a transformation to a pixel object using linear algebra.
+   * @param  inputTransformation The transformation to be applied.
+   * @param  inputPixel the pixel it should be applied to
+   * @param x the x-coordinate in this image of that pixel
+   * @param y the y-coordinate in this image of that pixel
    * @return A new pixel object that is the result of applying this filter to a pixel.
    */
   private Pixel TransformPixel(Transformation inputTransformation, Pixel inputPixel, int x, int y) {
@@ -273,11 +278,10 @@ public class Image extends ImageUtil {
   }
 
   //TODO Duplicate code.
-  /**
-   * Method to return this image as a 3D array of integers. // TODO More detailed explanation? I.e.
-   * what is stored in each dimension of the array?
-   *
-   * @return This image as a 3D array of integers.
+  /** Returns the data of this Flag image, by converting a 2D array of Pixel objects
+   * into a 3D array of int objects. The purpose of this method is to make the data readable
+   * by the ImageUtil class, or any 'outsiders' who do not have Pixel objects.
+   * @return A 3D array of values representing RGB values of this image
    */
   public int[][][] get3Ddata() {
     int[][][] output = new int[this.data.length][this.data[0].length][3];

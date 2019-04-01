@@ -72,23 +72,13 @@ testChecker.writeToFile("testCheckerSmall.png");
 Creating a flag requires the width (an integer, in pixels), a country name, and then the name of
 the output filename. The result of this is a flag of France 500px wide,
 found in the file ./testFlagFrench.png. If the desired flag is not found in our database, an
-exception will be thrown. //TODO
+exception will be thrown. //TODO ?
 ```java
 import imageProcessing.*;
 Flag testFlagFrench = new Flag(500, "France");
-testFlagFrench.writeFlagToFile("testFlagFrench.png");
+testFlagFrench.writeImageToFile("testFlagFrench.png");
 ```
 
 
-
-
-
-
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
+## Licenses
 [MIT](https://choosealicense.com/licenses/mit/)

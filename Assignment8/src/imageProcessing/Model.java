@@ -47,13 +47,13 @@ public class Model {
 
     //Draw Flags
     Flag greekFlag = new Flag(908, Country.GREECE);
-    greekFlag.writeFlagToFile("GreekFlag.png");
+    greekFlag.writeImageToFile("GreekFlag.png");
 
     Flag swissFlag = new Flag(777, Country.SWITZERLAND);
-    swissFlag.writeFlagToFile("SwissFlag.png");
+    swissFlag.writeImageToFile("SwissFlag.png");
 
     Flag frenchFlag = new Flag(800, Country.FRANCE);
-    frenchFlag.writeFlagToFile("FrenchFlag.png");
+    frenchFlag.writeImageToFile("FrenchFlag.png");
 
     //Draw Rainbows
     Rainbow verticalRainbow = new Rainbow(300, 500, Orientation.VERTICAL);

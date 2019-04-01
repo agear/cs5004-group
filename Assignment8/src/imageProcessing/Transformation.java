@@ -40,9 +40,9 @@ public class Transformation implements Adjustment {
                             {0.272, 0.534, 0.131} };
       return sepia;
     }
-    // Should never get here but needed to complete the if else if statement.
-    // TODO is there a way to avoid this? Introduced because I removed the unnecessary exception
-    //  since this method now takes an enum instead of a string.
+
+    // This else statement is reached if a valid enum is inputted, but hasn't been implemented yet.
+    // It preserves the image.
     else {
       double[][] identity =  { {1, 0, 0},
                                {0, 1, 0},
@@ -61,8 +61,6 @@ public class Transformation implements Adjustment {
     this.matrix = getFilterByName(transformationName);
   }
 
-
-
   /**
    * Returns a copy of the matrix of this Transformation.
    *
@@ -78,7 +76,6 @@ public class Transformation implements Adjustment {
    * @return Altered cloned image
    */
   public Image apply(Image inputImage) {
-    // Will do this later
     return inputImage.Transform(this);
   }
 

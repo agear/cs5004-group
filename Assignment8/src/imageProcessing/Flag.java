@@ -162,7 +162,11 @@ public class Flag extends ImageUtil implements IImage {
     return widthClone;
   }
 
-  //TODO Duplicate code. Can this go in the image class and Flag extends?
+  /** Returns the data of this Flag image, by converting a 2D array of Pixel objects
+   * into a 3D array of int objects. The purpose of this method is to make the data readable
+   * by the ImageUtil class, or any 'outsiders' who do not have Pixel objects.
+   * @return A 3D array of values representing RGB values of this image
+   */
   public int[][][] get3Ddata() {
     int[][][] output = new int[this.data.length][this.data[0].length][3];
     for (int i = 0; i < this.data.length - 1; i++) {
@@ -175,14 +179,13 @@ public class Flag extends ImageUtil implements IImage {
     return output;
   }
 
- //TODO Can this be "writeImageToFile()" for consistency?
   /**
    * Writes the image to a file.
    *
    * @param filename The desired file path.
    * @throws IOException If there is an error creating a file with that path name.
    */
-  public void writeFlagToFile(String filename) throws IOException {
+  public void writeImageToFile(String filename) throws IOException {
     this.writeImage(this.get3Ddata(), this.getWidth(), this.getHeight(), filename);
   }
 
