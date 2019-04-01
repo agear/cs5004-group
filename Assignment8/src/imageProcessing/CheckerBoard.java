@@ -1,5 +1,7 @@
 package imageProcessing;
 
+import java.io.IOException;
+
 /**
  * This class represents a checkerboard image. It can create the checkerboard, and return
  * information about the object. It is a type of Image, which means it can have adjustments
@@ -125,6 +127,15 @@ public class CheckerBoard extends ImageUtil implements IImage {
       }
     }
     return output;
+  }
+
+
+  /** Writes the image to a file.
+   * @param filename The desired file path.
+   * @throws IOException If there is an error creating a file with that path name.
+   */
+  public void writeToFile(String filename) throws IOException {
+    this.writeImage(this.get3Ddata(), this.getWidth(), this.getHeight(), filename);
   }
 
 }

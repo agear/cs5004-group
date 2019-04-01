@@ -1,5 +1,7 @@
 package imageProcessing;
 
+import java.io.IOException;
+
 public class Rainbow extends ImageUtil implements IImage {
   private Pixel[][] data;
   private int height;
@@ -177,4 +179,15 @@ public class Rainbow extends ImageUtil implements IImage {
     }
     return output;
   }
+
+
+  /** Writes the image to a file.
+   * @param filename The desired file path.
+   * @throws IOException If there is an error creating a file with that path name.
+   */
+  public void writeToFile(String filename) throws IOException {
+    this.writeImage(this.get3Ddata(), this.getWidth(), this.getHeight(), filename);
+  }
+
 }
+
