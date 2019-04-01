@@ -6,7 +6,7 @@ public class Rainbow extends ImageUtil implements IImage {
   private Pixel[][] data;
   private int height;
   private int width;
-  private String orientation;
+  private Orientation orientation;
 
   /** Creates an image of the rainbow with user-specified dimension and orientation. Does not
    * write to a file, but can.
@@ -16,7 +16,7 @@ public class Rainbow extends ImageUtil implements IImage {
    * @param orientation The desired direction of the rainbow's stripes
    * @throws IllegalArgumentException If the orientation is not vertical or horizontal
    */
-  public Rainbow(int height, int width, String orientation) throws IllegalArgumentException {
+  public Rainbow(int height, int width, Orientation orientation) throws IllegalArgumentException {
     this.height = height;
     this.width = width;
     this.orientation = orientation;
@@ -28,12 +28,12 @@ public class Rainbow extends ImageUtil implements IImage {
         this.data[j][i] = uninitPixel;
       }
     }
-    if (this.orientation.equals("Horizontal")) {
-      System.out.println("Drawing horizontal");
+    if (this.orientation.equals(Orientation.HORIZONTAL)) {
+//      System.out.println("Drawing horizontal");
       this.drawHorizontal();
     }
-    else if (this.orientation.equals("Vertical")){
-      System.out.println("Drawing vertical");
+    else if (this.orientation.equals(Orientation.VERTICAL)){
+  //    System.out.println("Drawing vertical");
       this.drawVertical();
     }
 

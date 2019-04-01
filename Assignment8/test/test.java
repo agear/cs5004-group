@@ -349,5 +349,11 @@ public class test {
 
     Flag frenchFlag = new Flag(800,Country.FRANCE);
     frenchFlag.writeFlagToFile("FrenchFlag.png");
+
+    Rainbow verticalRainbow = new Rainbow(300,500, Orientation.VERTICAL);
+    verticalRainbow.writeToFile("VerticalRainbow.png");
+
+    Rainbow horizontalRainbow = new Rainbow(300,500, Orientation.HORIZONTAL);
+    horizontalRainbow.writeToFile("HorizontalRainbow.png");
   }
 }
