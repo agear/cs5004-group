@@ -1,4 +1,4 @@
-package imageProcessing;
+package imageprocessing;
 
 /**
  * This class represents a filter to apply to an image. A filter has a "Kernel" which is a 2D array
@@ -42,17 +42,17 @@ public class Filter implements Adjustment {
    */
   private double[][] getFilterByName(Filters filterName) {
     if (filterName.equals(Filters.BLUR)) {
-      double[][] blurKernel =  { {1.0/16.0, 1.0/8.0, 1.0/16.0},
-                                 {1.0/8.0,  1.0/4.0, 1.0/18.0},
-                                 {1.0/16.0, 1.0/8.0, 1.0/16.0} };
+      double[][] blurKernel =  { {1.0 / 16.0, 1.0 / 8.0, 1.0 / 16.0},
+                                 {1.0 / 8.0,  1.0 / 4.0, 1.0 / 18.0},
+                                 {1.0 / 16.0, 1.0 / 8.0, 1.0 / 16.0} };
       return blurKernel;
     }
     else if (filterName.equals(Filters.SHARPEN)) {
-      double[][] sharpenKernel =  { {-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0},
-                                    {-1.0/8.0,  1.0/4.0,  1.0/4.0,  1.0/4.0, -1.0/8.0},
-                                    {-1.0/8.0,  1.0/4.0,  1.0,      1.0/4.0, -1.0/8.0},
-                                    {-1.0/8.0,  1.0/4.0,  1.0/4.0,  1.0/4.0, -1.0/8.0},
-                                    {-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0}  };
+      double[][] sharpenKernel =  { {-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0},
+                                    {-1.0 / 8.0,  1.0 / 4.0,  1.0 / 4.0,  1.0 / 4.0, -1.0 / 8.0},
+                                    {-1.0 / 8.0,  1.0 / 4.0,  1.0,      1.0 / 4.0, -1.0 / 8.0},
+                                    {-1.0 / 8.0,  1.0 / 4.0,  1.0 / 4.0,  1.0 / 4.0, -1.0 / 8.0},
+                                    {-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0}  };
       return sharpenKernel;
     }
     // Method should never get here but needed something for the else clause.
@@ -152,30 +152,28 @@ public class Filter implements Adjustment {
 
     return input.applyFilter(this);
 //
-//    // Initialize output object
-//    Pixel[][] output = new Pixel[input.get3Ddata().length][input.get3Ddata()[0].length];
+//  // Initialize output object
+//  Pixel[][] output = new Pixel[input.get3Ddata().length][input.get3Ddata()[0].length];
 //
-//    // For each pixel in the image, apply the filter. Add that new value to the corresponding value
-//    // in a new set of data, and then create a new Image object from that. Return the resulting obj.
-//    for (int i = 0; i < input.get3Ddata().length; i++) {
+//  // For each pixel in the image, apply the filter. Add that new value to the corresponding
+//  value
+//  // in a new set of data, and then create a new Image object from that.
+//  Return the resulting obj.
+//  for (int i = 0; i < input.get3Ddata().length; i++) {
 //
-//      //System.out.println("Applying filter to image...." + i);
-//      for (int j = 0; j < input.get3Ddata()[i].length; j++) {
+//    for (int j = 0; j < input.get3Ddata()[i].length; j++) {
 //
-//        // Apply the filter, and receive new value
-//        // Put the new pixel in the output image
-//        Pixel filteredPixel = this.applyToPixel(input, i, j);
-//        output[i][j] = filteredPixel;
-//        //System.out.println("Created a filtered pixel. i,j = " + i + "  " +j);
-//
-//      }
+//      // Apply the filter, and receive new value
+//      // Put the new pixel in the output image
+//      Pixel filteredPixel = this.applyToPixel(input, i, j);
+//      output[i][j] = filteredPixel;
 //
 //    }
-//    //System.out.println("Created a filtered pixel. ");
 //
-//    Image filteredImage = new Image(output);
-//    return filteredImage;
-
+//  }
+//
+//  Image filteredImage = new Image(output);
+//  return filteredImage
   }
 
 

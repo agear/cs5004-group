@@ -1,4 +1,4 @@
-package imageProcessing;
+package imageprocessing;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -40,6 +40,12 @@ public class ImageUtil {
     return result;
   }
 
+  /** Creates an uninitialized blank white image.
+   *
+   * @param width  The width in pixels of the image
+   * @param height The height in pixels of the image
+   * @return A blank white image
+   */
   public static int[][][] createWhiteImage(int width, int height)  {
 
 

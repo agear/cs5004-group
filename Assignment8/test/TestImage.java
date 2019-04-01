@@ -1,19 +1,18 @@
 import org.junit.Test;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 
-import imageProcessing.CheckerBoard;
-import imageProcessing.Filter;
-import imageProcessing.Flag;
-import imageProcessing.Image;
-import imageProcessing.ImageUtil;
-import imageProcessing.*;
+import imageprocessing.Model;
 
 
-//TODO should we have a driver class to output all these images?
-public class test {
+/**
+ * Tests for the image processing class.
+ */
+public class TestImage {
 
-//  @Test
+//  @TestImage
 //  public void testImageReading() throws IOException {
 ////    ImageUtil shadow = new ImageUtil();
 ////    int[][][] result = shadow.readImage("./images/shadow.jpg");
@@ -36,7 +35,7 @@ public class test {
 ////
 ////
 ////
-////  @Test
+////  @TestImage
 ////  public void trivialTest() throws IOException {
 ////    double[][] blurKernel =  { {1.0/2.0, 1.0/2.0, 1.0/2.0}, {1.0/2.0, 1.0/2.0, 1.0/2.0},
 ////            {1.0/2.0, 1.0/2.0, 1.0/2.0} };
@@ -123,7 +122,7 @@ public class test {
 ////  }
 //////
 //
-//  @Test
+//  @TestImage
 //  public void testManhattan() throws IOException {
 //    ImageUtil manhattan = new ImageUtil();
 //    int[][][] result = manhattan.readImage("./images/manhattan-small.png");
@@ -143,7 +142,7 @@ public class test {
 //  }
 //
 //
-////  @Test
+////  @TestImage
 ////  public void testSepia() throws IOException {
 ////    ImageUtil manhattan = new ImageUtil();
 ////    int[][][] result = manhattan.readImage("./images/manhattan-small.png");
@@ -160,7 +159,7 @@ public class test {
 ////            "makeManhattanSepia.png");
 ////  }
 ////
-//  @Test
+//  @TestImage
 //  public void testGreyScale() throws IOException {
 //    ImageUtil manhattan = new ImageUtil();
 //    int[][][] result = manhattan.readImage("./images/manhattan-small.png");
@@ -178,7 +177,7 @@ public class test {
 //  }
 //  //TODO Uncomment above. and below
 //
-////  @Test
+////  @TestImage
 ////  public void testHorizontalStripes() throws IOException {
 ////    Image testImage = new Image(500,500);
 ////    int[][][] newTestImageAllWhite = testImage.createWhiteImage(500,350);
@@ -192,7 +191,7 @@ public class test {
 ////  }
 //
 //
-////  @Test
+////  @TestImage
 ////  public void testVerticalStripes() throws IOException {
 ////    Image testImage = new Image(500, 350);
 ////    int[][][] newTestImageAllWhite = testImage.createWhiteImage(500, 350);
@@ -205,7 +204,7 @@ public class test {
 ////            "rainbowv.png");
 ////  }
 //
-////  @Test
+////  @TestImage
 ////  public void testGreece() throws IOException {
 ////    Image testImage = new Image(700, 700);
 ////    int[][][] newTestImageAllWhite = testImage.createWhiteImage(500, 450);
@@ -217,7 +216,7 @@ public class test {
 ////    testImage.writeImage(testImage.get3Ddata(), 500, 450,
 ////            "greece.png");
 ////  }
-////  @Test
+////  @TestImage
 ////  public void testFilterArchitecture() throws IOException {
 ////    Filter blur = new Filter("blur");
 ////    Image shadowOriginal = new Image("./images/shadowresize.jpg");
@@ -226,7 +225,7 @@ public class test {
 ////    shadowFiltered.writeImageToFile("./images/shadowResizeBlurred.jpg");
 ////  }
 //
-////  @Test
+////  @TestImage
 ////  public void testGreece() throws IOException {
 ////    Image testImage = new Image(700,700);
 ////    int[][][] newTestImageAllWhite = testImage.createWhiteImage(500,450);
@@ -241,7 +240,7 @@ public class test {
 ////
 ////
 ////
-////  @Test
+////  @TestImage
 ////  public void testFilterArchitecture() throws IOException {
 ////    Adjustment blur = new Filter("blur");
 ////    Image shadowOriginal = new Image("./images/manhattan-small.png");
@@ -250,97 +249,117 @@ public class test {
 ////  }
 //
 //
-////  @Test
+////  @TestImage
 ////  public void testCheckerboard() throws IOException {
 ////    CheckerBoard testChecker = new CheckerBoard(100);
-////    testChecker.writeImage(testChecker.get3Ddata(), testChecker.getWidth(), testChecker.getHeight(), "testChecker2.png");
+////    testChecker.writeImage(testChecker.get3Ddata(), testChecker.getWidth(),
+// testChecker.getHeight(), "testChecker2.png");
 ////
 ////  }
 ////
-////  @Test
+////  @TestImage
 ////  public void testCheckerboardSmall() throws IOException {
 ////    CheckerBoard testChecker = new CheckerBoard(5);
-////    testChecker.writeImage(testChecker.get3Ddata(), testChecker.getWidth(), testChecker.getHeight(), "testCheckerSmall.png");
+////    testChecker.writeImage(testChecker.get3Ddata(), testChecker.getWidth(),
+// testChecker.getHeight(), "testCheckerSmall.png");
 ////
 ////  }
 //
-//  @Test
+//  @TestImage
 //  public void testRainbowHorizontal() throws IOException {
 //    Rainbow testRainbow1 = new Rainbow(140, 140, "Horizontal");
 //    testRainbow1.writeToFile("HorizontalRainbow.png");
 //
 //
-//    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testRainbowHorizontal1.png");
+//    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(),
+//    testRainbow1.getHeight(), "testRainbowHorizontal1.png");
 //    Rainbow testRainbow2 = new Rainbow(140, 70, "Horizontal");
-//    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testRainbowHorizontal2.png");
+//    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(),
+//    testRainbow2.getHeight(), "testRainbowHorizontal2.png");
 //    Rainbow testRainbow3 = new Rainbow(70, 140, "Horizontal");
-//    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testRainbowHorizontal3.png");
+//    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(),
+//    testRainbow3.getHeight(), "testRainbowHorizontal3.png");
 //    Rainbow testRainbow4 = new Rainbow(100, 100, "Horizontal");
-//    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testRainbowHorizontal4.png");
+//    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(),
+//    testRainbow4.getHeight(), "testRainbowHorizontal4.png");
 //  }
 //
-//  @Test
+//  @TestImage
 //  public void testRainbowHorizontalNonDiv() throws IOException {
 //    Rainbow testRainbow1 = new Rainbow(704, 696, "Horizontal");
-//    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testNonDivRainbowHorizontal1.png");
+//    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(),
+//    testRainbow1.getHeight(), "testNonDivRainbowHorizontal1.png");
 //    Rainbow testRainbow2 = new Rainbow(701, 699, "Horizontal");
-//    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testNonDivRainbowHorizontal2.png");
+//    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(),
+//    testRainbow2.getHeight(), "testNonDivRainbowHorizontal2.png");
 //    Rainbow testRainbow3 = new Rainbow(702, 698, "Horizontal");
-//    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testNonDivRainbowHorizontal3.png");
+//    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(),
+//    testRainbow3.getHeight(), "testNonDivRainbowHorizontal3.png");
 //    Rainbow testRainbow4 = new Rainbow(703, 697, "Horizontal");
-//    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testNonDivRainbowHorizontal4.png");
+//    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(),
+//    testRainbow4.getHeight(), "testNonDivRainbowHorizontal4.png");
 //  }
 //
-//  @Test
+//  @TestImage
 //  public void testRainbowVertical() throws IOException {
 //    Rainbow testRainbow1 = new Rainbow(140, 140, "Vertical");
-//    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testRainbowVertical1.png");
+//    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(),
+//    testRainbow1.getHeight(), "testRainbowVertical1.png");
 //    Rainbow testRainbow2 = new Rainbow(140, 70, "Vertical");
-//    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testRainbowVertical2.png");
+//    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(),
+//    testRainbow2.getHeight(), "testRainbowVertical2.png");
 //    Rainbow testRainbow3 = new Rainbow(70, 140, "Vertical");
-//    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testRainbowVertical3.png");
+//    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(),
+//    testRainbow3.getHeight(), "testRainbowVertical3.png");
 //    Rainbow testRainbow4 = new Rainbow(500, 500, "Vertical");
-//    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testRainbowVertical4.png");
+//    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(),
+//    testRainbow4.getHeight(), "testRainbowVertical4.png");
 //  }
 //
-//  @Test
+//  @TestImage
 //  public void testRainbowVerticalNonDiv() throws IOException {
 //    Rainbow testRainbow1 = new Rainbow(300, 500, "Vertical");
-//    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testNonDivRainbowVertical1.png");
+//    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(),
+//    testRainbow1.getHeight(), "testNonDivRainbowVertical1.png");
 //    Rainbow testRainbow2 = new Rainbow(305, 495, "Vertical");
-//    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testNonDivRainbowVertical2.png");
+//    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(),
+//    testRainbow2.getHeight(), "testNonDivRainbowVertical2.png");
 //    Rainbow testRainbow3 = new Rainbow(310, 491, "Vertical");
-//    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testNonDivRainbowVertical3.png");
+//    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(),
+//    testRainbow3.getHeight(), "testNonDivRainbowVertical3.png");
 //    Rainbow testRainbow4 = new Rainbow(316, 485, "Vertical");
-//    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testNonDivRainbowVertical4.png");
+//    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(),
+//    testRainbow4.getHeight(), "testNonDivRainbowVertical4.png");
 //  }
 //
-//  @Test
+//  @TestImage
 //  public void testFlag() throws IOException {
 //    Flag testFlagFrench = new Flag(500, "France");
 //    testFlagFrench.writeFlagToFile("testFlagFrench.png");
 //    Flag testFlagSwiss = new Flag(500, "Switzerland");
-//    testFlagSwiss.writeImage(testFlagSwiss.get3Ddata(), testFlagSwiss.getWidth(), testFlagSwiss.getHeight(), "testFlagSwiss.png");
+//    testFlagSwiss.writeImage(testFlagSwiss.get3Ddata(), testFlagSwiss.getWidth(),
+//    testFlagSwiss.getHeight(), "testFlagSwiss.png");
 //    Flag testFlagGreek = new Flag(500, "Greece");
-//    testFlagGreek.writeImage(testFlagGreek.get3Ddata(), testFlagGreek.getWidth(), testFlagGreek.getHeight(), "testFlagGreek.png");
+//    testFlagGreek.writeImage(testFlagGreek.get3Ddata(), testFlagGreek.getWidth(),
+//    testFlagGreek.getHeight(), "testFlagGreek.png");
 //
 //  }
 
 
-//  @Test
+//  @TestImage
 //  public void readmeblur() throws IOException {
 //    Image myImage = new Image("./images/manhattan-small.png");
 //
-//    //Test filters
+//    //TestImage filters
 //    Filter blur = new Filter(Filters.BLUR);
 //    Image myBlurredImage = blur.apply(myImage);
-//    myBlurredImage.writeImageToFile("manhattan-small-and-blurry.png");
+//    myBlurredImage.writeImageToFile("manhattan-small-and-shadow_blurry.png");
 //
 //    Filter sharpen = new Filter(Filters.SHARPEN);
 //    Image mySharpenedImage = sharpen.apply(myImage);
 //    mySharpenedImage.writeImageToFile("manhattan-small-and-sharper.png");
 //
-//    //Test transformations
+//    //TestImage transformations
 //    Transformation sepia = new Transformation(Transformations.SEPIA);
 //    Image mySepiaImage = sepia.apply(myImage);
 //    mySepiaImage.writeImageToFile("manhattan-small-and-vintage.png");
@@ -349,21 +368,22 @@ public class test {
 //    Image myGreyscale = greyscale.apply(myImage);
 //    myGreyscale.writeImageToFile("manhattan-small-and-greyscale.png");
 //
-//    //Test Rainbows
+//    //TestImage Rainbows
 //    Rainbow verticalRainbow = new Rainbow(300,500, Orientation.VERTICAL);
 //    verticalRainbow.writeToFile("VerticalRainbow.png");
 //
 //    Rainbow horizontalRainbow = new Rainbow(300,500, Orientation.HORIZONTAL);
 //    horizontalRainbow.writeToFile("HorizontalRainbow.png");
 //
-//    //Test Checkerboards
+//    //TestImage Checkerboards
 //    CheckerBoard testChecker = new CheckerBoard(15);
 //    testChecker.writeToFile("CheckerBoard.png");
-//  }
+//    }
 
   @Test
-  public void mainTest() throws IOException{
+  public void mainTest() throws IOException {
     Model testModel = new Model();
     testModel.main();
+    assertTrue(true);
   }
 }

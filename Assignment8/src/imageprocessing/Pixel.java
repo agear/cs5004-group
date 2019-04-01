@@ -1,4 +1,4 @@
-package imageProcessing;
+package imageprocessing;
 
 /**
  * This class represents a pixel. A Pixel has red, green and blue values which can take integer
@@ -9,8 +9,8 @@ public class Pixel {
   private int red;
   private int green;
   private int blue;
-  final private int MIN = 0;
-  final private int MAX = 255;
+  final int MIN = 0;
+  final int MAX = 255;
 
   /**
    * Constructs a pixel object. Takes three integers between 0 and 255 to represent it's red, green,

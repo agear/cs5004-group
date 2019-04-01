@@ -1,4 +1,4 @@
-package imageProcessing;
+package imageprocessing;
 
 /**
  * This class represents an object that can morph an image, such as blurring, sharpening,

@@ -1,20 +1,20 @@
-# imageProcessing
+# imageprocessing
 
-imageProcessing is a package in Java to (1) filter images and (2) generate geometric images.
+imageprocessing is a package in Java to (1) filter images and (2) generate geometric images.
 
 ## Installation
 
 Install the package and import each class:
 
 ```java
-import imageProcessing.*;
+import imageprocessing.*;
 ```
 
 ## Usage
 
 
 ### Blurring and Sharpening an Image from a File
-Blurring and sharpening are built-in filter methods in the imageProcessing package.
+Blurring and sharpening are built-in filter methods in the imageprocessing package.
 To apply either of these to an image, first create the image (loading it
 from a file is a convenient method). Then create the Filter object. If the user inputs a name of a
 filter not found in the database, they will get an exception. But, they can also create a filter by
@@ -23,7 +23,7 @@ Then, the user applies the filter to the image, and a new Image object is create
 image is not mutated). Finally, the user can output the new image to a file by specifying the
 desired path.
 ```java
-import imageProcessing.*;
+import imageprocessing.*;
 Image myImage = new Image("./images/manhattan-small.png");
 Filter blur = new Filter("blur");
 Image myBlurredImage = blur.apply(myImage);
@@ -38,7 +38,7 @@ differently on different colors channels. This allows you to create greyscale
 or sepia images from existing images. Built-in transformations are sepia and greyscale.
 
 ```java
-import imageProcessing.*;
+import imageprocessing.*;
 Image myImage = new Image("./images/manhattan-small.png");
 Transformation sepia = new Transformation("sepia");
 Image mySepiaImage = sepia.apply(myImage);
@@ -60,7 +60,7 @@ This code generates an image 150px tall, 140px wide, with horizontal rainbow str
 
 ### Generating Checkerboards
 
-The imageProcessing package also easily allows for checkerboard generation. Just input the desired
+The imageprocessing package also easily allows for checkerboard generation. Just input the desired
 square size, in pixels.
 ```java
 CheckerBoard testChecker = new CheckerBoard(5);
@@ -74,7 +74,7 @@ the output filename. The result of this is a flag of France 500px wide,
 found in the file ./testFlagFrench.png. If the desired flag is not found in our database, an
 exception will be thrown. //TODO ?
 ```java
-import imageProcessing.*;
+import imageprocessing.*;
 Flag testFlagFrench = new Flag(500, "France");
 testFlagFrench.writeImageToFile("testFlagFrench.png");
 ```
@@ -82,4 +82,4 @@ testFlagFrench.writeImageToFile("testFlagFrench.png");
 
 ## Licenses
 The landscape image and dog image were taken by Alex Gear and Alice Tilles, respectively. The use
-of these images for imageProcessing is authorized.
+of these images for imageprocessing is authorized.

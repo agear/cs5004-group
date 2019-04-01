@@ -1,4 +1,4 @@
-package imageProcessing;
+package imageprocessing;
 
 import java.io.IOException;
 
@@ -9,7 +9,6 @@ public class Rainbow extends ImageUtil implements IImage {
   private Pixel[][] data;
   private int height;
   private int width;
-  private Orientation orientation;
 
   /** Creates an image of the rainbow with user-specified dimension and orientation. Does not
    * write to a file, but can.
@@ -21,7 +20,7 @@ public class Rainbow extends ImageUtil implements IImage {
   public Rainbow(int height, int width, Orientation orientation) {
     this.height = height;
     this.width = width;
-    this.orientation = orientation;
+    Orientation thisOrientation = orientation;
     this.data = new Pixel[this.height][this.width];
 
     //Initialize canvas.
@@ -32,10 +31,10 @@ public class Rainbow extends ImageUtil implements IImage {
       }
     }
 
-    if (this.orientation.equals(Orientation.HORIZONTAL)) {
+    if (thisOrientation.equals(Orientation.HORIZONTAL)) {
       this.drawHorizontal();
     }
-    else if (this.orientation.equals(Orientation.VERTICAL)){
+    else if (thisOrientation.equals(Orientation.VERTICAL)) {
       this.drawVertical();
     }
 
@@ -46,51 +45,62 @@ public class Rainbow extends ImageUtil implements IImage {
    */
   private void drawHorizontal() {
     double height = (double)this.height;
-    int stripeWidth = (int)Math.ceil(height/7.0);
-    int lastStripe = this.height - (stripeWidth*6);
+    int stripeWidth = (int)Math.ceil(height / 7.0);
+    int lastStripe = this.height - (stripeWidth * 6);
 
     //Red Stripe
-    for (int x = 0; x < stripeWidth; x++)
+    for (int x = 0; x < stripeWidth; x++) {
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(255, 0, 0);
         this.data[x][y] = newPixel;
       }
+    }
     //Orange Stripe
-    for (int x = stripeWidth; x < stripeWidth*2; x++)
+    for (int x = stripeWidth; x < stripeWidth * 2; x++) {
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(255, 165, 0);
         this.data[x][y] = newPixel;
       }
+    }
+
     //Yellow Stripe
-    for (int x = stripeWidth*2; x < stripeWidth*3; x++)
+    for (int x = stripeWidth * 2; x < stripeWidth * 3; x++) {
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(255, 255, 0);
         this.data[x][y] = newPixel;
       }
+    }
+
     //Green Stripe
-    for (int x = stripeWidth*3; x < stripeWidth*4; x++)
+    for (int x = stripeWidth * 3; x < stripeWidth * 4; x++) {
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(0, 128, 0);
         this.data[x][y] = newPixel;
       }
+    }
+
     //Blue Stripe
-    for (int x = stripeWidth*4; x < stripeWidth*5; x++)
+    for (int x = stripeWidth * 4; x < stripeWidth * 5; x++) {
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(0, 0, 255);
         this.data[x][y] = newPixel;
       }
+    }
+
     //Indigo Stripe
-    for (int x = stripeWidth*5; x < stripeWidth*6; x++)
+    for (int x = stripeWidth * 5; x < stripeWidth * 6; x++) {
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(75, 0, 130);
         this.data[x][y] = newPixel;
       }
+    }
     //Violet Stripe
-    for (int x = stripeWidth*6; x < stripeWidth*6 + lastStripe; x++)
+    for (int x = stripeWidth * 6; x < stripeWidth * 6 + lastStripe; x++) {
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(238, 130, 238);
         this.data[x][y] = newPixel;
       }
+    }
   }
 
   /**
@@ -98,51 +108,63 @@ public class Rainbow extends ImageUtil implements IImage {
    */
   private void drawVertical() {
     double width = (double)this.width;
-    int stripeWidth = (int)Math.ceil(width/7.0);
-    int lastStripe = this.width - (stripeWidth*6);
+    int stripeWidth = (int)Math.ceil(width / 7.0);
+    int lastStripe = this.width - (stripeWidth * 6);
 
     //Red Stripe
-    for (int x = 0; x < this.height; x++)
+    for (int x = 0; x < this.height; x++) {
       for (int y = 0; y < stripeWidth; y++) {
         Pixel newPixel = new Pixel(255, 0, 0);
         this.data[x][y] = newPixel;
       }
+    }
     //Orange Stripe
-    for (int x = 0; x < this.height; x++)
-      for (int y = stripeWidth; y < stripeWidth*2; y++) {
+    for (int x = 0; x < this.height; x++) {
+      for (int y = stripeWidth; y < stripeWidth * 2; y++) {
         Pixel newPixel = new Pixel(255, 165, 0);
         this.data[x][y] = newPixel;
       }
+    }
+
     //Yellow Stripe
-    for (int x = 0; x < this.height; x++)
-      for (int y = stripeWidth*2; y < stripeWidth*3; y++) {
+    for (int x = 0; x < this.height; x++) {
+      for (int y = stripeWidth * 2; y < stripeWidth * 3; y++) {
         Pixel newPixel = new Pixel(255, 255, 0);
         this.data[x][y] = newPixel;
       }
+    }
+
     //Green Stripe
-    for (int x = 0; x < this.height; x++)
-      for (int y = stripeWidth*3; y < stripeWidth*4; y++) {
+    for (int x = 0; x < this.height; x++) {
+      for (int y = stripeWidth * 3; y < stripeWidth * 4; y++) {
         Pixel newPixel = new Pixel(0, 128, 0);
         this.data[x][y] = newPixel;
       }
+    }
+
     //Blue Stripe
-    for (int x = 0; x < this.height; x++)
-      for (int y = stripeWidth*4; y < stripeWidth*5; y++) {
+    for (int x = 0; x < this.height; x++) {
+      for (int y = stripeWidth * 4; y < stripeWidth * 5; y++) {
         Pixel newPixel = new Pixel(0, 0, 255);
         this.data[x][y] = newPixel;
       }
+    }
+
     //Indigo Stripe
-    for (int x = 0; x < this.height; x++)
-      for (int y = stripeWidth*5; y < stripeWidth*6; y++) {
+    for (int x = 0; x < this.height; x++) {
+      for (int y = stripeWidth * 5; y < stripeWidth * 6; y++) {
         Pixel newPixel = new Pixel(75, 0, 130);
         this.data[x][y] = newPixel;
       }
+    }
+
     //Violet Stripe
-    for (int x = 0; x < this.height; x++)
-      for (int y = stripeWidth*6; y < stripeWidth*6 + lastStripe; y++) {
+    for (int x = 0; x < this.height; x++) {
+      for (int y = stripeWidth * 6; y < stripeWidth * 6 + lastStripe; y++) {
         Pixel newPixel = new Pixel(238, 130, 238);
         this.data[x][y] = newPixel;
       }
+    }
   }
 
   /**

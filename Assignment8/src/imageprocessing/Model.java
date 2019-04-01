@@ -1,4 +1,4 @@
-package imageProcessing;
+package imageprocessing;
 
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ public class Model {
     //Apply filters
     Filter blur = new Filter(Filters.BLUR);
     Image myBlurredImage = blur.apply(myImage1);
-    myBlurredImage.writeImageToFile("blurry.png");
+    myBlurredImage.writeImageToFile("shadow_blurry.png");
 
     Filter sharpen = new Filter(Filters.SHARPEN);
     Image mySharpenedImage = sharpen.apply(myImage1);

@@ -1,5 +1,9 @@
-package imageProcessing;
+package imageprocessing;
 
+/**
+ * An image has a height, width, and RGB values.
+ * Besides retrieving those, the methods it can do depends on the type of image.
+ */
 public interface IImage {
 
   /** Returns the height, in pixels, of the flag.

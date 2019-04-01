@@ -1,4 +1,4 @@
-package imageProcessing;
+package imageprocessing;
 
 import java.io.IOException;
 
@@ -37,7 +37,8 @@ public class Image extends ImageUtil {
       for (int j = 0; j < this.data[i].length; j++) {
 
         // Create a pixel with data
-        Pixel newPixel = new Pixel(imageRGBMap[i][j][0], imageRGBMap[i][j][1], imageRGBMap[i][j][2]);
+        Pixel newPixel = new Pixel(imageRGBMap[i][j][0], imageRGBMap[i][j][1],
+                imageRGBMap[i][j][2]);
         this.data[i][j] = newPixel;
       }
     }
@@ -97,11 +98,12 @@ public class Image extends ImageUtil {
     this.width = width;
     this.height = height;
 
-    for (int x = 0; x < width; x++)
+    for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
         Pixel newPixel = new Pixel(data[x][y][0], data[x][y][1], data[x][y][2]);
         this.data[x][y] = newPixel;
       }
+    }
   }
 
 
@@ -209,7 +211,7 @@ public class Image extends ImageUtil {
    * @param inputTransformation The transformation to be applied
    * @return The Image after the filter has been applied.
    */
-  public Image Transform(Transformation inputTransformation) {
+  public Image transform(Transformation inputTransformation) {
 
     // Initialize output object
     Pixel[][] output = new Pixel[this.data.length][this.data[0].length];
@@ -223,7 +225,7 @@ public class Image extends ImageUtil {
         //Pixel filteredPixel = new Pixel(data[i][j].red, 0, data[i][j].blue);
 
         // Apply the transformation, and receive new value
-        Pixel transformedPixel = this.TransformPixel(inputTransformation, data[x][y], x, y);
+        Pixel transformedPixel = this.transformPixel(inputTransformation, data[x][y], x, y);
 
         // Put the new pixel in the output image
         output[x][y] = transformedPixel;
@@ -242,7 +244,7 @@ public class Image extends ImageUtil {
    * @param y the y-coordinate in this image of that pixel
    * @return A new pixel object that is the result of applying this filter to a pixel.
    */
-  private Pixel TransformPixel(Transformation inputTransformation, Pixel inputPixel, int x, int y) {
+  private Pixel transformPixel(Transformation inputTransformation, Pixel inputPixel, int x, int y) {
 
     // Get the matrix of the transformation.
     double[][] matrix = inputTransformation.getData();
@@ -312,7 +314,8 @@ public class Image extends ImageUtil {
 
     // If the image was originally created with a file ...
     if (this.filename != null) {
-      this.writeImage(this.get3Ddata(), this.getWidth(this.filename), this.getHeight(this.filename), filename);
+      this.writeImage(this.get3Ddata(), this.getWidth(this.filename),
+              this.getHeight(this.filename), filename);
     }
 
     // If the image was originally created by the computer (e.g., a flag)...

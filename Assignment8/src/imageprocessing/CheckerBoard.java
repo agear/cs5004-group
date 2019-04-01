@@ -1,4 +1,4 @@
-package imageProcessing;
+package imageprocessing;
 
 import java.io.IOException;
 
@@ -70,11 +70,12 @@ public class CheckerBoard extends ImageUtil implements IImage {
    * @param top The y-coordinate of the top left corner of the new square.
    */
   private void drawWhiteSquare(int left, int top) {
-    for (int x = left; x < left + this.squareSize; x++)
+    for (int x = left; x < left + this.squareSize; x++) {
       for (int y = top; y < top + this.squareSize; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
+    }
   }
 
   /** Creates a black square object in this.data, - a helper method used by draw.
@@ -82,11 +83,12 @@ public class CheckerBoard extends ImageUtil implements IImage {
    * @param top The y-coordinate of the top left corner of the new square.
    */
   private void drawBlackSquare(int left, int top) {
-    for (int x = left; x < left + this.squareSize; x++)
+    for (int x = left; x < left + this.squareSize; x++) {
       for (int y = top; y < top + this.squareSize; y++) {
         Pixel newPixel = new Pixel(0, 0, 0);
         this.data[x][y] = newPixel;
       }
+    }
   }
 
 

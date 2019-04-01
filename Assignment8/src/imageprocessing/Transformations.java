@@ -1,4 +1,4 @@
-package imageProcessing;
+package imageprocessing;
 
 /**
  * Database of built-in transformations, which create altered images.

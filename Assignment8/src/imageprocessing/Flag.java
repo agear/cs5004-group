@@ -1,21 +1,30 @@
-package imageProcessing;
+package imageprocessing;
 
 import java.io.IOException;
 
+/**
+ * A flag is a type of image object. Flags have a specific pattern which can be scaled with size.
+ */
 public class Flag extends ImageUtil implements IImage {
   private Pixel[][] data;
   private int height;
   private int width;
   private Country country;
 
+  /** Creates a Flag object by initializing pixels and then filling them in with color.
+   *
+   * @param width The specified user-inputted width of the flag image
+   * @param country The user-chosen country
+   */
   public Flag(int width, Country country) {
     this.width = width;
-    this.country = country;
+    Country thisCountry = country;
 
-    // The Swiss flag is one of only two square sovereign-state flags, the other being the flag of Vatican City. - Wikipedia.
-    if (this.country.equals(Country.FRANCE) || this.country.equals(Country.GREECE)) {
+    // The Swiss flag is one of only two square sovereign-state flags, the other being
+    // the flag of Vatican City. - Wikipedia.
+    if (thisCountry.equals(Country.FRANCE) || thisCountry.equals(Country.GREECE)) {
       this.height = (int) (width * 0.6);
-    } else if (this.country.equals(Country.SWITZERLAND)) {
+    } else if (thisCountry.equals(Country.SWITZERLAND)) {
       this.height = width;
     }
 
@@ -30,41 +39,52 @@ public class Flag extends ImageUtil implements IImage {
       }
     }
 
-    if (this.country.equals(Country.FRANCE)) {
+    if (thisCountry.equals(Country.FRANCE)) {
       this.drawFrench();
-    } else if (this.country.equals(Country.SWITZERLAND)) {
+    } else if (thisCountry.equals(Country.SWITZERLAND)) {
       this.drawSwiss();
-    } else if (this.country.equals(Country.GREECE)) {
+    } else if (thisCountry.equals(Country.GREECE)) {
       this.drawGreek();
     }
   }
 
 
+  /**
+   * Creates a French flag as this flag.
+   */
   private void drawFrench() {
     double width = (double)this.width;
     int stripeWidth = (int)Math.ceil(width / 3);
 
     //draw blue stripe
-    for (int x = 0; x < this.height; x++)
+    for (int x = 0; x < this.height; x++) {
       for (int y = 0; y < stripeWidth; y++) {
         Pixel newPixel = new Pixel(0, 35, 149);
         this.data[x][y] = newPixel;
       }
+    }
+
     //draw white stripe
-    for (int x = 0; x < this.height; x++)
+    for (int x = 0; x < this.height; x++) {
       for (int y = stripeWidth; y < stripeWidth * 2; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
+    }
+
     //draw red stripe
-    for (int x = 0; x < this.height; x++)
+    for (int x = 0; x < this.height; x++) {
       for (int y = stripeWidth * 2; y < this.width; y++) {
         Pixel newPixel = new Pixel(237, 41, 57);
         this.data[x][y] = newPixel;
       }
+    }
 
   }
 
+  /**
+   * Creates a Greek flag as this flag.
+   */
   private void drawGreek() {
     double height = (double)this.height;
     int stripeWidth = (int)Math.ceil(height / 9.0);
@@ -78,29 +98,33 @@ public class Flag extends ImageUtil implements IImage {
     }
 
     //Draw white stripes
-    for (int x = stripeWidth; x < stripeWidth * 2; x++)
+    for (int x = stripeWidth; x < stripeWidth * 2; x++) {
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
+    }
 
-    for (int x = stripeWidth * 3; x < stripeWidth * 4; x++)
+    for (int x = stripeWidth * 3; x < stripeWidth * 4; x++) {
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
+    }
 
-    for (int x = stripeWidth * 5; x < stripeWidth * 6; x++)
+    for (int x = stripeWidth * 5; x < stripeWidth * 6; x++) {
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
+    }
 
-    for (int x = stripeWidth * 7; x < stripeWidth * 8; x++)
+    for (int x = stripeWidth * 7; x < stripeWidth * 8; x++) {
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
+    }
 
     // draw blue corner square
     for (int x = 0; x < stripeWidth * 5; x++) {
@@ -125,6 +149,9 @@ public class Flag extends ImageUtil implements IImage {
     }
   }
 
+  /**
+   * Draws the Swiss flag as this flag.
+   */
   private void drawSwiss() {
     int square = (int) (this.height * 0.2);
 
@@ -152,11 +179,19 @@ public class Flag extends ImageUtil implements IImage {
     }
   }
 
+  /**
+   * Returns the height in pixels of this flag image object.
+   * @return the height in pixels of this flag image object
+   */
   public int getHeight() {
     int heightClone = this.height;
     return heightClone;
   }
 
+  /**
+   * Returns the width in pixels of this flag image object.
+   * @return the width in pixels of this flag image object
+   */
   public int getWidth() {
     int widthClone = this.width;
     return widthClone;
