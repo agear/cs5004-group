@@ -2,7 +2,11 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import imageProcessing.*;
+import imageProcessing.Filter;
+import imageProcessing.Flag;
+import imageProcessing.Image;
+import imageProcessing.ImageUtil;
+import imageProcessing.Rainbow;
 
 
 //TODO should we have a driver class to output all these images?
@@ -120,17 +124,17 @@ public class test {
 
   @Test
   public void testManhattan() throws IOException {
-      ImageUtil manhattan = new ImageUtil();
-      int[][][] result = manhattan.readImage("./images/manhattan-small.png");
-      Image testImage = new Image(result);
+    ImageUtil manhattan = new ImageUtil();
+    int[][][] result = manhattan.readImage("./images/manhattan-small.png");
+    Image testImage = new Image(result);
 
-      double[][] sharpenKernel =  { {-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0},
-                                    {-1.0/8.0, 1.0/4.0, 1.0/4.0, 1.0/4.0, -1.0/8.0},
-                                    {-1.0/8.0, 1.0/4.0, 1.0, 1.0/4.0, -1.0/8.0},
-                                    {-1.0/8.0, 1.0/4.0, 1.0/4.0, 1.0/4.0, -1.0/8.0},
-                                    {-1.0/8.0, -1.0/8.0,  -1.0/8.0, -1.0/8.0, -1.0/8.0} };
-      Filter sharpen = new Filter(sharpenKernel);
-      testImage = testImage.applyFilter(sharpen);
+    double[][] sharpenKernel = {{-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0},
+            {-1.0 / 8.0, 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0, -1.0 / 8.0},
+            {-1.0 / 8.0, 1.0 / 4.0, 1.0, 1.0 / 4.0, -1.0 / 8.0},
+            {-1.0 / 8.0, 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0, -1.0 / 8.0},
+            {-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0}};
+    Filter sharpen = new Filter(sharpenKernel);
+    testImage = testImage.applyFilter(sharpen);
 //      manhattan.writeImage(testImage.get3Ddata(),
 //              manhattan.getWidth("./images/manhattan-small.png"),
 //              manhattan.getHeight("./images/manhattan-small.png"),
@@ -259,43 +263,62 @@ public class test {
 //
 //  }
 
-//  @Test
-//  public void testRainbowHorizontal() throws IOException {
-//    Rainbow testRainbow1 = new Rainbow(140,140, "Horizontal");
-//    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testRainbowHorizontal1.png");
-//    Rainbow testRainbow2 = new Rainbow(140,70, "Horizontal");
-//    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testRainbowHorizontal2.png");
-//    Rainbow testRainbow3 = new Rainbow(70,140, "Horizontal");
-//    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testRainbowHorizontal3.png");
-//    Rainbow testRainbow4 = new Rainbow(100,100, "Horizontal");
-//    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testRainbowHorizontal4.png");
-//  }
-//
-//  @Test
-//  public void testRainbowVertical() throws IOException {
-//    Rainbow testRainbow1 = new Rainbow(140,140, "Vertical");
-//    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testRainbowVertical1.png");
-//    Rainbow testRainbow2 = new Rainbow(140,70, "Vertical");
-//    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testRainbowVertical2.png");
-//    Rainbow testRainbow3 = new Rainbow(70,140, "Vertical");
-//    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testRainbowVertical3.png");
-//    Rainbow testRainbow4 = new Rainbow(500,500, "Vertical");
-//    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testRainbowVertical4.png");
-//  }
-
   @Test
-  public void testRainbowVerticalUnevenInputs() throws IOException {
-    Rainbow testRainbow1 = new Rainbow(141,141, "Vertical");
-    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testRainbowVerticalUneven1.png");
-    Rainbow testRainbow2 = new Rainbow(76,76, "Vertical");
-    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testRainbowVerticalUneven2.png");
-//    Rainbow testRainbow3 = new Rainbow(70,140, "Vertical");
-//    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testRainbowVertical3.png");
-//    Rainbow testRainbow4 = new Rainbow(500,500, "Vertical");
-//    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testRainbowVertical4.png");
+  public void testRainbowHorizontal() throws IOException {
+    Rainbow testRainbow1 = new Rainbow(140, 140, "Horizontal");
+    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testRainbowHorizontal1.png");
+    Rainbow testRainbow2 = new Rainbow(140, 70, "Horizontal");
+    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testRainbowHorizontal2.png");
+    Rainbow testRainbow3 = new Rainbow(70, 140, "Horizontal");
+    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testRainbowHorizontal3.png");
+    Rainbow testRainbow4 = new Rainbow(100, 100, "Horizontal");
+    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testRainbowHorizontal4.png");
   }
 
+  @Test
+  public void testRainbowHorizontalNonDiv() throws IOException {
+    Rainbow testRainbow1 = new Rainbow(704, 696, "Horizontal");
+    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testNonDivRainbowHorizontal1.png");
+    Rainbow testRainbow2 = new Rainbow(701, 699, "Horizontal");
+    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testNonDivRainbowHorizontal2.png");
+    Rainbow testRainbow3 = new Rainbow(702, 698, "Horizontal");
+    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testNonDivRainbowHorizontal3.png");
+    Rainbow testRainbow4 = new Rainbow(703, 697, "Horizontal");
+    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testNonDivRainbowHorizontal4.png");
+  }
 
-  // TODO throw exception if orientation not equal to vertical/horizontal
+  @Test
+  public void testRainbowVertical() throws IOException {
+    Rainbow testRainbow1 = new Rainbow(140, 140, "Vertical");
+    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testRainbowVertical1.png");
+    Rainbow testRainbow2 = new Rainbow(140, 70, "Vertical");
+    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testRainbowVertical2.png");
+    Rainbow testRainbow3 = new Rainbow(70, 140, "Vertical");
+    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testRainbowVertical3.png");
+    Rainbow testRainbow4 = new Rainbow(500, 500, "Vertical");
+    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testRainbowVertical4.png");
+  }
 
+  @Test
+  public void testRainbowVerticalNonDiv() throws IOException {
+    Rainbow testRainbow1 = new Rainbow(300, 500, "Vertical");
+    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testNonDivRainbowVertical1.png");
+    Rainbow testRainbow2 = new Rainbow(305, 495, "Vertical");
+    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testNonDivRainbowVertical2.png");
+    Rainbow testRainbow3 = new Rainbow(310, 491, "Vertical");
+    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testNonDivRainbowVertical3.png");
+    Rainbow testRainbow4 = new Rainbow(316, 485, "Vertical");
+    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testNonDivRainbowVertical4.png");
+  }
+
+  @Test
+  public void testFlag() throws IOException {
+    Flag testFlagFrench = new Flag(500, "France");
+    testFlagFrench.writeImage(testFlagFrench.get3Ddata(), testFlagFrench.getWidth(), testFlagFrench.getHeight(), "testFlagFrench.png");
+    Flag testFlagSwiss = new Flag(500, "Switzerland");
+    testFlagSwiss.writeImage(testFlagSwiss.get3Ddata(), testFlagSwiss.getWidth(), testFlagSwiss.getHeight(), "testFlagSwiss.png");
+    Flag testFlagGreek = new Flag(500, "Greece");
+    testFlagGreek.writeImage(testFlagGreek.get3Ddata(), testFlagGreek.getWidth(), testFlagGreek.getHeight(), "testFlagGreek.png");
+
+  }
 }

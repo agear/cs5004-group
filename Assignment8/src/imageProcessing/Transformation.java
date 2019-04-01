@@ -6,7 +6,7 @@ package imageProcessing;
  * This class represents a transformation to apply to an image. A transformation has a 2D 3x3
  * matrix.
  */
-public class Transformation extends AbstractAdjustment {
+public class Transformation implements Adjustment {
 
   double matrix[][];
 
@@ -28,7 +28,6 @@ public class Transformation extends AbstractAdjustment {
     return this.matrix.clone();
   }
 
-  @Override
   public Image apply(Image inputImage) {
     // Will do this later
     return new Image(300,300);

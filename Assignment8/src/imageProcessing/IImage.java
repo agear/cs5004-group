@@ -12,4 +12,6 @@ public interface IImage {
    * @return the width, in pixels, of the flag
    */
   int getWidth();
+
+  int[][][] get3Ddata();
 }
