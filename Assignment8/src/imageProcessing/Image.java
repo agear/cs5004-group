@@ -96,6 +96,8 @@ public class Image extends ImageUtil {
 
     int[][][] data = this.createWhiteImage(width, height);
     this.data = new Pixel[width][height];
+    this.width = width;
+    this.height = height;
 
     for (int x = 0; x < width; x++)
       for (int y = 0; y < height; y++) {
@@ -446,7 +448,10 @@ public class Image extends ImageUtil {
   }
 
 
-
+  /** Writes the image to a file.
+   * @param filename The desired file path.
+   * @throws IOException If there is an error creating a file with that path name.
+   */
   public void writeImageToFile(String filename) throws IOException {
 
     // If the image was originally created with a file ...
@@ -456,7 +461,6 @@ public class Image extends ImageUtil {
 
     // If the image was originally created by the computer (e.g., stripes)...
     else {
-      System.out.println("Calculating height and width...");
       this.writeImage(this.get3Ddata(), this.width, this.height, filename);
     }
   }
