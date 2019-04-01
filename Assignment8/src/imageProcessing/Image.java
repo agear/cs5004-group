@@ -3,7 +3,8 @@ package imageProcessing;
 import java.io.IOException;
 
 /**
- * This class represents and image. An image is 2D array of pixel objects.
+ * This class represents an image. An image is 2D array of pixel objects. It can be filtered or
+ * transformed. It can be created by a file (.jpg, .png, etc).
  */
 public class Image extends ImageUtil {
 
@@ -15,6 +16,11 @@ public class Image extends ImageUtil {
   // Takes data of the type outputted by ImageUtil class (TODO describe better)
 
 
+  /** Constructor for an image object, if the filename is given.
+   *
+   * @param filename The name of the file to be turned into an Image file
+   * @throws IOException If the file cannot be found
+   */
   public Image(String filename) throws IOException {
 
 
@@ -77,10 +83,14 @@ public class Image extends ImageUtil {
     this.width = data[0].length;
   }
 
-  //TODO This creates a NullPointerException.
+  //TODO This creates a NullPointerException. ?? what does ??
 
   /**
-   * Constructor for an empty image. Use for generative images.
+   * Constructor for an empty image. Use for generative images (i.e., user-specified size, not
+   * coming from a file).
+   *
+   * @param width The width of the new image
+   * @param height The height of the new Image
    */
   public Image(int width, int height) {
 
@@ -96,6 +106,12 @@ public class Image extends ImageUtil {
   }
 
   //TODO This creates a NullPointerException.
+
+
+  /** Creates an image with horizontal stripes.
+   *
+   * @return The image of horizontal stripes.
+   */
   public Image horizontalStripes() {
     //Pixel[][] rainbow;
 
@@ -138,6 +154,10 @@ public class Image extends ImageUtil {
     return generatedImage;
   }
 
+  /** Creates an image with horizontal stripes.
+   *
+   * @return The image of horizontal stripes.
+   */
   public Image verticalStripes() {
     //Pixel[][] rainbow;
 
@@ -244,9 +264,14 @@ public class Image extends ImageUtil {
   }
 
 
-  /**
-   * TODO Javadoc. and general clean up. Helper method for applyFilter()? Move to Filter class?
+
+  /** Applies a filter object to a specified pixel in this specified image. Helper method used by
+   * apply.
    *
+   * @param inputFilter The filter to apply.
+   * @param inputPixel TODO delete this
+   * @param x The x-coordinate of this pixel.
+   * @param y The y-coordinate of this pixel.
    * @return A new pixel object that is the result of applying this filter to a pixel.
    */
   private Pixel applyFilterToPixel(Filter inputFilter, Pixel inputPixel, int x, int y) {
@@ -379,7 +404,9 @@ public class Image extends ImageUtil {
   }
 
   /**
-   * TODO Javadoc. Are we using this or just for trouble shooting?
+   * Creates a String representation of this image, which is a matrix of RGB values.
+   *
+   * @return String representation of this image's RGB values
    */
   public String toString() {
     String output = "";
@@ -411,6 +438,9 @@ public class Image extends ImageUtil {
   }
 
 
+  /** Returns the data (RGB values) associated with this image.
+   * @return The data
+   */
   public Pixel[][] getData() {
     return this.data.clone();
   }
@@ -418,16 +448,15 @@ public class Image extends ImageUtil {
 
 
   public void writeImageToFile(String filename) throws IOException {
+
+    // If the image was originally created with a file ...
     if (this.filename != null) {
       this.writeImage(this.get3Ddata(), this.getWidth(this.filename), this.getHeight(this.filename), filename);
-//<<<<<<< HEAD
-//    } else {
-//      System.out.println("Howd u make this image?");
-//      throw new IOException("???");
-//=======
     }
+
+    // If the image was originally created by the computer (e.g., stripes)...
     else {
-      System.out.println("Calculatign hieght and width");
+      System.out.println("Calculating height and width...");
       this.writeImage(this.get3Ddata(), this.width, this.height, filename);
     }
   }

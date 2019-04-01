@@ -4,7 +4,7 @@ package imageProcessing;
  * This class represents a filter to apply to an image. A filter has a "Kernel" which is a 2D array
  * of numbers with odd dimensions (3x3, 5x5, etc).
  */
-public class Filter extends AbstractAdjustment {
+public class Filter implements Adjustment {
 
   double kernel[][];
 
@@ -34,6 +34,14 @@ public class Filter extends AbstractAdjustment {
   }
 
 
+  /** This constructor makes the Filter object by identifying the input string as a built-in
+   * filter, such as sharpen or blur. If it finds the filter, then it creates it. If it does not
+   * find the specified filter, it throws an error. It is a helper method used by the constructor.
+   *
+   * @param filterName The name of the filter to create.
+   * @return The kernel of the filter specified
+   * @throws IllegalArgumentException If the filter is not found
+   */
   private double[][] getFilterByName(String filterName) throws IllegalArgumentException {
     if (filterName == "blur") {
       double[][] blurKernel =  { {1.0/16.0, 1.0/8.0, 1.0/16.0}, {1.0/8.0, 1.0/4.0, 1.0/18.0},
@@ -66,7 +74,14 @@ public class Filter extends AbstractAdjustment {
   }
 
 
-
+  /** Applies this filter object to a specified pixel in a specified image. Helper method used by
+   * apply.
+   *
+   * @param inputImage The image with a pixel to change.
+   * @param x The x-coordinate of this pixel.
+   * @param y The y-coordinate of this pixel.
+   * @return The filtered pixel.
+   */
   private Pixel applyToPixel(Image inputImage, int x, int y) {
 
     // Get the kernel of the filter
@@ -115,8 +130,12 @@ public class Filter extends AbstractAdjustment {
   }
 
 
-
-
+  /** This applies the filter to an image without modifying the image. We could not fully
+   * implement this (it was taking much longer than calling the method in the Image object) but
+   * given enough time, this method would be doing all the "work". This is what is commented out.
+   * @param input The image to be filtered.
+   * @return The Image after the filter has been applied.
+   */
   public Image apply(Image input) {
 
     return input.applyFilter(this);

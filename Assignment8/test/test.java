@@ -259,27 +259,43 @@ public class test {
 //
 //  }
 
-  @Test
-  public void testRainbowHorizontal() throws IOException {
-    Rainbow testRainbow1 = new Rainbow(140,140, "Horizontal");
-    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testRainbowHorizontal1.png");
-    Rainbow testRainbow2 = new Rainbow(140,70, "Horizontal");
-    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testRainbowHorizontal2.png");
-    Rainbow testRainbow3 = new Rainbow(70,140, "Horizontal");
-    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testRainbowHorizontal3.png");
-    Rainbow testRainbow4 = new Rainbow(100,100, "Horizontal");
-    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testRainbowHorizontal4.png");
-  }
+//  @Test
+//  public void testRainbowHorizontal() throws IOException {
+//    Rainbow testRainbow1 = new Rainbow(140,140, "Horizontal");
+//    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testRainbowHorizontal1.png");
+//    Rainbow testRainbow2 = new Rainbow(140,70, "Horizontal");
+//    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testRainbowHorizontal2.png");
+//    Rainbow testRainbow3 = new Rainbow(70,140, "Horizontal");
+//    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testRainbowHorizontal3.png");
+//    Rainbow testRainbow4 = new Rainbow(100,100, "Horizontal");
+//    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testRainbowHorizontal4.png");
+//  }
+//
+//  @Test
+//  public void testRainbowVertical() throws IOException {
+//    Rainbow testRainbow1 = new Rainbow(140,140, "Vertical");
+//    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testRainbowVertical1.png");
+//    Rainbow testRainbow2 = new Rainbow(140,70, "Vertical");
+//    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testRainbowVertical2.png");
+//    Rainbow testRainbow3 = new Rainbow(70,140, "Vertical");
+//    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testRainbowVertical3.png");
+//    Rainbow testRainbow4 = new Rainbow(500,500, "Vertical");
+//    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testRainbowVertical4.png");
+//  }
 
   @Test
-  public void testRainbowVertical() throws IOException {
-    Rainbow testRainbow1 = new Rainbow(140,140, "Vertical");
-    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testRainbowVertical1.png");
-    Rainbow testRainbow2 = new Rainbow(140,70, "Vertical");
-    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testRainbowVertical2.png");
-    Rainbow testRainbow3 = new Rainbow(70,140, "Vertical");
-    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testRainbowVertical3.png");
-    Rainbow testRainbow4 = new Rainbow(500,500, "Vertical");
-    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testRainbowVertical4.png");
+  public void testRainbowVerticalUnevenInputs() throws IOException {
+    Rainbow testRainbow1 = new Rainbow(141,141, "Vertical");
+    testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testRainbowVerticalUneven1.png");
+    Rainbow testRainbow2 = new Rainbow(76,76, "Vertical");
+    testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testRainbowVerticalUneven2.png");
+//    Rainbow testRainbow3 = new Rainbow(70,140, "Vertical");
+//    testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testRainbowVertical3.png");
+//    Rainbow testRainbow4 = new Rainbow(500,500, "Vertical");
+//    testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testRainbowVertical4.png");
   }
+
+
+  // TODO throw exception if orientation not equal to vertical/horizontal
+
 }
