@@ -341,6 +341,13 @@ public class test {
     Image mySepiaImage = sepia.apply(myImage);
     mySepiaImage.writeImageToFile("manhattan-small-and-vintage.png");
 
+    Flag greekFlag = new Flag(908,Country.GREECE);
+    greekFlag.writeFlagToFile("GreekFlag.png");
 
+    Flag swissFlag = new Flag(777,Country.SWITZERLAND);
+    swissFlag.writeFlagToFile("SwissFlag.png");
+
+    Flag frenchFlag = new Flag(800,Country.FRANCE);
+    frenchFlag.writeFlagToFile("FrenchFlag.png");
   }
 }

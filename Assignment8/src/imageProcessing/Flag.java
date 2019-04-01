@@ -6,15 +6,18 @@ public class Flag extends ImageUtil implements IImage {
   private Pixel[][] data;
   private int height;
   private int width;
-  private String country;
+  private Country country;
 
-  public Flag(int width, String country) {
+  public Flag(int width, Country country) {
     this.width = width;
     this.country = country;
 
     // Flag proportions are different for Switzerland.
-    if (this.country.equals("France") || this.country.equals("Greece")) { this.height = (int) (width*0.6); }
-    else if (this.country.equals("Switzerland")) { this.height = width;}
+    if (this.country.equals(Country.FRANCE) || this.country.equals(Country.GREECE)) {
+      this.height = (int) (width * 0.6);
+    } else if (this.country.equals(Country.SWITZERLAND)) {
+      this.height = width;
+    }
 
     // Initialize array
     this.data = new Pixel[this.height][this.width];
@@ -27,33 +30,36 @@ public class Flag extends ImageUtil implements IImage {
       }
     }
 
-    if (this.country.equals("France")) { this.drawFrench();}
-    else if (this.country.equals("Switzerland")) { this.drawSwiss();}
-    else if (this.country.equals("Greece")) {this.drawGreek();}
+    if (this.country.equals(Country.FRANCE)) {
+      this.drawFrench();
+    } else if (this.country.equals(Country.SWITZERLAND)) {
+      this.drawSwiss();
+    } else if (this.country.equals(Country.GREECE)) {
+      this.drawGreek();
+    }
   }
 
 
-
-
   private void drawFrench() {
-    int stripeWidth = this.width/3;
+    double width = (double)this.width;
+    int stripeWidth = (int)Math.ceil(width / 3);
 
     //draw blue stripe
     for (int x = 0; x < this.height; x++)
       for (int y = 0; y < stripeWidth; y++) {
-              //System.out.println("Drawing red pixel at "+ x + ", " + y);
+        //System.out.println("Drawing red pixel at "+ x + ", " + y);
         Pixel newPixel = new Pixel(0, 35, 149);
         this.data[x][y] = newPixel;
       }
     //draw white stripe
     for (int x = 0; x < this.height; x++)
-      for (int y = stripeWidth; y < stripeWidth*2; y++) {
+      for (int y = stripeWidth; y < stripeWidth * 2; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
     //draw red stripe
     for (int x = 0; x < this.height; x++)
-      for (int y = stripeWidth*2; y < stripeWidth*3; y++) {
+      for (int y = stripeWidth * 2; y < this.width; y++) {
         Pixel newPixel = new Pixel(237, 41, 57);
         this.data[x][y] = newPixel;
       }
@@ -61,81 +67,59 @@ public class Flag extends ImageUtil implements IImage {
   }
 
   private void drawGreek() {
-    int stripeWidth = this.height/9;
-//    System.out.println("stripeWidth = " + stripeWidth);
-//    int lastStripe = this.height - (stripeWidth*6);
-//    System.out.println("lastStripe = " + lastStripe);
+    double height = (double)this.height;
+    int stripeWidth = (int)Math.ceil(height / 9.0);
 
-    for (int x = 0; x < stripeWidth; x++)
+    // Paint the background blue
+    for (int x = 0; x < this.height; x++) {
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(13, 94, 175);
         this.data[x][y] = newPixel;
       }
+    }
 
-    for (int x = stripeWidth; x < stripeWidth*2; x++)
+    //Draw white stripes
+    for (int x = stripeWidth; x < stripeWidth * 2; x++)
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
 
-    for (int x = stripeWidth*2; x < stripeWidth*3; x++)
-      for (int y = 0; y < this.width; y++) {
-        Pixel newPixel = new Pixel(13, 94, 175);
-        this.data[x][y] = newPixel;
-      }
-
-    for (int x = stripeWidth*3; x < stripeWidth*4; x++)
+    for (int x = stripeWidth * 3; x < stripeWidth * 4; x++)
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
 
-    for (int x = stripeWidth*4; x < stripeWidth*5; x++)
-      for (int y = 0; y < this.width; y++) {
-        Pixel newPixel = new Pixel(13, 94, 175);
-        this.data[x][y] = newPixel;
-      }
-
-    for (int x = stripeWidth*5; x < stripeWidth*6; x++)
+    for (int x = stripeWidth * 5; x < stripeWidth * 6; x++)
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
 
-    for (int x = stripeWidth*6; x < stripeWidth*7; x++)
-      for (int y = 0; y < this.width; y++) {
-        Pixel newPixel = new Pixel(13, 94, 175);
-        this.data[x][y] = newPixel;
-      }
-
-    for (int x = stripeWidth*7; x < stripeWidth*8; x++)
+    for (int x = stripeWidth * 7; x < stripeWidth * 8; x++)
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
 
-    for (int x = stripeWidth*8; x < stripeWidth*9; x++)
-      for (int y = 0; y < this.width; y++) {
-        Pixel newPixel = new Pixel(13, 94, 175);
-        this.data[x][y] = newPixel;
-      }
     // draw blue corner square
-    for (int x = 0; x < stripeWidth*5; x++ ) {
-      for (int y = 0; y < stripeWidth*5; y++) {
+    for (int x = 0; x < stripeWidth * 5; x++) {
+      for (int y = 0; y < stripeWidth * 5; y++) {
         Pixel newPixel = new Pixel(13, 94, 175);
         this.data[x][y] = newPixel;
       }
     }
     // draw horizontal white cross
-    for (int x = stripeWidth*2; x < stripeWidth*3; x++ ) {
-      for (int y = 0; y < stripeWidth*5; y++) {
+    for (int x = stripeWidth * 2; x < stripeWidth * 3; x++) {
+      for (int y = 0; y < stripeWidth * 5; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
     }
     //draw vertical white cross
-    for (int x = 0; x < stripeWidth*5; x++ ) {
-      for (int y = stripeWidth*2; y < stripeWidth*3; y++) {
+    for (int x = 0; x < stripeWidth * 5; x++) {
+      for (int y = stripeWidth * 2; y < stripeWidth * 3; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
@@ -143,7 +127,7 @@ public class Flag extends ImageUtil implements IImage {
   }
 
   private void drawSwiss() {
-    int square = (int)(this.height*0.2);
+    int square = (int) (this.height * 0.2);
 
     // Draw red background.
     for (int x = 0; x < this.height; x++) {
@@ -153,16 +137,16 @@ public class Flag extends ImageUtil implements IImage {
       }
     }
     //Draw white cross horizontal
-    for (int x = square*2; x < square*3; x++) {
-      for (int y = square; y < square*4; y++) {
+    for (int x = square * 2; x < square * 3; x++) {
+      for (int y = square; y < square * 4; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
     }
 
     //Draw white cross Vertical
-    for (int x = square; x < square*4; x++) {
-      for (int y = square*2; y < square*3; y++) {
+    for (int x = square; x < square * 4; x++) {
+      for (int y = square * 2; y < square * 3; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
         this.data[x][y] = newPixel;
       }
@@ -193,7 +177,9 @@ public class Flag extends ImageUtil implements IImage {
   }
 
 
-  /** Writes the image to a file.
+  /**
+   * Writes the image to a file.
+   *
    * @param filename The desired file path.
    * @throws IOException If there is an error creating a file with that path name.
    */
