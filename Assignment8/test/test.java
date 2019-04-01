@@ -337,9 +337,13 @@ public class test {
 //    CheckerBoard testChecker = new CheckerBoard(5);
 //    testChecker.writeToFile("testCheckerSmall.png");
 
-    Transformation sepia = new Transformation("sepia");
+    Transformation sepia = new Transformation(Transformations.SEPIA);
     Image mySepiaImage = sepia.apply(myImage);
     mySepiaImage.writeImageToFile("manhattan-small-and-vintage.png");
+
+    Transformation greyscale = new Transformation(Transformations.GREYSCALE);
+    Image myGreyscale = greyscale.apply(myImage);
+    myGreyscale.writeImageToFile("manhattan-small-and-greyscale.png");
 
     Flag greekFlag = new Flag(908,Country.GREECE);
     greekFlag.writeFlagToFile("GreekFlag.png");

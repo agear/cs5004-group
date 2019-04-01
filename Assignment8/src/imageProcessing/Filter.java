@@ -6,7 +6,7 @@ package imageProcessing;
  */
 public class Filter implements Adjustment {
 
-  double kernel[][];
+  private double[][] kernel;
 
   /**
    * Constructs a filter object. A filter has a "Kernel" which is a 2D array of doubles with odd
@@ -14,7 +14,7 @@ public class Filter implements Adjustment {
    *
    * @param kernel A 2D array of doubles with odd dimensions (3x3, 5x5, etc).
    */
-  public Filter(double kernel[][]) throws IllegalArgumentException {
+  public Filter(double[][] kernel) throws IllegalArgumentException {
 
     if ( (kernel.length % 2) == 0 || kernel.length != kernel[0].length ) {
       throw new IllegalArgumentException("Kernel must be nxn matrix where n is odd.");

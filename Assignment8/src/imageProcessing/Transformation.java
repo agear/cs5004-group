@@ -27,21 +27,20 @@ public class Transformation implements Adjustment {
    *
    * @param transformationName The name of the transformation to create.
    * @return The matrix of the filter specified
-   * @throws IllegalArgumentException If the transformation is not found
    */
-  private double[][] getFilterByName(String transformationName) throws IllegalArgumentException {
-    if (transformationName == "greyscale") {
+  private double[][] getFilterByName(Transformations transformationName) {
+    if (transformationName.equals(Transformations.GREYSCALE)) {
       double[][] grey =  { {0.2126, 0.7152, 0.0722},
               {0.2126, 0.7152, 0.0722},
               {0.2126, 0.7152, 0.0722} };
       return grey;
     }
 
-    if (transformationName == "sepia") {
-      double[][] blurKernel =  { {0.393, 0.769, 0.189},
+    if (transformationName.equals(Transformations.SEPIA)) {
+      double[][] sepia =  { {0.393, 0.769, 0.189},
             {0.349, 0.686, 0.168},
             {0.272, 0.534, 0.131} };
-      return blurKernel;
+      return sepia;
     }
 
     throw new IllegalArgumentException("Filter name not recognized.");
@@ -52,9 +51,8 @@ public class Transformation implements Adjustment {
    * A transformation has a "matrix" which is a 2D array of doubles.
    * This constructor is for a filter object for common names (e.g., greyscale, sepia).
    * @param transformationName The transformation type
-   * @throws IllegalArgumentException If the transformation isn't in the system/predefined.
    */
-  public Transformation(String transformationName) throws IllegalArgumentException {
+  public Transformation(Transformations transformationName) {
     this.matrix = getFilterByName(transformationName);
   }
 
