@@ -10,8 +10,8 @@ public interface Adjustment {
 
   /** Applies this object onto an image input without mutating it, and outputs a new
    * image object with the adjustment.
-   * @param input
-   * @return
+   * @param input Image to change
+   * @return Altered cloned image
    */
   Image apply(Image input);
 
