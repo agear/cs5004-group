@@ -3,6 +3,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 import imageProcessing.Filter;
+import imageProcessing.Flag;
 import imageProcessing.Image;
 import imageProcessing.ImageUtil;
 import imageProcessing.Rainbow;
@@ -276,7 +277,7 @@ public class test {
 
   @Test
   public void testRainbowHorizontalNonDiv() throws IOException {
-    Rainbow testRainbow1 = new Rainbow(700, 700, "Horizontal");
+    Rainbow testRainbow1 = new Rainbow(704, 696, "Horizontal");
     testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testNonDivRainbowHorizontal1.png");
     Rainbow testRainbow2 = new Rainbow(701, 699, "Horizontal");
     testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testNonDivRainbowHorizontal2.png");
@@ -304,9 +305,20 @@ public class test {
     testRainbow1.writeImage(testRainbow1.get3Ddata(), testRainbow1.getWidth(), testRainbow1.getHeight(), "testNonDivRainbowVertical1.png");
     Rainbow testRainbow2 = new Rainbow(305, 495, "Vertical");
     testRainbow2.writeImage(testRainbow2.get3Ddata(), testRainbow2.getWidth(), testRainbow2.getHeight(), "testNonDivRainbowVertical2.png");
-    Rainbow testRainbow3 = new Rainbow(310, 490, "Vertical");
+    Rainbow testRainbow3 = new Rainbow(310, 491, "Vertical");
     testRainbow3.writeImage(testRainbow3.get3Ddata(), testRainbow3.getWidth(), testRainbow3.getHeight(), "testNonDivRainbowVertical3.png");
-    Rainbow testRainbow4 = new Rainbow(315, 485, "Vertical");
+    Rainbow testRainbow4 = new Rainbow(316, 485, "Vertical");
     testRainbow4.writeImage(testRainbow4.get3Ddata(), testRainbow4.getWidth(), testRainbow4.getHeight(), "testNonDivRainbowVertical4.png");
+  }
+
+  @Test
+  public void testFlag() throws IOException {
+    Flag testFlagFrench = new Flag(500, "France");
+    testFlagFrench.writeImage(testFlagFrench.get3Ddata(), testFlagFrench.getWidth(), testFlagFrench.getHeight(), "testFlagFrench.png");
+    Flag testFlagSwiss = new Flag(500, "Switzerland");
+    testFlagSwiss.writeImage(testFlagSwiss.get3Ddata(), testFlagSwiss.getWidth(), testFlagSwiss.getHeight(), "testFlagSwiss.png");
+    Flag testFlagGreek = new Flag(500, "Greece");
+    testFlagGreek.writeImage(testFlagGreek.get3Ddata(), testFlagGreek.getWidth(), testFlagGreek.getHeight(), "testFlagGreek.png");
+
   }
 }

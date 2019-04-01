@@ -1,7 +1,7 @@
 package imageProcessing;
 
 public class Rainbow extends ImageUtil implements IImage {
-  public Pixel[][] data;
+  private Pixel[][] data;
   private int height;
   private int width;
   private String orientation;
@@ -10,7 +10,14 @@ public class Rainbow extends ImageUtil implements IImage {
     this.height = height;
     this.width = width;
     this.orientation = orientation;
-    this.data = new Pixel[this.height + 1][this.width + 1];
+    this.data = new Pixel[this.height][this.width];
+    for (int i = 0; i < this.width; i++) {
+      for (int j = 0; j < this.height; j++) {
+        Pixel uninitPixel = new Pixel(0, 0, 255);
+        //  System.out.println("Creating new pixel at " + i +", "+ j);
+        this.data[j][i] = uninitPixel;
+      }
+    }
     if (this.orientation.equals("Horizontal")) {
       System.out.println("Drawing horizontal");
       this.drawHorizontal();
@@ -23,25 +30,11 @@ public class Rainbow extends ImageUtil implements IImage {
 
   private void drawHorizontal() {
     double height = (double)this.height;
-    int stripeWidth = (int)Math.ceil(height/7);
+    int stripeWidth = (int)Math.ceil(height/7.0);
     System.out.println("stripeWidth = " + stripeWidth);
     int lastStripe = this.height - (stripeWidth*6);
     System.out.println("lastStripe = " + lastStripe);
 
-
-    // System.out.println("Initializing....");
-
-    //initialization
-    for (int i = 0; i < this.width; i++) {
-      for (int j = 0; j < this.height; j++) {
-        Pixel uninitPixel = new Pixel(0, 0, 255);
-      //  System.out.println("Creating new pixel at " + i +", "+ j);
-        this.data[j][i] = uninitPixel;
-      }
-    }
- //   System.out.println("Done!");
-
-  //  System.out.println("Drawing red stripe");
     for (int x = 0; x < stripeWidth; x++)
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(255, 0, 0);
@@ -99,18 +92,8 @@ public class Rainbow extends ImageUtil implements IImage {
 
   private void drawVertical() {
     double width = (double)this.width;
-    int stripeWidth = (int)Math.ceil(this.width/7);
+    int stripeWidth = (int)Math.ceil(width/7.0);
     int lastStripe = this.width - (stripeWidth*6);
-
-    //initialize
-    for (int x = 0; x < this.height; x++) {
-      for (int y = 0; y < this.width; y++) {
-  //      System.out.println("Initializing pixel at "+ x + ", " + y);
-        Pixel uninitPixel = new Pixel(0, 0, 255);
-        this.data[x][y] = uninitPixel;
-      }
-    }
-  //  System.out.println("Done initializing");
 
     for (int x = 0; x < this.height; x++)
       for (int y = 0; y < stripeWidth; y++) {
