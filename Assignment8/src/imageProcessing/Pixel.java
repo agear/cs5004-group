@@ -9,8 +9,8 @@ public class Pixel {
   private int red;
   private int green;
   private int blue;
-  final int MIN = 0;
-  final int MAX = 255;
+  final private int MIN = 0;
+  final private int MAX = 255;
 
   /**
    * Constructs a pixel object. Takes three integers between 0 and 255 to represent it's red, green,
@@ -56,7 +56,9 @@ public class Pixel {
    * @return An int representing this pixel's red value.
    */
   public int getRed() {
-    return this.red;
+    // Return a copy.
+    int redCopy = this.red;
+    return redCopy;
   }
 
   /**
@@ -65,7 +67,9 @@ public class Pixel {
    * @return An int representing this pixel's green value.
    */
   public int getGreen() {
-    return this.green;
+    // Return a copy.
+    int greenCopy = this.green;
+    return greenCopy;
   }
 
   /**
@@ -74,7 +78,9 @@ public class Pixel {
    * @return An int representing this pixel's blue value.
    */
   public int getBlue() {
-    return this.blue;
+    // Return a copy.
+    int blueCopy = this.blue;
+    return blueCopy;
   }
 
 // TODO Delete?

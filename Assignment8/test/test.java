@@ -327,47 +327,53 @@ public class test {
 //  }
 
 
+//  @Test
+//  public void readmeblur() throws IOException {
+//    Image myImage = new Image("./images/manhattan-small.png");
+//
+//    //Test filters
+//    Filter blur = new Filter(Filters.BLUR);
+//    Image myBlurredImage = blur.apply(myImage);
+//    myBlurredImage.writeImageToFile("manhattan-small-and-blurry.png");
+//
+//    Filter sharpen = new Filter(Filters.SHARPEN);
+//    Image mySharpenedImage = sharpen.apply(myImage);
+//    mySharpenedImage.writeImageToFile("manhattan-small-and-sharper.png");
+//
+//    //Test transformations
+//    Transformation sepia = new Transformation(Transformations.SEPIA);
+//    Image mySepiaImage = sepia.apply(myImage);
+//    mySepiaImage.writeImageToFile("manhattan-small-and-vintage.png");
+//
+//    Transformation greyscale = new Transformation(Transformations.GREYSCALE);
+//    Image myGreyscale = greyscale.apply(myImage);
+//    myGreyscale.writeImageToFile("manhattan-small-and-greyscale.png");
+//
+//    //Test Flags
+//    Flag greekFlag = new Flag(908,Country.GREECE);
+//    greekFlag.writeFlagToFile("GreekFlag.png");
+//
+//    Flag swissFlag = new Flag(777,Country.SWITZERLAND);
+//    swissFlag.writeFlagToFile("SwissFlag.png");
+//
+//    Flag frenchFlag = new Flag(800,Country.FRANCE);
+//    frenchFlag.writeFlagToFile("FrenchFlag.png");
+//
+//    //Test Rainbows
+//    Rainbow verticalRainbow = new Rainbow(300,500, Orientation.VERTICAL);
+//    verticalRainbow.writeToFile("VerticalRainbow.png");
+//
+//    Rainbow horizontalRainbow = new Rainbow(300,500, Orientation.HORIZONTAL);
+//    horizontalRainbow.writeToFile("HorizontalRainbow.png");
+//
+//    //Test Checkerboards
+//    CheckerBoard testChecker = new CheckerBoard(15);
+//    testChecker.writeToFile("CheckerBoard.png");
+//  }
+
   @Test
-  public void readmeblur() throws IOException {
-    Image myImage = new Image("./images/manhattan-small.png");
-
-    //Test filters
-    Filter blur = new Filter(Filters.BLUR);
-    Image myBlurredImage = blur.apply(myImage);
-    myBlurredImage.writeImageToFile("manhattan-small-and-blurry.png");
-
-    Filter sharpen = new Filter(Filters.SHARPEN);
-    Image mySharpenedImage = sharpen.apply(myImage);
-    mySharpenedImage.writeImageToFile("manhattan-small-and-sharper.png");
-
-    //Test transformations
-    Transformation sepia = new Transformation(Transformations.SEPIA);
-    Image mySepiaImage = sepia.apply(myImage);
-    mySepiaImage.writeImageToFile("manhattan-small-and-vintage.png");
-
-    Transformation greyscale = new Transformation(Transformations.GREYSCALE);
-    Image myGreyscale = greyscale.apply(myImage);
-    myGreyscale.writeImageToFile("manhattan-small-and-greyscale.png");
-
-    //Test Flags
-    Flag greekFlag = new Flag(908,Country.GREECE);
-    greekFlag.writeFlagToFile("GreekFlag.png");
-
-    Flag swissFlag = new Flag(777,Country.SWITZERLAND);
-    swissFlag.writeFlagToFile("SwissFlag.png");
-
-    Flag frenchFlag = new Flag(800,Country.FRANCE);
-    frenchFlag.writeFlagToFile("FrenchFlag.png");
-
-    //Test Rainbows
-    Rainbow verticalRainbow = new Rainbow(300,500, Orientation.VERTICAL);
-    verticalRainbow.writeToFile("VerticalRainbow.png");
-
-    Rainbow horizontalRainbow = new Rainbow(300,500, Orientation.HORIZONTAL);
-    horizontalRainbow.writeToFile("HorizontalRainbow.png");
-
-    //Test Checkerboards
-    CheckerBoard testChecker = new CheckerBoard(15);
-    testChecker.writeToFile("CheckerBoard.png");
+  public void mainTest() throws IOException{
+    Model testModel = new Model();
+    testModel.main();
   }
 }

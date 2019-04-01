@@ -13,5 +13,9 @@ public interface IImage {
    */
   int getWidth();
 
+  /**
+   * TODO Write javadoc.
+   * @return
+   */
   int[][][] get3Ddata();
 }
