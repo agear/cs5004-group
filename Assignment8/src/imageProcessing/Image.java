@@ -83,7 +83,6 @@ public class Image extends ImageUtil {
     this.width = data[0].length;
   }
 
-  //TODO This creates a NullPointerException. ?? what does ??
 
   /**
    * Constructor for an empty image. Use for generative images (i.e., user-specified size, not
@@ -105,7 +104,6 @@ public class Image extends ImageUtil {
 
   }
 
-  //TODO This creates a NullPointerException.
 
 
   /** Creates an image with horizontal stripes.
