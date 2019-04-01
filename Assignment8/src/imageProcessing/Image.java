@@ -8,10 +8,13 @@ import java.io.IOException;
  */
 public class Image extends ImageUtil {
 
-  public Pixel[][] data;
+  private Pixel[][] data;
   private String filename;
   private int height;
   private int width;
+
+  // Takes data of the type outputted by ImageUtil class (TODO describe better)
+
 
   /** Constructor for an image object, if the filename is given.
    *
@@ -75,7 +78,6 @@ public class Image extends ImageUtil {
   // Alternate way of creating data
   public Image(Pixel[][] data) {
     this.data = data;
-//    System.out.println("Creating an image with 2D pixel data!");
     this.height = data.length;
     this.width = data[0].length;
   }
@@ -100,154 +102,8 @@ public class Image extends ImageUtil {
         Pixel newPixel = new Pixel(data[x][y][0], data[x][y][1], data[x][y][2]);
         this.data[x][y] = newPixel;
       }
-
   }
 
-
-
-  /** Creates an image with horizontal stripes.
-   *
-   * @return The image of horizontal stripes.
-   */
-  public Image horizontalStripes() {
-    //Pixel[][] rainbow;
-
-    for (int x = 0; x < 50; x++)
-      for (int y = 0; y < 500; y++) {
-        Pixel newPixel = new Pixel(255, 0, 0);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 51; x < 100; x++)
-      for (int y = 0; y < 500; y++) {
-        Pixel newPixel = new Pixel(255, 165, 0);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 101; x < 150; x++)
-      for (int y = 0; y < 500; y++) {
-        Pixel newPixel = new Pixel(255, 255, 0);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 151; x < 200; x++)
-      for (int y = 0; y < 500; y++) {
-        Pixel newPixel = new Pixel(0, 128, 0);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 201; x < 250; x++)
-      for (int y = 0; y < 500; y++) {
-        Pixel newPixel = new Pixel(0, 0, 255);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 251; x < 300; x++)
-      for (int y = 0; y < 500; y++) {
-        Pixel newPixel = new Pixel(75, 0, 130);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 301; x < 350; x++)
-      for (int y = 0; y < 500; y++) {
-        Pixel newPixel = new Pixel(238, 130, 238);
-        this.data[x][y] = newPixel;
-      }
-    Image generatedImage = new Image(this.data);
-    return generatedImage;
-  }
-
-  /** Creates an image with horizontal stripes.
-   *
-   * @return The image of horizontal stripes.
-   */
-  public Image verticalStripes() {
-    //Pixel[][] rainbow;
-
-    for (int x = 0; x < 350; x++)
-      for (int y = 0; y < 50; y++) {
-        Pixel newPixel = new Pixel(255, 0, 0);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 0; x < 350; x++)
-      for (int y = 51; y < 100; y++) {
-        Pixel newPixel = new Pixel(255, 165, 0);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 0; x < 350; x++)
-      for (int y = 101; y < 150; y++) {
-        Pixel newPixel = new Pixel(255, 255, 0);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 0; x < 350; x++)
-      for (int y = 151; y < 200; y++) {
-        Pixel newPixel = new Pixel(0, 128, 0);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 0; x < 350; x++)
-      for (int y = 201; y < 250; y++) {
-        Pixel newPixel = new Pixel(0, 0, 255);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 0; x < 350; x++)
-      for (int y = 251; y < 300; y++) {
-        Pixel newPixel = new Pixel(75, 0, 130);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 0; x < 350; x++)
-      for (int y = 301; y < 350; y++) {
-        Pixel newPixel = new Pixel(238, 130, 238);
-        this.data[x][y] = newPixel;
-      }
-    Image generatedImage = new Image(this.data);
-    return generatedImage;
-  }
-
-  // TODO Delete? Because moved to flag class?
-  public Image greece() {
-
-    for (int x = 0; x < 50; x++)
-      for (int y = 0; y < 700; y++) {
-        Pixel newPixel = new Pixel(13, 94, 175);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 51; x < 100; x++)
-      for (int y = 0; y < 700; y++) {
-        Pixel newPixel = new Pixel(255, 255, 255);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 101; x < 150; x++)
-      for (int y = 0; y < 700; y++) {
-        Pixel newPixel = new Pixel(13, 94, 175);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 151; x < 200; x++)
-      for (int y = 0; y < 700; y++) {
-        Pixel newPixel = new Pixel(255, 255, 255);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 201; x < 250; x++)
-      for (int y = 0; y < 700; y++) {
-        Pixel newPixel = new Pixel(13, 94, 175);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 251; x < 300; x++)
-      for (int y = 0; y < 700; y++) {
-        Pixel newPixel = new Pixel(255, 255, 255);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 301; x < 350; x++)
-      for (int y = 0; y < 700; y++) {
-        Pixel newPixel = new Pixel(13, 94, 175);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 351; x < 400; x++)
-      for (int y = 0; y < 700; y++) {
-        Pixel newPixel = new Pixel(255, 255, 255);
-        this.data[x][y] = newPixel;
-      }
-    for (int x = 401; x < 450; x++)
-      for (int y = 0; y < 700; y++) {
-        Pixel newPixel = new Pixel(13, 94, 175);
-        this.data[x][y] = newPixel;
-      }
-    Image generatedImage = new Image(this.data);
-    return generatedImage;
-  }
 
   /**
    * Checks if the image contains the given pixel position.
@@ -267,16 +123,16 @@ public class Image extends ImageUtil {
    * apply.
    *
    * @param inputFilter The filter to apply.
+   * @param inputPixel TODO What does this do?
    * @param x The x-coordinate of this pixel.
    * @param y The y-coordinate of this pixel.
    * @return A new pixel object that is the result of applying this filter to a pixel.
    */
-  private Pixel applyFilterToPixel(Filter inputFilter, int x, int y) {
+  private Pixel applyFilterToPixel(Filter inputFilter, Pixel inputPixel, int x, int y) {
 
     // Get the kernel of the filter
     double[][] filterKernel = inputFilter.getData();
     int filterLength = (filterKernel.length - 1) / 2;
-    int xStart = x - filterLength;
     int yStart = y - filterLength;
 
     double redSum = 0;
@@ -286,7 +142,7 @@ public class Image extends ImageUtil {
 
     // For each entry in the filter kernel
     for (int b = 0; b < filterKernel.length; b++) {
-      xStart = x - filterLength;
+      int xStart = x - filterLength;
       for (int a = 0; a < filterKernel.length; a++) {
 
         // Gets the current filter
@@ -313,6 +169,8 @@ public class Image extends ImageUtil {
 
   }
 
+  // TODO Move to filter class? I.e. public Image applyFilter(Image unfilteredImage)?
+
   /**
    * Applies the given filter to this image.
    *
@@ -332,7 +190,7 @@ public class Image extends ImageUtil {
         //Pixel filteredPixel = new Pixel(data[i][j].red, 0, data[i][j].blue);
 
         // Apply the filter, and receive new value
-        Pixel filteredPixel = this.applyFilterToPixel(inputFilter, i, j);
+        Pixel filteredPixel = this.applyFilterToPixel(inputFilter, data[i][j], i, j);
 
         // Put the new pixel in the output image
         output[i][j] = filteredPixel;
@@ -344,12 +202,10 @@ public class Image extends ImageUtil {
 
   }
 
+  // TODO Move to Transformation class? I.e. public Image Transform(Image untransformedImage)?
 
   /**
-   * Takes as input a transformation (such as greyscale or sepia), and returns that tranformation
-   * applied to this image object, without mutating the image.
-   * @param inputTransformation The tranformation to apply
-   * @return The image after transformation
+   * // TODO Java doc
    */
   public Image Transform(Transformation inputTransformation) {
 
@@ -377,11 +233,8 @@ public class Image extends ImageUtil {
   }
 
   /**
-   * A helper method for Transform which transforms a single pixel using linear algebra.
-   * @param inputTransformation The transformation to apply to this image
-   * @param inputPixel The pixel to be transformed
-   * @param x The x coordinate of that pixel in the image
-   * @param y The y coordinate of that pixel in the image
+   * TODO Javadoc. Helper method for Transform()? Move to Transformation class?
+   *
    * @return A new pixel object that is the result of applying this filter to a pixel.
    */
   private Pixel TransformPixel(Transformation inputTransformation, Pixel inputPixel, int x, int y) {
@@ -419,6 +272,7 @@ public class Image extends ImageUtil {
     return output;
   }
 
+  //TODO Duplicate code.
   /**
    * Method to return this image as a 3D array of integers. // TODO More detailed explanation? I.e.
    * what is stored in each dimension of the array?
@@ -457,7 +311,7 @@ public class Image extends ImageUtil {
       this.writeImage(this.get3Ddata(), this.getWidth(this.filename), this.getHeight(this.filename), filename);
     }
 
-    // If the image was originally created by the computer (e.g., stripes)...
+    // If the image was originally created by the computer (e.g., a flag)...
     else {
       this.writeImage(this.get3Ddata(), this.width, this.height, filename);
     }

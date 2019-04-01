@@ -55,7 +55,7 @@ public class Filter implements Adjustment {
                                     {-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0}  };
       return sharpenKernel;
     }
-    // Should never get here but needed to complete the if else if statement.
+    // Method should never get here but needed something for the else clause.
     // TODO is there a way to avoid this? Introduced because I removed the unnecessary exception
     //  since this method now takes an enum instead of a string.
     else {
@@ -85,7 +85,6 @@ public class Filter implements Adjustment {
 
     return (x < image.get3Ddata().length && y < image.get3Ddata()[0].length && x >= 0 && y >= 0);
   }
-
 
   /** Applies this filter object to a specified pixel in a specified image. Helper method used by
    * apply.

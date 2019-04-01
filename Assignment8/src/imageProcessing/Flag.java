@@ -12,7 +12,7 @@ public class Flag extends ImageUtil implements IImage {
     this.width = width;
     this.country = country;
 
-    // Flag proportions are different for Switzerland.
+    // The Swiss flag is one of only two square sovereign-state flags, the other being the flag of Vatican City. - Wikipedia.
     if (this.country.equals(Country.FRANCE) || this.country.equals(Country.GREECE)) {
       this.height = (int) (width * 0.6);
     } else if (this.country.equals(Country.SWITZERLAND)) {
@@ -25,7 +25,7 @@ public class Flag extends ImageUtil implements IImage {
     // Fill array with blank pixels
     for (int i = 0; i < this.width; i++) {
       for (int j = 0; j < this.height; j++) {
-        Pixel uninitPixel = new Pixel(0, 0, 255); //TODO Change this to white.
+        Pixel uninitPixel = new Pixel(255, 255, 255);
         this.data[j][i] = uninitPixel;
       }
     }
@@ -47,7 +47,6 @@ public class Flag extends ImageUtil implements IImage {
     //draw blue stripe
     for (int x = 0; x < this.height; x++)
       for (int y = 0; y < stripeWidth; y++) {
-        //System.out.println("Drawing red pixel at "+ x + ", " + y);
         Pixel newPixel = new Pixel(0, 35, 149);
         this.data[x][y] = newPixel;
       }
@@ -153,33 +152,21 @@ public class Flag extends ImageUtil implements IImage {
     }
   }
 
-  /** Returns the height, in pixels, of the flag.
-   * @return the height, in pixels, of the flag
-   */
   public int getHeight() {
     int heightClone = this.height;
     return heightClone;
   }
 
-  /** Returns the width, in pixels, of the flag.
-   * @return the width, in pixels, of the flag
-   */
   public int getWidth() {
     int widthClone = this.width;
     return widthClone;
   }
 
-  /** Returns the data of this Flag image, by converting a 2D array of Pixel objects
-   * into a 3D array of int objects. The purpose of this method is to make the data readable
-   * by the ImageUtil class, or any 'outsiders' who do not have Pixel objects.
-   *
-   * @return A 3D array of values representing RGB values of this image
-   */
+  //TODO Duplicate code. Can this go in the image class and Flag extends?
   public int[][][] get3Ddata() {
     int[][][] output = new int[this.data.length][this.data[0].length][3];
     for (int i = 0; i < this.data.length - 1; i++) {
       for (int j = 0; j < this.data[0].length - 1; j++) {
-        // System.out.println("get3DData at " + i + ", " + j);
         output[i][j][0] = this.data[i][j].getRed();
         output[i][j][1] = this.data[i][j].getGreen();
         output[i][j][2] = this.data[i][j].getBlue();
@@ -188,7 +175,7 @@ public class Flag extends ImageUtil implements IImage {
     return output;
   }
 
-
+ //TODO Can this be "writeImageToFile()" for consistency?
   /**
    * Writes the image to a file.
    *

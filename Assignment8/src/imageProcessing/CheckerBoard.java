@@ -8,7 +8,7 @@ import java.io.IOException;
  * applied to it.
  */
 public class CheckerBoard extends ImageUtil implements IImage {
-  public Pixel[][] data;
+  private Pixel[][] data;
   private int height;
   private int width;
   private int squareSize;
@@ -29,9 +29,8 @@ public class CheckerBoard extends ImageUtil implements IImage {
    * Draws the checkerboard object - a helper method used by the constructor.
    */
   private void draw() {
-    System.out.println("This.width " + this.width + " . divided by square size =  " + this.squareSize);
     int left = 0;
-    int top = 0;
+    //int top = 0;
 
 
     // Initializes this.data by creating a pixel in each spot.
@@ -44,12 +43,10 @@ public class CheckerBoard extends ImageUtil implements IImage {
 
     // For each row,
     for (int horizontal = 0; horizontal < 8; horizontal++) {
-      System.out.println("\n NEW ROW!!!");
-      top = 0;
+      int top = 0;
 
       // For each column,
       for (int vertical = 0; vertical < 4; vertical++) {
-        System.out.println("Row = " + vertical + ", Column = " + horizontal);
         if (horizontal % 2 == 0) {
           drawWhiteSquare(left, top);
         } else {
@@ -64,7 +61,6 @@ public class CheckerBoard extends ImageUtil implements IImage {
         top += this.squareSize;
       }
       left += this.squareSize;
-      System.out.println("NEW COLUMN " + left);
     }
   }
 
@@ -74,7 +70,6 @@ public class CheckerBoard extends ImageUtil implements IImage {
    * @param top The y-coordinate of the top left corner of the new square.
    */
   private void drawWhiteSquare(int left, int top) {
-    System.out.println("White square at " + left + ", " + top);
     for (int x = left; x < left + this.squareSize; x++)
       for (int y = top; y < top + this.squareSize; y++) {
         Pixel newPixel = new Pixel(255, 255, 255);
@@ -87,7 +82,6 @@ public class CheckerBoard extends ImageUtil implements IImage {
    * @param top The y-coordinate of the top left corner of the new square.
    */
   private void drawBlackSquare(int left, int top) {
-    System.out.println("Black square at " + left + ", " + top);
     for (int x = left; x < left + this.squareSize; x++)
       for (int y = top; y < top + this.squareSize; y++) {
         Pixel newPixel = new Pixel(0, 0, 0);
@@ -112,6 +106,7 @@ public class CheckerBoard extends ImageUtil implements IImage {
     return widthClone;
   }
 
+  //TODO Duplicate code
   /** Returns the data of this checkerboard image, by converting a 2D array of Pixel objects
    * into a 3D array of int objects. The purpose of this method is to make the data readably
    * by the ImageUtil class, or any 'outsiders' who do not have Pixel objects.

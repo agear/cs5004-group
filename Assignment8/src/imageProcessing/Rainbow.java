@@ -14,89 +14,72 @@ public class Rainbow extends ImageUtil implements IImage {
    * @param height The height, in px, of the desired rainbow image
    * @param width The width, in px, of the desired rainbow image
    * @param orientation The desired direction of the rainbow's stripes
-   * @throws IllegalArgumentException If the orientation is not vertical or horizontal
    */
-  public Rainbow(int height, int width, Orientation orientation) throws IllegalArgumentException {
+  public Rainbow(int height, int width, Orientation orientation) {
     this.height = height;
     this.width = width;
     this.orientation = orientation;
     this.data = new Pixel[this.height][this.width];
+
+    //Initialize canvas.
     for (int i = 0; i < this.width; i++) {
       for (int j = 0; j < this.height; j++) {
         Pixel uninitPixel = new Pixel(0, 0, 255);
-        //  System.out.println("Creating new pixel at " + i +", "+ j);
         this.data[j][i] = uninitPixel;
       }
     }
+
     if (this.orientation.equals(Orientation.HORIZONTAL)) {
-//      System.out.println("Drawing horizontal");
       this.drawHorizontal();
     }
     else if (this.orientation.equals(Orientation.VERTICAL)){
-  //    System.out.println("Drawing vertical");
       this.drawVertical();
     }
 
-    else {
-      throw new IllegalArgumentException("Orientation must be Vertical or Horizontal.");
-    }
   }
 
   private void drawHorizontal() {
     double height = (double)this.height;
     int stripeWidth = (int)Math.ceil(height/7.0);
-    System.out.println("stripeWidth = " + stripeWidth);
     int lastStripe = this.height - (stripeWidth*6);
-    System.out.println("lastStripe = " + lastStripe);
 
+    //Red Stripe
     for (int x = 0; x < stripeWidth; x++)
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(255, 0, 0);
         this.data[x][y] = newPixel;
       }
-   // System.out.println("Drawing orange stripe");
-
+    //Orange Stripe
     for (int x = stripeWidth; x < stripeWidth*2; x++)
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(255, 165, 0);
         this.data[x][y] = newPixel;
       }
-
-   // System.out.println("Drawing yellow stripe");
-
+    //Yellow Stripe
     for (int x = stripeWidth*2; x < stripeWidth*3; x++)
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(255, 255, 0);
         this.data[x][y] = newPixel;
       }
-
-  //  System.out.println("Drawing green stripe");
-
+    //Green Stripe
     for (int x = stripeWidth*3; x < stripeWidth*4; x++)
       for (int y = 0; y < this.width; y++) {
-  //      System.out.println("Drawing green pixel at " + x + ", " + y);
         Pixel newPixel = new Pixel(0, 128, 0);
         this.data[x][y] = newPixel;
       }
-
-  //  System.out.println("Drawing blue stripe");
-
+    //Blue Stripe
     for (int x = stripeWidth*4; x < stripeWidth*5; x++)
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(0, 0, 255);
         this.data[x][y] = newPixel;
       }
-
-  //  System.out.println("Drawing indigo stripe");
-
+    //Indigo Stripe
     for (int x = stripeWidth*5; x < stripeWidth*6; x++)
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(75, 0, 130);
         this.data[x][y] = newPixel;
       }
-
-  //  System.out.println("Drawing violet stripe");
-
+    //Violet Stripe
     for (int x = stripeWidth*6; x < stripeWidth*6 + lastStripe; x++)
       for (int y = 0; y < this.width; y++) {
         Pixel newPixel = new Pixel(238, 130, 238);
@@ -109,69 +92,76 @@ public class Rainbow extends ImageUtil implements IImage {
     int stripeWidth = (int)Math.ceil(width/7.0);
     int lastStripe = this.width - (stripeWidth*6);
 
+    //Red Stripe
     for (int x = 0; x < this.height; x++)
       for (int y = 0; y < stripeWidth; y++) {
-  //      System.out.println("Drawing red pixel at "+ x + ", " + y);
         Pixel newPixel = new Pixel(255, 0, 0);
         this.data[x][y] = newPixel;
       }
-
+    //Orange Stripe
     for (int x = 0; x < this.height; x++)
       for (int y = stripeWidth; y < stripeWidth*2; y++) {
         Pixel newPixel = new Pixel(255, 165, 0);
         this.data[x][y] = newPixel;
       }
-
+    //Yellow Stripe
     for (int x = 0; x < this.height; x++)
       for (int y = stripeWidth*2; y < stripeWidth*3; y++) {
         Pixel newPixel = new Pixel(255, 255, 0);
         this.data[x][y] = newPixel;
       }
-
+    //Green Stripe
     for (int x = 0; x < this.height; x++)
       for (int y = stripeWidth*3; y < stripeWidth*4; y++) {
         Pixel newPixel = new Pixel(0, 128, 0);
         this.data[x][y] = newPixel;
       }
-
+    //Blue Stripe
     for (int x = 0; x < this.height; x++)
       for (int y = stripeWidth*4; y < stripeWidth*5; y++) {
         Pixel newPixel = new Pixel(0, 0, 255);
         this.data[x][y] = newPixel;
       }
-
+    //Indigo Stripe
     for (int x = 0; x < this.height; x++)
       for (int y = stripeWidth*5; y < stripeWidth*6; y++) {
         Pixel newPixel = new Pixel(75, 0, 130);
         this.data[x][y] = newPixel;
       }
-
+    //Violet Stripe
     for (int x = 0; x < this.height; x++)
       for (int y = stripeWidth*6; y < stripeWidth*6 + lastStripe; y++) {
-  //      System.out.println("Drawing violet pixel at "+ x + ", " + y);
         Pixel newPixel = new Pixel(238, 130, 238);
         this.data[x][y] = newPixel;
       }
-  //  System.out.println("Done drawing");
-
   }
 
-
+  /**
+   * //TODO Java doc
+   * @return
+   */
   public int getHeight() {
     int heightClone = this.height;
     return heightClone;
   }
 
+  /**
+   * //TODO Java doc
+   * @return
+   */
   public int getWidth() {
     int widthClone = this.width;
     return widthClone;
   }
 
+  /**
+   * //TODO Java doc
+   * @return
+   */
   public int[][][] get3Ddata() {
     int[][][] output = new int[this.data.length][this.data[0].length][3];
     for (int i = 0; i < this.data.length - 1; i++) {
       for (int j = 0; j < this.data[0].length - 1; j++) {
-       // System.out.println("get3DData at " + i + ", " + j);
         output[i][j][0] = this.data[i][j].getRed();
         output[i][j][1] = this.data[i][j].getGreen();
         output[i][j][2] = this.data[i][j].getBlue();
