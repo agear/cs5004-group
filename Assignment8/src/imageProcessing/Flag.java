@@ -153,16 +153,28 @@ public class Flag extends ImageUtil implements IImage {
     }
   }
 
+  /** Returns the height, in pixels, of the flag.
+   * @return the height, in pixels, of the flag
+   */
   public int getHeight() {
     int heightClone = this.height;
     return heightClone;
   }
 
+  /** Returns the width, in pixels, of the flag.
+   * @return the width, in pixels, of the flag
+   */
   public int getWidth() {
     int widthClone = this.width;
     return widthClone;
   }
 
+  /** Returns the data of this Flag image, by converting a 2D array of Pixel objects
+   * into a 3D array of int objects. The purpose of this method is to make the data readable
+   * by the ImageUtil class, or any 'outsiders' who do not have Pixel objects.
+   *
+   * @return A 3D array of values representing RGB values of this image
+   */
   public int[][][] get3Ddata() {
     int[][][] output = new int[this.data.length][this.data[0].length][3];
     for (int i = 0; i < this.data.length - 1; i++) {

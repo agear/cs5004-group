@@ -13,9 +13,6 @@ public class Image extends ImageUtil {
   private int height;
   private int width;
 
-  // Takes data of the type outputted by ImageUtil class (TODO describe better)
-
-
   /** Constructor for an image object, if the filename is given.
    *
    * @param filename The name of the file to be turned into an Image file
@@ -200,6 +197,7 @@ public class Image extends ImageUtil {
     return generatedImage;
   }
 
+  // TODO Delete? Because moved to flag class?
   public Image greece() {
 
     for (int x = 0; x < 50; x++)
@@ -269,12 +267,11 @@ public class Image extends ImageUtil {
    * apply.
    *
    * @param inputFilter The filter to apply.
-   * @param inputPixel TODO delete this
    * @param x The x-coordinate of this pixel.
    * @param y The y-coordinate of this pixel.
    * @return A new pixel object that is the result of applying this filter to a pixel.
    */
-  private Pixel applyFilterToPixel(Filter inputFilter, Pixel inputPixel, int x, int y) {
+  private Pixel applyFilterToPixel(Filter inputFilter, int x, int y) {
 
     // Get the kernel of the filter
     double[][] filterKernel = inputFilter.getData();
@@ -316,8 +313,6 @@ public class Image extends ImageUtil {
 
   }
 
-  // TODO Move to filter class? I.e. public Image applyFilter(Image unfilteredImage)?
-
   /**
    * Applies the given filter to this image.
    *
@@ -337,7 +332,7 @@ public class Image extends ImageUtil {
         //Pixel filteredPixel = new Pixel(data[i][j].red, 0, data[i][j].blue);
 
         // Apply the filter, and receive new value
-        Pixel filteredPixel = this.applyFilterToPixel(inputFilter, data[i][j], i, j);
+        Pixel filteredPixel = this.applyFilterToPixel(inputFilter, i, j);
 
         // Put the new pixel in the output image
         output[i][j] = filteredPixel;
@@ -349,10 +344,12 @@ public class Image extends ImageUtil {
 
   }
 
-  // TODO Move to Transformation class? I.e. public Image Transform(Image untransformedImage)?
 
   /**
-   * // TODO Java doc
+   * Takes as input a transformation (such as greyscale or sepia), and returns that tranformation
+   * applied to this image object, without mutating the image.
+   * @param inputTransformation The tranformation to apply
+   * @return The image after transformation
    */
   public Image Transform(Transformation inputTransformation) {
 
@@ -380,8 +377,11 @@ public class Image extends ImageUtil {
   }
 
   /**
-   * TODO Javadoc. Helper method for Transform()? Move to Transformation class?
-   *
+   * A helper method for Transform which transforms a single pixel using linear algebra.
+   * @param inputTransformation The transformation to apply to this image
+   * @param inputPixel The pixel to be transformed
+   * @param x The x coordinate of that pixel in the image
+   * @param y The y coordinate of that pixel in the image
    * @return A new pixel object that is the result of applying this filter to a pixel.
    */
   private Pixel TransformPixel(Transformation inputTransformation, Pixel inputPixel, int x, int y) {

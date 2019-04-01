@@ -13,5 +13,10 @@ public interface IImage {
    */
   int getWidth();
 
+
+  /** Returns the data of this image, by converting a 2D array of Pixel objects
+   * into a 3D array of int objects. The purpose of this method is to make the data readable
+   * by the ImageUtil class, or any 'outsiders' who do not have Pixel objects.
+   */
   int[][][] get3Ddata();
 }
