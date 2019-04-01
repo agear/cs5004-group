@@ -27,9 +27,8 @@ public class Filter implements Adjustment {
    * A filter has a "Kernel" which is a 2D array of doubles with odd dimensions (3x3, 5x5, etc).
    * This constructor is for a filter object for common names (e.g., blur, sharpen).
    * @param filterType The filter type
-   * @throws IllegalArgumentException If the filter isn't in the system/predefined.
    */
-  public Filter(String filterType) throws IllegalArgumentException {
+  public Filter(Filters filterType) {
     this.kernel = getFilterByName(filterType);
   }
 
@@ -40,15 +39,29 @@ public class Filter implements Adjustment {
    *
    * @param filterName The name of the filter to create.
    * @return The kernel of the filter specified
-   * @throws IllegalArgumentException If the filter is not found
    */
-  private double[][] getFilterByName(String filterName) throws IllegalArgumentException {
-    if (filterName == "blur") {
-      double[][] blurKernel =  { {1.0/16.0, 1.0/8.0, 1.0/16.0}, {1.0/8.0, 1.0/4.0, 1.0/18.0},
-              {1.0/16.0, 1.0/8.0, 1.0/16.0} };
+  private double[][] getFilterByName(Filters filterName) {
+    if (filterName.equals(Filters.BLUR)) {
+      double[][] blurKernel =  { {1.0/16.0, 1.0/8.0, 1.0/16.0},
+                                 {1.0/8.0,  1.0/4.0, 1.0/18.0},
+                                 {1.0/16.0, 1.0/8.0, 1.0/16.0} };
       return blurKernel;
     }
-    throw new IllegalArgumentException("Filter name not recognized.");
+    else if (filterName.equals(Filters.SHARPEN)) {
+      double[][] sharpenKernel =  { {-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0},
+                                    {-1.0/8.0,  1.0/4.0,  1.0/4.0,  1.0/4.0, -1.0/8.0},
+                                    {-1.0/8.0,  1.0/4.0,  1.0,      1.0/4.0, -1.0/8.0},
+                                    {-1.0/8.0,  1.0/4.0,  1.0/4.0,  1.0/4.0, -1.0/8.0},
+                                    {-1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0, -1.0/8.0}  };
+      return sharpenKernel;
+    }
+    // Should never get here but needed to complete the if else if statement.
+    // TODO is there a way to avoid this? Introduced because I removed the unnecessary exception
+    //  since this method now takes an enum instead of a string.
+    else {
+      double[][] identity = {{1,0}, {0,1}};
+      return identity;
+    }
   }
 
 

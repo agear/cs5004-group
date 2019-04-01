@@ -30,20 +30,27 @@ public class Transformation implements Adjustment {
    */
   private double[][] getFilterByName(Transformations transformationName) {
     if (transformationName.equals(Transformations.GREYSCALE)) {
-      double[][] grey =  { {0.2126, 0.7152, 0.0722},
-              {0.2126, 0.7152, 0.0722},
-              {0.2126, 0.7152, 0.0722} };
-      return grey;
+      double[][] greyScale =  { {0.2126, 0.7152, 0.0722},
+                                {0.2126, 0.7152, 0.0722},
+                                {0.2126, 0.7152, 0.0722} };
+      return greyScale;
     }
 
-    if (transformationName.equals(Transformations.SEPIA)) {
+    else if (transformationName.equals(Transformations.SEPIA)) {
       double[][] sepia =  { {0.393, 0.769, 0.189},
-            {0.349, 0.686, 0.168},
-            {0.272, 0.534, 0.131} };
+                            {0.349, 0.686, 0.168},
+                            {0.272, 0.534, 0.131} };
       return sepia;
     }
-
-    throw new IllegalArgumentException("Filter name not recognized.");
+    // Should never get here but needed to complete the if else if statement.
+    // TODO is there a way to avoid this? Introduced because I removed the unnecessary exception
+    //  since this method now takes an enum instead of a string.
+    else {
+      double[][] identity =  { {1, 0, 0},
+                               {0, 1, 0},
+                               {0, 0, 1} };
+      return identity;
+    }
   }
 
 
