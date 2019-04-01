@@ -69,9 +69,14 @@ public class Transformation implements Adjustment {
     return this.matrix.clone();
   }
 
+  /** Applies this object onto an image input without mutating it, and outputs a new
+   * image object with the adjustment.
+   * @param inputImage Image to change
+   * @return Altered cloned image
+   */
   public Image apply(Image inputImage) {
     // Will do this later
-    return new Image(300,300);
+    return inputImage.Transform(this);
   }
 
 
