@@ -81,4 +81,5 @@ testFlagFrench.writeImageToFile("testFlagFrench.png");
 
 
 ## Licenses
-[MIT](https://choosealicense.com/licenses/mit/)
+The landscape image and dog image were taken by Alex Gear and Alice Tilles, respectively. The use
+of these images for imageProcessing is authorized.
