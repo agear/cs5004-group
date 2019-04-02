@@ -108,7 +108,6 @@ public class CheckerBoard extends ImageUtil implements IImage {
     return widthClone;
   }
 
-  //TODO Duplicate code
   /** Returns the data of this checkerboard image, by converting a 2D array of Pixel objects
    * into a 3D array of int objects. The purpose of this method is to make the data readably
    * by the ImageUtil class, or any 'outsiders' who do not have Pixel objects.

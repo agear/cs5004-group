@@ -16,18 +16,17 @@ import imageprocessing.*;
 ### Blurring and Sharpening an Image from a File
 Blurring and sharpening are built-in filter methods in the imageprocessing package.
 To apply either of these to an image, first create the image (loading it
-from a file is a convenient method). Then create the Filter object. If the user inputs a name of a
-filter not found in the database, they will get an exception. But, they can also create a filter by
+from a file is a convenient method). Then create the Filter object. They can also create a filter by
 inputting the kernel, either a Pixel[][] object or a double[][][] object directly.
 Then, the user applies the filter to the image, and a new Image object is created (the old
 image is not mutated). Finally, the user can output the new image to a file by specifying the
 desired path.
 ```java
 import imageprocessing.*;
-Image myImage = new Image("./images/manhattan-small.png");
-Filter blur = new Filter("blur");
+Image myImage = new Image("./res/santaferesized.jpg");
+Filter blur = new Filter(Filters.BLUR);
 Image myBlurredImage = blur.apply(myImage);
-myBlurredImage.writeImageToFile("manhattan-small-and-blurry.png");
+myBlurredImage.writeImageToFile("santafe_blurry.png");
 ```
 This code creates a blurred manhattan-small image.
 
@@ -39,10 +38,10 @@ or sepia images from existing images. Built-in transformations are sepia and gre
 
 ```java
 import imageprocessing.*;
-Image myImage = new Image("./images/manhattan-small.png");
-Transformation sepia = new Transformation("sepia");
+Image myImage = new Image("./res/shadowresize.jpg");
+Transformation sepia = new Transformation(Transformations.SEPIA);
 Image mySepiaImage = sepia.apply(myImage);
-mySepiaImage.writeImageToFile("manhattan-small-and-vintage.png");
+mySepiaImage.writeImageToFile("shadow_sepia.png");
 ```
 
 
@@ -52,8 +51,8 @@ It is easy to quickly generate a rainbow stripe images that suits your needs. Al
 input a desired height, width, and orientation. Orientation can be horizontal or vertical.
 
 ```java
-Rainbow testRainbow1 = new Rainbow(150, 140, "Horizontal");
-testRainbow1.writeToFile("HorizontalRainbow.png");
+Rainbow testRainbow1 = new Rainbow(150, 140, Orientation.HORIZONTAL);
+testRainbow1.writeToFile("RainbowHorizontal.png");
 ```
 This code generates an image 150px tall, 140px wide, with horizontal rainbow stripes.
 
@@ -69,14 +68,13 @@ testChecker.writeToFile("testCheckerSmall.png");
 
 
 ### Flags
-Creating a flag requires the width (an integer, in pixels), a country name, and then the name of
+Creating a flag requires the width (an integer, in pixels), a country enum, and then the name of
 the output filename. The result of this is a flag of France 500px wide,
-found in the file ./testFlagFrench.png. If the desired flag is not found in our database, an
-exception will be thrown. //TODO ?
+found in the file ./FlagFrench.png.
 ```java
 import imageprocessing.*;
-Flag testFlagFrench = new Flag(500, "France");
-testFlagFrench.writeImageToFile("testFlagFrench.png");
+Flag testFlagFrench = new Flag(500, Country.FRANCE);
+testFlagFrench.writeImageToFile("FlagFrench.png");
 ```
 
 

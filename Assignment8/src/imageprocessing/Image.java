@@ -13,9 +13,6 @@ public class Image extends ImageUtil {
   private int height;
   private int width;
 
-  // Takes data of the type outputted by ImageUtil class (TODO describe better)
-
-
   /** Constructor for an image object, if the filename is given.
    *
    * @param filename The name of the file to be turned into an Image file
@@ -125,12 +122,11 @@ public class Image extends ImageUtil {
    * apply.
    *
    * @param inputFilter The filter to apply.
-   * @param inputPixel TODO What does this do?
    * @param x The x-coordinate of this pixel.
    * @param y The y-coordinate of this pixel.
    * @return A new pixel object that is the result of applying this filter to a pixel.
    */
-  private Pixel applyFilterToPixel(Filter inputFilter, Pixel inputPixel, int x, int y) {
+  private Pixel applyFilterToPixel(Filter inputFilter, int x, int y) {
 
     // Get the kernel of the filter
     double[][] filterKernel = inputFilter.getData();
@@ -171,8 +167,6 @@ public class Image extends ImageUtil {
 
   }
 
-  // TODO Move to filter class? I.e. public Image applyFilter(Image unfilteredImage)?
-
   /**
    * Applies the given filter to this image.
    *
@@ -192,7 +186,7 @@ public class Image extends ImageUtil {
         //Pixel filteredPixel = new Pixel(data[i][j].red, 0, data[i][j].blue);
 
         // Apply the filter, and receive new value
-        Pixel filteredPixel = this.applyFilterToPixel(inputFilter, data[i][j], i, j);
+        Pixel filteredPixel = this.applyFilterToPixel(inputFilter, i, j);
 
         // Put the new pixel in the output image
         output[i][j] = filteredPixel;
@@ -203,8 +197,6 @@ public class Image extends ImageUtil {
     return filteredImage;
 
   }
-
-  // TODO Move to Transformation class? I.e. public Image Transform(Image untransformedImage)?
 
   /** This applies a transformation to the image without modifying the image.
    *
@@ -279,7 +271,6 @@ public class Image extends ImageUtil {
     return output;
   }
 
-  //TODO Duplicate code.
   /** Returns the data of this Flag image, by converting a 2D array of Pixel objects
    * into a 3D array of int objects. The purpose of this method is to make the data readable
    * by the ImageUtil class, or any 'outsiders' who do not have Pixel objects.

@@ -16,6 +16,7 @@ public class Flag extends ImageUtil implements IImage {
    * @param width The specified user-inputted width of the flag image
    * @param country The user-chosen country
    */
+
   public Flag(int width, Country country) {
     this.width = width;
     Country thisCountry = country;

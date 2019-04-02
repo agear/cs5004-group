@@ -76,7 +76,7 @@ public class Transformation implements Adjustment {
    * @return Altered cloned image
    */
   public Image apply(Image inputImage) {
-    return inputImage.Transform(this);
+    return inputImage.transform(this);
   }
 
 

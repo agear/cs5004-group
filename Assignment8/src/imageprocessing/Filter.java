@@ -47,7 +47,7 @@ public class Filter implements Adjustment {
                                  {1.0 / 16.0, 1.0 / 8.0, 1.0 / 16.0} };
       return blurKernel;
     }
-    else if (filterName.equals(Filters.SHARPEN)) {
+    else {
       double[][] sharpenKernel =  { {-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0},
                                     {-1.0 / 8.0,  1.0 / 4.0,  1.0 / 4.0,  1.0 / 4.0, -1.0 / 8.0},
                                     {-1.0 / 8.0,  1.0 / 4.0,  1.0,      1.0 / 4.0, -1.0 / 8.0},
@@ -55,13 +55,7 @@ public class Filter implements Adjustment {
                                     {-1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0, -1.0 / 8.0}  };
       return sharpenKernel;
     }
-    // Method should never get here but needed something for the else clause.
-    // TODO is there a way to avoid this? Introduced because I removed the unnecessary exception
-    //  since this method now takes an enum instead of a string.
-    else {
-      double[][] identity = {{1,0}, {0,1}};
-      return identity;
-    }
+    
   }
 
 
