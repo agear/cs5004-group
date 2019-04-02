@@ -2,12 +2,23 @@ package imageprocessing;
 
 import java.io.IOException;
 
+/**
+ * This class is a driver for the imageprocessing package.
+ */
 public class Driver {
 
+  /**
+   * Construct a driver object.
+   */
   public Driver() {
+    //Driver is only used to run the main method.
   }
 
-  public void main() throws IOException {
+  /**
+   * Main method of a driver. Imports images, manipulates them and outputs the result. Also
+   * generates images such as rainbows and flags.
+   */
+  public boolean main() throws IOException {
     //Import image to manipulate.
     Image myImage1 = new Image("./res/shadowresize.jpg");
     Image myImage2 = new Image("./res/santaferesized.jpg");
@@ -64,5 +75,6 @@ public class Driver {
     //Draw Checkerboard
     CheckerBoard testChecker = new CheckerBoard(15);
     testChecker.writeToFile("CheckerBoard.png");
+    return true;
   }
 }

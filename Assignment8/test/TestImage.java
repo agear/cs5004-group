@@ -15,7 +15,6 @@ public class TestImage {
   @Test
   public void mainTest() throws IOException {
     Driver testDriver = new Driver();
-    testDriver.main();
-    assertTrue(true);
+    assertTrue(testDriver.main());
   }
 }
