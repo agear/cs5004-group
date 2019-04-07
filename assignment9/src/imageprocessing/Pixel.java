@@ -123,13 +123,27 @@ public class Pixel {
     return output;
   }
 
-
   /**
-   * Adds a number to the channel, changing the data.
+   * Adds a number to every channel equally, changing the data.
    *
    * @return A string in the format: "[R: red, G: green, B: blue]".
    */
-  public void add(String channel, double amount) throws IllegalArgumentException {
+  public void add(double amount) {
+    this.red += amount;
+    this.blue += amount;
+    this.green += amount;
+    //System.out.println(amount + " added to pixel.");
+  }
+
+
+
+
+    /**
+     * Adds a number to the channel, changing the data.
+     *
+     * @return A string in the format: "[R: red, G: green, B: blue]".
+     */
+  public void addChannelSpecific(String channel, double amount) throws IllegalArgumentException {
 
 
     if (channel.equals("red")) {

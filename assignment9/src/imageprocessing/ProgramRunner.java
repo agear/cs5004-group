@@ -14,20 +14,6 @@ public class ProgramRunner {
   public static void main() throws IOException {
     IModel model = new ModelImpl();
 
-    model.drawFlag(500, Country.GREECE);
-    model.applyBlur("flag_1");
-    model.applyBlur("flag_1-blur");
-    model.applyBlur("flag_1-blur-blur");
-    model.applyBlur("flag_1-blur-blur-blur");
-    model.applyDither("flag_1-blur-blur-blur");
-    model.save("flag_1");
-
-    model.drawFlag(777,Country.SWITZERLAND);
-    model.save("flag_2");
-
-    model.drawFlag(800, Country.FRANCE);
-    model.save("flag_3");
-
     //Draw Rainbows
     model.drawRainbow(300, 500, Orientation.VERTICAL);
     model.save("rainbow_1");
@@ -35,16 +21,18 @@ public class ProgramRunner {
     model.drawRainbow(300,500,Orientation.HORIZONTAL);
     model.save("rainbow_2");
 
-    //Draw
-    model.drawCheckerBoard(100);
-    model.save("checkerboard_1");
+//    //Draw
+//    model.drawCheckerBoard(100);
+//    model.save("checkerboard_1");
+//
+//    // Apply dither
+    model.load("./res/shadowresize.jpg", "shadow");
+    model.applyDither("shadow");
+    model.save("shadow-dither");
 
-
-
-    model.save("flag_1-blur");
-    model.save("flag_1-blur-blur");
-    model.save("flag_1-blur-blur-blur");
-    model.save("flag_1-blur-blur-blur-dither");
+//    model.load("./manhattan-small.png", "manhattan");
+//    model.applyDither("manhattan");
+//    model.save("manhattan-dither");
 
 
 //    //Import image to manipulate.

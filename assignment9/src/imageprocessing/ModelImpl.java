@@ -68,10 +68,10 @@ public class ModelImpl implements IModel {
 
   @Override
   public void applyDither(String title) {
-  Dither dither = new Dither();
-  IImage ditherImage = dither.apply(this.openImages.get(title));
-  String newName = title + "-dither";
-  this.openImages.put(newName, ditherImage);
+    Dither dither = new Dither();
+    IImage ditherImage = dither.apply(this.openImages.get(title));
+    String newName = title + "-dither";
+    this.openImages.put(newName, ditherImage);
   }
 
   @Override
@@ -100,6 +100,7 @@ public class ModelImpl implements IModel {
     Flag f = new Flag(width, c);
     this.flagCount += 1;
     String name = "flag_" + this.flagCount;
+    System.out.println("Name put into open images: " + name);
     this.openImages.put(name, f);
   }
 }
