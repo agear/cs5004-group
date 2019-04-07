@@ -49,11 +49,18 @@ public class Driver {
     mySharpenedImage2.writeImageToFile("santafe_sharpen.png");
 
     //Apply transformations
-    IImage mySepiaImage2 = sepia.apply(myImage2);
+    IImage mySepiaImage2 = sepia.apply(myImage1);
     mySepiaImage2.writeImageToFile("santafe_sepia.png");
 
     IImage myGreyscale2 = greyscale.apply(myImage2);
     myGreyscale2.writeImageToFile("santafe_greyscale.png");
+
+    // Apply dithers
+    IImage myDitheredDog = greyscale.apply(myImage1);
+    myDitheredDog.writeImageToFile("shadow_dithered.png");
+
+    IImage myDitheredVacation = greyscale.apply(myImage2);
+    myDitheredVacation.writeImageToFile("santafe_dithered.png");
 
     //Draw Flags
     Flag greekFlag = new Flag(908, Country.GREECE);
@@ -77,4 +84,22 @@ public class Driver {
     testChecker.writeImageToFile("CheckerBoard.png");
     return true;
   }
+
+
+  public void aliceDitherTest() throws IOException {
+
+    //Import image to manipulate.
+    IImage myImage1 = new Image("./res/shadowresize.jpg");
+    IImage myImage2 = new Image("./res/santaferesized.jpg");
+
+    // Apply dithers
+    Adjustment dither = new Dither();
+    IImage myDitheredDog = dither.apply(myImage1);
+    myDitheredDog.writeImageToFile("shadow_dithered.png");
+
+    IImage myDitheredVacation = dither.apply(myImage2);
+    myDitheredVacation.writeImageToFile("santafe_dithered.png");
+  }
+
+
 }
