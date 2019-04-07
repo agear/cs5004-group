@@ -1,10 +1,8 @@
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
-
 import java.io.IOException;
 
-import imageprocessing.Driver;
+import imageprocessing.ProgramRunner;
 
 
 /**
@@ -14,8 +12,7 @@ public class TestImage {
 
   @Test
   public void mainTest() throws IOException {
-    Driver testDriver = new Driver();
-    testDriver.aliceDitherTest();
 
+    ProgramRunner.main();
   }
 }
