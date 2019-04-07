@@ -41,7 +41,9 @@ public class Mosaic implements Adjustment {
     // Each pixel should be paired to the seed closest to it
 
     // The color of each pixel in the cluster is replaced with the average color
-
+    //TODO this is just so I can compile:
+    IImage i = new CheckerBoard(20);
+    return i;
   }
 
 
