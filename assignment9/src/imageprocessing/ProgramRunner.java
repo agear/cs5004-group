@@ -14,12 +14,12 @@ public class ProgramRunner {
   public static void main() throws IOException {
     IModel model = new ModelImpl();
 
-    //Draw Rainbows
-    model.drawRainbow(300, 500, Orientation.VERTICAL);
-    model.save("rainbow_1");
-
-    model.drawRainbow(300,500,Orientation.HORIZONTAL);
-    model.save("rainbow_2");
+//    //Draw Rainbows
+//    model.drawRainbow(300, 500, Orientation.VERTICAL);
+//    model.save("rainbow_1");
+//
+//    model.drawRainbow(300,500,Orientation.HORIZONTAL);
+//    model.save("rainbow_2");
 
 //    //Draw
 //    model.drawCheckerBoard(100);
@@ -27,8 +27,13 @@ public class ProgramRunner {
 //
 //    // Apply dither
     model.load("./res/shadowresize.jpg", "shadow");
-    model.applyDither("shadow");
-    model.save("shadow-dither");
+//    model.applyDither("shadow");
+//    model.save("shadow-dither");
+
+    // Apply mosaic
+    model.applyMosaic("shadow", 1000);
+    model.save("shadow-mosaic");
+
 
 //    model.load("./manhattan-small.png", "manhattan");
 //    model.applyDither("manhattan");

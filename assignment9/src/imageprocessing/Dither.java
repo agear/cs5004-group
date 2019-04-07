@@ -91,7 +91,6 @@ public class Dither implements Adjustment {
     }
 
     Image ditheredImage = new Image(newData);
-    System.out.println("Dithering complete");
     return ditheredImage;
   }
 
