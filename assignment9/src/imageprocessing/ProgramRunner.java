@@ -12,61 +12,60 @@ public class ProgramRunner {
    * generates images such as rainbows and flags.
    */
   public static void main() throws IOException {
+    IModel model = new ModelImpl();
+
+
     //Import image to manipulate.
-    IImage myImage1 = new Image("./res/shadowresize.jpg");
-    IImage myImage2 = new Image("./res/santaferesized.jpg");
+    model.load("./res/shadowresize.jpg", "shadow");
+    model.load("./res/santaferesized.jpg", "santafe");
 
     //Apply filters
-    Filter blur = new Filter(Filters.BLUR);
-    IImage myBlurredImage = blur.apply(myImage1);
-    myBlurredImage.writeImageToFile("shadow_blurry.png");
+    model.applyBlur("shadow");
+    model.save("shadow-blur");
 
-    Filter sharpen = new Filter(Filters.SHARPEN);
-    IImage mySharpenedImage = sharpen.apply(myImage1);
-    mySharpenedImage.writeImageToFile("shadow_sharpen.png");
+    model.applySharpen("shadow");
+    model.save("shadow-sharp");
 
     //Apply transformations
-    Transformation sepia = new Transformation(Transformations.SEPIA);
-    IImage mySepiaImage = sepia.apply(myImage1);
-    mySepiaImage.writeImageToFile("shadow_sepia.png");
+    model.applySepia("shadow");
+    model.save("shadow-sepia");
 
-    Transformation greyscale = new Transformation(Transformations.GREYSCALE);
-    IImage myGreyscale = greyscale.apply(myImage1);
-    myGreyscale.writeImageToFile("shadow_greyscale.png");
+    model.applyGreyscale("shadow");
+    model.save("shadow-greyscale");
 
     //Apply filters
-    IImage myBlurredImage2 = blur.apply(myImage2);
-    myBlurredImage2.writeImageToFile("santafe_blurry.png");
+    model.applyBlur("santafe");
+    model.save("santafe-blur");
 
-    IImage mySharpenedImage2 = sharpen.apply(myImage2);
-    mySharpenedImage2.writeImageToFile("santafe_sharpen.png");
+    model.applySharpen("santafe");
+    model.save("santafe-sharp");
 
     //Apply transformations
-    IImage mySepiaImage2 = sepia.apply(myImage2);
-    mySepiaImage2.writeImageToFile("santafe_sepia.png");
+    model.applySepia("santafe");
+    model.save("santafe-sepia");
 
-    IImage myGreyscale2 = greyscale.apply(myImage2);
-    myGreyscale2.writeImageToFile("santafe_greyscale.png");
+    model.applyGreyscale("santafe");
+    model.save("santafe-greyscale");
 
     //Draw Flags
-    Flag greekFlag = new Flag(908, Country.GREECE);
-    greekFlag.writeImageToFile("FlagGreek.png");
+    model.drawFlag(908,Country.GREECE);
+    model.save("flag_1");
 
-    Flag swissFlag = new Flag(777, Country.SWITZERLAND);
-    swissFlag.writeImageToFile("FlagSwiss.png");
+    model.drawFlag(777,Country.SWITZERLAND);
+    model.save("flag_2");
 
-    Flag frenchFlag = new Flag(800, Country.FRANCE);
-    frenchFlag.writeImageToFile("FlagFrench.png");
+    model.drawFlag(800, Country.FRANCE);
+    model.save("flag_3");
 
     //Draw Rainbows
-    Rainbow verticalRainbow = new Rainbow(300, 500, Orientation.VERTICAL);
-    verticalRainbow.writeImageToFile("RainbowVertical.png");
+    model.drawRainbow(300, 500, Orientation.VERTICAL);
+    model.save("rainbow_1");
 
-    Rainbow horizontalRainbow = new Rainbow(300, 500, Orientation.HORIZONTAL);
-    horizontalRainbow.writeImageToFile("RainbowHorizontal.png");
+    model.drawRainbow(300,500,Orientation.HORIZONTAL);
+    model.save("rainbow_2");
 
-    //Draw Checkerboard
-    CheckerBoard testChecker = new CheckerBoard(15);
-    testChecker.writeImageToFile("CheckerBoard.png");
+    //Draw
+    model.drawCheckerBoard(100);
+    model.save("checkerboard_1");
   }
 }
