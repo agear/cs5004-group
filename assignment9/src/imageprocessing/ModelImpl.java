@@ -32,47 +32,42 @@ public class ModelImpl implements IModel {
   }
 
   @Override
-  public Image applySepia(Image i) {
+  public void applySepia(String title) {
     Transformation sepia = new Transformation(Transformations.SEPIA);
     openImages.add(sepia.apply(i));
-    return null;
   }
 
   @Override
-  public Image applyGreyscale(Image i) {
+  public void applyGreyscale(String title) {
     Transformation greyscale = new Transformation(Transformations.GREYSCALE);
     openImages.add(greyscale.apply(i));
-    return null;
   }
 
   @Override
-  public Image applyDither(Image i) {
-    return null;
+  public void applyDither(String title) {
+
   }
 
   @Override
-  public Image applyMosaic(Image i, int seed) {
-    return null;
+  public void applyMosaic(String title, int seed) {
+
   }
 
   @Override
-  public Image drawRainbow(int height, int width, Orientation o) {
+  public void drawRainbow(int height, int width, Orientation o) {
     Rainbow r = new Rainbow(height, width, o);
     openImages.add(r);
-    return null;
   }
 
   @Override
-  public Image drawCheckerBoard(int squareSize) {
+  public void drawCheckerBoard(int squareSize) {
     CheckerBoard cb = new CheckerBoard(squareSize);
     openImages.add(cb);
-    return null;
   }
 
   @Override
-  public Image drawFlag(int width, Country c) {
+  public void drawFlag(int width, Country c) {
     Flag f = new Flag(width, c);
     openImages.add(f);
-    return null;
   }
 }
