@@ -68,7 +68,10 @@ public class ModelImpl implements IModel {
 
   @Override
   public void applyDither(String title) {
-  //TODO
+  Dither dither = new Dither();
+  IImage ditherImage = dither.apply(this.openImages.get(title));
+  String newName = title + "-dither";
+  this.openImages.put(newName, ditherImage);
   }
 
   @Override
