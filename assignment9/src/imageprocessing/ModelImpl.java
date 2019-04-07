@@ -1,9 +1,9 @@
 package imageprocessing;
 
-import java.util.Set;
+import java.util.HashMap;
 
 public class ModelImpl implements IModel {
-  Set<IImage> openImages;
+  private HashMap<String, IImage> openImages;
 
   @Override
   public Image load(String ifile, String title) {
@@ -11,22 +11,24 @@ public class ModelImpl implements IModel {
   }
 
   @Override
-  public void save(Image i, String ofile) {
+  public void save(String title, String ofile) {
 
   }
 
   @Override
-  public Image applyBlur(Image i) {
+  public void applyBlur(String title) {
     Filter blur = new Filter(Filters.BLUR);
-    openImages.add(blur.apply(i));
-    return null;
+    IImage blurredImage = blur.apply(openImages.get(title));
+    String newName = title + "_blur";
+    openImages.put(newName, blurredImage);
   }
 
   @Override
-  public Image applySharpen(Image i) {
+  public void applySharpen(String title) {
     Filter sharpen = new Filter(Filters.SHARPEN);
-    openImages.add(sharpen.apply(i));
-    return null;
+    IImage sharpenedImage = sharpen.apply(openImages.get(title));
+    String newName = title + "_sharp";
+    openImages.put(newName, sharpenedImage);
   }
 
   @Override

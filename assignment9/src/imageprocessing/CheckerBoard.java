@@ -126,6 +126,10 @@ public class CheckerBoard extends ImageUtil implements IImage {
   }
 
 
+  public Pixel[][] getData() {
+    return this.data.clone();
+  }
+
   /** Writes the image to a file.
    * @param filename The desired file path.
    * @throws IOException If there is an error creating a file with that path name.

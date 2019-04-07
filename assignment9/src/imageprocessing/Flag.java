@@ -215,6 +215,9 @@ public class Flag extends ImageUtil implements IImage {
     return output;
   }
 
+  public Pixel[][] getData() {
+    return this.data.clone();
+  }
   /**
    * Writes the image to a file.
    *

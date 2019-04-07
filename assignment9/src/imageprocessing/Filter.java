@@ -75,7 +75,7 @@ public class Filter implements Adjustment {
    * @param y Position of the pixel to check.
    * @return True if x, and y values exist in this image. False otherwise.
    */
-  private boolean isValidPixelPosition(Image image, int x, int y) {
+  private boolean isValidPixelPosition(IImage image, int x, int y) {
 
     return (x < image.get3Ddata().length && y < image.get3Ddata()[0].length && x >= 0 && y >= 0);
   }
@@ -88,7 +88,7 @@ public class Filter implements Adjustment {
    * @param y The y-coordinate of this pixel.
    * @return The filtered pixel.
    */
-  private Pixel applyToPixel(Image inputImage, int x, int y) {
+  private Pixel applyToPixel(IImage inputImage, int x, int y) {
 
     // Get the kernel of the filter
     double[][] filterKernel = this.getData();
@@ -142,7 +142,7 @@ public class Filter implements Adjustment {
    * @param input The image to be filtered.
    * @return The Image after the filter has been applied.
    */
-  public Image apply(Image input) {
+  public Image apply(IImage input) {
 
     return input.applyFilter(this);
     //

@@ -4,23 +4,23 @@ public interface IModel {
 
   Image load(String ifile, String title);
 
-  void save(Image i, String ofile);
+  void save(String title, String ofile);
 
-  Image applyBlur(Image i);
+  void applyBlur(String title);
 
-  Image applySharpen(Image i);
+  void applySharpen(String title);
 
-  Image applySepia(Image i);
+  void applySepia(String title);
 
-  Image applyGreyscale(Image i);
+  void applyGreyscale(String title);
 
-  Image applyDither(Image i);
+  void applyDither(String title);
 
-  Image applyMosaic(Image i, int seed);
+  void applyMosaic(String title, int seed);
 
-  Image drawRainbow(int height, int width, Orientation o);
+  void drawRainbow(int height, int width, Orientation o);
 
-  Image drawCheckerBoard(int squareSize);
+  void drawCheckerBoard(int squareSize);
 
-  Image drawFlag(int width, Country c);
+  void drawFlag(int width, Country c);
 }

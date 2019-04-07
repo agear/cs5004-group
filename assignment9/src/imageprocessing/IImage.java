@@ -23,4 +23,6 @@ public interface IImage {
    * @return A 3D array of values representing RGB values of this image
    */
   int[][][] get3Ddata();
+
+  Pixel[][] getData();
 }
