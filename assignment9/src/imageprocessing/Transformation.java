@@ -75,7 +75,7 @@ public class Transformation implements Adjustment {
    * @param inputImage Image to change
    * @return Altered cloned image
    */
-  public Image apply(Image inputImage) {
+  public IImage apply(IImage inputImage) {
     return inputImage.transform(this);
   }
 

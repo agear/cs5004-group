@@ -1,10 +1,12 @@
 package imageprocessing;
 
+import java.io.IOException;
+
 public interface IModel {
 
-  Image load(String ifile, String title);
+  void load(String ifile, String title) throws IOException;
 
-  void save(String title, String ofile);
+  void save(String title) throws IOException;
 
   void applyBlur(String title);
 

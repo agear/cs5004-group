@@ -1,5 +1,7 @@
 package imageprocessing;
 
+import java.io.IOException;
+
 /**
  * An image has a height, width, and RGB values.
  * Besides retrieving those, the methods it can do depends on the type of image.
@@ -25,4 +27,15 @@ public interface IImage {
   int[][][] get3Ddata();
 
   Pixel[][] getData();
+
+  void writeImageToFile(String s) throws IOException;
+
+  /** This applies a transformation to the image without modifying the image.
+   *
+   * @param inputTransformation The transformation to be applied
+   * @return The Image after the filter has been applied.
+   */
+  IImage transform(Transformation inputTransformation);
+
+  IImage applyFilter(Filter inputFilter);
 }

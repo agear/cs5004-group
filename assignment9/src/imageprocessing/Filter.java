@@ -142,7 +142,7 @@ public class Filter implements Adjustment {
    * @param input The image to be filtered.
    * @return The Image after the filter has been applied.
    */
-  public Image apply(IImage input) {
+  public IImage apply(IImage input) {
 
     return input.applyFilter(this);
     //

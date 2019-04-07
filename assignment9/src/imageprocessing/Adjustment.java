@@ -13,7 +13,7 @@ public interface Adjustment {
    * @param input Image to change
    * @return Altered cloned image
    */
-  Image apply(Image input);
+  IImage apply(IImage input);
 
 
 }

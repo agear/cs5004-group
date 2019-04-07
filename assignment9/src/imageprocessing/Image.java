@@ -172,7 +172,7 @@ public class Image extends ImageUtil implements IImage {
    * @param inputFilter The filter to apply to this image.
    * @return A copy of this image with the given filter applied.
    */
-  public Image applyFilter(Filter inputFilter) {
+  public IImage applyFilter(Filter inputFilter) {
 
     // Initialize output object
     Pixel[][] output = new Pixel[this.data.length][this.data[0].length];
@@ -202,7 +202,7 @@ public class Image extends ImageUtil implements IImage {
    * @param inputTransformation The transformation to be applied
    * @return The Image after the filter has been applied.
    */
-  public Image transform(Transformation inputTransformation) {
+  public IImage transform(Transformation inputTransformation) {
 
     // Initialize output object
     Pixel[][] output = new Pixel[this.data.length][this.data[0].length];
@@ -223,7 +223,7 @@ public class Image extends ImageUtil implements IImage {
       }
     }
 
-    Image transformedImage = new Image(output);
+    IImage transformedImage = new Image(output);
     return transformedImage;
   }
 
