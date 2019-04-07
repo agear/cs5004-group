@@ -28,7 +28,10 @@ public class ModelImpl implements IModel {
 
   @Override
   public void save(String title) throws IOException {
-  this.openImages.get(title).writeImageToFile(title + ".png");
+
+    IImage currentImage = this.openImages.get(title);
+    System.out.println("Loading " + title);
+    currentImage.writeImageToFile(title + ".png");
   }
 
   @Override

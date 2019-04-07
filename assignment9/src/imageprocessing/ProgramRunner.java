@@ -67,5 +67,8 @@ public class ProgramRunner {
     //Draw
     model.drawCheckerBoard(100);
     model.save("checkerboard_1");
+
+
+
   }
 }
