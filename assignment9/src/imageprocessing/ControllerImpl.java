@@ -24,7 +24,7 @@ public class ControllerImpl implements IController {
     String imagename = "";
 
     Scanner scan = new Scanner(this.in);
-    while(true) {
+    while(scan.hasNext()) {
       command = scan.next();
       if(command.equals("load")) {
         filename = scan.next();
@@ -43,7 +43,7 @@ public class ControllerImpl implements IController {
       else if(command.equals("save")){ imagename = scan.next();
         System.out.println("Saving "+imagename+" to "+imagename+".png");
       model.save(imagename);}
-      else if (command.equals("exit")){break;}
+      //else if (command.equals("exit")){break;}
       else{System.out.println("Command not found");}
     }
   }
