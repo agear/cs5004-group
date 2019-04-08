@@ -3,9 +3,9 @@ package imageprocessing;
 import java.io.IOException;
 
 public abstract class AbstractImage extends ImageUtil{
-  private int height;
-  private int width;
-  private Pixel[][] data;
+  protected int height;
+  protected int width;
+  protected Pixel[][] data;
 
 
   /** Returns the height, in Pixels, of this image.
@@ -30,9 +30,8 @@ public abstract class AbstractImage extends ImageUtil{
    * @return A 3D array of values representing RGB values of this image
    */
   public int[][][] get3Ddata() {
-    System.out.println("Inside 3D data...");
     int[][][] output = new int[this.data.length][this.data[0].length][3];
-    System.out.println("And then...");
+
     for (int i = 0; i < this.data.length; i++) {
       for (int j = 0; j < this.data[0].length; j++) {
         output[i][j][0] = this.data[i][j].getRed();
@@ -40,7 +39,6 @@ public abstract class AbstractImage extends ImageUtil{
         output[i][j][2] = this.data[i][j].getBlue();
       }
     }
-    System.out.println("Returning output...");
     return output;
   }
 
@@ -57,20 +55,16 @@ public abstract class AbstractImage extends ImageUtil{
    * @return The Image after the filter has been applied.
    */
   public IImage transform(Transformation inputTransformation) {
-
     // Initialize output object
     Pixel[][] output = new Pixel[this.data.length][this.data[0].length];
-
     // For each pixel in the image, apply the transformation. Add that new value to the
     // corresponding value
     // in a new set of data, and then create a new Image object from that. Return the resulting obj.
-    for (int x = 0; x < data.length; x++) {
-      for (int y = 0; y < data[x].length; y++) {
-
-        //Pixel filteredPixel = new Pixel(data[i][j].red, 0, data[i][j].blue);
+    for (int x = 0; x < this.data.length; x++) {
+      for (int y = 0; y < this.data[x].length; y++) {
 
         // Apply the transformation, and receive new value
-        Pixel transformedPixel = this.transformPixel(inputTransformation, data[x][y], x, y);
+        Pixel transformedPixel = this.transformPixel(inputTransformation, x, y);
 
         // Put the new pixel in the output image
         output[x][y] = transformedPixel;
@@ -84,22 +78,19 @@ public abstract class AbstractImage extends ImageUtil{
   /**
    * Applies a transformation to a pixel object using linear algebra.
    * @param  inputTransformation The transformation to be applied.
-   * @param  inputPixel the pixel it should be applied to
    * @param x the x-coordinate in this image of that pixel
    * @param y the y-coordinate in this image of that pixel
    * @return A new pixel object that is the result of applying this filter to a pixel.
    */
-  protected Pixel transformPixel(Transformation inputTransformation, Pixel inputPixel, int x, int y) {
-
+  protected Pixel transformPixel(Transformation inputTransformation, int x, int y) {
     // Get the matrix of the transformation.
     double[][] matrix = inputTransformation.getData();
-
-    double redPrime = (matrix[0][0] * inputPixel.getRed() + matrix[0][1] * inputPixel.getGreen()
-            + matrix[0][2] * inputPixel.getBlue());
-    double greenPrime = (matrix[1][0] * inputPixel.getRed() + matrix[1][1] * inputPixel.getGreen()
-            + matrix[1][2] * inputPixel.getBlue());
-    double bluePrime = (matrix[2][0] * inputPixel.getRed() + matrix[2][1] * inputPixel.getGreen()
-            + matrix[2][2] * inputPixel.getBlue());
+    double redPrime = (matrix[0][0] * this.data[x][y].getRed() + matrix[0][1] * this.data[x][y].getGreen()
+            + matrix[0][2] * this.data[x][y].getBlue());
+    double greenPrime = (matrix[1][0] * this.data[x][y].getRed() + matrix[1][1] * this.data[x][y].getGreen()
+            + matrix[1][2] * this.data[x][y].getBlue());
+    double bluePrime = (matrix[2][0] * this.data[x][y].getRed() + matrix[2][1] * this.data[x][y].getGreen()
+            + matrix[2][2] * this.data[x][y].getBlue());
 
     // Round double values and cast to ints.
     Pixel newPixel = new Pixel((int) Math.round(redPrime), (int) Math.round(greenPrime),

@@ -21,6 +21,8 @@ public class ProgramRunner {
 //    controller.go();
     model.drawCheckerBoard(100);
     model.save("checkerboard_1");
+    model.applySepia("checkerboard_1");
+    model.save("checkerboard_1-sepia");
 
   }
 }
