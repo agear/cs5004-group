@@ -1,0 +1,10 @@
+load ./res/shadowresize.jpg shadow
+dither
+save shadow-dither
+load ./res/shadowresize.jpg shadow
+blur
+save shadow-blur
+sepia
+TODO: Figure out why it needs the -blur-
+save shadow-blur-sepia
+exit
