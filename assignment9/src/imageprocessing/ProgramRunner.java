@@ -18,7 +18,9 @@ public class ProgramRunner {
     IModel model = new ModelImpl();
     FileReader in = new FileReader(args[0]);
     IController controller = new ControllerImpl(model, in);
-    controller.go();
+//    controller.go();
+    model.drawCheckerBoard(100);
+    model.save("checkerboard_1");
 
   }
 }

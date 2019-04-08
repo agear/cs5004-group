@@ -6,4 +6,4 @@ blur
 save shadow-blur
 sepia
 save shadow-blur-sepia
-exit
+
