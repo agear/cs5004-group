@@ -19,10 +19,12 @@ public class ProgramRunner {
     FileReader in = new FileReader(args[0]);
     IController controller = new ControllerImpl(model, in);
 //    controller.go();
-    model.drawFlag(100, Country.FRANCE);
-    model.save("flag_1");
-    model.applySepia("flag_1");
-    model.save("flag_1-sepia");
+    model.drawRainbow(300, 500, Orientation.HORIZONTAL);
+    model.save("rainbow_1");
+    model.drawRainbow(300, 500, Orientation.VERTICAL);
+    model.save("rainbow_2");
+    model.applySepia("rainbow_1");
+    model.save("rainbow_1-sepia");
 
   }
 }
