@@ -19,10 +19,10 @@ public class ProgramRunner {
     FileReader in = new FileReader(args[0]);
     IController controller = new ControllerImpl(model, in);
 //    controller.go();
-    model.drawCheckerBoard(100);
-    model.save("checkerboard_1");
-    model.applySepia("checkerboard_1");
-    model.save("checkerboard_1-sepia");
+    model.drawFlag(100, Country.FRANCE);
+    model.save("flag_1");
+    model.applySepia("flag_1");
+    model.save("flag_1-sepia");
 
   }
 }
