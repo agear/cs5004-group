@@ -1,6 +1,9 @@
 package imageprocessing;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * This class is a driver for the imageprocessing package.
@@ -11,24 +14,28 @@ public class ProgramRunner {
    * Main method of a driver. Imports images, manipulates them and outputs the result. Also
    * generates images such as rainbows and flags.
    */
-  public static void main() throws IOException {
+  public static void main(String[] args) throws IOException {
     IModel model = new ModelImpl();
+    FileReader in = new FileReader(args[0]);
+    IController controller = new ControllerImpl(model, in);
+    controller.go();
+
 
     //Draw Rainbows
-    model.drawRainbow(300, 500, Orientation.VERTICAL);
-    model.save("rainbow_1");
-
-    model.drawRainbow(300,500,Orientation.HORIZONTAL);
-    model.save("rainbow_2");
+//    model.drawRainbow(300, 500, Orientation.VERTICAL);
+//    model.save("rainbow_1");
+//
+//    model.drawRainbow(300,500,Orientation.HORIZONTAL);
+//    model.save("rainbow_2");
 
 //    //Draw
 //    model.drawCheckerBoard(100);
 //    model.save("checkerboard_1");
 //
 //    // Apply dither
-    model.load("./res/shadowresize.jpg", "shadow");
-    model.applyDither("shadow");
-    model.save("shadow-dither");
+//    model.load("./res/shadowresize.jpg", "shadow");
+//    model.applyDither("shadow");
+//    model.save("shadow-dither");
 
 //    model.load("./manhattan-small.png", "manhattan");
 //    model.applyDither("manhattan");

@@ -30,7 +30,7 @@ public class ModelImpl implements IModel {
   public void save(String title) throws IOException {
 
     IImage currentImage = this.openImages.get(title);
-    System.out.println("Loading " + title);
+//    System.out.println("Loading " + title);
     currentImage.writeImageToFile(title + ".png");
   }
 

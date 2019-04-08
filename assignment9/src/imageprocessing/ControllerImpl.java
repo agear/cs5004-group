@@ -1,37 +1,50 @@
 package imageprocessing;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class ControllerImpl implements IController {
-  public static void main(String[] args) throws IOException {
+  final Readable in;
+//  final Appendable out;
+  IModel model;
+ // IView view;
+
+  public ControllerImpl(IModel model, Readable in) {
+    this.in = in;
+//    this.out = out;
+    this.model = model;
+  }
+
+  //TODO Change to switch statement
+  public void go() throws IOException {
+    Objects.requireNonNull(model);
     String command = "";
     String filename = "";
     String imagename = "";
 
-    IModel model = new ModelImpl();
-    Scanner scan = new Scanner(System.in);
-    while(!command.equals("exit")) {
+    Scanner scan = new Scanner(this.in);
+    while(true) {
       command = scan.next();
       if(command.equals("load")) {
         filename = scan.next();
         imagename = scan.next();
-        model.load(filename, imagename);
-        System.out.println("Loading "+imagename+"...");
+        this.model.load(filename, imagename);
+        System.out.println("Loading "+filename+" as "+imagename+"...");
       }
-      else if(command.equals("dither")){ model.applyDither(imagename);
+      else if(command.equals("dither")){ this.model.applyDither(imagename);
         System.out.println("Dithering "+imagename+"...");}
-      else if(command.equals("blur")){ model.applyBlur(imagename);
+      else if(command.equals("blur")){ this.model.applyBlur(imagename);
         System.out.println("Applying blur to "+imagename+"...");}
-      else if(command.equals("sepia")){ model.applySepia(imagename);
+      else if(command.equals("sepia")){ this.model.applySepia(imagename);
         System.out.println("Applying sepia transformation to "+imagename+"...");}
-      else if(command.equals("greyscale")){ model.applyGreyscale(imagename);
+      else if(command.equals("greyscale")){ this.model.applyGreyscale(imagename);
       System.out.println("Applying greyscale transformation to "+imagename+"...");}
       else if(command.equals("save")){ imagename = scan.next();
         System.out.println("Saving "+imagename+" to "+imagename+".png");
       model.save(imagename);}
+      else if (command.equals("exit")){break;}
       else{System.out.println("Command not found");}
-      //System.out.println("thank you for entering "+ command);
     }
   }
 }
