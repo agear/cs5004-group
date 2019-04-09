@@ -24,6 +24,7 @@ public class ControllerImpl implements IController {
 //    this.view = view;
   }
 
+  //TODO Need another input.txt file for spec. From Piazza: They are to show us what features are supported. Two files are recommended so that you don't have one file with everything in it. - Amit
   //TODO Remove print debugging commands, add better comments.
   //TODO Java doc.
   public void go() throws IOException {
@@ -79,25 +80,41 @@ public class ControllerImpl implements IController {
           int squareSize = Integer.parseInt(scan.next());
           this.model.drawCheckerBoard(squareSize);
           checkerboardNum += 1;
-          this.model.save("checkerboard-"+checkerboardNum);
+          this.model.save("checkerboard-" + checkerboardNum);
           break;
         case "flag":
           String country = scan.next();
           int fWidth = Integer.parseInt(scan.next());
-          if(country.equals("france")){ this.model.drawFlag(fWidth, Country.FRANCE); flagNum += 1;}
-          else if(country.equals("switzerland")){ this.model.drawFlag(fWidth, Country.SWITZERLAND); flagNum += 1;}
-          else if(country.equals("greece")){this.model.drawFlag(fWidth, Country.GREECE); flagNum += 1;}
-          else{System.out.println("Country " + command + " not found"); break;}
-          this.model.save("flag-"+flagNum);
+          if (country.equals("france")) {
+            this.model.drawFlag(fWidth, Country.FRANCE);
+            flagNum += 1;
+          } else if (country.equals("switzerland")) {
+            this.model.drawFlag(fWidth, Country.SWITZERLAND);
+            flagNum += 1;
+          } else if (country.equals("greece")) {
+            this.model.drawFlag(fWidth, Country.GREECE);
+            flagNum += 1;
+          } else {
+            System.out.println("Country " + command + " not found");
+            break;
+          }
+          this.model.save("flag-" + flagNum);
           break;
         case "rainbow":
           String orientation = scan.next();
           int rWidth = Integer.parseInt(scan.next());
           int rHeight = Integer.parseInt(scan.next());
-          if(orientation.equals("horizontal")){ this.model.drawRainbow(rHeight, rWidth, Orientation.HORIZONTAL); rainbowNum += 1;}
-          else if(orientation.equals("vertical")){ this.model.drawRainbow(rHeight, rWidth, Orientation.VERTICAL); rainbowNum += 1;}
-          else{System.out.println("Orientation "+orientation+" not found"); break;}
-          this.model.save("rainbow-"+rainbowNum);
+          if (orientation.equals("horizontal")) {
+            this.model.drawRainbow(rHeight, rWidth, Orientation.HORIZONTAL);
+            rainbowNum += 1;
+          } else if (orientation.equals("vertical")) {
+            this.model.drawRainbow(rHeight, rWidth, Orientation.VERTICAL);
+            rainbowNum += 1;
+          } else {
+            System.out.println("Orientation " + orientation + " not found");
+            break;
+          }
+          this.model.save("rainbow-" + rainbowNum);
           break;
         case "save":
           imageName = scan.next();
