@@ -1,4 +1,6 @@
-package imageprocessing;
+package imageprocessing.model.adjustment;
+
+import imageprocessing.model.Image.IImage;
 
 /**
  * This class represents a transformation to apply to an image. A transformation has a 2D 3x3

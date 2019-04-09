@@ -1,7 +1,21 @@
-package imageprocessing;
+package imageprocessing.model;
 
 import java.io.IOException;
 import java.util.HashMap;
+
+import imageprocessing.model.Image.CheckerBoard;
+import imageprocessing.model.Image.Country;
+import imageprocessing.model.adjustment.Dither;
+import imageprocessing.model.adjustment.Filter;
+import imageprocessing.model.adjustment.Filters;
+import imageprocessing.model.Image.Flag;
+import imageprocessing.model.Image.IImage;
+import imageprocessing.model.Image.Image;
+import imageprocessing.model.adjustment.Mosaic;
+import imageprocessing.model.Image.Orientation;
+import imageprocessing.model.Image.Rainbow;
+import imageprocessing.model.adjustment.Transformation;
+import imageprocessing.model.adjustment.Transformations;
 
 public class ModelImpl implements IModel {
   private HashMap<String, IImage> openImages;

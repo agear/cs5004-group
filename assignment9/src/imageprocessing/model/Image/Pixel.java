@@ -1,4 +1,4 @@
-package imageprocessing;
+package imageprocessing.model.Image;
 
 /**
  * This class represents a pixel. A Pixel has red, green and blue values which can take integer

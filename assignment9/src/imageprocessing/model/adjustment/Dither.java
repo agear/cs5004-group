@@ -1,4 +1,11 @@
-package imageprocessing;
+package imageprocessing.model.adjustment;
+
+import imageprocessing.model.Image.IImage;
+import imageprocessing.model.Image.Image;
+import imageprocessing.model.Image.Pixel;
+import imageprocessing.model.adjustment.Adjustment;
+import imageprocessing.model.adjustment.Transformation;
+import imageprocessing.model.adjustment.Transformations;
 
 /**
  * This class is a type of adjustment that can be applied to an image. It uses the Floyd-Steinberg

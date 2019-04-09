@@ -1,4 +1,6 @@
-package imageprocessing;
+package imageprocessing.model.adjustment;
+
+import imageprocessing.model.Image.IImage;
 
 /**
  * This class represents an object that can morph an image, such as blurring, sharpening,

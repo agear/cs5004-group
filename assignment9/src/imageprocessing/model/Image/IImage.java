@@ -1,6 +1,9 @@
-package imageprocessing;
+package imageprocessing.model.Image;
 
 import java.io.IOException;
+
+import imageprocessing.model.adjustment.Filter;
+import imageprocessing.model.adjustment.Transformation;
 
 /**
  * An image has a height, width, and RGB values.

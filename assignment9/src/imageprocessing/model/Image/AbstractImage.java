@@ -1,8 +1,11 @@
-package imageprocessing;
+package imageprocessing.model.Image;
 
 import java.io.IOException;
 
-public abstract class AbstractImage extends ImageUtil{
+import imageprocessing.model.adjustment.Filter;
+import imageprocessing.model.adjustment.Transformation;
+
+public abstract class AbstractImage extends ImageUtil {
   protected int height;
   protected int width;
   protected Pixel[][] data;

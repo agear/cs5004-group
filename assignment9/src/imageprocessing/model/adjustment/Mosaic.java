@@ -1,8 +1,13 @@
-package imageprocessing;
+package imageprocessing.model.adjustment;
 
 import java.util.HashMap;
 import java.util.Random;
 import java.util.ArrayList;
+
+import imageprocessing.model.Image.IImage;
+import imageprocessing.model.Image.Image;
+import imageprocessing.model.Image.Pixel;
+import imageprocessing.model.adjustment.Adjustment;
 
 
 public class Mosaic implements Adjustment {

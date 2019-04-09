@@ -1,6 +1,9 @@
-package imageprocessing;
+package imageprocessing.model;
 
 import java.io.IOException;
+
+import imageprocessing.model.Image.Country;
+import imageprocessing.model.Image.Orientation;
 
 public interface IModel {
 

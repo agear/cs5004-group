@@ -1,4 +1,9 @@
-package imageprocessing;
+package imageprocessing.model.adjustment;
+
+import imageprocessing.model.Image.IImage;
+import imageprocessing.model.Image.Pixel;
+import imageprocessing.model.adjustment.Adjustment;
+import imageprocessing.model.adjustment.Filters;
 
 /**
  * This class represents a filter to apply to an image. A filter has a "Kernel" which is a 2D array

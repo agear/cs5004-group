@@ -1,9 +1,12 @@
 package imageprocessing;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
+
+import imageprocessing.controller.ControllerImpl;
+import imageprocessing.controller.IController;
+import imageprocessing.model.IModel;
+import imageprocessing.model.ModelImpl;
 
 /**
  * This class is a driver for the imageprocessing package.
@@ -18,11 +21,11 @@ public class ProgramRunner {
     IModel model = new ModelImpl();
     FileReader in = new FileReader(args[0]);
     IController controller = new ControllerImpl(model, in);
-//    controller.go();
-    model.load("./res/shadowresize.jpg", "shadow");
-    model.save("shadow");
-    model.applySepia("shadow");
-    model.save("shadow-sepia");
+    controller.go();
+//    model.load("./res/shadowresize.jpg", "shadow");
+//    model.save("shadow");
+//    model.applySepia("shadow");
+//    model.save("shadow-sepia");
 
   }
 }

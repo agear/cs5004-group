@@ -1,6 +1,4 @@
-package imageprocessing;
-
-import java.io.IOException;
+package imageprocessing.model.Image;
 
 /**
  * A flag is a type of image object. Flags have a specific pattern which can be scaled with size.

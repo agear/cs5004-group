@@ -1,8 +1,10 @@
-package imageprocessing;
+package imageprocessing.controller;
 
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
+
+import imageprocessing.model.IModel;
 
 public class ControllerImpl implements IController {
   final Readable in;

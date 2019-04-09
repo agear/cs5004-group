@@ -1,4 +1,4 @@
-package imageprocessing;
+package imageprocessing.controller;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package imageprocessing;
+package imageprocessing.model.Image;
 
 /**
  * This class creates and represents a Rainbow image object, with 7 colored stripes.

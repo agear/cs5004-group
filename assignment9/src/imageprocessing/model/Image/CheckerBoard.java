@@ -1,4 +1,4 @@
-package imageprocessing;
+package imageprocessing.model.Image;
 
 /**
  * This class represents a checkerboard image. It can create the checkerboard, and return

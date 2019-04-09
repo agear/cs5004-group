@@ -1,4 +1,4 @@
-package imageprocessing;
+package imageprocessing.model.Image;
 
 /**
  * Enum to represent the orientation of a rainbow. Orientation can be HORIZONTAL or VERTICAL.
