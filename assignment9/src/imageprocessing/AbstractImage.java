@@ -197,4 +197,21 @@ public abstract class AbstractImage extends ImageUtil{
   public void writeImageToFile(String filename) throws IOException {
     this.writeImage(this.get3Ddata(), this.getWidth(), this.getHeight(), filename);
   }
+
+  //TODO delete?
+//  /**
+//   * Creates a String representation of this image, which is a matrix of RGB values.
+//   *
+//   * @return String representation of this image's RGB values
+//   */
+//  public String toString() {
+//    String output = "";
+//    for (int i = 0; i < this.data.length; i++) {
+//      for (int j = 0; j < this.data[i].length; j++) {
+//        output += this.data[i][j] + " ";
+//      }
+//      output += "\n";
+//    }
+//    return output;
+//  }
 }
