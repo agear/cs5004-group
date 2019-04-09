@@ -22,10 +22,5 @@ public class ProgramRunner {
     FileReader in = new FileReader(args[0]);
     IController controller = new ControllerImpl(model, in);
     controller.go();
-//    model.load("./res/shadowresize.jpg", "shadow");
-//    model.save("shadow");
-//    model.applySepia("shadow");
-//    model.save("shadow-sepia");
-
   }
 }

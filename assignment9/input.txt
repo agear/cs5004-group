@@ -26,5 +26,6 @@ checkerboard 100
 checkerboard 500
 rainbow vertical 300 500
 rainbow horizontal 500 300
+rainbow diagonal 200 200
 mosaic rainbow-1 1000
 save rainbow-1-mosaic

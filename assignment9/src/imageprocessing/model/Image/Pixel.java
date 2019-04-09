@@ -132,12 +132,11 @@ public class Pixel {
     this.red += amount;
     this.blue += amount;
     this.green += amount;
-    //System.out.println(amount + " added to pixel.");
   }
 
 
 
-
+  //TODO never used?
     /**
      * Adds a number to the channel, changing the data.
      *

@@ -5,6 +5,7 @@ import java.io.IOException;
 import imageprocessing.model.Image.Country;
 import imageprocessing.model.Image.Orientation;
 
+//TODO Javadoc.
 public interface IModel {
 
   void load(String ifile, String title) throws IOException;

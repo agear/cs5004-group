@@ -1,3 +1,5 @@
+//TODO You should document and justify all design changes in the README.md file. You are allowed to
+//TODO change your design. However the bigger the change, the more convicing we expect your explantion to be.
 # imageprocessing
 
 imageprocessing is a package in Java to (1) filter images and (2) generate geometric images.

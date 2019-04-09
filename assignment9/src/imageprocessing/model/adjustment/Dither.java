@@ -102,6 +102,7 @@ public class Dither implements Adjustment {
     return ditheredImage;
   }
 
+  //TODO Delete?
 //  /**
 //   * Applies this object onto an image input without mutating it, and outputs a new image object
 //   * with the adjustment.

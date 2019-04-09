@@ -23,8 +23,9 @@ public class ModelImpl implements IModel {
   private int checkerBoardCount;
   private int flagCount;
 
+  //TODO Lots of javadoc :(
   /**
-   * //TODO Constructor
+   * //TODO Constructor java doc
    */
   public ModelImpl() {
     this.openImages = new HashMap<>();
@@ -33,6 +34,7 @@ public class ModelImpl implements IModel {
     this.flagCount = 0;
   }
 
+  //TODO remove debug prints
   private String isDuplicate(String title){
     String titleCopy = title;
     int count = 0;
@@ -57,7 +59,6 @@ public class ModelImpl implements IModel {
   public void save(String title) throws IOException {
 
     IImage currentImage = this.openImages.get(title);
-//    System.out.println("Saving " + title);
     currentImage.writeImageToFile(title + ".png");
   }
 
@@ -110,6 +111,7 @@ public class ModelImpl implements IModel {
 
   }
 
+  //TODO Would it be better to use the isDuplicate method rather than keep count of rainbows etc?
   @Override
   public void drawRainbow(int height, int width, Orientation o) {
     Rainbow r = new Rainbow(height, width, o);
@@ -131,7 +133,6 @@ public class ModelImpl implements IModel {
     Flag f = new Flag(width, c);
     this.flagCount += 1;
     String name = "flag-" + this.flagCount;
-    System.out.println("Name put into open images: " + name);
     this.openImages.put(isDuplicate(name), f);
   }
 }

@@ -40,7 +40,7 @@ public class Mosaic implements Adjustment {
      return Math.sqrt(Math.pow((pointA[0] - pointB[0]), 2)
                 + Math.pow((pointA[1] - pointB[1]), 2));
   }
-
+//TODO Delete debugging statements.
   /**
    * Applies this object onto an image input without mutating it, and outputs a new image object
    * with the adjustment. Uses a specified number of seeds.

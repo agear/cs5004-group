@@ -8,6 +8,7 @@ import imageprocessing.model.IModel;
 import imageprocessing.model.Image.Country;
 import imageprocessing.model.Image.Orientation;
 
+//TODO javadoc.
 
 public class ControllerImpl implements IController {
   final Readable in;
@@ -15,21 +16,24 @@ public class ControllerImpl implements IController {
   IModel model;
   // IView view;
 
+  //TODO javadoc.
   public ControllerImpl(IModel model, Readable in) {
     this.in = in;
 //    this.out = out;
     this.model = model;
+//    this.view = view;
   }
 
-  //TODO Add more functionality
+  //TODO Remove print debugging commands, add better comments.
+  //TODO Java doc.
   public void go() throws IOException {
     Objects.requireNonNull(model);
     String command;
-    String imageName = "";
+    String imageName;
     int flagNum = 0;
     int rainbowNum = 0;
     int checkerboardNum = 0;
-
+    //TODO Should this be a Map<String, Method> ??? Is there a less cumbersome way to do this?
     Scanner scan = new Scanner(this.in);
     while (scan.hasNext()) {
       command = scan.next();
