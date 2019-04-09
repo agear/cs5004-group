@@ -90,7 +90,6 @@ public class ModelImpl implements IModel {
 
   @Override
   public void applyMosaic(String title, int seed) {
-
     Mosaic mosaic = new Mosaic();
     IImage mosaicImage = mosaic.apply(this.openImages.get(title), seed);
     String newName = title + "-mosaic";

@@ -1,9 +1,13 @@
 load ./res/shadowresize.jpg shadow
-dither
-save shadow-dither
+mosaic 10
+save shadow-mosaic
 load ./res/shadowresize.jpg shadow
 blur
 save shadow-blur
 sepia
 save shadow-blur-sepia
-
+flag france 100
+flag switzerland 200
+flag greece 300
+flag germany 900
+checkerboard 100
