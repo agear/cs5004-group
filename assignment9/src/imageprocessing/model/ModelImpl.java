@@ -26,9 +26,8 @@ import imageprocessing.model.adjustment.Transformations;
  */
 public class ModelImpl implements IModel {
   private HashMap<String, IImage> openImages;
-  private int rainbowCount;
-  private int checkerBoardCount;
-  private int flagCount;
+//  private int checkerBoardCount;
+//  private int flagCount;
 
   /**
    * This is the constructor for the model of the imageprocessing package. It initializes
@@ -38,9 +37,8 @@ public class ModelImpl implements IModel {
    */
   public ModelImpl() {
     this.openImages = new HashMap<>();
-    this.rainbowCount = 0;
-    this.checkerBoardCount = 0;
-    this.flagCount = 0;
+//    this.checkerBoardCount = 0;
+//    this.flagCount = 0;
   }
 
   /** Checks if a filename is taken and takes the appropriate actions either way. If the filename
@@ -49,16 +47,13 @@ public class ModelImpl implements IModel {
    * @param title  The questionable filename
    * @return The approved filename
    */
-  //TODO remove debug prints
   private String isDuplicate(String title){
     String titleCopy = title;
     int count = 0;
     while(this.openImages.containsKey(titleCopy)) {
-      System.out.println("The name "+titleCopy+" was already taken...");
       titleCopy = title;
       count += 1;
       titleCopy = title+"-"+count;
-      System.out.println("Trying "+titleCopy+" instead");
     }
     return titleCopy;
   }
@@ -191,8 +186,7 @@ public class ModelImpl implements IModel {
   @Override
   public void drawRainbow(int height, int width, Orientation o) {
     Rainbow r = new Rainbow(height, width, o);
-    this.rainbowCount += 1;
-    String name = "rainbow-"  + this.rainbowCount;
+    String name = "rainbow";
     this.openImages.put(isDuplicate(name), r);
   }
 
@@ -205,8 +199,7 @@ public class ModelImpl implements IModel {
   @Override
   public void drawCheckerBoard(int squareSize) {
     CheckerBoard cb = new CheckerBoard(squareSize);
-    this.checkerBoardCount += 1;
-    String name = "checkerboard-" + this.checkerBoardCount;
+    String name = "checkerboard";
     this.openImages.put(isDuplicate(name), cb);
   }
 
@@ -219,8 +212,7 @@ public class ModelImpl implements IModel {
   @Override
   public void drawFlag(int width, Country c) {
     Flag f = new Flag(width, c);
-    this.flagCount += 1;
-    String name = "flag-" + this.flagCount;
+    String name = "flag";
     this.openImages.put(isDuplicate(name), f);
   }
 }
