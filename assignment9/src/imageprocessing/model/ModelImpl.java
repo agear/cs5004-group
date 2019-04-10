@@ -18,9 +18,10 @@ import imageprocessing.model.adjustment.Transformation;
 import imageprocessing.model.adjustment.Transformations;
 
 /**
- * This is the model of the imageprocessing package. It can apply
- * filters to images. This class allows the users of this package to have a clean
- * inteface -- they don't need to initialize filter objects, create images from files
+ * This is the model of the imageprocessing package. It can load and save images, apply
+ * different types of filters to open images and draw flags, rainbows and checkerboards.
+ * This class allows the users of this package to have a clean
+ * interface -- they don't need to initialize filter objects, create images from files
  * in a cumbersome way, etc.
  */
 public class ModelImpl implements IModel {

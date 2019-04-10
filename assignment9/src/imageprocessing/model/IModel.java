@@ -5,10 +5,14 @@ import java.io.IOException;
 import imageprocessing.model.Image.Country;
 import imageprocessing.model.Image.Orientation;
 
-//TODO Javadoc.
+/**
+ * This is the model interface of the imageprocessing package. It can load and save images, apply
+ * different types of filters to open images and draw flags, rainbows and checkerboards.
+ */
 public interface IModel {
 
-  /** Takes as input a filename and a name for the file in the internal organization.
+  /**
+   * Takes as input a filename and a name for the file in the internal organization.
    *
    * @param ifile The name of the file in the OS
    * @param title The name of the image in the imageprocessing package
