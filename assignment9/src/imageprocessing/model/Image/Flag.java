@@ -2,6 +2,7 @@ package imageprocessing.model.Image;
 
 /**
  * A flag is a type of image object. Flags have a specific pattern which can be scaled with size.
+ * Currently supports France, Switzerland and Greece.
  */
 public class Flag extends AbstractImage implements IImage {
   private Country country;

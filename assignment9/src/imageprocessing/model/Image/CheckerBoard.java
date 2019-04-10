@@ -1,9 +1,9 @@
 package imageprocessing.model.Image;
 
 /**
- * This class represents a checkerboard image. It can create the checkerboard, and return
- * information about the object. It is a type of Image, which means it can have adjustments
- * applied to it.
+ * This class represents a checkerboard image. It can create an 8 square x 8 square checkerboard,
+ * and return information about the object. It is a type of Image, which means it can have
+ * adjustments applied to it.
  */
 public class CheckerBoard extends AbstractImage implements IImage {
   private int squareSize;

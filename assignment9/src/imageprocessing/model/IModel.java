@@ -88,7 +88,7 @@ public interface IModel {
 
   /**
    * Initializes a checkerboard image (alternating equally-sized black and white squares),
-   * where the square size is user-specified.
+   * where the square size is user-specified. A checkerboard is 8 squares x 8 squares.
    *
    * @param squareSize the length/width of a square, in pixels
    */
@@ -98,8 +98,8 @@ public interface IModel {
   /**
    * Initializes a flag image of a user-specified country and size.
    *
-   * @param width the width of the desired flag
-   * @param c the country of the desired flag
+   * @param width the width of the desired flag, in pixels.
+   * @param c the country of the desired flag. Currently supports France, Switzerland and Greece.
    */
   void drawFlag(int width, Country c);
 }

@@ -28,8 +28,8 @@ public class ControllerImpl implements IController {
    * The controller takes input from the user and decides what to do. It also controls what must
    * be shown by the view and when.
    *
-   * @param model the model associated with this controller
-   * @param in //TODO idk what this is lol
+   * @param model the model associated with this controller.
+   * @param in an object implementing the Readable interface to parse.
    */
   public ControllerImpl(IModel model, Readable in) {
     this.in = in;
@@ -41,6 +41,8 @@ public class ControllerImpl implements IController {
   //TODO Need another input.txt file for spec. From Piazza: They are to show us what features are supported. Two files are recommended so that you don't have one file with everything in it. - Amit
   //TODO Remove print debugging commands, add better comments.
   //TODO Java doc.
+  //TODO Explain syntax
+  //TODO Throw exceptions if incorrect syntax is given?
   public void go() throws IOException {
     Objects.requireNonNull(model);
     String command;

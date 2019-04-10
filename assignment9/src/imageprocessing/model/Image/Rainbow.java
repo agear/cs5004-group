@@ -11,7 +11,7 @@ public class Rainbow extends AbstractImage implements IImage {
    *
    * @param height The height, in px, of the desired rainbow image
    * @param width The width, in px, of the desired rainbow image
-   * @param orientation The desired direction of the rainbow's stripes
+   * @param orientation The desired direction (vertical or horizontal) of the rainbow's stripes
    */
   public Rainbow(int height, int width, Orientation orientation) {
     super.height = height;
