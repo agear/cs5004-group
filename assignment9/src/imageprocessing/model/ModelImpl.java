@@ -29,7 +29,6 @@ public class ModelImpl implements IModel {
   private int checkerBoardCount;
   private int flagCount;
 
-  //TODO Lots of javadoc :(
   /**
    * This is the constructor for the model of the imageprocessing package. It initializes
    * a library of openimages -- images the user has chosen to 'upload' to the system. It also
