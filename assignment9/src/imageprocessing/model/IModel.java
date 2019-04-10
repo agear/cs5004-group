@@ -87,10 +87,19 @@ public interface IModel {
   void drawRainbow(int height, int width, Orientation o);
 
   /**
-   * 
-   * @param squareSize
+   * Initializes a checkerboard image (alternating equally-sized black and white squares),
+   * where the square size is user-specified.
+   *
+   * @param squareSize the length/width of a square, in pixels
    */
   void drawCheckerBoard(int squareSize);
 
+
+  /**
+   * Initializes a flag image of a user-specified country and size.
+   *
+   * @param width the width of the desired flag
+   * @param c the country of the desired flag
+   */
   void drawFlag(int width, Country c);
 }

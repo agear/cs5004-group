@@ -196,6 +196,12 @@ public class ModelImpl implements IModel {
     this.openImages.put(isDuplicate(name), r);
   }
 
+  /**
+   * Initializes a checkerboard image (alternating equally-sized black and white squares),
+   * where the square size is user-specified.
+   *
+   * @param squareSize the length/width of a square, in pixels
+   */
   @Override
   public void drawCheckerBoard(int squareSize) {
     CheckerBoard cb = new CheckerBoard(squareSize);
@@ -204,6 +210,12 @@ public class ModelImpl implements IModel {
     this.openImages.put(isDuplicate(name), cb);
   }
 
+  /**
+   * Initializes a flag image of a user-specified country and size.
+   *
+   * @param width the width of the desired flag
+   * @param c the country of the desired flag
+   */
   @Override
   public void drawFlag(int width, Country c) {
     Flag f = new Flag(width, c);
