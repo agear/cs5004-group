@@ -99,22 +99,6 @@ public class Image extends AbstractImage implements IImage {
     }
   }
 
-  //TODO Delete?
-//  /**
-//   * Creates a String representation of this image, which is a matrix of RGB values.
-//   *
-//   * @return String representation of this image's RGB values
-//   */
-//  public String toString() {
-//    String output = "";
-//    for (int i = 0; i < super.data.length; i++) {
-//      for (int j = 0; j < super.data[i].length; j++) {
-//        output += super.data[i][j] + " ";
-//      }
-//      output += "\n";
-//    }
-//    return output;
-//  }
 
   //TODO Does this break anything?
 //  /** Writes the image to a file.

@@ -40,7 +40,6 @@ public class Mosaic implements Adjustment {
      return Math.sqrt(Math.pow((pointA[0] - pointB[0]), 2)
                 + Math.pow((pointA[1] - pointB[1]), 2));
   }
-//TODO Delete debugging statements.
   /**
    * Applies this object onto an image input without mutating it, and outputs a new image object
    * with the adjustment. Uses a specified number of seeds.
@@ -81,7 +80,6 @@ public class Mosaic implements Adjustment {
     // Each pixel should be paired to the seed closest to it
     for (int x = 0; x < input.getHeight(); x++) {
       for (int y = 0; y < input.getWidth(); y++) {
-//        System.out.println("x y = " + x + " " + y);
 
 
         // Initialize data points
@@ -93,7 +91,6 @@ public class Mosaic implements Adjustment {
         // Initialize variable that contains the smallest distance
         double smallestDistance = getDistance(currentCoordinates, clustersToCoordinates.get(0));
         Integer closestPoint = 0;
-//        System.out.println("Current smallest distance is " + smallestDistance);
 
         // For each cluster, calculate the distance between current point and that one
         for (int j = 0; j < numSeeds; j++) {
@@ -109,17 +106,10 @@ public class Mosaic implements Adjustment {
 
         }
 
-//        System.out.println("Final smallest distance is " + smallestDistance);
-//        System.out.println("With point " + closestPoint);
-
-
 
         // After finding the smallest distance to the current point, assign it to a cluster
         pixelsToClusters.put(currentCoordinates, closestPoint);
         Integer clusterAssigned = pixelsToClusters.get(currentCoordinates);
-//        System.out.println(currentCoordinates.toString() + " << In first loop, currentCoordinates");
-
-        //System.out.println("Assigned " + currentCoordinates[0] + " " + currentCoordinates[1] + " to " + closestPoint.toString());
 
         // Increment number of members assigned to that cluster
         int currentNumMembers = clusterToNumMembers.get(closestPoint);
@@ -148,7 +138,6 @@ public class Mosaic implements Adjustment {
         int x = currentCoordinates[0];
         int y = currentCoordinates[1];
 
-//        System.out.println(currentCoordinates.toString() + " << In second loop, currentCoordinates");
         Integer clusterAssigned = pixelsToClusters.get(currentCoordinates);
 
         // Get colors of this pixel
@@ -223,7 +212,6 @@ public class Mosaic implements Adjustment {
     }
 
     Image mosaic = new Image(newData);
-    System.out.println("Mosaic complete");
     return mosaic;
 
   }

@@ -136,49 +136,6 @@ public class Pixel {
 
 
 
-  //TODO never used?
-    /**
-     * Adds a number to the channel, changing the data.
-     *
-     * @return A string in the format: "[R: red, G: green, B: blue]".
-     */
-  public void addChannelSpecific(String channel, double amount) throws IllegalArgumentException {
-
-
-    if (channel.equals("red")) {
-      this.red += amount;
-
-      if (this.red > 255 ) {
-        this.red = 255;
-      }
-
-    }
-
-    else if (channel.equals("green")) {
-      this.green += amount;
-
-      if (this.green > 255 ) {
-        this.green = 255;
-      }
-
-    }
-
-    else if (channel.equals("blue")) {
-      this.blue += amount;
-
-      if (this.blue > 255 ) {
-        this.blue = 255;
-      }
-
-    }
-
-    else {
-      throw new IllegalArgumentException("Channel name not found, can not change color.");
-    }
-
-  }
-
-
 
 
 }

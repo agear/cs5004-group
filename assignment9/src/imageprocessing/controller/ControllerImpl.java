@@ -3,20 +3,34 @@ package imageprocessing.controller;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.Map;
+import java.util.HashMap;
 
 import imageprocessing.model.IModel;
 import imageprocessing.model.Image.Country;
 import imageprocessing.model.Image.Orientation;
 
-//TODO javadoc.
-
+/**
+ * The controller takes input from the user and decides what to do. It is the client of the model
+ * and it controls how and when the model is used. It also controls what must be shown by the view
+ * and when. This controller applies filters and transformations onto any sort of image.
+ */
 public class ControllerImpl implements IController {
   final Readable in;
   //  final Appendable out;
   IModel model;
   // IView view;
 
-  //TODO javadoc.
+  Map<Character, Runnable> commands = new HashMap<>();
+
+
+  /** Initializes the controller of the imageprocessing package.
+   * The controller takes input from the user and decides what to do. It also controls what must
+   * be shown by the view and when.
+   *
+   * @param model the model associated with this controller
+   * @param in //TODO idk what this is lol
+   */
   public ControllerImpl(IModel model, Readable in) {
     this.in = in;
 //    this.out = out;

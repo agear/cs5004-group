@@ -17,6 +17,12 @@ import imageprocessing.model.Image.Rainbow;
 import imageprocessing.model.adjustment.Transformation;
 import imageprocessing.model.adjustment.Transformations;
 
+/**
+ * This is the model of the imageprocessing package. It can apply
+ * filters to images. This class allows the users of this package to have a clean
+ * inteface -- they don't need to initialize filter objects, create images from files
+ * in a cumbersome way, etc.
+ */
 public class ModelImpl implements IModel {
   private HashMap<String, IImage> openImages;
   private int rainbowCount;
@@ -25,7 +31,10 @@ public class ModelImpl implements IModel {
 
   //TODO Lots of javadoc :(
   /**
-   * //TODO Constructor java doc
+   * This is the constructor for the model of the imageprocessing package. It initializes
+   * a library of openimages -- images the user has chosen to 'upload' to the system. It also
+   * intiializes a count of rainbows, checkerboards, and flags the user has made, in order
+   * to have a clean naming convention for creating them into files.
    */
   public ModelImpl() {
     this.openImages = new HashMap<>();
@@ -34,6 +43,12 @@ public class ModelImpl implements IModel {
     this.flagCount = 0;
   }
 
+  /** Checks if a filename is taken and takes the appropriate actions either way. If the filename
+   * is taken and it can't be made, then it appends a number to the filename to make it unique.
+   * Otherwise, the specified file name is given in the output and given the go-ahead to be used.
+   * @param title  The questionable filename
+   * @return The approved filename
+   */
   //TODO remove debug prints
   private String isDuplicate(String title){
     String titleCopy = title;
