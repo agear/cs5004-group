@@ -98,25 +98,4 @@ public class Image extends AbstractImage implements IImage {
       }
     }
   }
-
-
-  //TODO Does this break anything?
-//  /** Writes the image to a file.
-//   * @param filename The desired file path.
-//   * @throws IOException If there is an error creating a file with that path name.
-//   */
-//  @Override
-//  public void writeImageToFile(String filename) throws IOException {
-//
-//    // If the image was originally created with a file ...
-//    if (this.filename != null) {
-//      this.writeImage(this.get3Ddata(), this.getWidth(this.filename),
-//              this.getHeight(this.filename), filename);
-//    }
-//
-//    // If the image was originally created by the computer (e.g., a flag)...
-//    else {
-//      this.writeImage(this.get3Ddata(), super.width, super.height, filename);
-//    }
-//  }
 }

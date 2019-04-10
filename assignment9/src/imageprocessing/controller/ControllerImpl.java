@@ -39,7 +39,6 @@ public class ControllerImpl implements IController {
   }
 
   //TODO Need another input.txt file for spec. From Piazza: They are to show us what features are supported. Two files are recommended so that you don't have one file with everything in it. - Amit
-  //TODO Remove print debugging commands, add better comments.
   //TODO Java doc.
   //TODO Explain syntax--  command, argument1, argument2 etc
   //TODO Throw exceptions if incorrect syntax is given?
@@ -47,7 +46,6 @@ public class ControllerImpl implements IController {
     Objects.requireNonNull(model);
     String command;
     String imageName;
-    //TODO Should this be a Map<String, Method> ??? Is there a less cumbersome way to do this?
     Scanner scan = new Scanner(this.in);
     while (scan.hasNext()) {
       command = scan.next();
@@ -118,7 +116,7 @@ public class ControllerImpl implements IController {
           model.save(imageName);
           break;
         default:
-          //TODO throw exception
+          //TODO throw exception?
       }
     }
   }

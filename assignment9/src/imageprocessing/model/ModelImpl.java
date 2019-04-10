@@ -174,8 +174,6 @@ public class ModelImpl implements IModel {
 
   }
 
-  //TODO Would it be better to use the isDuplicate method rather than keep count of rainbows etc?
-  // Yes I think so! the isDuplicate method is very clear, and is more scalable :)
   /**
    * Initializes a rainbow image -- 7 stripes of color, with user specified orientation and size.
    *
