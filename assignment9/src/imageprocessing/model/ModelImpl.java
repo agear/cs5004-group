@@ -63,20 +63,38 @@ public class ModelImpl implements IModel {
     return titleCopy;
   }
 
-
+  /** Takes as input a filename and a name for the file in the internal organization.
+   *
+   * @param ifile The name of the file in the OS
+   * @param title The name of the image in the imageprocessing package
+   * @throws IOException If the ifile doesn't exist/can't be found
+   */
   @Override
   public void load(String ifile, String title) throws IOException {
     IImage i = new Image(ifile);
     this.openImages.put(isDuplicate(title), i);
   }
 
+  /**
+   * Saves an image to the computer in a file. I.e., write the image to a file.
+   *
+   * @param title The goal name of the output file (+.png)
+   * @throws IOException If there is an error with the specified file name
+   */
   @Override
   public void save(String title) throws IOException {
 
     IImage currentImage = this.openImages.get(title);
     currentImage.writeImageToFile(title + ".png");
+
   }
 
+  /**
+   * Creates a filtered version of the current image with a blur using a built-in kernel.
+   * Doesn't mutate the image.
+   *
+   * @param title the name of the image the user wants blurred
+   */
   @Override
   public void applyBlur(String title) {
     Filter blur = new Filter(Filters.BLUR);
@@ -85,6 +103,12 @@ public class ModelImpl implements IModel {
     this.openImages.put(isDuplicate(newName), blurredImage);
   }
 
+  /**
+   * Creates a filtered version of the current image -- sharpened -- using a built-in kernel.
+   * Doesn't mutate the image.
+   *
+   * @param title the name of the image the user wants sharpened
+   */
   @Override
   public void applySharpen(String title) {
     Filter sharpen = new Filter(Filters.SHARPEN);
@@ -93,6 +117,12 @@ public class ModelImpl implements IModel {
     this.openImages.put(isDuplicate(newName), sharpenedImage);
   }
 
+  /**
+   * Creates a filtered version of the current image -- in sepia.
+   * Doesn't mutate the image.
+   *
+   * @param title the name of the image the user wants in sepia
+   */
   @Override
   public void applySepia(String title) {
     Transformation sepia = new Transformation(Transformations.SEPIA);
@@ -101,6 +131,12 @@ public class ModelImpl implements IModel {
     this.openImages.put(isDuplicate(newName), sepiaImage);
   }
 
+  /**
+   * Creates a filtered version of the current image -- in greyscale.
+   * Doesn't mutate the image.
+   *
+   * @param title the name of the image the user wants in greyscale
+   */
   @Override
   public void applyGreyscale(String title) {
     Transformation greyscale = new Transformation(Transformations.GREYSCALE);
@@ -109,6 +145,14 @@ public class ModelImpl implements IModel {
     this.openImages.put(isDuplicate(newName), greyscaleImage);
   }
 
+  /**
+   * Creates a filtered version of the current image -- in dithered format,
+   * appropriate for dot-matrix printers.
+   *
+   * Doesn't mutate the image.
+   *
+   * @param title the name of the image the user wants dithered
+   */
   @Override
   public void applyDither(String title) {
     Dither dither = new Dither();
@@ -117,6 +161,15 @@ public class ModelImpl implements IModel {
     this.openImages.put(isDuplicate(newName), ditherImage);
   }
 
+  /**
+   * Creates a mosaic of the current image using a simplified k-means. The user specifies the
+   * number of seeds. The more seeds, the more fine the dots in the mosaic.
+   *
+   * Doesn't mutate the image.
+   *
+   * @param title the name of the image the user wants mosaic'ed
+   * @param seed the number of seeds (chunks) of the desired mosaic
+   */
   @Override
   public void applyMosaic(String title, int seed) {
     Mosaic mosaic = new Mosaic();
@@ -127,6 +180,14 @@ public class ModelImpl implements IModel {
   }
 
   //TODO Would it be better to use the isDuplicate method rather than keep count of rainbows etc?
+  // Yes I think so! the isDuplicate method is very clear, and is more scalable :)
+  /**
+   * Initializes a rainbow image -- 7 stripes of color, with user specified orientation and size.
+   *
+   * @param height The height, in pixels, of the desired rainbow image
+   * @param width The width, in pixels, of the desired rainbow image
+   * @param o The orientation of the desired rainbow image (vertical or horizontal)
+   */
   @Override
   public void drawRainbow(int height, int width, Orientation o) {
     Rainbow r = new Rainbow(height, width, o);
