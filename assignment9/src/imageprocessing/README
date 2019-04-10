@@ -86,7 +86,14 @@ image class. This included the get3Ddata() method, isValidPixelPosition method, 
 method, applyFilter method, transformPixel method, transform method, getData method, getWidth method,
 getHeight method, and the height, width, and data fields. The fact that these methods and fields are
 all shared among CheckerBoard, Flag, Image, and Rainbow classes was justification enough for us
-to implement the AbstractImage class, thus simplifying our overall code architecture. 
+to implement the AbstractImage class, thus simplifying our overall code architecture.
+
+### Swapping of Image with IImage
+We thought that the code would be more open for extension if the adjustment method 'apply' took
+as arguments an Image interface, as opposed to an Image class. This change allows adjustments to
+work on any type of object that future programmers create, as long as they implement the
+IImage interface.
+
 
 ## Licenses
 The landscape image and dog image were taken by Alex Gear and Alice Tilles, respectively. The use
