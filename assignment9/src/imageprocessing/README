@@ -80,6 +80,11 @@ testFlagFrench.writeImageToFile("FlagFrench.png");
 ```
 
 ## Design changes
+### Addition of a Facade Design Pattern
+Since in our original design the model was made up of several different classes it made sense
+to minimize dependencies and reduce complexity by the addition of a Model Class and Model
+Interface which could act as a Facade for the Controller to interact with.
+
 ### Introduction of AbstractImage
 We decided to consolidate the duplicate code found in our different type of images into an abstract
 image class. This included the get3Ddata() method, isValidPixelPosition method, applyFilterToPixel
