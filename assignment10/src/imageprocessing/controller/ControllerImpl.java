@@ -17,7 +17,7 @@ import imageprocessing.model.image.Orientation;
  */
 public class ControllerImpl implements IController {
   final Readable in;
-  //  final Appendable out;
+  final Appendable out;
   IModel model;
   // IView view;
 
@@ -31,8 +31,9 @@ public class ControllerImpl implements IController {
    * @param model the model associated with this controller.
    * @param in an object implementing the Readable interface to parse.
    */
-  public ControllerImpl(IModel model, Readable in) {
+  public ControllerImpl(IModel model, Readable in, Appendable out) {
     this.in = in;
+    this.out = out;
     this.model = model;
   }
 
@@ -72,6 +73,7 @@ public class ControllerImpl implements IController {
         case "dither":
           imageName = scan.next();
           this.model.applyDither(imageName);
+          this.out.append(String.format("%d\n", model.getCode()));
           break;
         case "blur":
           imageName = scan.next();
