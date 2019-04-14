@@ -3,13 +3,18 @@ package imageprocessing.view;
 // Import packages needed for Swing.
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.BorderFactory;
 
+import imageprocessing.model.image.IImage;
+import imageprocessing.model.image.Image;
 
 
 /**
@@ -36,13 +41,13 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   /**
    * Initializes the window and all containers of the imageprocessing GUI.
    */
-  public ViewImpl() {
+  public ViewImpl() throws IOException {
     System.out.println("Trying to set up ...");
     prepareGui("./res/shadowresize.jpg");
   }
 
 
-  private void prepareGui(String file) {
+  private void prepareGui(String file) throws IOException {
     mainFrame = new JFrame("Image Processing Software");
     mainFrame.setSize(400,400);
     mainFrame.setLayout(new BorderLayout());
@@ -304,7 +309,7 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   /**
    * Creates the scrollable panel to hold an image.
    */
-  private void prepareScrollPane(String file) {
+  private void prepareScrollPane(String file) throws IOException {
     System.out.println("Preparing scroll pane...");
 
     JPanel imagePanel = new JPanel();
@@ -313,7 +318,10 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     imagePanel.setMaximumSize(null);
     mainFrame.add(imagePanel);
 
-    String[] images = {file};
+    IImage image = new Image(file);
+    BufferedImage buffered = image.convertToByteStream(file);
+
+    BufferedImage[] images = {buffered};
     JLabel[] imageLabel = new JLabel[images.length];
     JScrollPane[] imageScrollPane = new JScrollPane[images.length];
 
@@ -321,7 +329,7 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
       imageLabel[i] = new JLabel();
       imageScrollPane[i] = new JScrollPane(imageLabel[i]);
       imageLabel[i].setIcon(new ImageIcon(images[i]));
-      imageScrollPane[i].setPreferredSize(new Dimension(100, 600));
+      imageScrollPane[i].setPreferredSize(new Dimension(50, 50));
       imagePanel.add(imageScrollPane[i]);
     }
 
@@ -338,9 +346,10 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
 
 
     // center the frame
-    //mainFrame.setLocationRelativeTo(null);
+    mainFrame.setLocationRelativeTo(null);
 //    scrollPane.setVisible(true);
 //    textArea.setVisible(true);
+//    mainFrame.pack();
     imagePanel.setVisible(true);
     System.out.println("Scroll pane added");
 
@@ -365,7 +374,12 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
           String path = f.getAbsolutePath();
           System.out.println(path);
 //          prepareScrollPane(path);
-          prepareGui(path);
+          try {
+            prepareGui(path);
+          }
+          catch (IOException exception){
+            System.out.println("Doesn't.");
+          }
         }
       }
       break;

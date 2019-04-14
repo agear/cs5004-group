@@ -1,5 +1,7 @@
 package imageprocessing.model.image;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import imageprocessing.model.adjustment.Filter;
@@ -32,6 +34,8 @@ public interface IImage {
   Pixel[][] getData();
 
   void writeImageToFile(String s) throws IOException;
+
+  BufferedImage convertToByteStream(String filename) throws IOException;
 
   /** This applies a transformation to the image without modifying the image.
    *
