@@ -8,6 +8,8 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.BorderFactory;
+
 
 
 /**
@@ -280,6 +282,24 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   private void prepareScrollPane() {
     System.out.println("Preparing scroll pane...");
 
+    JPanel imagePanel = new JPanel();
+    imagePanel.setBorder(BorderFactory.createTitledBorder("Showing an image"));
+    imagePanel.setLayout(new GridLayout(1,0, 10, 10));
+    imagePanel.setMaximumSize(null);
+    mainFrame.add(imagePanel);
+
+    String[] images = {"./res/shadowresize.jpg"};
+    JLabel[] imageLabel = new JLabel[images.length];
+    JScrollPane[] imageScrollPane = new JScrollPane[images.length];
+
+    for (int i = 0; i < imageLabel.length; i++) {
+      imageLabel[i] = new JLabel();
+      imageScrollPane[i] = new JScrollPane(imageLabel[i]);
+      imageLabel[i].setIcon(new ImageIcon(images[i]));
+      imageScrollPane[i].setPreferredSize(new Dimension(100, 600));
+      imagePanel.add(imageScrollPane[i]);
+    }
+
     // ImageIcon image = new ImageIcon("./res/shadowresize.jpg");
     JTextArea textArea = new JTextArea(100,100);
     textArea.setText("xx\nxx\nxx\nxx\nxx\nxx\ndjfnjksdnfjkbsdjhsdbfjhsdbfjhsdbfhjbsdjhfsd\nx\n\\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nx\nxx\nxx\nxx\nxx\nxx\nxx\n");
@@ -288,12 +308,13 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
 
 
     // Put the scrolly area into a frame
-    mainFrame.add(scrollPane, BorderLayout.CENTER);
+//    mainFrame.add(scrollPane, BorderLayout.CENTER);
 
     // center the frame
     //mainFrame.setLocationRelativeTo(null);
-    scrollPane.setVisible(true);
-    textArea.setVisible(true);
+//    scrollPane.setVisible(true);
+//    textArea.setVisible(true);
+    imagePanel.setVisible(true);
     System.out.println("Scroll pane added");
 
   }
