@@ -1,6 +1,7 @@
 package imageprocessing.controller;
 
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.Map;
@@ -66,46 +67,127 @@ public class ControllerImpl implements IController {
 
         // Loading a file adds it to our open, available images, with a readable name
         case "load":
-          String filename = scan.next();
-          imageName = scan.next();
+
+          // When loading, get the file name:
+          String filename;
+          try {
+            filename = scan.next();
+          }
+          catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Must specify the path of the file to load.");
+          }
+
+          // Get the image name:
+          try {
+            imageName = scan.next();
+          }
+          catch (NoSuchElementException e) {
+            // If they don't specify, then just call it the same name as the file
+            imageName = filename;
+          }
+
+          // Load the file name as the image name:
           this.model.load(filename, imageName);
           break;
 
           // Each of the next cases is a 'verb' to apply to the next image
         case "dither":
-          imageName = scan.next();
+
+          try {
+            imageName = scan.next();
+          }
+
+          catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Must specify the name of the image to adjust.");
+          }
+
           this.model.applyDither(imageName);
-         // this.out.append(String.format("%d\n", this.model.getCode()));
           break;
         case "blur":
-          imageName = scan.next();
+
+          try {
+            imageName = scan.next();
+          }
+          catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Must specify the name of the image to adjust.");
+          }
+
+
           this.model.applyBlur(imageName);
           break;
         case "sharpen":
-          imageName = scan.next();
+          try {
+            imageName = scan.next();
+          }
+          catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Must specify the name of the image to adjust.");
+          }
           this.model.applySharpen(imageName);
           break;
         case "sepia":
-          imageName = scan.next();
+          try {
+            imageName = scan.next();
+          }
+          catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Must specify the name of the image to adjust.");
+          }
           this.model.applySepia(imageName);
           break;
         case "greyscale":
-          imageName = scan.next();
+          try {
+            imageName = scan.next();
+          }
+          catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Must specify the name of the image to adjust.");
+          }
           this.model.applyGreyscale(imageName);
           break;
         case "mosaic":
-          imageName = scan.next();
-          int seed = Integer.parseInt(scan.next());
+          try {
+            imageName = scan.next();
+          }
+          catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Must specify the name of the image to adjust.");
+          }
+
+          int seed;
+          try {
+            seed = Integer.parseInt(scan.next());
+          }
+          catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Must specify number of seeds for mosaic'ing.");
+          }
+
+
           this.model.applyMosaic(imageName, seed);
           break;
         case "checkerboard":
-          int squareSize = Integer.parseInt(scan.next());
+          int squareSize;
+          try {
+            squareSize = Integer.parseInt(scan.next());
+          }
+          catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Must specify the size of the squares.");
+          }
           this.model.drawCheckerBoard(squareSize);
           break;
 
         case "flag":
-          String country = scan.next().toLowerCase();
-          int fWidth = Integer.parseInt(scan.next());
+          String country;
+          try {
+            country = scan.next().toLowerCase();
+          }
+          catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Must specify the name of the country to generate.");
+          }
+
+          int fWidth;
+          try {
+            fWidth = Integer.parseInt(scan.next());
+          }
+          catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Must specify the size of the flag to generate.");
+          }
 
           // Only France, Greece, and Switzerland are included in this package.
           if (country.equals("france")) {
@@ -120,10 +202,23 @@ public class ControllerImpl implements IController {
                     + "Maybe in version 4.0?");
           }
           break;
+
+
         case "rainbow":
-          String orientation = scan.next();
-          int rWidth = Integer.parseInt(scan.next());
-          int rHeight = Integer.parseInt(scan.next());
+
+          String orientation;
+          int rWidth;
+          int rHeight;
+          try {
+            orientation = scan.next();
+            rHeight = Integer.parseInt(scan.next());
+            rWidth = Integer.parseInt(scan.next());
+          }
+          catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Must specify the rainbow's orientation, "
+                    + "width, and height.");
+          }
+
           if (orientation.equals("horizontal")) {
             this.model.drawRainbow(rHeight, rWidth, Orientation.HORIZONTAL);
           } else if (orientation.equals("vertical")) {
@@ -136,7 +231,13 @@ public class ControllerImpl implements IController {
 
           // This case saves an image, based on its english name (not path) to a file
         case "save":
-          imageName = scan.next();
+          try {
+            imageName = scan.next();
+          }
+          catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Must specify the name of the image to save.");
+          }
+
           model.save(imageName);
           break;
 

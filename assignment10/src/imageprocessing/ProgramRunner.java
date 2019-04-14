@@ -11,7 +11,7 @@ import imageprocessing.view.IView;
 import imageprocessing.view.ViewImpl;
 
 /**
- * This class is a driver for the imageprocessing package.
+ * This class is a driver for the image processing package.
  */
 public class ProgramRunner {
 

@@ -6,15 +6,15 @@ import imageprocessing.model.image.Country;
 import imageprocessing.model.image.Orientation;
 
 public class MockModel implements IModel {
-  public int code;
+  public String code;
 
   public MockModel() {
+    this.code = "";
 
   }
 
-  public int getCode() {
-    int codeCopy = this.code;
-    return codeCopy;
+  public String getCode() {
+    return this.code.trim();
   }
 
   /**
@@ -26,7 +26,7 @@ public class MockModel implements IModel {
    */
   @Override
   public void load(String ifile, String title) throws IOException {
-    this.code = 1;
+    this.code += " load";
   }
 
   /**
@@ -37,7 +37,7 @@ public class MockModel implements IModel {
    */
   @Override
   public void save(String title) throws IOException {
-    this.code = 2;
+    this.code += " save";
   }
 
   /**
@@ -48,7 +48,7 @@ public class MockModel implements IModel {
    */
   @Override
   public void applyBlur(String title) {
-    this.code = 3;
+    this.code += " blur";
   }
 
   /**
@@ -59,7 +59,7 @@ public class MockModel implements IModel {
    */
   @Override
   public void applySharpen(String title) {
-    this.code = 4;
+    this.code += " sharpen";
   }
 
   /**
@@ -69,7 +69,7 @@ public class MockModel implements IModel {
    */
   @Override
   public void applySepia(String title) {
-    this.code = 5;
+    this.code += " sepia";
   }
 
   /**
@@ -79,7 +79,7 @@ public class MockModel implements IModel {
    */
   @Override
   public void applyGreyscale(String title) {
-    this.code = 6;
+    this.code += " greyscale";
   }
 
   /**
@@ -90,7 +90,7 @@ public class MockModel implements IModel {
    */
   @Override
   public void applyDither(String title) {
-    this.code = 7;
+    this.code += " dither";
   }
 
   /**
@@ -102,7 +102,7 @@ public class MockModel implements IModel {
    */
   @Override
   public void applyMosaic(String title, int seed) {
-    this.code = 8;
+    this.code += " mosaic " + seed;
   }
 
   /**
@@ -114,7 +114,7 @@ public class MockModel implements IModel {
    */
   @Override
   public void drawRainbow(int height, int width, Orientation o) {
-    this.code = 9;
+    this.code += " rainbow h:" + height + " w:" + width + " " + o;
   }
 
   /**
@@ -125,7 +125,7 @@ public class MockModel implements IModel {
    */
   @Override
   public void drawCheckerBoard(int squareSize) {
-    this.code = 10;
+    this.code += " checkerboard " + squareSize;
   }
 
   /**
@@ -137,6 +137,6 @@ public class MockModel implements IModel {
    */
   @Override
   public void drawFlag(int width, Country c) {
-    this.code = 11;
+    this.code += " flag " + width + " " + c;
   }
 }
