@@ -15,6 +15,8 @@ import javax.swing.BorderFactory;
 
 import imageprocessing.model.image.IImage;
 import imageprocessing.model.image.Image;
+import imageprocessing.controller.ControllerImpl;
+
 
 
 /**
@@ -29,12 +31,19 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   // Fields required for menu:
 
   private JMenuBar menuBar;
-  private JMenu menu, submenu, menuAdj, menuFile;
-  private JMenuItem menuItem;
+  private JMenu menuAdj, menuFile, menuDraw;
+  private JMenuItem menuItem, blurMenuItem, sharpenMenuItem, ditherMenuItem,
+  mosaicMenuItem, sepiaMenuItem, greyscaleMenuItem, flagMenuItem, checkerBoardMenuItem,
+  rainbowMenuItem, loadMenuItem;
+  private JScrollPane imageScrollPane;
+
+  private JPanel imagePanel;
   private JRadioButtonMenuItem rbMenuItem;
   private JCheckBoxMenuItem cbMenuItem;
   private JLabel fileOpenDisplay;
   private JLabel fileSaveDisplay;
+  JComboBox countryListComboBox;
+  ControllerImpl controller;
 
 
 
@@ -44,6 +53,7 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   public ViewImpl() throws IOException {
     System.out.println("Trying to set up ...");
     prepareGui("./res/shadowresize.jpg");
+    System.out.println("Initialization complete.");
   }
 
 
@@ -76,21 +86,13 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
 
     // Create the menu bar:
     menuBar = new JMenuBar();
-    System.out.println("Creating menu bar...");
 
     // Add each category
     prepareFileMenuItems();
-    System.out.println("Preparing File Menu...");
     prepareEditMenuItems();
-    System.out.println("Preparing Edit Menu...");
     prepareAdjustmentMenuItems();
-    System.out.println("Preparing Adjustment Menu...");
     prepareDrawMenuItems();
-    System.out.println("Preparing Draw Menu...");
     prepareImagesMenuItems();
-    System.out.println("Preparing Images Menu...");
-
-
 
     // Add the menu bar to the frame at the top.
     mainFrame.setJMenuBar(menuBar);
@@ -117,39 +119,43 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     menuAdj.getAccessibleContext().setAccessibleDescription("Change the image.");
 
     // Add all adjustments item to this menu:
-    menuItem = new JMenuItem("Blur", KeyEvent.VK_B); // If the person hits "b", it goes here
+    blurMenuItem = new JMenuItem("Blur", KeyEvent.VK_B); // If the person hits "b", it goes here
     // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
-    menuItem.getAccessibleContext().setAccessibleDescription("Blur your image");
-    menuAdj.add(menuItem);
+    blurMenuItem.getAccessibleContext().setAccessibleDescription("Blur your image");
+    blurMenuItem.setActionCommand("blur");
+    menuAdj.add(blurMenuItem);
 
-    menuItem = new JMenuItem("Sharpen", KeyEvent.VK_S);
-    menuItem.getAccessibleContext().setAccessibleDescription("Sharpen your image");
-    menuAdj.add(menuItem);
+    sharpenMenuItem = new JMenuItem("Sharpen", KeyEvent.VK_S);
+    sharpenMenuItem.getAccessibleContext().setAccessibleDescription("Sharpen your image");
+    sharpenMenuItem.setActionCommand("sharpen");
+    menuAdj.add(sharpenMenuItem);
 
     // Add a separator to categorize types of adjustments
     menuAdj.addSeparator();
 
+    ditherMenuItem = new JMenuItem("Dither", KeyEvent.VK_D);
+    ditherMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in dither");
+    ditherMenuItem.setActionCommand("dither");
+    menuAdj.add(ditherMenuItem);
 
-    menuItem = new JMenuItem("Dither", KeyEvent.VK_D);
-    menuItem.getAccessibleContext().setAccessibleDescription("Make your image in dither");
-    menuAdj.add(menuItem);
-
-    menuItem = new JMenuItem("Mosaic", KeyEvent.VK_M);
-    menuItem.getAccessibleContext().setAccessibleDescription("Make your image in dither");
-    menuAdj.add(menuItem);
+    mosaicMenuItem = new JMenuItem("Mosaic", KeyEvent.VK_M);
+    mosaicMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in dither");
+    mosaicMenuItem.setActionCommand("mosaic");
+    menuAdj.add(mosaicMenuItem);
 
     // Add a seperator to categorize types of adjustments
     menuAdj.addSeparator();
 
-    // TODO: Two menu items begin with S
-    menuItem = new JMenuItem("Sepia", KeyEvent.VK_S);
-    menuItem.getAccessibleContext().setAccessibleDescription("Make your image in sepia");
-    menuAdj.add(menuItem);
 
-    menuItem = new JMenuItem("Greyscale", KeyEvent.VK_G);
-    menuItem.getAccessibleContext().setAccessibleDescription("Make your image in greyscale");
-    menuAdj.add(menuItem);
+    sepiaMenuItem = new JMenuItem("Sepia", KeyEvent.VK_S);
+    sepiaMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in sepia");
+    sepiaMenuItem.setActionCommand("sepia");
+    menuAdj.add(sepiaMenuItem);
 
+    greyscaleMenuItem = new JMenuItem("Greyscale", KeyEvent.VK_G);
+    greyscaleMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in greyscale");
+    greyscaleMenuItem.setActionCommand("greyscale");
+    menuAdj.add(greyscaleMenuItem);
 
 
     // Add this new menu to the bar.
@@ -161,23 +167,21 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   private void prepareFileMenuItems() {
     // Build the first menu (File):
     menuFile = new JMenu("File");
-    System.out.println("Making File Menu");
 
     // If the user types "F" for "F"ile (VK_F), this menu opens up:
     menuFile.setMnemonic(KeyEvent.VK_F);
-    System.out.println("Setting Mnemonic");
 
     // Gets the AccessibleContext associated with this JMenuBar.
     menuFile.getAccessibleContext().setAccessibleDescription("Open or save an image");
 
     // Add all adjustments item to this menu:
-    menuItem = new JMenuItem("Load", KeyEvent.VK_L); // If the person hits "L", it goes here
-    menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_L, ActionEvent.ALT_MASK)); //
-    menuItem.getAccessibleContext().setAccessibleDescription("Load an image");
-    menuItem.addActionListener(this);
-    JPanel fileopenPanel = new JPanel();
-    menuFile.add(menuItem);
-    menuItem.setActionCommand("Open file");
+    loadMenuItem = new JMenuItem("Load", KeyEvent.VK_L); // If the person hits "L", it goes here
+    loadMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_L, ActionEvent.ALT_MASK)); //
+    loadMenuItem.getAccessibleContext().setAccessibleDescription("Load an image");
+
+    loadMenuItem.addActionListener(this);
+    menuFile.add(loadMenuItem);
+    loadMenuItem.setActionCommand("Open file");
 
 
 
@@ -226,56 +230,50 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   //TODO copied and pasted--update comments.
   private void prepareDrawMenuItems() {
     // Build the first menu (File):
-    menuAdj = new JMenu("Draw");
-
-    // If the user types "F" for "F"ile (VK_F), this menu opens up:
-    menuAdj.setMnemonic(KeyEvent.VK_D);
+    menuDraw = new JMenu("Draw");
+    menuDraw.setMnemonic(KeyEvent.VK_D);
 
     // Gets the AccessibleContext associated with this JMenuBar.
-    menuAdj.getAccessibleContext().setAccessibleDescription("Draw menu");
-
-    //TODO Sub menus or dialogue boxes to specify options/dimensions?
+    menuDraw.getAccessibleContext().setAccessibleDescription("Draw menu");
 
     // Add all adjustments item to this menu:
-    menuItem = new JMenuItem("Flag", KeyEvent.VK_F); // If the person hits "F", it goes here
-    // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
-    menuItem.getAccessibleContext().setAccessibleDescription("Draws Flag");
-    menuAdj.add(menuItem);
+    flagMenuItem = new JMenuItem("Flag", KeyEvent.VK_F); // If the person hits "F", it goes here
+    flagMenuItem.getAccessibleContext().setAccessibleDescription("Draws Flag");
+    menuDraw.add(flagMenuItem);
+    flagMenuItem.setActionCommand("flag");
 
-    menuItem.addActionListener(new java.awt.event.ActionListener() {
+    final String[] countryList = { "Greece", "France", "Switzerland" };
+    countryListComboBox = new JComboBox(countryList);
+    countryListComboBox.setSelectedIndex(countryList.length-1);
+
+    flagMenuItem.addActionListener(new java.awt.event.ActionListener() {
       @Override
       public void actionPerformed(java.awt.event.ActionEvent evt) {
 
-
-
-        String[] countryList = { "Greece", "France", "Switzerland"};
-        JComboBox petList = new JComboBox(countryList);
-        petList.setSelectedIndex(countryList.length-1);
-        petList.addActionListener(this);
+        countryListComboBox.addActionListener(this);
 
         String input = (String)JOptionPane.showInputDialog(null, "What country?",
-                "The Choice of a Lifetime", JOptionPane.QUESTION_MESSAGE, null, countryList,
+                "Choose your country carefully", JOptionPane.QUESTION_MESSAGE, null, countryList,
                 countryList[0]);
-        System.out.println(input);
-        petList.setVisible(true);
 
+        System.out.println("In view, this was selected: " + input);
+        countryListComboBox.setVisible(true);
+        countryListComboBox.setActionCommand(input);
       }
     });
 
 
+    rainbowMenuItem = new JMenuItem("Rainbow", KeyEvent.VK_R);
+    rainbowMenuItem.getAccessibleContext().setAccessibleDescription("Draws Rainbow");
+    menuDraw.add(rainbowMenuItem);
 
-    menuItem = new JMenuItem("Rainbow", KeyEvent.VK_R);
-    menuItem.getAccessibleContext().setAccessibleDescription("Draws Rainbow");
-    menuAdj.add(menuItem);
-
-    menuItem = new JMenuItem("Checkerboard", KeyEvent.VK_C);
-    menuItem.getAccessibleContext().setAccessibleDescription("Draws Checkerboard");
-    menuAdj.add(menuItem);
+    checkerBoardMenuItem = new JMenuItem("Checkerboard", KeyEvent.VK_C);
+    checkerBoardMenuItem.getAccessibleContext().setAccessibleDescription("Draws Checkerboard");
+    menuDraw.add(checkerBoardMenuItem);
 
     // Add this new menu to the bar.
-    menuBar.add(menuAdj);
+    menuBar.add(menuDraw);
   }
-
 
 
   //TODO copied and pasted--update comments.
@@ -312,47 +310,35 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   private void prepareScrollPane(String file) throws IOException {
     System.out.println("Preparing scroll pane...");
 
-    JPanel imagePanel = new JPanel();
-    imagePanel.setBorder(BorderFactory.createTitledBorder(file));
+    imagePanel = new JPanel();
+    imagePanel.setBorder(BorderFactory.createTitledBorder("Current image"));
     imagePanel.setLayout(new GridLayout(1,0, 10, 10));
     imagePanel.setMaximumSize(null);
     mainFrame.add(imagePanel);
 
     IImage image = new Image(file);
     BufferedImage buffered = image.convertToByteStream(file);
-
-    BufferedImage[] images = {buffered};
-    JLabel[] imageLabel = new JLabel[images.length];
-    JScrollPane[] imageScrollPane = new JScrollPane[images.length];
-
-    for (int i = 0; i < imageLabel.length; i++) {
-      imageLabel[i] = new JLabel();
-      imageScrollPane[i] = new JScrollPane(imageLabel[i]);
-      imageLabel[i].setIcon(new ImageIcon(images[i]));
-      imageScrollPane[i].setPreferredSize(new Dimension(50, 50));
-      imagePanel.add(imageScrollPane[i]);
-    }
-
-    // ImageIcon image = new ImageIcon("./res/shadowresize.jpg");
-    JTextArea textArea = new JTextArea(100,100);
-    textArea.setText("xx\nxx\nxx\nxx\nxx\nxx\ndjfnjksdnfjkbsdjhsdbfjhsdbfjhsdbfhjbsdjhfsd\nx\n\\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nx\nxx\nxx\nxx\nxx\nxx\nxx\n");
-
-    // Put the content into a pane
-    JScrollPane scrollPane = new JScrollPane(textArea);
-
-
-    // Put the scrolly area into a frame
-//    mainFrame.add(scrollPane, BorderLayout.CENTER);
-
-
-    // center the frame
-    mainFrame.setLocationRelativeTo(null);
-//    scrollPane.setVisible(true);
-//    textArea.setVisible(true);
-//    mainFrame.pack();
+    JLabel imageLabel = new JLabel("");
+    imageScrollPane = new JScrollPane(imageLabel);
+    imageLabel.setIcon(new ImageIcon(buffered));
+    imagePanel.add(imageScrollPane);
     imagePanel.setVisible(true);
     System.out.println("Scroll pane added");
 
+  }
+
+
+  private void changeImageInPanel(String filename) {
+    this.imagePanel.remove(this.imagePanel);
+    this.imagePanel.remove(this.imageScrollPane);
+    //this.mainFrame.remove(imagePanel);
+    JLabel imageLabel = new JLabel("");
+    imageLabel.setIcon(new ImageIcon(filename));
+    this.imageScrollPane = new JScrollPane(imageLabel);
+    imagePanel.add(imageScrollPane);
+    this.imagePanel.revalidate();
+    imagePanel.repaint();
+    this.mainFrame.add(imagePanel);
   }
 
 
@@ -361,6 +347,7 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
    */
   @Override
   public void actionPerformed(ActionEvent e) {
+
     switch (e.getActionCommand()) {
       case "Open file": {
         final JFileChooser fchooser = new JFileChooser(".");
@@ -373,13 +360,7 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
           //fileOpenDisplay.setText(f.getAbsolutePath());
           String path = f.getAbsolutePath();
           System.out.println(path);
-//          prepareScrollPane(path);
-          try {
-            prepareGui(path);
-          }
-          catch (IOException exception){
-            System.out.println("Doesn't.");
-          }
+          changeImageInPanel(path);
         }
       }
       break;
@@ -391,10 +372,22 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
           fileSaveDisplay.setText(f.getAbsolutePath());
         }
       }
+      case "flag": {
+        countryListComboBox.setVisible(true);
+      }
     }
   }
 
-
-
-
+  @Override
+  public void setListener(ControllerImpl controller) {
+    this.controller = controller;
+    this.blurMenuItem.addActionListener(controller);
+    this.sharpenMenuItem.addActionListener(controller);
+    this.ditherMenuItem.addActionListener(controller);
+    this.mosaicMenuItem.addActionListener(controller);
+    this.sepiaMenuItem.addActionListener(controller);
+    this.greyscaleMenuItem.addActionListener(controller);
+    this.flagMenuItem.addActionListener(controller);
+    this.countryListComboBox.addActionListener(controller);
+  }
 }

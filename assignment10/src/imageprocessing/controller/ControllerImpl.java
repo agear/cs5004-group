@@ -1,5 +1,7 @@
 package imageprocessing.controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -17,7 +19,7 @@ import imageprocessing.view.IView;
  * and it controls how and when the model is used. It also controls what must be shown by the view
  * and when. This controller applies filters and transformations onto any sort of image.
  */
-public class ControllerImpl implements IController {
+public class ControllerImpl implements IController, ActionListener {
   final Readable in;
 //  final Appendable out;
   IModel model;
@@ -33,11 +35,23 @@ public class ControllerImpl implements IController {
    * @param model the model associated with this controller.
    * @param in an object implementing the Readable interface to parse.
    */
-  public ControllerImpl(IModel model, IView view, Readable in){ //, Appendable out) {
+  public ControllerImpl(IModel model, IView view, Readable in){
     this.in = in;
-//    this.out = out;
     this.model = model;
     this.view = view;
+
+    /*
+     During initialization, the controller passes itself as the listener for all the view’s buttons.
+     The effect of this design is that when the program is run and the button is clicked,
+     a method inside the controller is called.
+     Thus the controller gets control over what to do next.
+     */
+    try {
+      this.view.setListener(this);
+    }
+    catch (NullPointerException e) {
+      System.out.println("There's an exception, idk why");
+    }
   }
 
   /** The goGo method gives control to the controller (this class) until the program ends.
@@ -247,4 +261,22 @@ public class ControllerImpl implements IController {
       }
     }
   }
+
+
+
+
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    switch (e.getActionCommand()) {
+      case "Greece":
+        System.out.println("Greece has been sent to the controller");
+      case "blur":
+        System.out.println("Blur has been sent to the controller");
+    }
+    System.out.println(e.getActionCommand() + " got sent to the controller");
+
+  }
+
+
 }
