@@ -3,28 +3,31 @@ package imageprocessing.view;
 // Import packages needed for Swing.
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+
 import javax.swing.*;
 import javax.swing.JScrollPane;
-
-
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 /**
  * The user interface of the image processing package. To be implemented in v3.0.
  * TODO update javadoc
  */
-public class ViewImpl implements IView {
+public class ViewImpl extends JFrame implements IView, ActionListener {
 
   // Fields required for setup.
   private JFrame mainFrame;
 
   // Fields required for menu:
-  JMenuBar menuBar;
-  JMenu menu, submenu, menuAdj;
-  JMenuItem menuItem;
-  JRadioButtonMenuItem rbMenuItem;
-  JCheckBoxMenuItem cbMenuItem;
-  JFrame.Type picture;
+
+  private JMenuBar menuBar;
+  private JMenu menu, submenu, menuAdj, menuFile;
+  private JMenuItem menuItem;
+  private JRadioButtonMenuItem rbMenuItem;
+  private JCheckBoxMenuItem cbMenuItem;
+  private JLabel fileOpenDisplay;
+  private JLabel fileSaveDisplay;
 
 
 
@@ -68,13 +71,20 @@ public class ViewImpl implements IView {
 
     // Create the menu bar:
     menuBar = new JMenuBar();
+    System.out.println("Creating menu bar...");
 
     // Add each category
     prepareFileMenuItems();
+    System.out.println("Preparing File Menu...");
     prepareEditMenuItems();
+    System.out.println("Preparing Edit Menu...");
     prepareAdjustmentMenuItems();
+    System.out.println("Preparing Adjustment Menu...");
     prepareDrawMenuItems();
+    System.out.println("Preparing Draw Menu...");
     prepareImagesMenuItems();
+    System.out.println("Preparing Images Menu...");
+
 
 
     // Add the menu bar to the frame at the top.
@@ -145,28 +155,51 @@ public class ViewImpl implements IView {
   //TODO Copied an pasted -- Update comments
   private void prepareFileMenuItems() {
     // Build the first menu (File):
-    menuAdj = new JMenu("File");
+    menuFile = new JMenu("File");
+    System.out.println("Making File Menu");
 
     // If the user types "F" for "F"ile (VK_F), this menu opens up:
-    menuAdj.setMnemonic(KeyEvent.VK_F);
+    menuFile.setMnemonic(KeyEvent.VK_F);
+    System.out.println("Setting Mnemonic");
 
     // Gets the AccessibleContext associated with this JMenuBar.
-    menuAdj.getAccessibleContext().setAccessibleDescription(
-            "Open or save an image");
+    menuFile.getAccessibleContext().setAccessibleDescription("Open or save an image");
 
     // Add all adjustments item to this menu:
     menuItem = new JMenuItem("Load", KeyEvent.VK_L); // If the person hits "L", it goes here
     // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
     menuItem.getAccessibleContext().setAccessibleDescription("Load an image");
-    menuAdj.add(menuItem);
+    menuItem.addActionListener(this);
+    System.out.println("Adding action listener");
+    JPanel fileopenPanel = new JPanel();
+    System.out.println("Making JPanel");
+    fileopenPanel.setLayout(new FlowLayout());
+    menuFile.add(fileopenPanel);
+    System.out.println("Making Menu Item");
+
+
+
+    //file open
+//    JPanel fileopenPanel = new JPanel();
+//    fileopenPanel.setLayout(new FlowLayout());
+//    dialogBoxesPanel.add(fileopenPanel);
+    JButton fileOpenButton = new JButton("Open a file");
+    fileOpenButton.setActionCommand("Open file");
+    System.out.println("Setting action command");
+
+//    fileOpenButton.addActionListener(this);
+    fileopenPanel.add(fileOpenButton);
+//    fileOpenDisplay = new JLabel("File path will appear here");
+//    fileopenPanel.add(fileOpenDisplay);
+    System.out.println("adding fileopendisplay");
 
     menuItem = new JMenuItem("Save", KeyEvent.VK_S);
     menuItem.getAccessibleContext().setAccessibleDescription("Save image");
-    menuAdj.add(menuItem);
+    menuFile.add(menuItem);
 
 
     // Add this new menu to the bar.
-    menuBar.add(menuAdj);
+    menuBar.add(menuFile);
   }
 
   //TODO copied and pasted--update comments.
@@ -257,8 +290,7 @@ public class ViewImpl implements IView {
     // Add this new menu to the bar.
     menuBar.add(menuAdj);
   }
-
-
+  
   private void prepareScrollPane() {
 
     // ImageIcon image = new ImageIcon("./res/shadowresize.jpg");
@@ -270,4 +302,24 @@ public class ViewImpl implements IView {
   }
 
 
+  /**
+   * Invoked when an action occurs.
+   */
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    switch (e.getActionCommand()) {
+      case "Open file": {
+        final JFileChooser fchooser = new JFileChooser(".");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "JPG & GIF Images", "jpg", "gif");
+        fchooser.setFileFilter(filter);
+        int retvalue = fchooser.showOpenDialog(ViewImpl.this);
+        if (retvalue == JFileChooser.APPROVE_OPTION) {
+          File f = fchooser.getSelectedFile();
+          fileOpenDisplay.setText(f.getAbsolutePath());
+        }
+      }
+      break;
+    }
+  }
 }
