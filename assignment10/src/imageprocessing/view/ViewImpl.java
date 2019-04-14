@@ -4,6 +4,9 @@ package imageprocessing.view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.JScrollPane;
+
+
 
 
 /**
@@ -21,6 +24,7 @@ public class ViewImpl implements IView {
   JMenuItem menuItem;
   JRadioButtonMenuItem rbMenuItem;
   JCheckBoxMenuItem cbMenuItem;
+  JFrame.Type picture;
 
 
 
@@ -95,12 +99,10 @@ public class ViewImpl implements IView {
     menuAdj.setMnemonic(KeyEvent.VK_A);
 
     // Gets the AccessibleContext associated with this JMenuBar.
-    menuAdj.getAccessibleContext().setAccessibleDescription(
-            "Change the image.");
+    menuAdj.getAccessibleContext().setAccessibleDescription("Change the image.");
 
     // Add all adjustments item to this menu:
-    menuItem = new JMenuItem("Blur",
-            KeyEvent.VK_B); // If the person hits "b", it goes here
+    menuItem = new JMenuItem("Blur", KeyEvent.VK_B); // If the person hits "b", it goes here
     // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
     menuItem.getAccessibleContext().setAccessibleDescription("Blur your image");
     menuAdj.add(menuItem);
@@ -109,15 +111,15 @@ public class ViewImpl implements IView {
     menuItem.getAccessibleContext().setAccessibleDescription("Sharpen your image");
     menuAdj.add(menuItem);
 
-    // Add a seperator to categorize types of adjustments
+    // Add a separator to categorize types of adjustments
     menuAdj.addSeparator();
 
 
-    menuItem = new JMenuItem("Dither", KeyEvent.VK_G);
+    menuItem = new JMenuItem("Dither", KeyEvent.VK_D);
     menuItem.getAccessibleContext().setAccessibleDescription("Make your image in dither");
     menuAdj.add(menuItem);
 
-    menuItem = new JMenuItem("Mosaic", KeyEvent.VK_G);
+    menuItem = new JMenuItem("Mosaic", KeyEvent.VK_M);
     menuItem.getAccessibleContext().setAccessibleDescription("Make your image in dither");
     menuAdj.add(menuItem);
 
@@ -153,8 +155,7 @@ public class ViewImpl implements IView {
             "Open or save an image");
 
     // Add all adjustments item to this menu:
-    menuItem = new JMenuItem("Load",
-            KeyEvent.VK_L); // If the person hits "L", it goes here
+    menuItem = new JMenuItem("Load", KeyEvent.VK_L); // If the person hits "L", it goes here
     // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
     menuItem.getAccessibleContext().setAccessibleDescription("Load an image");
     menuAdj.add(menuItem);
@@ -256,4 +257,17 @@ public class ViewImpl implements IView {
     // Add this new menu to the bar.
     menuBar.add(menuAdj);
   }
+
+
+  private void prepareScrollPane() {
+
+    // ImageIcon image = new ImageIcon("./res/shadowresize.jpg");
+    JTextArea textArea = new JTextArea();
+    textArea.setText("xx\nxx\nxx\nxx\nxx\nxx\nxx\nxx\nxx\nxx\nxx\nxx\nxx\nxx\n");
+    JScrollPane scrollPane = new JScrollPane(textArea);
+
+
+  }
+
+
 }
