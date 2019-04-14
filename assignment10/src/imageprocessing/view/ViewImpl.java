@@ -227,17 +227,37 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     menuAdj.setMnemonic(KeyEvent.VK_D);
 
     // Gets the AccessibleContext associated with this JMenuBar.
-    menuAdj.getAccessibleContext().setAccessibleDescription(
-            "Draw menu");
+    menuAdj.getAccessibleContext().setAccessibleDescription("Draw menu");
 
     //TODO Sub menus or dialogue boxes to specify options/dimensions?
 
     // Add all adjustments item to this menu:
-    menuItem = new JMenuItem("Flag",
-            KeyEvent.VK_L); // If the person hits "L", it goes here
+    menuItem = new JMenuItem("Flag", KeyEvent.VK_F); // If the person hits "F", it goes here
     // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
     menuItem.getAccessibleContext().setAccessibleDescription("Draws Flag");
     menuAdj.add(menuItem);
+
+    menuItem.addActionListener(new java.awt.event.ActionListener() {
+      @Override
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+
+
+        String[] countryList = { "Greece", "France", "Switzerland"};
+        JComboBox petList = new JComboBox(countryList);
+        petList.setSelectedIndex(countryList.length-1);
+        petList.addActionListener(this);
+
+        String input = (String)JOptionPane.showInputDialog(null, "What country?",
+                "The Choice of a Lifetime", JOptionPane.QUESTION_MESSAGE, null, countryList,
+                countryList[0]);
+        System.out.println(input);
+        petList.setVisible(true);
+
+      }
+    });
+
+
 
     menuItem = new JMenuItem("Rainbow", KeyEvent.VK_R);
     menuItem.getAccessibleContext().setAccessibleDescription("Draws Rainbow");
@@ -250,6 +270,8 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     // Add this new menu to the bar.
     menuBar.add(menuAdj);
   }
+
+
 
   //TODO copied and pasted--update comments.
   private void prepareImagesMenuItems() {
@@ -279,6 +301,9 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     menuBar.add(menuAdj);
   }
 
+  /**
+   * Creates the scrollable panel to hold an image.
+   */
   private void prepareScrollPane() {
     System.out.println("Preparing scroll pane...");
 
@@ -304,11 +329,13 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     JTextArea textArea = new JTextArea(100,100);
     textArea.setText("xx\nxx\nxx\nxx\nxx\nxx\ndjfnjksdnfjkbsdjhsdbfjhsdbfjhsdbfhjbsdjhfsd\nx\n\\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nx\nxx\nxx\nxx\nxx\nxx\nxx\n");
 
+    // Put the content into a pane
     JScrollPane scrollPane = new JScrollPane(textArea);
 
-
+    
     // Put the scrolly area into a frame
 //    mainFrame.add(scrollPane, BorderLayout.CENTER);
+
 
     // center the frame
     //mainFrame.setLocationRelativeTo(null);
@@ -348,4 +375,8 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
       }
     }
   }
+
+
+
+
 }
