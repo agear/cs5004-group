@@ -44,20 +44,18 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     mainFrame = new JFrame("Image Processing Software");
     mainFrame.setSize(400,400);
     mainFrame.setLayout(new BorderLayout());
-    mainFrame.setVisible(true);
     mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     // Prepare the menu
     prepareMenu();
+
+    // Prepare scrolly area
+    prepareScrollPane();
+
+    pack();
     mainFrame.setVisible(true);
 
   }
-
-
-
-
-
-
 
 
   /**
@@ -290,14 +288,25 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     // Add this new menu to the bar.
     menuBar.add(menuAdj);
   }
-  
+
   private void prepareScrollPane() {
+    System.out.println("Preparing scroll pane...");
 
     // ImageIcon image = new ImageIcon("./res/shadowresize.jpg");
-    JTextArea textArea = new JTextArea();
-    textArea.setText("xx\nxx\nxx\nxx\nxx\nxx\nxx\nxx\nxx\nxx\nxx\nxx\nxx\nxx\n");
+    JTextArea textArea = new JTextArea(100,100);
+    textArea.setText("xx\nxx\nxx\nxx\nxx\nxx\ndjfnjksdnfjkbsdjhsdbfjhsdbfjhsdbfhjbsdjhfsd\nx\n\\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nx\nxx\nxx\nxx\nxx\nxx\nxx\n");
+
     JScrollPane scrollPane = new JScrollPane(textArea);
 
+
+    // Put the scrolly area into a frame
+    mainFrame.add(scrollPane, BorderLayout.CENTER);
+
+    // center the frame
+    //mainFrame.setLocationRelativeTo(null);
+    scrollPane.setVisible(true);
+    textArea.setVisible(true);
+    System.out.println("Scroll pane added");
 
   }
 
