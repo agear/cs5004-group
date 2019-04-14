@@ -7,6 +7,8 @@ import imageprocessing.controller.ControllerImpl;
 import imageprocessing.controller.IController;
 import imageprocessing.model.IModel;
 import imageprocessing.model.ModelImpl;
+import imageprocessing.view.IView;
+import imageprocessing.view.ViewImpl;
 
 /**
  * This class is a driver for the imageprocessing package.
@@ -20,7 +22,8 @@ public class ProgramRunner {
   public static void main(String[] args) throws IOException {
     IModel model = new ModelImpl();
     FileReader in = new FileReader(args[0]);
-    IController controller = new ControllerImpl(model, in);
-    controller.goGo();
+    IView view = new ViewImpl();
+    IController controller = new ControllerImpl(model, view, in);
+    //controller.goGo();
   }
 }

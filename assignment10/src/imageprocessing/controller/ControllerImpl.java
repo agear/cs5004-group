@@ -9,6 +9,7 @@ import java.util.HashMap;
 import imageprocessing.model.IModel;
 import imageprocessing.model.image.Country;
 import imageprocessing.model.image.Orientation;
+import imageprocessing.view.IView;
 
 /**
  * The controller takes input from the user and decides what to do. It is the client of the model
@@ -17,9 +18,9 @@ import imageprocessing.model.image.Orientation;
  */
 public class ControllerImpl implements IController {
   final Readable in;
-  final Appendable out;
+//  final Appendable out;
   IModel model;
-  // IView view;
+  IView view;
 
   Map<Character, Runnable> commands = new HashMap<>();
 
@@ -31,10 +32,11 @@ public class ControllerImpl implements IController {
    * @param model the model associated with this controller.
    * @param in an object implementing the Readable interface to parse.
    */
-  public ControllerImpl(IModel model, Readable in, Appendable out) {
+  public ControllerImpl(IModel model, IView view, Readable in){ //, Appendable out) {
     this.in = in;
-    this.out = out;
+//    this.out = out;
     this.model = model;
+    this.view = view;
   }
 
   /** The goGo method gives control to the controller (this class) until the program ends.
@@ -73,7 +75,7 @@ public class ControllerImpl implements IController {
         case "dither":
           imageName = scan.next();
           this.model.applyDither(imageName);
-          this.out.append(String.format("%d\n", model.getCode()));
+         // this.out.append(String.format("%d\n", this.model.getCode()));
           break;
         case "blur":
           imageName = scan.next();

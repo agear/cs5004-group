@@ -66,8 +66,12 @@ public class ViewImpl implements IView {
     menuBar = new JMenuBar();
 
     // Add each category
-    prepareAdjustmentMenuItems();
     prepareFileMenuItems();
+    prepareEditMenuItems();
+    prepareAdjustmentMenuItems();
+    prepareDrawMenuItems();
+    prepareImagesMenuItems();
+
 
     // Add the menu bar to the frame at the top.
     mainFrame.setJMenuBar(menuBar);
@@ -136,11 +140,120 @@ public class ViewImpl implements IView {
 
   }
 
-
+  //TODO Copied an pasted -- Update comments
   private void prepareFileMenuItems() {
+    // Build the first menu (File):
+    menuAdj = new JMenu("File");
 
+    // If the user types "F" for "F"ile (VK_F), this menu opens up:
+    menuAdj.setMnemonic(KeyEvent.VK_F);
+
+    // Gets the AccessibleContext associated with this JMenuBar.
+    menuAdj.getAccessibleContext().setAccessibleDescription(
+            "Open or save an image");
+
+    // Add all adjustments item to this menu:
+    menuItem = new JMenuItem("Load",
+            KeyEvent.VK_L); // If the person hits "L", it goes here
+    // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
+    menuItem.getAccessibleContext().setAccessibleDescription("Load an image");
+    menuAdj.add(menuItem);
+
+    menuItem = new JMenuItem("Save", KeyEvent.VK_S);
+    menuItem.getAccessibleContext().setAccessibleDescription("Save image");
+    menuAdj.add(menuItem);
+
+
+    // Add this new menu to the bar.
+    menuBar.add(menuAdj);
   }
 
+  //TODO copied and pasted--update comments.
+  private void prepareEditMenuItems() {
+    // Build the first menu (File):
+    menuAdj = new JMenu("Edit");
+
+    // If the user types "F" for "F"ile (VK_F), this menu opens up:
+    menuAdj.setMnemonic(KeyEvent.VK_E);
+
+    // Gets the AccessibleContext associated with this JMenuBar.
+    menuAdj.getAccessibleContext().setAccessibleDescription(
+            "Edit menu");
+
+    // Add all adjustments item to this menu:
+    menuItem = new JMenuItem("Undo",
+            KeyEvent.VK_Z); // If the person hits "Z", it goes here
+    // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
+    menuItem.getAccessibleContext().setAccessibleDescription("Undo last command");
+    menuAdj.add(menuItem);
+
+    menuItem = new JMenuItem("Redo", KeyEvent.VK_X);
+    menuItem.getAccessibleContext().setAccessibleDescription("Redo last command");
+    menuAdj.add(menuItem);
 
 
+    // Add this new menu to the bar.
+    menuBar.add(menuAdj);
+  }
+
+  //TODO copied and pasted--update comments.
+  private void prepareDrawMenuItems() {
+    // Build the first menu (File):
+    menuAdj = new JMenu("Draw");
+
+    // If the user types "F" for "F"ile (VK_F), this menu opens up:
+    menuAdj.setMnemonic(KeyEvent.VK_D);
+
+    // Gets the AccessibleContext associated with this JMenuBar.
+    menuAdj.getAccessibleContext().setAccessibleDescription(
+            "Draw menu");
+
+    //TODO Sub menus or dialogue boxes to specify options/dimensions?
+
+    // Add all adjustments item to this menu:
+    menuItem = new JMenuItem("Flag",
+            KeyEvent.VK_L); // If the person hits "L", it goes here
+    // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
+    menuItem.getAccessibleContext().setAccessibleDescription("Draws Flag");
+    menuAdj.add(menuItem);
+
+    menuItem = new JMenuItem("Rainbow", KeyEvent.VK_R);
+    menuItem.getAccessibleContext().setAccessibleDescription("Draws Rainbow");
+    menuAdj.add(menuItem);
+
+    menuItem = new JMenuItem("Checkerboard", KeyEvent.VK_C);
+    menuItem.getAccessibleContext().setAccessibleDescription("Draws Checkerboard");
+    menuAdj.add(menuItem);
+
+    // Add this new menu to the bar.
+    menuBar.add(menuAdj);
+  }
+
+  //TODO copied and pasted--update comments.
+  private void prepareImagesMenuItems() {
+    // Build the first menu (File):
+    menuAdj = new JMenu("Images");
+
+    // If the user types "F" for "F"ile (VK_F), this menu opens up:
+    menuAdj.setMnemonic(KeyEvent.VK_I);
+
+    // Gets the AccessibleContext associated with this JMenuBar.
+    menuAdj.getAccessibleContext().setAccessibleDescription(
+            "Image menu");
+
+    // Add all adjustments item to this menu:
+    menuItem = new JMenuItem("Image_1",
+            KeyEvent.VK_Z); // If the person hits "Z", it goes here
+    // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
+    menuItem.getAccessibleContext().setAccessibleDescription("Select Image_1");
+    menuAdj.add(menuItem);
+
+    menuItem = new JMenuItem("Image_2", KeyEvent.VK_X);
+    menuItem.getAccessibleContext().setAccessibleDescription("Select Image_2");
+    menuAdj.add(menuItem);
+
+
+    // Add this new menu to the bar.
+    menuBar.add(menuAdj);
+  }
 }
