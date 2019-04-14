@@ -38,11 +38,11 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
    */
   public ViewImpl() {
     System.out.println("Trying to set up ...");
-    prepareGui();
+    prepareGui("./res/shadowresize.jpg");
   }
 
 
-  private void prepareGui() {
+  private void prepareGui(String file) {
     mainFrame = new JFrame("Image Processing Software");
     mainFrame.setSize(400,400);
     mainFrame.setLayout(new BorderLayout());
@@ -52,7 +52,7 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     prepareMenu();
 
     // Prepare scrolly area
-    prepareScrollPane();
+    prepareScrollPane(file);
 
     pack();
     mainFrame.setVisible(true);
@@ -304,16 +304,16 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   /**
    * Creates the scrollable panel to hold an image.
    */
-  private void prepareScrollPane() {
+  private void prepareScrollPane(String file) {
     System.out.println("Preparing scroll pane...");
 
     JPanel imagePanel = new JPanel();
-    imagePanel.setBorder(BorderFactory.createTitledBorder("Showing an image"));
+    imagePanel.setBorder(BorderFactory.createTitledBorder(file));
     imagePanel.setLayout(new GridLayout(1,0, 10, 10));
     imagePanel.setMaximumSize(null);
     mainFrame.add(imagePanel);
 
-    String[] images = {"./res/shadowresize.jpg"};
+    String[] images = {file};
     JLabel[] imageLabel = new JLabel[images.length];
     JScrollPane[] imageScrollPane = new JScrollPane[images.length];
 
@@ -332,7 +332,7 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     // Put the content into a pane
     JScrollPane scrollPane = new JScrollPane(textArea);
 
-    
+
     // Put the scrolly area into a frame
 //    mainFrame.add(scrollPane, BorderLayout.CENTER);
 
@@ -356,12 +356,16 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
       case "Open file": {
         final JFileChooser fchooser = new JFileChooser(".");
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "JPG & GIF Images", "jpg", "gif");
+                "JPG & GIF Images", "jpg", "gif", "png");
         fchooser.setFileFilter(filter);
         int retvalue = fchooser.showOpenDialog(ViewImpl.this);
         if (retvalue == JFileChooser.APPROVE_OPTION) {
           File f = fchooser.getSelectedFile();
-          fileOpenDisplay.setText(f.getAbsolutePath());
+          //fileOpenDisplay.setText(f.getAbsolutePath());
+          String path = f.getAbsolutePath();
+          System.out.println(path);
+//          prepareScrollPane(path);
+          prepareGui(path);
         }
       }
       break;
