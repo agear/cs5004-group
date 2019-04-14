@@ -165,35 +165,23 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
 
     // Add all adjustments item to this menu:
     menuItem = new JMenuItem("Load", KeyEvent.VK_L); // If the person hits "L", it goes here
-    // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
+    menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_L, ActionEvent.ALT_MASK)); //
     menuItem.getAccessibleContext().setAccessibleDescription("Load an image");
     menuItem.addActionListener(this);
-    System.out.println("Adding action listener");
     JPanel fileopenPanel = new JPanel();
-    System.out.println("Making JPanel");
-    fileopenPanel.setLayout(new FlowLayout());
-    menuFile.add(fileopenPanel);
-    System.out.println("Making Menu Item");
+    menuFile.add(menuItem);
+    menuItem.setActionCommand("Open file");
 
 
 
-    //file open
-//    JPanel fileopenPanel = new JPanel();
-//    fileopenPanel.setLayout(new FlowLayout());
-//    dialogBoxesPanel.add(fileopenPanel);
-    JButton fileOpenButton = new JButton("Open a file");
-    fileOpenButton.setActionCommand("Open file");
-    System.out.println("Setting action command");
-
-//    fileOpenButton.addActionListener(this);
-    fileopenPanel.add(fileOpenButton);
-//    fileOpenDisplay = new JLabel("File path will appear here");
-//    fileopenPanel.add(fileOpenDisplay);
-    System.out.println("adding fileopendisplay");
 
     menuItem = new JMenuItem("Save", KeyEvent.VK_S);
+    menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.ALT_MASK)); //
     menuItem.getAccessibleContext().setAccessibleDescription("Save image");
+    menuItem.addActionListener(this);
+    JPanel filesavePanel = new JPanel();
     menuFile.add(menuItem);
+    menuItem.setActionCommand("Save file");
 
 
     // Add this new menu to the bar.
@@ -329,6 +317,14 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
         }
       }
       break;
+      case "Save file": {
+        final JFileChooser fchooser = new JFileChooser(".");
+        int retvalue = fchooser.showSaveDialog(ViewImpl.this);
+        if (retvalue == JFileChooser.APPROVE_OPTION) {
+          File f = fchooser.getSelectedFile();
+          fileSaveDisplay.setText(f.getAbsolutePath());
+        }
+      }
     }
   }
 }
