@@ -35,7 +35,7 @@ public interface IImage {
 
   void writeImageToFile(String s) throws IOException;
 
-  BufferedImage convertToByteStream(String filename) throws IOException;
+  BufferedImage convertToBufferedImage(String filename) throws IOException;
 
   /** This applies a transformation to the image without modifying the image.
    *

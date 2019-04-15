@@ -135,7 +135,7 @@ public class ImageUtil {
     ImageIO.write(output, extension, new FileOutputStream(filename));
   }
 
-  public static BufferedImage convertImageToByteStream(int[][][] rgb, int width, int height, String
+  public static BufferedImage convertImageToBufferedImage(int[][][] rgb, int width, int height, String
           filename)
           throws IOException {
 
@@ -157,12 +157,7 @@ public class ImageUtil {
         output.setRGB(j, i, color);
       }
     }
-//    String extension = filename.substring(filename.indexOf(".") + 1);
-//    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//    ImageIO.write(output, extension, baos);
-//    baos.flush();
-//    byte[] imageInByte = baos.toByteArray();
-//    baos.close();
+
     return output;
   }
 

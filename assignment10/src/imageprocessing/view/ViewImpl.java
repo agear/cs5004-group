@@ -4,7 +4,6 @@ package imageprocessing.view;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -180,8 +179,9 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     loadMenuItem.getAccessibleContext().setAccessibleDescription("Load an image");
 
     loadMenuItem.addActionListener(this);
+    JPanel fileloadPanel = new JPanel();
     menuFile.add(loadMenuItem);
-    loadMenuItem.setActionCommand("Open file");
+    loadMenuItem.setActionCommand("load");
 
 
 
@@ -317,7 +317,7 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     mainFrame.add(imagePanel);
 
     IImage image = new Image(file);
-    BufferedImage buffered = image.convertToByteStream(file);
+    BufferedImage buffered = image.convertToBufferedImage(file);
     JLabel imageLabel = new JLabel("");
     imageScrollPane = new JScrollPane(imageLabel);
     imageLabel.setIcon(new ImageIcon(buffered));
@@ -327,13 +327,13 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
 
   }
 
-
-  private void changeImageInPanel(String filename) {
+//TODO Add to interface so controller can call it?
+  public void displayImage(BufferedImage image) {
     this.imagePanel.remove(this.imagePanel);
     this.imagePanel.remove(this.imageScrollPane);
     //this.mainFrame.remove(imagePanel);
     JLabel imageLabel = new JLabel("");
-    imageLabel.setIcon(new ImageIcon(filename));
+    imageLabel.setIcon(new ImageIcon(image));
     this.imageScrollPane = new JScrollPane(imageLabel);
     imagePanel.add(imageScrollPane);
     this.imagePanel.revalidate();
@@ -349,18 +349,29 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   public void actionPerformed(ActionEvent e) {
 
     switch (e.getActionCommand()) {
-      case "Open file": {
+      case "load": {
         final JFileChooser fchooser = new JFileChooser(".");
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "JPG & GIF Images", "jpg", "gif", "png");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif", "png");
         fchooser.setFileFilter(filter);
         int retvalue = fchooser.showOpenDialog(ViewImpl.this);
         if (retvalue == JFileChooser.APPROVE_OPTION) {
           File f = fchooser.getSelectedFile();
-          //fileOpenDisplay.setText(f.getAbsolutePath());
+          fileOpenDisplay.setText(f.getAbsolutePath());
           String path = f.getAbsolutePath();
           System.out.println(path);
-          changeImageInPanel(path);
+          try {
+            //TODO command should be sent to controller which then loads the image into the model
+            // and returns the buffered image from the model, for display
+            loadMenuItem.setActionCommand("load "+path);
+            System.out.println("load "+path);
+            IImage image = new Image(path);
+            BufferedImage buffered = image.convertToBufferedImage(path);
+            displayImage(buffered);
+          }
+          catch (IOException exception) {
+            throw new IllegalArgumentException("No such element");
+          }
+//          displayImage(path);
         }
       }
       break;
@@ -381,6 +392,7 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   @Override
   public void setListener(ControllerImpl controller) {
     this.controller = controller;
+    this.loadMenuItem.addActionListener(controller);
     this.blurMenuItem.addActionListener(controller);
     this.sharpenMenuItem.addActionListener(controller);
     this.ditherMenuItem.addActionListener(controller);

@@ -1,7 +1,6 @@
 package imageprocessing.model.image;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import imageprocessing.model.adjustment.Filter;
@@ -215,7 +214,7 @@ public abstract class AbstractImage extends ImageUtil {
    * @param filename
    * @throws IOException
    */
-  public BufferedImage convertToByteStream(String filename) throws IOException {
-    return this.convertImageToByteStream(this.get3Ddata(), this.getWidth(), this.getHeight(), filename);
+  public BufferedImage convertToBufferedImage(String filename) throws IOException {
+    return this.convertImageToBufferedImage(this.get3Ddata(), this.getWidth(), this.getHeight(), filename);
   }
 }
