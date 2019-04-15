@@ -320,16 +320,18 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   }
 
 
+  /** Changes the currently displayed image, by replacing the old one with a new one.
+   * @param filename The path to the image that user wants displayed
+   */
   private void changeImageInPanel(String filename) {
     this.imagePanel.remove(this.imagePanel);
     this.imagePanel.remove(this.imageScrollPane);
-    //this.mainFrame.remove(imagePanel);
     JLabel imageLabel = new JLabel("");
     imageLabel.setIcon(new ImageIcon(filename));
     this.imageScrollPane = new JScrollPane(imageLabel);
     imagePanel.add(imageScrollPane);
     this.imagePanel.revalidate();
-    imagePanel.repaint();
+    this.imagePanel.repaint();
     this.mainFrame.add(imagePanel);
   }
 
@@ -355,18 +357,16 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
           changeImageInPanel(path);
         }
       }
-      break;
-      case "Save file": {
+      break; //TODO is this necessary?
+      case "Save file":
         final JFileChooser fchooser = new JFileChooser(".");
         int retvalue = fchooser.showSaveDialog(ViewImpl.this);
         if (retvalue == JFileChooser.APPROVE_OPTION) {
           File f = fchooser.getSelectedFile();
           fileSaveDisplay.setText(f.getAbsolutePath());
         }
-      }
-      case "flag": {
-        countryListComboBox.setVisible(true);
-      }
+      case "flag":
+        System.out.println("xxxxxxxCombo box flag??");
     }
   }
 
