@@ -290,7 +290,7 @@ public class ControllerImpl implements IController, ActionListener {
         this.view.displayImage(buffered);
         break;
       case "undo":
-
+        //TODO throw exception if stack is empty?
         this.currentImage = this.undoStack.pop();
         BufferedImage bufferedU = this.model.getImage(this.currentImage);
         this.view.displayImage(bufferedU);
@@ -308,6 +308,8 @@ public class ControllerImpl implements IController, ActionListener {
         }
         break;
       case "blur":
+        //TODO should this be in a higher order function since this is basically going to be the
+        // same template for all adjustments?
         System.out.println("blur has been received by the controller");
         this.undoStack.push(currentImage);
         this.model.applyBlur(currentImage);
