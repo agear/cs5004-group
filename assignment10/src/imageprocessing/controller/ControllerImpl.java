@@ -275,6 +275,7 @@ public class ControllerImpl implements IController, ActionListener {
         this.view.openLoadDialogue();
         String path = this.view.getFilePath();
         System.out.println("Controller: "+ path);
+
         break;
 //        System.out.println("What should I open???");
 //        try {

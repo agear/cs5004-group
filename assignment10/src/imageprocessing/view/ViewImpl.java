@@ -358,15 +358,21 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   }
 
   public void openLoadDialogue() {
+
+    // Creates a JFileChooser options, which opens a dialog box that lets the user choose a file.
     final JFileChooser fchooser = new JFileChooser(".");
+
+    // Limits the options to just .jpg, .gif, and .png images.
     FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG, GIF and PNG Images", "jpg","gif","png");
     fchooser.setFileFilter(filter);
-    int retvalue = fchooser.showOpenDialog(ViewImpl.this);
-    if (retvalue == JFileChooser.APPROVE_OPTION) {
+
+    // The return value is the path that the user chooses.
+    int retValue = fchooser.showOpenDialog(ViewImpl.this);
+    if (retValue == JFileChooser.APPROVE_OPTION) {
       File f = fchooser.getSelectedFile();
 //      fileOpenDisplay.setText(f.getAbsolutePath());
       path = f.getAbsolutePath();
-      System.out.println("View: "+path);
+      System.out.println("In the View, user has selected this path: " + path);
     }
   }
 
@@ -438,7 +444,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     this.greyscaleMenuItem.addActionListener(controller);
 
     //Draw Menu
-    this.flagMenuItem.addActionListener(controller);
+    this.flagMenuItem.addActionListener(controller); //TODO this section will probably be deleted when we figure out how to do dialog boxes correctly
     this.rainbowMenuItem.addActionListener(controller);
     this.checkerBoardMenuItem.addActionListener(controller);
 
