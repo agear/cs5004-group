@@ -2,6 +2,7 @@ package imageprocessing.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -25,7 +26,8 @@ public class ControllerImpl implements IController, ActionListener {
   IModel model;
   IView view;
 
-  Map<Character, Runnable> commands = new HashMap<>();
+  //TODO Delete?
+//  Map<Character, Runnable> commands = new HashMap<>();
 
 
   /** Initializes the controller of the imageprocessing package.
@@ -269,13 +271,42 @@ public class ControllerImpl implements IController, ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand()) {
+//      case "load":
+//        System.out.println("What should I open???");
+//        try {
+//          this.model.load("./res/santafe-dither.png", "santafe");
+//        }
+//        catch (IOException exception) {
+//          throw new IllegalArgumentException("Nope!!!");
+//        }
+//        BufferedImage buffered = this.model.getImage("santafe");
+//        this.view.displayImage(buffered);
       case "Greece":
-        System.out.println("Greece has been sent to the controller");
+        System.out.println("Greece has been recieved by the controller");
+        model.drawFlag(100, Country.GREECE);
+        try {
+          model.save("flag");
+        }
+        catch (IOException exception) {
+          throw new IllegalArgumentException("No such element");
+        }
       case "blur":
-        System.out.println("Blur has been sent to the controller");
+        System.out.println("Blur has been received by the controller");
     }
-    System.out.println(e.getActionCommand() + " got sent to the controller");
+    System.out.println(e.getActionCommand() + " was received by the controller");
 
+  }
+
+  public void sendBufferedImage(String input) throws IOException {
+    try {
+      this.model.load(input, input);
+      System.out.println("Sent from view to controller:" + input);
+    }
+    catch (IOException exception) {
+      throw new IllegalArgumentException("Nope!!!");
+    }
+    BufferedImage buffered = this.model.getImage(input);
+    this.view.displayImage(buffered);
   }
 
 

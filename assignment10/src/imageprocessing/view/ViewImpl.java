@@ -3,14 +3,19 @@ package imageprocessing.view;
 // Import packages needed for Swing.
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.BorderFactory;
 
+import imageprocessing.model.image.IImage;
+import imageprocessing.model.image.Image;
 import imageprocessing.controller.ControllerImpl;
+
 
 
 /**
@@ -44,14 +49,14 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   /**
    * Initializes the window and all containers of the imageprocessing GUI.
    */
-  public ViewImpl() {
+  public ViewImpl() throws IOException {
     System.out.println("Trying to set up ...");
     prepareGui("./res/shadowresize.jpg");
     System.out.println("Initialization complete.");
   }
 
 
-  private void prepareGui(String file) {
+  private void prepareGui(String file) throws IOException {
     mainFrame = new JFrame("Image Processing Software");
     mainFrame.setSize(400,400);
     mainFrame.setLayout(new BorderLayout());
@@ -174,8 +179,9 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     loadMenuItem.getAccessibleContext().setAccessibleDescription("Load an image");
 
     loadMenuItem.addActionListener(this);
+    JPanel fileloadPanel = new JPanel();
     menuFile.add(loadMenuItem);
-    loadMenuItem.setActionCommand("Open file");
+    loadMenuItem.setActionCommand("load");
 
 
 
@@ -236,7 +242,7 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     menuDraw.add(flagMenuItem);
     flagMenuItem.setActionCommand("flag");
 
-    String[] countryList = { "Greece", "France", "Switzerland" };
+    final String[] countryList = { "Greece", "France", "Switzerland" };
     countryListComboBox = new JComboBox(countryList);
     countryListComboBox.setSelectedIndex(countryList.length-1);
 
@@ -301,7 +307,7 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   /**
    * Creates the scrollable panel to hold an image.
    */
-  private void prepareScrollPane(String file) {
+  private void prepareScrollPane(String file) throws IOException {
     System.out.println("Preparing scroll pane...");
 
     imagePanel = new JPanel();
@@ -310,28 +316,28 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     imagePanel.setMaximumSize(null);
     mainFrame.add(imagePanel);
 
+    IImage image = new Image(file);
+    BufferedImage buffered = image.convertToBufferedImage(file);
     JLabel imageLabel = new JLabel("");
     imageScrollPane = new JScrollPane(imageLabel);
-    imageLabel.setIcon(new ImageIcon(file));
+    imageLabel.setIcon(new ImageIcon(buffered));
     imagePanel.add(imageScrollPane);
     imagePanel.setVisible(true);
     System.out.println("Scroll pane added");
 
   }
 
-
-  /** Changes the currently displayed image, by replacing the old one with a new one.
-   * @param filename The path to the image that user wants displayed
-   */
-  private void changeImageInPanel(String filename) {
+//TODO Add to interface so controller can call it?
+  public void displayImage(BufferedImage image) {
     this.imagePanel.remove(this.imagePanel);
     this.imagePanel.remove(this.imageScrollPane);
+    //this.mainFrame.remove(imagePanel);
     JLabel imageLabel = new JLabel("");
-    imageLabel.setIcon(new ImageIcon(filename));
+    imageLabel.setIcon(new ImageIcon(image));
     this.imageScrollPane = new JScrollPane(imageLabel);
     imagePanel.add(imageScrollPane);
     this.imagePanel.revalidate();
-    this.imagePanel.repaint();
+    imagePanel.repaint();
     this.mainFrame.add(imagePanel);
   }
 
@@ -343,36 +349,60 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   public void actionPerformed(ActionEvent e) {
 
     switch (e.getActionCommand()) {
-      case "Open file": {
+      case "load": {
         final JFileChooser fchooser = new JFileChooser(".");
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "JPG & GIF Images", "jpg", "gif", "png");
+        fchooser.addActionListener(this.controller);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif", "png");
         fchooser.setFileFilter(filter);
         int retvalue = fchooser.showOpenDialog(ViewImpl.this);
         if (retvalue == JFileChooser.APPROVE_OPTION) {
           File f = fchooser.getSelectedFile();
-          //fileOpenDisplay.setText(f.getAbsolutePath());
+          System.out.println("f.getabsolutepath:" + f.getAbsolutePath());
+          //fileOpenDisplay.setText(f.getAbsolutePath()); // TODO what is it? it is uninitialized and creating a null pointer exception
           String path = f.getAbsolutePath();
           System.out.println(path);
-          changeImageInPanel(path);
+          try {
+            //TODO command should be sent to controller which then loads the image into the model
+            // and returns the buffered image from the model, for display
+            loadMenuItem.setActionCommand("load " + path);
+            System.out.println("load " + path);
+            IImage image = new Image(path);
+            BufferedImage buffered = image.convertToBufferedImage(path);
+            displayImage(buffered);
+            fchooser.addActionListener(l-> {
+              try {
+                System.out.println("try { ");
+                this.controller.sendBufferedImage(path);
+                System.out.println("this.controller.sendBufferedImage(path); ");
+              } catch (IOException ex) {
+                System.out.println("Unknown error");
+              }
+            });
+            }
+          catch (IOException exception) {
+            throw new IllegalArgumentException("No such element");
+          }
         }
       }
-      break; //TODO is this necessary?
-      case "Save file":
+      break;
+      case "Save file": {
         final JFileChooser fchooser = new JFileChooser(".");
         int retvalue = fchooser.showSaveDialog(ViewImpl.this);
         if (retvalue == JFileChooser.APPROVE_OPTION) {
           File f = fchooser.getSelectedFile();
           fileSaveDisplay.setText(f.getAbsolutePath());
         }
-      case "flag":
-        System.out.println("xxxxxxxCombo box flag??");
+      }
+      case "flag": {
+        countryListComboBox.setVisible(true);
+      }
     }
   }
 
   @Override
   public void setListener(ControllerImpl controller) {
     this.controller = controller;
+    this.loadMenuItem.addActionListener(controller);
     this.blurMenuItem.addActionListener(controller);
     this.sharpenMenuItem.addActionListener(controller);
     this.ditherMenuItem.addActionListener(controller);

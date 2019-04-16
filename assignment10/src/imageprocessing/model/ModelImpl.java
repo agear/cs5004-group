@@ -1,5 +1,6 @@
 package imageprocessing.model;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -80,6 +81,17 @@ public class ModelImpl implements IModel {
 
   }
 
+  public BufferedImage getImage(String title) {
+    IImage currentImage = this.openImages.get(title);
+    try {
+      BufferedImage buffered = currentImage.convertToBufferedImage(title);
+      return buffered;
+    }
+    catch (IOException e) {
+      return null;
+//      throw new IOException("Couldn't find");}
+    }
+  }
   /**
    * Creates a filtered version of the current image with a blur using a built-in kernel.
    * Doesn't mutate the image.

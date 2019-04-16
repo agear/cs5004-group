@@ -1,5 +1,7 @@
 package imageprocessing.view;
 
+import java.awt.image.BufferedImage;
+
 import imageprocessing.controller.ControllerImpl;
 
 /**
@@ -14,4 +16,6 @@ public interface IView {
   what happened in the view.
    */
   void setListener(ControllerImpl controller);
+
+  void displayImage(BufferedImage image);
 }

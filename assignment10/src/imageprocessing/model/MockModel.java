@@ -1,5 +1,6 @@
 package imageprocessing.model;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import imageprocessing.model.image.Country;
@@ -138,5 +139,10 @@ public class MockModel implements IModel {
   @Override
   public void drawFlag(int width, Country c) {
     this.code += " flag " + width + " " + c;
+  }
+
+  @Override
+  public BufferedImage getImage(String image) {
+    return null;
   }
 }

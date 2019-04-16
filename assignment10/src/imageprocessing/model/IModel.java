@@ -1,5 +1,6 @@
 package imageprocessing.model;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import imageprocessing.model.image.Country;
@@ -27,6 +28,9 @@ public interface IModel {
    * @throws IOException If there is an error with the specified file name
    */
   void save(String title) throws IOException;
+
+  //TODO Javadoc.
+  BufferedImage getImage(String title);
 
   /**
    * Creates a filtered version of the current image with a blur using a built-in kernel.
