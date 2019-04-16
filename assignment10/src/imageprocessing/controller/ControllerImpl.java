@@ -309,7 +309,7 @@ public class ControllerImpl implements IController, ActionListener {
         break;
       case "blur":
         //TODO should this be in a higher order function since this is basically going to be the
-        // same template for all adjustments?
+        // same template for all adjustments? applyAdjustment(e->applyBlur) ???
         System.out.println("blur has been received by the controller");
         this.undoStack.push(currentImage);
         this.model.applyBlur(currentImage);
