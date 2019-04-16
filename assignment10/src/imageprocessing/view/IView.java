@@ -26,5 +26,9 @@ public interface IView {
 
   String flagDialog();
 
+  String rainbowDialog();
+
   int widthDialog();
+
+  int heightDialog();
 }

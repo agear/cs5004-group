@@ -25,13 +25,10 @@ public class ControllerImpl implements IController, ActionListener {
   IModel model;
   IView view;
 
-  int flagCount;
+  int flagCount,rainbowCount,checkerboardCount;
   String currentImage;
   Stack<String> undoStack;
   Stack<String> redoStack;
-
-  //TODO Delete?
-//  Map<Character, Runnable> commands = new HashMap<>();
 
 
   /**
@@ -47,8 +44,10 @@ public class ControllerImpl implements IController, ActionListener {
     this.view = view;
     this.undoStack = new Stack<>();
     this.redoStack = new Stack<>();
-
     this.flagCount = 0;
+    this.checkerboardCount = 0;
+    this.rainbowCount = 0;
+    this.currentImage = "./res/welcome.jpeg";
 
     /*
      During initialization, the controller passes itself as the listener for all the view’s buttons.
@@ -113,6 +112,7 @@ public class ControllerImpl implements IController, ActionListener {
 
           // Load the file name as the image name:
           this.model.load(filename, imageName);
+          this.currentImage = imageName;
           break;
 
         // Each of the next cases is a 'verb' to apply to the next image
@@ -283,6 +283,8 @@ public class ControllerImpl implements IController, ActionListener {
         // Displays the image in the view.
         this.view.displayImage(buffered);
         break;
+
+
       case "undo":
         if (undoStack.empty()) {
           System.out.println("Nothing to undo");
@@ -304,6 +306,10 @@ public class ControllerImpl implements IController, ActionListener {
         BufferedImage bufferedR = this.model.getImage(this.currentImage);
         this.view.displayImage(bufferedR);
         break;
+
+        /* If it is a flag, get the type of flag, and the width of the flag. Display the flag
+      and save the image.
+      */
       case "flag":
 
         String chosenFlagString = view.flagDialog();
@@ -341,10 +347,45 @@ public class ControllerImpl implements IController, ActionListener {
         catch (IOException exception) {
           throw new IllegalArgumentException("There was an error saving your flag into a file.");
         }
-
         break;
 
+      case "rainbow":
+        String chosenRainbowOrientation = view.rainbowDialog();
+        Orientation chosenOrientation = stringToOrientation(chosenRainbowOrientation);
+        chosenWidth = view.widthDialog();
+        int chosenHeight = view.heightDialog();
 
+        model.drawRainbow(chosenHeight, chosenWidth, chosenOrientation);
+        this.rainbowCount++;
+
+        // Load the flag into the open images in the model, and save it as a file.
+        try {
+
+          BufferedImage bufferedRainbow;
+          // If this is the first flag, the name of it is "flag"
+          if (this.rainbowCount == 1) {
+            bufferedRainbow = this.model.getImage("rainbow");
+            view.displayImage(bufferedRainbow);
+            this.currentImage = "rainbow";
+            model.save("rainbow");
+          }
+
+          // If this isn't the first flag, the name is "flag" with a number appended
+          else {
+            bufferedRainbow = this.model.getImage("rainbow-" + (rainbowCount - 1));
+            view.displayImage(bufferedRainbow);
+            this.currentImage = "rainbow-" + (rainbowCount - 1);
+            model.save("rainbow-" + (rainbowCount - 1));
+          }
+
+        }
+
+        // This is thrown if the name of the flag file to be saved is illegal.
+        catch (IOException exception) {
+          throw new IllegalArgumentException("There was an error saving your rainbow into a file.");
+        }
+
+        break;
 
 
       case "blur":
@@ -393,5 +434,23 @@ public class ControllerImpl implements IController, ActionListener {
     }
     throw new IllegalArgumentException("Country not installed yet. Bonus pack is $19.99.");
   }
+
+
+  /** Converts a string from the view into an Orientation -- parsing user input to pass
+   * to the model.
+   * @param input The name of the orientation from the view
+   * @return The name of the orientation in an Orientation enum
+   * @throws IllegalArgumentException If the orientation in the button isn't found
+   */
+  private Orientation stringToOrientation(String input) throws IllegalArgumentException {
+    if (input.equals("Horizontal")) {
+      return Orientation.HORIZONTAL;
+    }
+    else if (input.equals("Vertical")) {
+      return Orientation.VERTICAL;
+    }
+    throw new IllegalArgumentException("Orientation not installed yet. Bonus pack is $14.99.");
+  }
+
 
 }

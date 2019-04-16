@@ -41,7 +41,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   private JCheckBoxMenuItem cbMenuItem;
   private JLabel fileOpenDisplay;
   private JLabel fileSaveDisplay;
-  JComboBox countryListComboBox, widthComboBox;
+  JComboBox countryListComboBox, widthComboBox, rainbowComboBox, heightComboBox;
   ControllerImpl controller;
   private String path;
 
@@ -51,17 +51,25 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
    */
   public ViewImpl() throws IOException {
     System.out.println("Trying to set up ...");
-    prepareGui("./res/shadowresize.jpg");
+    prepareGui("./res/welcome.jpeg");
     System.out.println("Initialization complete.");
   }
 
 
+  /** Creates the Java Swing GUI -- a simple border layout with the image in the center
+   * of the screen and a menu bar with options on top.
+   * @param file The file to initialize the background image of the window to.
+   * @throws IOException If that file can not be found
+   */
   private void prepareGui(String file) throws IOException {
     /// always call the constructor of JFrame: it contains important initialization.
     mainFrame = new JFrame("Image Processing Software");
-    // setSize creates a frame with a specific size.
+
+    // setSize creates a frame with a specific size in the center of the screen.
     mainFrame.setSize(400,400);
+    mainFrame.setLocationRelativeTo(null);
     mainFrame.setLayout(new BorderLayout());
+
     // setDefaultCloseOperation determines the behavior when the “close-window” button is clicked.
     // Options are to close the application, close the window but not the application, or do
     // nothing.
@@ -70,7 +78,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     // Prepare the menu
     prepareMenuBar();
 
-    // Prepare scrolly area
+    // Prepare scrolling area
     prepareScrollPane(file);
 
     pack();
@@ -250,27 +258,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     menuDraw.add(flagMenuItem);
     flagMenuItem.setActionCommand("flag");
 
-//    final String[] countryList = { "Greece", "France", "Switzerland" };
-//    countryListComboBox = new JComboBox(countryList);
-//    countryListComboBox.setSelectedIndex(countryList.length-1);
-
-//    flagMenuItem.addActionListener(new java.awt.event.ActionListener() {
-//      @Override
-//      public void actionPerformed(java.awt.event.ActionEvent evt) {
-//
-//        countryListComboBox.addActionListener(this);
-//
-//        String input = (String)JOptionPane.showInputDialog(null, "What country?",
-//                "Choose your country carefully", JOptionPane.QUESTION_MESSAGE, null, countryList,
-//                countryList[0]);
-//
-//        System.out.println("In view, this was selected: " + input);
-//        countryListComboBox.setVisible(true);
-//        countryListComboBox.setActionCommand(input);
-//      }
-//    });
-
-
     rainbowMenuItem = new JMenuItem("Rainbow", KeyEvent.VK_R);
     rainbowMenuItem.getAccessibleContext().setAccessibleDescription("Draws Rainbow");
     rainbowMenuItem.setActionCommand("rainbow");
@@ -437,6 +424,19 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     return input;
   }
 
+  public String rainbowDialog() {
+    final String[] orientationList = { "Horizontal", "Vertical" };
+    rainbowComboBox = new JComboBox(orientationList);
+    rainbowComboBox.setSelectedIndex(orientationList.length-1);
+    String input = (String)JOptionPane.showInputDialog(null, "What orientation?",
+            "makin' a rainbow", JOptionPane.QUESTION_MESSAGE,
+            null, orientationList, orientationList[0]);
+    return input;
+  }
+
+
+
+
   public int widthDialog() {
 
     // Initialize 1000 numbers to display to user to choose.
@@ -455,6 +455,26 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
             null, stringNumberList, stringNumberList[0]);
 
     System.out.println("In view, this was selected: " + input);
+    return Integer.valueOf(input);
+  }
+
+  public int heightDialog() {
+
+    // Initialize 1000 numbers to display to user to choose.
+    String[] stringNumberList = new String[1000];
+    int j = 0;
+    for (int i = 54; i < stringNumberList.length - 1; i++ ) {
+      stringNumberList[j] = Integer.toString(i);
+      j++;
+    }
+
+    // Presents the user with a list of 1000 numbers to choose from.
+    heightComboBox = new JComboBox(stringNumberList);
+    heightComboBox.setSelectedIndex(stringNumberList.length-1);
+    String input = (String)JOptionPane.showInputDialog(null, "What height?",
+            "Selecting the height for your image.", JOptionPane.QUESTION_MESSAGE,
+            null, stringNumberList, stringNumberList[0]);
+
     return Integer.valueOf(input);
   }
 
