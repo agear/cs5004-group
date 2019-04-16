@@ -148,29 +148,7 @@ public class Filter implements Adjustment {
   public IImage apply(IImage input) {
 
     return input.applyFilter(this);
-    //
-    //  // Initialize output object
-    //  Pixel[][] output = new Pixel[input.get3Ddata().length][input.get3Ddata()[0].length];
-    //
-    //  // For each pixel in the image, apply the filter. Add that new value to the corresponding
-    //  value
-    //  // in a new set of data, and then create a new Image object from that.
-    //  Return the resulting obj.
-    //  for (int i = 0; i < input.get3Ddata().length; i++) {
-    //
-    //    for (int j = 0; j < input.get3Ddata()[i].length; j++) {
-    //
-    //      // Apply the filter, and receive new value
-    //      // Put the new pixel in the output image
-    //      Pixel filteredPixel = this.applyToPixel(input, i, j);
-    //      output[i][j] = filteredPixel;
-    //
-    //    }
-    //
-    //  }
-    //
-    //  Image filteredImage = new Image(output);
-    //  return filteredImage
+
   }
 
 

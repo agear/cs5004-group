@@ -7,8 +7,7 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.Stack;
 
 import imageprocessing.model.IModel;
 import imageprocessing.model.image.Country;
@@ -22,26 +21,32 @@ import imageprocessing.view.IView;
  */
 public class ControllerImpl implements IController, ActionListener {
   final Readable in;
-//  final Appendable out;
+  //  final Appendable out;
   IModel model;
   IView view;
+
   int flagCount;
+  String currentImage;
+  Stack<String> undoStack;
+  Stack<String> redoStack;
 
   //TODO Delete?
 //  Map<Character, Runnable> commands = new HashMap<>();
 
 
-  /** Initializes the controller of the imageprocessing package.
-   * The controller takes input from the user and decides what to do. It also controls what must
-   * be shown by the view and when.
+  /**
+   * Initializes the controller of the imageprocessing package. The controller takes input from the
+   * user and decides what to do. It also controls what must be shown by the view and when.
    *
    * @param model the model associated with this controller.
-   * @param in an object implementing the Readable interface to parse.
+   * @param in    an object implementing the Readable interface to parse.
    */
-  public ControllerImpl(IModel model, IView view, Readable in){
+  public ControllerImpl(IModel model, IView view, Readable in) {
     this.in = in;
     this.model = model;
     this.view = view;
+    this.undoStack = new Stack<>();
+    this.redoStack = new Stack<>();
 
     this.flagCount = 0;
 
@@ -53,8 +58,7 @@ public class ControllerImpl implements IController, ActionListener {
      */
     try {
       this.view.setListener(this);
-    }
-    catch (NullPointerException e) {
+    } catch (NullPointerException e) {
       System.out.println("There's an exception, idk why");
     }
 
@@ -62,13 +66,14 @@ public class ControllerImpl implements IController, ActionListener {
 //    this.view.display();
   }
 
-  /** The goGo method gives control to the controller (this class) until the program ends.
-   * It parses a text file, and has a switch-case design to determine which model method
-   * should be run to complete the user's intended action.
+  /**
+   * The goGo method gives control to the controller (this class) until the program ends. It parses
+   * a text file, and has a switch-case design to determine which model method should be run to
+   * complete the user's intended action.
    *
-   * @throws IOException If the input file to be parsed can not be found
+   * @throws IOException              If the input file to be parsed can not be found
    * @throws IllegalArgumentException If the input has an unrecognized command
-   * @throws NullPointerException If the model can't be found
+   * @throws NullPointerException     If the model can't be found
    */
   public void goGo() throws IOException, IllegalArgumentException, NullPointerException {
 
@@ -94,16 +99,14 @@ public class ControllerImpl implements IController, ActionListener {
           String filename;
           try {
             filename = scan.next();
-          }
-          catch (NoSuchElementException e) {
+          } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Must specify the path of the file to load.");
           }
 
           // Get the image name:
           try {
             imageName = scan.next();
-          }
-          catch (NoSuchElementException e) {
+          } catch (NoSuchElementException e) {
             // If they don't specify, then just call it the same name as the file
             imageName = filename;
           }
@@ -112,14 +115,12 @@ public class ControllerImpl implements IController, ActionListener {
           this.model.load(filename, imageName);
           break;
 
-          // Each of the next cases is a 'verb' to apply to the next image
+        // Each of the next cases is a 'verb' to apply to the next image
         case "dither":
 
           try {
             imageName = scan.next();
-          }
-
-          catch (NoSuchElementException e) {
+          } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Must specify the name of the image to adjust.");
           }
 
@@ -129,8 +130,7 @@ public class ControllerImpl implements IController, ActionListener {
 
           try {
             imageName = scan.next();
-          }
-          catch (NoSuchElementException e) {
+          } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Must specify the name of the image to adjust.");
           }
 
@@ -140,8 +140,7 @@ public class ControllerImpl implements IController, ActionListener {
         case "sharpen":
           try {
             imageName = scan.next();
-          }
-          catch (NoSuchElementException e) {
+          } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Must specify the name of the image to adjust.");
           }
           this.model.applySharpen(imageName);
@@ -149,8 +148,7 @@ public class ControllerImpl implements IController, ActionListener {
         case "sepia":
           try {
             imageName = scan.next();
-          }
-          catch (NoSuchElementException e) {
+          } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Must specify the name of the image to adjust.");
           }
           this.model.applySepia(imageName);
@@ -158,8 +156,7 @@ public class ControllerImpl implements IController, ActionListener {
         case "greyscale":
           try {
             imageName = scan.next();
-          }
-          catch (NoSuchElementException e) {
+          } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Must specify the name of the image to adjust.");
           }
           this.model.applyGreyscale(imageName);
@@ -167,16 +164,14 @@ public class ControllerImpl implements IController, ActionListener {
         case "mosaic":
           try {
             imageName = scan.next();
-          }
-          catch (NoSuchElementException e) {
+          } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Must specify the name of the image to adjust.");
           }
 
           int seed;
           try {
             seed = Integer.parseInt(scan.next());
-          }
-          catch (NoSuchElementException e) {
+          } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Must specify number of seeds for mosaic'ing.");
           }
 
@@ -187,8 +182,7 @@ public class ControllerImpl implements IController, ActionListener {
           int squareSize;
           try {
             squareSize = Integer.parseInt(scan.next());
-          }
-          catch (NoSuchElementException e) {
+          } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Must specify the size of the squares.");
           }
           this.model.drawCheckerBoard(squareSize);
@@ -198,16 +192,14 @@ public class ControllerImpl implements IController, ActionListener {
           String country;
           try {
             country = scan.next().toLowerCase();
-          }
-          catch (NoSuchElementException e) {
+          } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Must specify the name of the country to generate.");
           }
 
           int fWidth;
           try {
             fWidth = Integer.parseInt(scan.next());
-          }
-          catch (NoSuchElementException e) {
+          } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Must specify the size of the flag to generate.");
           }
 
@@ -235,8 +227,7 @@ public class ControllerImpl implements IController, ActionListener {
             orientation = scan.next();
             rHeight = Integer.parseInt(scan.next());
             rWidth = Integer.parseInt(scan.next());
-          }
-          catch (NoSuchElementException e) {
+          } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Must specify the rainbow's orientation, "
                     + "width, and height.");
           }
@@ -251,12 +242,11 @@ public class ControllerImpl implements IController, ActionListener {
           }
           break;
 
-          // This case saves an image, based on its english name (not path) to a file
+        // This case saves an image, based on its english name (not path) to a file
         case "save":
           try {
             imageName = scan.next();
-          }
-          catch (NoSuchElementException e) {
+          } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Must specify the name of the image to save.");
           }
 
@@ -279,7 +269,7 @@ public class ControllerImpl implements IController, ActionListener {
       case "load":
         this.view.openLoadDialogue();
         String path = this.view.getFilePath();
-        System.out.println("Controller: "+ path);
+        System.out.println("Controller: " + path);
         try {
           this.model.load(path, path);
         }
@@ -293,15 +283,27 @@ public class ControllerImpl implements IController, ActionListener {
         // Displays the image in the view.
         this.view.displayImage(buffered);
         break;
-//        System.out.println("What should I open???");
-//        try {
-//          this.model.load("./res/santafe-dither.png", "santafe");
-//        }
-//        catch (IOException exception) {
-//          throw new IllegalArgumentException("Nope!!!");
-//        }
-//        BufferedImage buffered = this.model.getImage("santafe");
-//        this.view.displayImage(buffered);
+      case "undo":
+        if (undoStack.empty()) {
+          System.out.println("Nothing to undo");
+          break;
+        }
+        this.currentImage = this.undoStack.pop();
+        this.redoStack.push(this.currentImage);
+        BufferedImage bufferedU = this.model.getImage(this.currentImage);
+        this.view.displayImage(bufferedU);
+        break;
+      case "redo":
+        //TODO doesn't seem to completely work yet..not sure why.
+        if (redoStack.empty()) {
+          System.out.println("Nothing to redo");
+          break;
+        }
+        this.currentImage = this.redoStack.pop();
+        this.undoStack.push(this.currentImage);
+        BufferedImage bufferedR = this.model.getImage(this.currentImage);
+        this.view.displayImage(bufferedR);
+        break;
       case "flag":
 
         String chosenFlagString = view.flagDialog();
@@ -321,6 +323,7 @@ public class ControllerImpl implements IController, ActionListener {
           if (this.flagCount == 1) {
             bufferedFlag = this.model.getImage("flag");
             view.displayImage(bufferedFlag);
+            this.currentImage = "flag";
             model.save("flag");
           }
 
@@ -328,7 +331,8 @@ public class ControllerImpl implements IController, ActionListener {
           else {
             bufferedFlag = this.model.getImage("flag-" + (flagCount - 1));
             view.displayImage(bufferedFlag);
-            model.save("flag-" + (flagCount-1));
+            this.currentImage = "flag-" + (flagCount - 1);
+            model.save("flag-" + (flagCount - 1));
           }
 
         }
@@ -341,10 +345,27 @@ public class ControllerImpl implements IController, ActionListener {
         break;
 
 
-        
+
 
       case "blur":
+        //TODO should this be in a higher order function since this is basically going to be the
+        // same template for all adjustments? applyAdjustment(e->applyBlur) ???
         System.out.println("blur has been received by the controller");
+        this.undoStack.push(currentImage);
+        this.model.applyBlur(currentImage);
+        this.currentImage = this.currentImage + "-blur";
+        BufferedImage buffer = this.model.getImage(currentImage);
+        view.displayImage(buffer);
+        break;
+      case "mosaic":
+        //TODO should this be in a higher order function since this is basically going to be the
+        // same template for all adjustments? applyAdjustment(e->applyBlur) ???
+        System.out.println("mosaic has been received by the controller");
+        this.undoStack.push(currentImage);
+        this.model.applyMosaic(currentImage, 100);
+        this.currentImage = this.currentImage + "-mosaic";
+        BufferedImage bufferM = this.model.getImage(currentImage);
+        view.displayImage(bufferM);
         break;
       default:
         System.out.println(e.getActionCommand() + " was received by the controller");
