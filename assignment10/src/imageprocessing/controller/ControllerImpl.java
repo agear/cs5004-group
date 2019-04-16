@@ -25,6 +25,7 @@ public class ControllerImpl implements IController, ActionListener {
 //  final Appendable out;
   IModel model;
   IView view;
+  String currentImage;
 
   //TODO Delete?
 //  Map<Character, Runnable> commands = new HashMap<>();
@@ -281,18 +282,10 @@ public class ControllerImpl implements IController, ActionListener {
         catch (IOException exception) {
           throw new IllegalArgumentException("Nope!!!");
         }
+        this.currentImage = path;
         BufferedImage buffered = this.model.getImage(path);
         this.view.displayImage(buffered);
         break;
-//        System.out.println("What should I open???");
-//        try {
-//          this.model.load("./res/santafe-dither.png", "santafe");
-//        }
-//        catch (IOException exception) {
-//          throw new IllegalArgumentException("Nope!!!");
-//        }
-//        BufferedImage buffered = this.model.getImage("santafe");
-//        this.view.displayImage(buffered);
       case "flag":
         System.out.println("flag has been recieved by the controller");
         model.drawFlag(100, Country.GREECE);
@@ -307,6 +300,10 @@ public class ControllerImpl implements IController, ActionListener {
         break;
       case "blur":
         System.out.println("blur has been received by the controller");
+        this.model.applyBlur(currentImage);
+        this.currentImage = this.currentImage+"-blur";
+        BufferedImage buffer = this.model.getImage(currentImage);
+        view.displayImage(buffer);
         break;
       default:
         System.out.println(e.getActionCommand() + " was received by the controller");
