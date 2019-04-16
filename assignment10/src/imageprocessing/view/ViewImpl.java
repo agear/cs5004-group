@@ -22,7 +22,7 @@ import imageprocessing.controller.ControllerImpl;
  * The user interface of the image processing package. To be implemented in v3.0.
  * TODO update javadoc
  */
-public class ViewImpl extends JFrame implements IView, ActionListener {
+public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
   // Fields required for setup.
   private JFrame mainFrame;
@@ -30,10 +30,10 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   // Fields required for menu:
 
   private JMenuBar menuBar;
-  private JMenu menuAdj, menuFile, menuDraw;
-  private JMenuItem menuItem, blurMenuItem, sharpenMenuItem, ditherMenuItem,
+  private JMenu menuFile, menuEdit, menuAdj, menuDraw, menuImages;
+  private JMenuItem blurMenuItem, sharpenMenuItem, ditherMenuItem,
   mosaicMenuItem, sepiaMenuItem, greyscaleMenuItem, flagMenuItem, checkerBoardMenuItem,
-  rainbowMenuItem, loadMenuItem;
+  rainbowMenuItem, loadMenuItem, saveMenuItem, undoMenuItem, redoMenuItem, image1MenuItem, image2MenuItem;
   private JScrollPane imageScrollPane;
 
   private JPanel imagePanel;
@@ -43,7 +43,7 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   private JLabel fileSaveDisplay;
   JComboBox countryListComboBox;
   ControllerImpl controller;
-
+  private String path;
 
 
   /**
@@ -57,13 +57,18 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
 
 
   private void prepareGui(String file) throws IOException {
+    /// always call the constructor of JFrame: it contains important initialization.
     mainFrame = new JFrame("Image Processing Software");
+    // setSize creates a frame with a specific size.
     mainFrame.setSize(400,400);
     mainFrame.setLayout(new BorderLayout());
+    // setDefaultCloseOperation determines the behavior when the “close-window” button is clicked.
+    // Options are to close the application, close the window but not the application, or do
+    // nothing.
     mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     // Prepare the menu
-    prepareMenu();
+    prepareMenuBar();
 
     // Prepare scrolly area
     prepareScrollPane(file);
@@ -79,7 +84,7 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
    * user can click on to change the current image, and the File menu, which has
    * 'administrative' type capabilities.
    */
-  private void prepareMenu() {
+  private void prepareMenuBar() {
     System.out.println("Trying to set up the menu ...");
 
 
@@ -178,21 +183,22 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     loadMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_L, ActionEvent.ALT_MASK)); //
     loadMenuItem.getAccessibleContext().setAccessibleDescription("Load an image");
 
-    loadMenuItem.addActionListener(this);
+    loadMenuItem.addActionListener(controller);
     JPanel fileloadPanel = new JPanel();
     menuFile.add(loadMenuItem);
     loadMenuItem.setActionCommand("load");
+    //TODO???
 
 
 
 
-    menuItem = new JMenuItem("Save", KeyEvent.VK_S);
-    menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.ALT_MASK)); //
-    menuItem.getAccessibleContext().setAccessibleDescription("Save image");
-    menuItem.addActionListener(this);
+    saveMenuItem = new JMenuItem("Save", KeyEvent.VK_S);
+    saveMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.ALT_MASK)); //
+    saveMenuItem.getAccessibleContext().setAccessibleDescription("Save image");
+    saveMenuItem.addActionListener(controller);
     JPanel filesavePanel = new JPanel();
-    menuFile.add(menuItem);
-    menuItem.setActionCommand("Save file");
+    menuFile.add(saveMenuItem);
+    saveMenuItem.setActionCommand("save");
 
 
     // Add this new menu to the bar.
@@ -202,29 +208,31 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   //TODO copied and pasted--update comments.
   private void prepareEditMenuItems() {
     // Build the first menu (File):
-    menuAdj = new JMenu("Edit");
+    menuEdit = new JMenu("Edit");
 
     // If the user types "F" for "F"ile (VK_F), this menu opens up:
-    menuAdj.setMnemonic(KeyEvent.VK_E);
+    menuEdit.setMnemonic(KeyEvent.VK_E);
 
     // Gets the AccessibleContext associated with this JMenuBar.
-    menuAdj.getAccessibleContext().setAccessibleDescription(
+    menuEdit.getAccessibleContext().setAccessibleDescription(
             "Edit menu");
 
-    // Add all adjustments item to this menu:
-    menuItem = new JMenuItem("Undo",
+    // Add all edit item to this menu:
+    undoMenuItem = new JMenuItem("Undo",
             KeyEvent.VK_Z); // If the person hits "Z", it goes here
     // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
-    menuItem.getAccessibleContext().setAccessibleDescription("Undo last command");
-    menuAdj.add(menuItem);
+    undoMenuItem.getAccessibleContext().setAccessibleDescription("Undo last command");
+    undoMenuItem.setActionCommand("undo");
+    menuEdit.add(undoMenuItem);
 
-    menuItem = new JMenuItem("Redo", KeyEvent.VK_X);
-    menuItem.getAccessibleContext().setAccessibleDescription("Redo last command");
-    menuAdj.add(menuItem);
+    redoMenuItem = new JMenuItem("Redo", KeyEvent.VK_X);
+    redoMenuItem.getAccessibleContext().setAccessibleDescription("Redo last command");
+    redoMenuItem.setActionCommand("redo");
+    menuEdit.add(redoMenuItem);
 
 
     // Add this new menu to the bar.
-    menuBar.add(menuAdj);
+    menuBar.add(menuEdit);
   }
 
   //TODO copied and pasted--update comments.
@@ -242,33 +250,35 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     menuDraw.add(flagMenuItem);
     flagMenuItem.setActionCommand("flag");
 
-    final String[] countryList = { "Greece", "France", "Switzerland" };
-    countryListComboBox = new JComboBox(countryList);
-    countryListComboBox.setSelectedIndex(countryList.length-1);
+//    final String[] countryList = { "Greece", "France", "Switzerland" };
+//    countryListComboBox = new JComboBox(countryList);
+//    countryListComboBox.setSelectedIndex(countryList.length-1);
 
-    flagMenuItem.addActionListener(new java.awt.event.ActionListener() {
-      @Override
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-        countryListComboBox.addActionListener(this);
-
-        String input = (String)JOptionPane.showInputDialog(null, "What country?",
-                "Choose your country carefully", JOptionPane.QUESTION_MESSAGE, null, countryList,
-                countryList[0]);
-
-        System.out.println("In view, this was selected: " + input);
-        countryListComboBox.setVisible(true);
-        countryListComboBox.setActionCommand(input);
-      }
-    });
+//    flagMenuItem.addActionListener(new java.awt.event.ActionListener() {
+//      @Override
+//      public void actionPerformed(java.awt.event.ActionEvent evt) {
+//
+//        countryListComboBox.addActionListener(this);
+//
+//        String input = (String)JOptionPane.showInputDialog(null, "What country?",
+//                "Choose your country carefully", JOptionPane.QUESTION_MESSAGE, null, countryList,
+//                countryList[0]);
+//
+//        System.out.println("In view, this was selected: " + input);
+//        countryListComboBox.setVisible(true);
+//        countryListComboBox.setActionCommand(input);
+//      }
+//    });
 
 
     rainbowMenuItem = new JMenuItem("Rainbow", KeyEvent.VK_R);
     rainbowMenuItem.getAccessibleContext().setAccessibleDescription("Draws Rainbow");
+    rainbowMenuItem.setActionCommand("rainbow");
     menuDraw.add(rainbowMenuItem);
 
     checkerBoardMenuItem = new JMenuItem("Checkerboard", KeyEvent.VK_C);
     checkerBoardMenuItem.getAccessibleContext().setAccessibleDescription("Draws Checkerboard");
+    checkerBoardMenuItem.setActionCommand("checkerboard");
     menuDraw.add(checkerBoardMenuItem);
 
     // Add this new menu to the bar.
@@ -279,29 +289,31 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
   //TODO copied and pasted--update comments.
   private void prepareImagesMenuItems() {
     // Build the first menu (File):
-    menuAdj = new JMenu("Images");
+    menuImages = new JMenu("Images");
 
     // If the user types "F" for "F"ile (VK_F), this menu opens up:
-    menuAdj.setMnemonic(KeyEvent.VK_I);
+    menuImages.setMnemonic(KeyEvent.VK_I);
 
     // Gets the AccessibleContext associated with this JMenuBar.
-    menuAdj.getAccessibleContext().setAccessibleDescription(
+    menuImages.getAccessibleContext().setAccessibleDescription(
             "Image menu");
 
     // Add all adjustments item to this menu:
-    menuItem = new JMenuItem("Image_1",
+    image1MenuItem = new JMenuItem("Image_1",
             KeyEvent.VK_Z); // If the person hits "Z", it goes here
     // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
-    menuItem.getAccessibleContext().setAccessibleDescription("Select Image_1");
-    menuAdj.add(menuItem);
+    image1MenuItem.getAccessibleContext().setAccessibleDescription("Select Image_1");
+    image1MenuItem.setActionCommand("image_1");
+    menuImages.add(image1MenuItem);
 
-    menuItem = new JMenuItem("Image_2", KeyEvent.VK_X);
-    menuItem.getAccessibleContext().setAccessibleDescription("Select Image_2");
-    menuAdj.add(menuItem);
+    image2MenuItem = new JMenuItem("Image_2", KeyEvent.VK_X);
+    image2MenuItem.getAccessibleContext().setAccessibleDescription("Select Image_2");
+    image2MenuItem.setActionCommand("image_2");
+    menuImages.add(image2MenuItem);
 
 
     // Add this new menu to the bar.
-    menuBar.add(menuAdj);
+    menuBar.add(menuImages);
   }
 
   /**
@@ -327,7 +339,7 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
 
   }
 
-//TODO Add to interface so controller can call it?
+
   public void displayImage(BufferedImage image) {
     this.imagePanel.remove(this.imagePanel);
     this.imagePanel.remove(this.imageScrollPane);
@@ -341,75 +353,98 @@ public class ViewImpl extends JFrame implements IView, ActionListener {
     this.mainFrame.add(imagePanel);
   }
 
+  public String getFilePath(){
+    return path;
+  }
+
+  public void openLoadDialogue() {
+    final JFileChooser fchooser = new JFileChooser(".");
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG, GIF and PNG Images", "jpg","gif","png");
+    fchooser.setFileFilter(filter);
+    int retvalue = fchooser.showOpenDialog(ViewImpl.this);
+    if (retvalue == JFileChooser.APPROVE_OPTION) {
+      File f = fchooser.getSelectedFile();
+//      fileOpenDisplay.setText(f.getAbsolutePath());
+      path = f.getAbsolutePath();
+      System.out.println("View: "+path);
+    }
+  }
 
   /**
    * Invoked when an action occurs.
    */
-  @Override
-  public void actionPerformed(ActionEvent e) {
-
-    switch (e.getActionCommand()) {
-      case "load": {
-        final JFileChooser fchooser = new JFileChooser(".");
-        fchooser.addActionListener(this.controller);
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif", "png");
-        fchooser.setFileFilter(filter);
-        int retvalue = fchooser.showOpenDialog(ViewImpl.this);
-        if (retvalue == JFileChooser.APPROVE_OPTION) {
-          File f = fchooser.getSelectedFile();
-          System.out.println("f.getabsolutepath:" + f.getAbsolutePath());
-          //fileOpenDisplay.setText(f.getAbsolutePath()); // TODO what is it? it is uninitialized and creating a null pointer exception
-          String path = f.getAbsolutePath();
-          System.out.println(path);
-          try {
-            //TODO command should be sent to controller which then loads the image into the model
-            // and returns the buffered image from the model, for display
-            loadMenuItem.setActionCommand("load " + path);
-            System.out.println("load " + path);
-            IImage image = new Image(path);
-            BufferedImage buffered = image.convertToBufferedImage(path);
-            displayImage(buffered);
-            fchooser.addActionListener(l-> {
-              try {
-                System.out.println("try { ");
-                this.controller.sendBufferedImage(path);
-                System.out.println("this.controller.sendBufferedImage(path); ");
-              } catch (IOException ex) {
-                System.out.println("Unknown error");
-              }
-            });
-            }
-          catch (IOException exception) {
-            throw new IllegalArgumentException("No such element");
-          }
-        }
-      }
-      break;
-      case "Save file": {
-        final JFileChooser fchooser = new JFileChooser(".");
-        int retvalue = fchooser.showSaveDialog(ViewImpl.this);
-        if (retvalue == JFileChooser.APPROVE_OPTION) {
-          File f = fchooser.getSelectedFile();
-          fileSaveDisplay.setText(f.getAbsolutePath());
-        }
-      }
-      case "flag": {
-        countryListComboBox.setVisible(true);
-      }
-    }
-  }
+//  @Override
+//  public void actionPerformed(ActionEvent e) {
+//
+//    switch (e.getActionCommand()) {
+//      case "load": {
+//        final JFileChooser fchooser = new JFileChooser(".");
+//        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif", "png");
+//        fchooser.setFileFilter(filter);
+//        int retvalue = fchooser.showOpenDialog(ViewImpl.this);
+//        if (retvalue == JFileChooser.APPROVE_OPTION) {
+//          File f = fchooser.getSelectedFile();
+//          fileOpenDisplay.setText(f.getAbsolutePath());
+//          String path = f.getAbsolutePath();
+//          System.out.println(path);
+//          try {
+//            //TODO command should be sent to controller which then loads the image into the model
+//            // and returns the buffered image from the model, for display
+//            loadMenuItem.setActionCommand("load "+path);
+//            System.out.println("load "+path);
+//            IImage image = new Image(path);
+//            BufferedImage buffered = image.convertToBufferedImage(path);
+//            displayImage(buffered);
+//          }
+//          catch (IOException exception) {
+//            throw new IllegalArgumentException("No such element");
+//          }
+////          displayImage(path);
+//        }
+//      }
+//      break;
+//      case "Save file": {
+//        final JFileChooser fchooser = new JFileChooser(".");
+//        int retvalue = fchooser.showSaveDialog(ViewImpl.this);
+//        if (retvalue == JFileChooser.APPROVE_OPTION) {
+//          File f = fchooser.getSelectedFile();
+//          fileSaveDisplay.setText(f.getAbsolutePath());
+//        }
+//      }
+//      case "flag": {
+//        countryListComboBox.setVisible(true);
+//      }
+//    }
+//  }
 
   @Override
-  public void setListener(ControllerImpl controller) {
-    this.controller = controller;
+  public void setListener(ActionListener controller) {
+//    this.controller = controller;
+
+    //File Menu
     this.loadMenuItem.addActionListener(controller);
+    this.saveMenuItem.addActionListener(controller);
+
+    //Edit Menu
+    this.undoMenuItem.addActionListener(controller);
+    this.redoMenuItem.addActionListener(controller);
+
+    //Adjustment Menu
     this.blurMenuItem.addActionListener(controller);
     this.sharpenMenuItem.addActionListener(controller);
     this.ditherMenuItem.addActionListener(controller);
     this.mosaicMenuItem.addActionListener(controller);
     this.sepiaMenuItem.addActionListener(controller);
     this.greyscaleMenuItem.addActionListener(controller);
+
+    //Draw Menu
     this.flagMenuItem.addActionListener(controller);
-    this.countryListComboBox.addActionListener(controller);
+    this.rainbowMenuItem.addActionListener(controller);
+    this.checkerBoardMenuItem.addActionListener(controller);
+
+    //Image Menu
+    this.image1MenuItem.addActionListener(controller);
+    this.image2MenuItem.addActionListener(controller);
+//    this.countryListComboBox.addActionListener(controller);
   }
 }
