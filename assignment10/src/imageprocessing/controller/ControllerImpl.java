@@ -54,6 +54,9 @@ public class ControllerImpl implements IController, ActionListener {
     catch (NullPointerException e) {
       System.out.println("There's an exception, idk why");
     }
+
+    //TODO Based on the Lecture code: ??
+//    this.view.display();
   }
 
   /** The goGo method gives control to the controller (this class) until the program ends.
@@ -265,35 +268,42 @@ public class ControllerImpl implements IController, ActionListener {
   }
 
 
-
-
-
   @Override
   public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand()) {
       case "load":
-        System.out.println("What should I open???");
-        try {
-          this.model.load("./res/santafe-dither.png", "santafe");
-        }
-        catch (IOException exception) {
-          throw new IllegalArgumentException("Nope!!!");
-        }
-        BufferedImage buffered = this.model.getImage("santafe");
-        this.view.displayImage(buffered);
-      case "Greece":
-        System.out.println("Greece has been recieved by the controller");
+        this.view.openLoadDialogue();
+        String path = this.view.getFilePath();
+        System.out.println("Controller: "+ path);
+        break;
+//        System.out.println("What should I open???");
+//        try {
+//          this.model.load("./res/santafe-dither.png", "santafe");
+//        }
+//        catch (IOException exception) {
+//          throw new IllegalArgumentException("Nope!!!");
+//        }
+//        BufferedImage buffered = this.model.getImage("santafe");
+//        this.view.displayImage(buffered);
+      case "flag":
+        System.out.println("flag has been recieved by the controller");
         model.drawFlag(100, Country.GREECE);
         try {
+          BufferedImage bufferedFlag = this.model.getImage("flag");
+          view.displayImage(bufferedFlag);
           model.save("flag");
         }
         catch (IOException exception) {
           throw new IllegalArgumentException("No such element");
         }
+        break;
       case "blur":
-        System.out.println("Blur has been received by the controller");
+        System.out.println("blur has been received by the controller");
+        break;
+      default:
+        System.out.println(e.getActionCommand() + " was received by the controller");
     }
-    System.out.println(e.getActionCommand() + " was received by the controller");
+//    System.out.println(e.getActionCommand() + " was received by the controller");
 
   }
 

@@ -1,5 +1,6 @@
 package imageprocessing.view;
 
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 import imageprocessing.controller.ControllerImpl;
@@ -15,7 +16,11 @@ public interface IView {
   in order for the controller to tell the model which actions to take based on
   what happened in the view.
    */
-  void setListener(ControllerImpl controller);
+  void setListener(ActionListener controller);
 
   void displayImage(BufferedImage image);
+
+  void openLoadDialogue();
+
+  String getFilePath();
 }
