@@ -313,8 +313,21 @@ public class ControllerImpl implements IController, ActionListener {
       case "flag":
 
         String chosenFlagString = view.flagDialog();
+
+        // If they click 'cancel', do not continue prompting them.
+        if (chosenFlagString == null) {
+          return;
+        }
+
+        // Convert the string to a Country (which is what our model is expecting)
         Country chosenFlag = stringToCountry(chosenFlagString);
+
         int chosenWidth = view.widthDialog();
+
+        // If they click 'cancel', do not make anything.
+        if (chosenWidth == 0) {
+          return;
+        }
 
         System.out.println("In the controller, the user has chosen this width:" + chosenWidth);
 
@@ -330,6 +343,7 @@ public class ControllerImpl implements IController, ActionListener {
             bufferedFlag = this.model.getImage("flag");
             view.displayImage(bufferedFlag);
             this.currentImage = "flag";
+            this.undoStack.push(currentImage);
             model.save("flag");
           }
 
@@ -338,6 +352,7 @@ public class ControllerImpl implements IController, ActionListener {
             bufferedFlag = this.model.getImage("flag-" + (flagCount - 1));
             view.displayImage(bufferedFlag);
             this.currentImage = "flag-" + (flagCount - 1);
+            this.undoStack.push(currentImage);
             model.save("flag-" + (flagCount - 1));
           }
 
@@ -351,9 +366,27 @@ public class ControllerImpl implements IController, ActionListener {
 
       case "rainbow":
         String chosenRainbowOrientation = view.rainbowDialog();
+
+        // If they click 'cancel', do not continue prompting them.
+        if (chosenRainbowOrientation == null) {
+          return;
+        }
+
         Orientation chosenOrientation = stringToOrientation(chosenRainbowOrientation);
+
         chosenWidth = view.widthDialog();
+
+        // If they click 'cancel', do not make anything.
+        if (chosenWidth == 0) {
+          return;
+        }
+
         int chosenHeight = view.heightDialog();
+
+        // If they click 'cancel', do not make anything.
+        if (chosenHeight == 0) {
+          return;
+        }
 
         model.drawRainbow(chosenHeight, chosenWidth, chosenOrientation);
         this.rainbowCount++;
@@ -367,6 +400,7 @@ public class ControllerImpl implements IController, ActionListener {
             bufferedRainbow = this.model.getImage("rainbow");
             view.displayImage(bufferedRainbow);
             this.currentImage = "rainbow";
+            this.undoStack.push(currentImage);
             model.save("rainbow");
           }
 
@@ -375,6 +409,7 @@ public class ControllerImpl implements IController, ActionListener {
             bufferedRainbow = this.model.getImage("rainbow-" + (rainbowCount - 1));
             view.displayImage(bufferedRainbow);
             this.currentImage = "rainbow-" + (rainbowCount - 1);
+            this.undoStack.push(currentImage);
             model.save("rainbow-" + (rainbowCount - 1));
           }
 
@@ -387,16 +422,66 @@ public class ControllerImpl implements IController, ActionListener {
 
         break;
 
+      case "checkerboard":
+        int checkerboardSize = view.checkerboardDialog();
+
+        // If they click 'cancel', do not make anything.
+        if (checkerboardSize == 0) {
+          return;
+        }
+
+        model.drawCheckerBoard(checkerboardSize);
+        this.checkerboardCount++;
+
+        // Load the flag into the open images in the model, and save it as a file.
+        try {
+
+          BufferedImage bufferedCheckerboard;
+          // If this is the first flag, the name of it is "flag"
+          if (this.checkerboardCount == 1) {
+            bufferedCheckerboard = this.model.getImage("checkerboard");
+            view.displayImage(bufferedCheckerboard);
+            this.currentImage = "checkerboard";
+            this.undoStack.push(currentImage);
+            model.save("checkerboard");
+          }
+
+          // If this isn't the first flag, the name is "flag" with a number appended
+          else {
+            bufferedCheckerboard = this.model.getImage("checkerboard-" + (checkerboardCount - 1));
+            view.displayImage(bufferedCheckerboard);
+            this.currentImage = "checkerboard-" + (checkerboardCount - 1);
+            this.undoStack.push(currentImage);
+            model.save("checkerboard-" + (checkerboardCount - 1));
+          }
+
+        }
+
+        // This is thrown if the name of the flag file to be saved is illegal.
+        catch (IOException exception) {
+          throw new IllegalArgumentException("There was an error saving your checkerboard into a file.");
+        }
+
+        break;
+
+
 
       case "blur":
         //TODO should this be in a higher order function since this is basically going to be the
         // same template for all adjustments? applyAdjustment(e->applyBlur) ???
         System.out.println("blur has been received by the controller");
         this.undoStack.push(currentImage);
-        this.model.applyBlur(currentImage);
-        this.currentImage = this.currentImage + "-blur";
-        BufferedImage buffer = this.model.getImage(currentImage);
-        view.displayImage(buffer);
+        System.out.println("current image:" + this.currentImage);
+        try {
+          this.model.applyBlur(currentImage);
+          this.currentImage = this.currentImage + "-blur";
+          BufferedImage buffer = this.model.getImage(currentImage);
+          view.displayImage(buffer);
+        }
+        catch (NullPointerException exc) {
+          System.out.println("Can't blur the background image. Must load your own image first.");
+        }
+
         break;
       case "mosaic":
         //TODO should this be in a higher order function since this is basically going to be the
@@ -411,8 +496,6 @@ public class ControllerImpl implements IController, ActionListener {
       default:
         System.out.println(e.getActionCommand() + " was received by the controller");
     }
-//    System.out.println(e.getActionCommand() + " was received by the controller");
-
   }
 
 
@@ -423,16 +506,22 @@ public class ControllerImpl implements IController, ActionListener {
    * @throws IllegalArgumentException If the country in the button isn't found
    */
   private Country stringToCountry(String input) throws IllegalArgumentException {
-    if (input.equals("Switzerland")) {
-      return Country.SWITZERLAND;
+    try {
+
+      if (input.equals("Switzerland")) {
+        return Country.SWITZERLAND;
+      } else if (input.equals("France")) {
+        return Country.FRANCE;
+      } else if (input.equals("Greece")) {
+        return Country.GREECE;
+      }
+      throw new IllegalArgumentException("Country not installed yet. Bonus pack is $19.99.");
     }
-    else if (input.equals("France")) {
-      return Country.FRANCE;
+
+    // If the user hits 'cancel' , it's no big deal!
+    catch (NullPointerException e) {
+      return null;
     }
-    else if (input.equals("Greece")) {
-      return Country.GREECE;
-    }
-    throw new IllegalArgumentException("Country not installed yet. Bonus pack is $19.99.");
   }
 
 
@@ -443,13 +532,20 @@ public class ControllerImpl implements IController, ActionListener {
    * @throws IllegalArgumentException If the orientation in the button isn't found
    */
   private Orientation stringToOrientation(String input) throws IllegalArgumentException {
-    if (input.equals("Horizontal")) {
-      return Orientation.HORIZONTAL;
+    try {
+      if (input.equals("Horizontal")) {
+        return Orientation.HORIZONTAL;
+      } else if (input.equals("Vertical")) {
+        return Orientation.VERTICAL;
+      }
+      throw new IllegalArgumentException("Orientation not installed yet. Bonus pack is $14.99.");
     }
-    else if (input.equals("Vertical")) {
-      return Orientation.VERTICAL;
+
+    // If the user hits 'cancel' , it's no big deal!
+    catch (NullPointerException e) {
+      return null;
     }
-    throw new IllegalArgumentException("Orientation not installed yet. Bonus pack is $14.99.");
+
   }
 
 

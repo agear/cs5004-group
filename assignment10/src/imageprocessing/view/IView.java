@@ -31,4 +31,6 @@ public interface IView {
   int widthDialog();
 
   int heightDialog();
+
+  int checkerboardDialog();
 }
