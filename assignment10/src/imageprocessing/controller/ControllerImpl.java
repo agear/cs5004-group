@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Stack;
 
 import imageprocessing.model.IModel;
 import imageprocessing.model.image.Country;
@@ -26,6 +28,7 @@ public class ControllerImpl implements IController, ActionListener {
   IModel model;
   IView view;
   String currentImage;
+  Stack<String> undoStack;
 
   //TODO Delete?
 //  Map<Character, Runnable> commands = new HashMap<>();
@@ -42,7 +45,7 @@ public class ControllerImpl implements IController, ActionListener {
     this.in = in;
     this.model = model;
     this.view = view;
-
+    this.undoStack = new Stack<>();
     /*
      During initialization, the controller passes itself as the listener for all the view’s buttons.
      The effect of this design is that when the program is run and the button is clicked,
@@ -286,7 +289,13 @@ public class ControllerImpl implements IController, ActionListener {
         BufferedImage buffered = this.model.getImage(path);
         this.view.displayImage(buffered);
         break;
-      case "flag":
+      case "undo":
+
+        this.currentImage = this.undoStack.pop();
+        BufferedImage bufferedU = this.model.getImage(this.currentImage);
+        this.view.displayImage(bufferedU);
+        break;
+        case "flag":
         System.out.println("flag has been recieved by the controller");
         model.drawFlag(100, Country.GREECE);
         try {
@@ -300,6 +309,7 @@ public class ControllerImpl implements IController, ActionListener {
         break;
       case "blur":
         System.out.println("blur has been received by the controller");
+        this.undoStack.push(currentImage);
         this.model.applyBlur(currentImage);
         this.currentImage = this.currentImage+"-blur";
         BufferedImage buffer = this.model.getImage(currentImage);
