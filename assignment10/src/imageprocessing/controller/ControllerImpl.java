@@ -275,6 +275,14 @@ public class ControllerImpl implements IController, ActionListener {
         this.view.openLoadDialogue();
         String path = this.view.getFilePath();
         System.out.println("Controller: "+ path);
+        try {
+          this.model.load(path, path);
+        }
+        catch (IOException exception) {
+          throw new IllegalArgumentException("Nope!!!");
+        }
+        BufferedImage buffered = this.model.getImage(path);
+        this.view.displayImage(buffered);
         break;
 //        System.out.println("What should I open???");
 //        try {
