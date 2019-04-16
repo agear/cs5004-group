@@ -41,7 +41,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   private JCheckBoxMenuItem cbMenuItem;
   private JLabel fileOpenDisplay;
   private JLabel fileSaveDisplay;
-  JComboBox countryListComboBox;
+  JComboBox countryListComboBox, widthComboBox;
   ControllerImpl controller;
   private String path;
 
@@ -422,6 +422,42 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 //      }
 //    }
 //  }
+
+
+  public String flagDialog() {
+
+    final String[] countryList = { "Greece", "France", "Switzerland" };
+    countryListComboBox = new JComboBox(countryList);
+    countryListComboBox.setSelectedIndex(countryList.length-1);
+    String input = (String)JOptionPane.showInputDialog(null, "What country?",
+                "Choose your country carefully", JOptionPane.QUESTION_MESSAGE,
+            null, countryList, countryList[0]);
+
+    System.out.println("In view, this was selected: " + input);
+    return input;
+  }
+
+  public int widthDialog() {
+
+    // Initialize 1000 numbers to display to user to choose.
+    String[] stringNumberList = new String[1000];
+    int j = 0;
+    for (int i = 54; i < stringNumberList.length - 1; i++ ) {
+      stringNumberList[j] = Integer.toString(i);
+      j++;
+    }
+
+    // Presents the user with a list of 1000 numbers to choose from.
+    widthComboBox = new JComboBox(stringNumberList);
+    widthComboBox.setSelectedIndex(stringNumberList.length-1);
+    String input = (String)JOptionPane.showInputDialog(null, "What width?",
+            "Selecting the width for your image.", JOptionPane.QUESTION_MESSAGE,
+            null, stringNumberList, stringNumberList[0]);
+
+    System.out.println("In view, this was selected: " + input);
+    return Integer.valueOf(input);
+  }
+
 
   @Override
   public void setListener(ActionListener controller) {

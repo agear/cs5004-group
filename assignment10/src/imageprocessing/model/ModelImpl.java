@@ -82,7 +82,9 @@ public class ModelImpl implements IModel {
   }
 
   public BufferedImage getImage(String title) {
+
     IImage currentImage = this.openImages.get(title);
+
     try {
       BufferedImage buffered = currentImage.convertToBufferedImage(title);
       return buffered;
@@ -215,8 +217,10 @@ public class ModelImpl implements IModel {
    */
   @Override
   public void drawFlag(int width, Country c) {
+    System.out.println("Making a flag with width: " + width);
     Flag f = new Flag(width, c);
     String name = "flag";
-    this.openImages.put(isDuplicate(name), f);
+    String outputName = isDuplicate(name);
+    this.openImages.put(outputName, f);
   }
 }

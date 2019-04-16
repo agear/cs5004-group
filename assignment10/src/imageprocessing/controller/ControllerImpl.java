@@ -25,6 +25,7 @@ public class ControllerImpl implements IController, ActionListener {
 //  final Appendable out;
   IModel model;
   IView view;
+  int flagCount;
 
   //TODO Delete?
 //  Map<Character, Runnable> commands = new HashMap<>();
@@ -41,6 +42,8 @@ public class ControllerImpl implements IController, ActionListener {
     this.in = in;
     this.model = model;
     this.view = view;
+
+    this.flagCount = 0;
 
     /*
      During initialization, the controller passes itself as the listener for all the view’s buttons.
@@ -269,13 +272,26 @@ public class ControllerImpl implements IController, ActionListener {
 
 
   @Override
-  public void actionPerformed(ActionEvent e) {
+  public void actionPerformed(ActionEvent e) throws IllegalArgumentException {
     switch (e.getActionCommand()) {
+
+      // When the user clicks on the 'load' button, load the image in the model
       case "load":
         this.view.openLoadDialogue();
         String path = this.view.getFilePath();
         System.out.println("Controller: "+ path);
+        try {
+          this.model.load(path, path);
+        }
+        catch (IOException exception) {
+          throw new IllegalArgumentException("There was a problem loading that image.");
+        }
 
+        // Creates a BufferedImage of the image specified by the path.
+        BufferedImage buffered = this.model.getImage(path);
+
+        // Displays the image in the view.
+        this.view.displayImage(buffered);
         break;
 //        System.out.println("What should I open???");
 //        try {
@@ -287,17 +303,46 @@ public class ControllerImpl implements IController, ActionListener {
 //        BufferedImage buffered = this.model.getImage("santafe");
 //        this.view.displayImage(buffered);
       case "flag":
-        System.out.println("flag has been recieved by the controller");
-        model.drawFlag(100, Country.GREECE);
+
+        String chosenFlagString = view.flagDialog();
+        Country chosenFlag = stringToCountry(chosenFlagString);
+        int chosenWidth = view.widthDialog();
+
+        System.out.println("In the controller, the user has chosen this width:" + chosenWidth);
+
+        model.drawFlag(chosenWidth, chosenFlag);
+        this.flagCount++;
+
+        // Load the flag into the open images in the model, and save it as a file.
         try {
-          BufferedImage bufferedFlag = this.model.getImage("flag");
-          view.displayImage(bufferedFlag);
-          model.save("flag");
+
+          BufferedImage bufferedFlag;
+          // If this is the first flag, the name of it is "flag"
+          if (this.flagCount == 1) {
+            bufferedFlag = this.model.getImage("flag");
+            view.displayImage(bufferedFlag);
+            model.save("flag");
+          }
+
+          // If this isn't the first flag, the name is "flag" with a number appended
+          else {
+            bufferedFlag = this.model.getImage("flag-" + (flagCount - 1));
+            view.displayImage(bufferedFlag);
+            model.save("flag-" + (flagCount-1));
+          }
+
         }
+
+        // This is thrown if the name of the flag file to be saved is illegal.
         catch (IOException exception) {
-          throw new IllegalArgumentException("No such element");
+          throw new IllegalArgumentException("There was an error saving your flag into a file.");
         }
+
         break;
+
+
+        
+
       case "blur":
         System.out.println("blur has been received by the controller");
         break;
@@ -308,5 +353,24 @@ public class ControllerImpl implements IController, ActionListener {
 
   }
 
+
+  /** Converts a string from the view into a Country -- parsing user input to pass
+   * to the model.
+   * @param input The name of the country from the button
+   * @return The name of the country in a Country enum
+   * @throws IllegalArgumentException If the country in the button isn't found
+   */
+  private Country stringToCountry(String input) throws IllegalArgumentException {
+    if (input.equals("Switzerland")) {
+      return Country.SWITZERLAND;
+    }
+    else if (input.equals("France")) {
+      return Country.FRANCE;
+    }
+    else if (input.equals("Greece")) {
+      return Country.GREECE;
+    }
+    throw new IllegalArgumentException("Country not installed yet. Bonus pack is $19.99.");
+  }
 
 }

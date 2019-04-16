@@ -23,4 +23,8 @@ public interface IView {
   void openLoadDialogue();
 
   String getFilePath();
+
+  String flagDialog();
+
+  int widthDialog();
 }
