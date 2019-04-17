@@ -368,6 +368,11 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     }
   }
 
+
+  public void openSaveDialogue() {
+    //TODO
+  }
+
   /**
    * Invoked when an action occurs.
    */
@@ -556,5 +561,27 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     this.image1MenuItem.addActionListener(controller);
     this.image2MenuItem.addActionListener(controller);
 //    this.countryListComboBox.addActionListener(controller);
+  }
+
+  public void toggleUndo(boolean b){
+    undoMenuItem.setEnabled(b);
+  }
+
+  public void toggleRedo(boolean b) {
+    redoMenuItem.setEnabled(b);
+  }
+
+  public void toggleAdjustments(boolean b) {
+    blurMenuItem.setEnabled(b);
+    sharpenMenuItem.setEnabled(b);
+    ditherMenuItem.setEnabled(b);
+    mosaicMenuItem.setEnabled(b);
+    sepiaMenuItem.setEnabled(b);
+    greyscaleMenuItem.setEnabled(b);
+    saveMenuItem.setEnabled(b);
+  }
+
+  public void updateImageMenu(boolean b) {
+    //TODO
   }
 }

@@ -290,10 +290,15 @@ public class ControllerImpl implements IController, ActionListener {
           System.out.println("Nothing to undo");
           break;
         }
-        this.currentImage = this.undoStack.pop();
+        // Start by pushing the current image onto the redo stack.
         this.redoStack.push(this.currentImage);
+        // Next make the current image the top item on the undo stack.
+        this.currentImage = this.undoStack.pop();
+        // Update the display.
         BufferedImage bufferedU = this.model.getImage(this.currentImage);
         this.view.displayImage(bufferedU);
+        // Update the undo/redo state.
+        updateUndoRedo();
         break;
       case "redo":
         //TODO doesn't seem to completely work yet..not sure why.
@@ -301,10 +306,11 @@ public class ControllerImpl implements IController, ActionListener {
           System.out.println("Nothing to redo");
           break;
         }
-        this.currentImage = this.redoStack.pop();
         this.undoStack.push(this.currentImage);
+        this.currentImage = this.redoStack.pop();
         BufferedImage bufferedR = this.model.getImage(this.currentImage);
         this.view.displayImage(bufferedR);
+        updateUndoRedo();
         break;
 
         /* If it is a flag, get the type of flag, and the width of the flag. Display the flag
@@ -344,6 +350,7 @@ public class ControllerImpl implements IController, ActionListener {
             view.displayImage(bufferedFlag);
             this.currentImage = "flag";
             this.undoStack.push(currentImage);
+            updateUndoRedo();
             model.save("flag");
           }
 
@@ -353,6 +360,7 @@ public class ControllerImpl implements IController, ActionListener {
             view.displayImage(bufferedFlag);
             this.currentImage = "flag-" + (flagCount - 1);
             this.undoStack.push(currentImage);
+            updateUndoRedo();
             model.save("flag-" + (flagCount - 1));
           }
 
@@ -401,6 +409,7 @@ public class ControllerImpl implements IController, ActionListener {
             view.displayImage(bufferedRainbow);
             this.currentImage = "rainbow";
             this.undoStack.push(currentImage);
+            updateUndoRedo();
             model.save("rainbow");
           }
 
@@ -410,6 +419,7 @@ public class ControllerImpl implements IController, ActionListener {
             view.displayImage(bufferedRainbow);
             this.currentImage = "rainbow-" + (rainbowCount - 1);
             this.undoStack.push(currentImage);
+            updateUndoRedo();
             model.save("rainbow-" + (rainbowCount - 1));
           }
 
@@ -443,6 +453,7 @@ public class ControllerImpl implements IController, ActionListener {
             view.displayImage(bufferedCheckerboard);
             this.currentImage = "checkerboard";
             this.undoStack.push(currentImage);
+            updateUndoRedo();
             model.save("checkerboard");
           }
 
@@ -452,6 +463,7 @@ public class ControllerImpl implements IController, ActionListener {
             view.displayImage(bufferedCheckerboard);
             this.currentImage = "checkerboard-" + (checkerboardCount - 1);
             this.undoStack.push(currentImage);
+            updateUndoRedo();
             model.save("checkerboard-" + (checkerboardCount - 1));
           }
 
@@ -471,12 +483,15 @@ public class ControllerImpl implements IController, ActionListener {
         // same template for all adjustments? applyAdjustment(e->applyBlur) ???
         System.out.println("blur has been received by the controller");
         this.undoStack.push(currentImage);
+        updateUndoRedo();
         System.out.println("current image:" + this.currentImage);
         try {
           this.model.applyBlur(currentImage);
           this.currentImage = this.currentImage + "-blur";
           BufferedImage buffer = this.model.getImage(currentImage);
           view.displayImage(buffer);
+          this.redoStack.clear();
+          updateUndoRedo();
         }
         catch (NullPointerException exc) {
           System.out.println("Can't blur the background image. Must load your own image first.");
@@ -487,12 +502,15 @@ public class ControllerImpl implements IController, ActionListener {
         // same template for all adjustments? applyAdjustment(e->applyBlur) ???
         System.out.println("sharpen has been received by the controller");
         this.undoStack.push(currentImage);
+        updateUndoRedo();
         System.out.println("current image:" + this.currentImage);
         try {
           this.model.applySharpen(currentImage);
           this.currentImage = this.currentImage + "-sharpen";
           BufferedImage buffer = this.model.getImage(currentImage);
           view.displayImage(buffer);
+          this.redoStack.clear();
+          updateUndoRedo();
         }
         catch (NullPointerException exc) {
           System.out.println("Can't sharpen the background image. Must load your own image first.");
@@ -503,12 +521,15 @@ public class ControllerImpl implements IController, ActionListener {
         // same template for all adjustments? applyAdjustment(e->applyBlur) ???
         System.out.println("dither has been received by the controller");
         this.undoStack.push(currentImage);
+        updateUndoRedo();
         System.out.println("current image:" + this.currentImage);
         try {
           this.model.applyDither(currentImage);
           this.currentImage = this.currentImage + "-dither";
           BufferedImage buffer = this.model.getImage(currentImage);
           view.displayImage(buffer);
+          this.redoStack.clear();
+          updateUndoRedo();
         }
         catch (NullPointerException exc) {
           System.out.println("Can't dither the background image. Must load your own image first.");
@@ -519,22 +540,28 @@ public class ControllerImpl implements IController, ActionListener {
         // same template for all adjustments? applyAdjustment(e->applyBlur) ???
         System.out.println("mosaic has been received by the controller");
         this.undoStack.push(currentImage);
+        updateUndoRedo();
         this.model.applyMosaic(currentImage, 100);
         this.currentImage = this.currentImage + "-mosaic";
         BufferedImage bufferM = this.model.getImage(currentImage);
         view.displayImage(bufferM);
+        this.redoStack.clear();
+        updateUndoRedo();
         break;
       case "sepia":
         //TODO should this be in a higher order function since this is basically going to be the
         // same template for all adjustments? applyAdjustment(e->applyBlur) ???
         System.out.println("sepia has been received by the controller");
         this.undoStack.push(currentImage);
+        updateUndoRedo();
         System.out.println("current image:" + this.currentImage);
         try {
           this.model.applySepia(currentImage);
           this.currentImage = this.currentImage + "-sepia";
           BufferedImage buffer = this.model.getImage(currentImage);
           view.displayImage(buffer);
+          this.redoStack.clear();
+          updateUndoRedo();
         }
         catch (NullPointerException exc) {
           System.out.println("Can't sepia the background image. Must load your own image first.");
@@ -545,12 +572,15 @@ public class ControllerImpl implements IController, ActionListener {
         // same template for all adjustments? applyAdjustment(e->applyBlur) ???
         System.out.println("greyscale has been received by the controller");
         this.undoStack.push(currentImage);
+        updateUndoRedo();
         System.out.println("current image:" + this.currentImage);
         try {
           this.model.applyGreyscale(currentImage);
           this.currentImage = this.currentImage + "-greyscale";
           BufferedImage buffer = this.model.getImage(currentImage);
           view.displayImage(buffer);
+          this.redoStack.clear();
+          updateUndoRedo();
         }
         catch (NullPointerException exc) {
           System.out.println("Can't greyscale the background image. Must load your own image first.");
@@ -561,6 +591,20 @@ public class ControllerImpl implements IController, ActionListener {
     }
   }
 
+  private void updateUndoRedo() {
+    if (this.undoStack.empty()) {
+      view.toggleUndo(false);
+    }
+    else {
+      view.toggleUndo(true);
+    }
+    if (this.redoStack.empty()){
+      view.toggleRedo(false);
+    }
+    else {
+      view.toggleRedo(true);
+    }
+  }
 
   /** Converts a string from the view into a Country -- parsing user input to pass
    * to the model.

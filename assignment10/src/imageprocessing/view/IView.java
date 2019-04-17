@@ -33,4 +33,14 @@ public interface IView {
   int heightDialog();
 
   int checkerboardDialog();
+
+  void toggleUndo(boolean b);
+
+  void toggleRedo(boolean b);
+
+  void toggleAdjustments(boolean b);
+
+
+
+
 }
