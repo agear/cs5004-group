@@ -44,4 +44,5 @@ public interface IView {
 
   void updateImageMenu(String imageName);
 
+  void setSize(int width, int height);
 }

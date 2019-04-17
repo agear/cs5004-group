@@ -280,7 +280,7 @@ public class ControllerImpl implements IController, ActionListener {
         this.currentImage = lpath;
         // Creates a BufferedImage of the image specified by the path.
         BufferedImage buffered = this.model.getImage(lpath);
-
+        this.view.setSize(buffered.getWidth(), buffered.getHeight());
         // Displays the image in the view.
         this.view.displayImage(buffered);
 

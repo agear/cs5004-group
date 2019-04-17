@@ -66,7 +66,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     mainFrame = new JFrame("Image Processing Software");
 
     // setSize creates a frame with a specific size in the center of the screen.
-    mainFrame.setSize(400,400);
+//    mainFrame.setSize(400,400);
     mainFrame.setLocationRelativeTo(null);
     mainFrame.setLayout(new BorderLayout());
 
@@ -81,12 +81,18 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     // Prepare scrolling area
     prepareScrollPane(file);
 
-    pack();
+    mainFrame.pack();
+//    mainFrame.mi
+    mainFrame.setBackground(Color.red);
     mainFrame.setVisible(true);
+
 
   }
 
-
+public void setSize(int width, int height) {
+    imagePanel.setSize(width +100, height+100);
+//    mainFrame.pack();
+}
   /**
    * Creates the adjustment menu, which has each type of adjustment of the image that the
    * user can click on to change the current image, and the File menu, which has
