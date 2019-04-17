@@ -231,11 +231,15 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
     undoMenuItem.getAccessibleContext().setAccessibleDescription("Undo last command");
     undoMenuItem.setActionCommand("undo");
+    //TODO
+    undoMenuItem.setEnabled(false);
     menuEdit.add(undoMenuItem);
 
     redoMenuItem = new JMenuItem("Redo", KeyEvent.VK_X);
     redoMenuItem.getAccessibleContext().setAccessibleDescription("Redo last command");
     redoMenuItem.setActionCommand("redo");
+    //TODO
+    redoMenuItem.setEnabled(false);
     menuEdit.add(redoMenuItem);
 
 
