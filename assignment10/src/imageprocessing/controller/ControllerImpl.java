@@ -270,24 +270,30 @@ public class ControllerImpl implements IController, ActionListener {
       // When the user clicks on the 'load' button, load the image in the model
       case "load":
         this.view.openLoadDialogue();
-        String path = this.view.getFilePath();
-        System.out.println("Controller: " + path);
+        String lpath = this.view.getFilePath();
+        System.out.println("Controller: " + lpath);
         try {
-          this.model.load(path, path);
+          this.model.load(lpath, lpath);
         } catch (IOException exception) {
           throw new IllegalArgumentException("There was a problem loading that image.");
         }
-        this.currentImage = path;
+        this.currentImage = lpath;
         // Creates a BufferedImage of the image specified by the path.
-        BufferedImage buffered = this.model.getImage(path);
+        BufferedImage buffered = this.model.getImage(lpath);
 
         // Displays the image in the view.
         this.view.displayImage(buffered);
 
-        // Since you have opened an image you can no apply adjustments
+        // Update the open images menu
+        this.view.updateImageMenu(lpath);
+        // Since you have opened an image you can now apply adjustments
         this.view.toggleAdjustments(true);
         break;
-
+      case "save":
+        this.view.openSaveDialogue();
+        String spath = this.view.getFilePath();
+        System.out.println("Controller save path: " + spath);
+        break;
 
       case "undo":
         //TODO Not sure if this if statement is still necessary
@@ -350,17 +356,22 @@ public class ControllerImpl implements IController, ActionListener {
         this.flagCount++;
 
         // Load the flag into the open images in the model, and save it as a file.
-        try {
+//        try {
 
           BufferedImage bufferedFlag;
+          //TODO this logic overwrites a file called "flag" if it already exists (i.e. from a
+          // previous session. Ditto for the numbered versions etc -- get rid of the model.save unless
+          // a user actually clicks save a names the file-- "flag" should only be for internal representation
           // If this is the first flag, the name of it is "flag"
           if (this.flagCount == 1) {
             bufferedFlag = this.model.getImage("flag");
             view.displayImage(bufferedFlag);
             this.currentImage = "flag";
             this.undoStack.push(currentImage);
-            updateUndoRedo();
-            model.save("flag");
+            this.view.toggleAdjustments(true);
+//            updateUndoRedo();
+//            model.save("flag");
+            this.view.updateImageMenu("flag");
           }
 
           // If this isn't the first flag, the name is "flag" with a number appended
@@ -369,16 +380,18 @@ public class ControllerImpl implements IController, ActionListener {
             view.displayImage(bufferedFlag);
             this.currentImage = "flag-" + (flagCount - 1);
             this.undoStack.push(currentImage);
-            updateUndoRedo();
-            model.save("flag-" + (flagCount - 1));
+//            updateUndoRedo();
+            this.view.toggleAdjustments(true);
+//            model.save("flag-" + (flagCount - 1));
+            this.view.updateImageMenu("flag-"+ (flagCount - 1));
           }
 
-        }
+//        }
 
-        // This is thrown if the name of the flag file to be saved is illegal.
-        catch (IOException exception) {
-          throw new IllegalArgumentException("There was an error saving your flag into a file.");
-        }
+//        // This is thrown if the name of the flag file to be saved is illegal.
+//        catch (IOException exception) {
+//          throw new IllegalArgumentException("There was an error saving your flag into a file.");
+//        }
         break;
 
       case "rainbow":
@@ -409,7 +422,7 @@ public class ControllerImpl implements IController, ActionListener {
         this.rainbowCount++;
 
         // Load the flag into the open images in the model, and save it as a file.
-        try {
+//        try {
 
           BufferedImage bufferedRainbow;
           // If this is the first flag, the name of it is "flag"
@@ -418,8 +431,10 @@ public class ControllerImpl implements IController, ActionListener {
             view.displayImage(bufferedRainbow);
             this.currentImage = "rainbow";
             this.undoStack.push(currentImage);
-            updateUndoRedo();
-            model.save("rainbow");
+//            updateUndoRedo();
+            this.view.toggleAdjustments(true);
+//            model.save("rainbow");
+            this.view.updateImageMenu("rainbow");
           }
 
           // If this isn't the first flag, the name is "flag" with a number appended
@@ -428,16 +443,18 @@ public class ControllerImpl implements IController, ActionListener {
             view.displayImage(bufferedRainbow);
             this.currentImage = "rainbow-" + (rainbowCount - 1);
             this.undoStack.push(currentImage);
-            updateUndoRedo();
-            model.save("rainbow-" + (rainbowCount - 1));
+//            updateUndoRedo();
+            this.view.toggleAdjustments(true);
+//            model.save("rainbow-" + (rainbowCount - 1));
+            this.view.updateImageMenu("rainbow-" + (rainbowCount - 1));
           }
 
-        }
-
-        // This is thrown if the name of the flag file to be saved is illegal.
-        catch (IOException exception) {
-          throw new IllegalArgumentException("There was an error saving your rainbow into a file.");
-        }
+//        }
+//
+//        // This is thrown if the name of the flag file to be saved is illegal.
+//        catch (IOException exception) {
+//          throw new IllegalArgumentException("There was an error saving your rainbow into a file.");
+//        }
 
         break;
 
@@ -452,36 +469,41 @@ public class ControllerImpl implements IController, ActionListener {
         model.drawCheckerBoard(checkerboardSize);
         this.checkerboardCount++;
 
-        // Load the flag into the open images in the model, and save it as a file.
-        try {
+        // Load the checkerboard into the open images in the model, and save it as a file.
+//        try {
 
           BufferedImage bufferedCheckerboard;
-          // If this is the first flag, the name of it is "flag"
+          // If this is the first checkerboard, the name of it is "checkerboard"
           if (this.checkerboardCount == 1) {
             bufferedCheckerboard = this.model.getImage("checkerboard");
             view.displayImage(bufferedCheckerboard);
             this.currentImage = "checkerboard";
             this.undoStack.push(currentImage);
-            updateUndoRedo();
-            model.save("checkerboard");
+//            updateUndoRedo();
+            this.view.toggleAdjustments(true);
+
+//            model.save("checkerboard");
+            this.view.updateImageMenu("checkerboard");
           }
 
-          // If this isn't the first flag, the name is "flag" with a number appended
+          // If this isn't the first checkerboard, the name is "checkerboard" with a number appended
           else {
             bufferedCheckerboard = this.model.getImage("checkerboard-" + (checkerboardCount - 1));
             view.displayImage(bufferedCheckerboard);
             this.currentImage = "checkerboard-" + (checkerboardCount - 1);
             this.undoStack.push(currentImage);
-            updateUndoRedo();
-            model.save("checkerboard-" + (checkerboardCount - 1));
+//            updateUndoRedo();
+            this.view.toggleAdjustments(true);
+//            model.save("checkerboard-" + (checkerboardCount - 1));
+            this.view.updateImageMenu("checkerboard" + (checkerboardCount -1));
           }
 
-        }
-
-        // This is thrown if the name of the flag file to be saved is illegal.
-        catch (IOException exception) {
-          throw new IllegalArgumentException("There was an error saving your checkerboard into a file.");
-        }
+//        }
+//
+//        // This is thrown if the name of the flag file to be saved is illegal.
+//        catch (IOException exception) {
+//          throw new IllegalArgumentException("There was an error saving your checkerboard into a file.");
+//        }
 
         break;
 

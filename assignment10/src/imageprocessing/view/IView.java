@@ -22,6 +22,8 @@ public interface IView {
 
   void openLoadDialogue();
 
+  void openSaveDialogue();
+
   String getFilePath();
 
   String flagDialog();
@@ -40,7 +42,6 @@ public interface IView {
 
   void toggleAdjustments(boolean b);
 
-
-
+  void updateImageMenu(String imageName);
 
 }

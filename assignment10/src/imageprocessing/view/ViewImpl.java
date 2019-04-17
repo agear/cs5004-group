@@ -33,7 +33,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   private JMenu menuFile, menuEdit, menuAdj, menuDraw, menuImages;
   private JMenuItem blurMenuItem, sharpenMenuItem, ditherMenuItem,
   mosaicMenuItem, sepiaMenuItem, greyscaleMenuItem, flagMenuItem, checkerBoardMenuItem,
-  rainbowMenuItem, loadMenuItem, saveMenuItem, undoMenuItem, redoMenuItem, image1MenuItem, image2MenuItem;
+  rainbowMenuItem, loadMenuItem, saveMenuItem, undoMenuItem, redoMenuItem, image1MenuItem, image2MenuItem, imageMenuItem;
   private JScrollPane imageScrollPane;
 
   private JPanel imagePanel;
@@ -290,20 +290,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     menuImages.getAccessibleContext().setAccessibleDescription(
             "Image menu");
 
-    // Add all adjustments item to this menu:
-    image1MenuItem = new JMenuItem("Image_1",
-            KeyEvent.VK_Z); // If the person hits "Z", it goes here
-    // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
-    image1MenuItem.getAccessibleContext().setAccessibleDescription("Select Image_1");
-    image1MenuItem.setActionCommand("image_1");
-    menuImages.add(image1MenuItem);
-
-    image2MenuItem = new JMenuItem("Image_2", KeyEvent.VK_X);
-    image2MenuItem.getAccessibleContext().setAccessibleDescription("Select Image_2");
-    image2MenuItem.setActionCommand("image_2");
-    menuImages.add(image2MenuItem);
-
-
     // Add this new menu to the bar.
     menuBar.add(menuImages);
   }
@@ -370,57 +356,21 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
 
   public void openSaveDialogue() {
-    //TODO
+
+        final JFileChooser fchooser = new JFileChooser(".");
+        int retvalue = fchooser.showSaveDialog(ViewImpl.this);
+        if (retvalue == JFileChooser.APPROVE_OPTION) {
+          File f = fchooser.getSelectedFile();
+          fileSaveDisplay.setText(f.getAbsoluteFile().getAbsolutePath());
+          path = f.getAbsoluteFile().getAbsolutePath();
+          System.out.println("In the View, user has chosen to save to this path: \n" + path);
+        }
   }
 
   /**
-   * Invoked when an action occurs.
+   * TODO Java doc
+   * @return
    */
-//  @Override
-//  public void actionPerformed(ActionEvent e) {
-//
-//    switch (e.getActionCommand()) {
-//      case "load": {
-//        final JFileChooser fchooser = new JFileChooser(".");
-//        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif", "png");
-//        fchooser.setFileFilter(filter);
-//        int retvalue = fchooser.showOpenDialog(ViewImpl.this);
-//        if (retvalue == JFileChooser.APPROVE_OPTION) {
-//          File f = fchooser.getSelectedFile();
-//          fileOpenDisplay.setText(f.getAbsolutePath());
-//          String path = f.getAbsolutePath();
-//          System.out.println(path);
-//          try {
-//            //TODO command should be sent to controller which then loads the image into the model
-//            // and returns the buffered image from the model, for display
-//            loadMenuItem.setActionCommand("load "+path);
-//            System.out.println("load "+path);
-//            IImage image = new Image(path);
-//            BufferedImage buffered = image.convertToBufferedImage(path);
-//            displayImage(buffered);
-//          }
-//          catch (IOException exception) {
-//            throw new IllegalArgumentException("No such element");
-//          }
-////          displayImage(path);
-//        }
-//      }
-//      break;
-//      case "Save file": {
-//        final JFileChooser fchooser = new JFileChooser(".");
-//        int retvalue = fchooser.showSaveDialog(ViewImpl.this);
-//        if (retvalue == JFileChooser.APPROVE_OPTION) {
-//          File f = fchooser.getSelectedFile();
-//          fileSaveDisplay.setText(f.getAbsolutePath());
-//        }
-//      }
-//      case "flag": {
-//        countryListComboBox.setVisible(true);
-//      }
-//    }
-//  }
-
-
   public String flagDialog() {
 
     final String[] countryList = { "Greece", "France", "Switzerland" };
@@ -434,6 +384,10 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     return input;
   }
 
+  /**
+   * TODO javadoc
+   * @return
+   */
   public String rainbowDialog() {
     final String[] orientationList = { "Horizontal", "Vertical" };
     rainbowComboBox = new JComboBox(orientationList);
@@ -444,9 +398,10 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     return input;
   }
 
-
-
-
+  /**
+   * TODO javadoc
+   * @return
+   */
   public int widthDialog() {
 
     // Initialize 1000 numbers to display to user to choose.
@@ -474,6 +429,10 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     }
   }
 
+  /**
+   * TODO Java doc
+   * @return
+   */
   public int heightDialog() {
 
     // Initialize 1000 numbers to display to user to choose.
@@ -501,6 +460,10 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     }
   }
 
+  /**
+   * TODO javadoc.
+   * @return
+   */
   public int checkerboardDialog() {
 
     // Initialize 150 numbers to display to user to choose.
@@ -533,6 +496,9 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
 
   @Override
+  /**
+   * TODO javadoc.
+   */
   public void setListener(ActionListener controller) {
 //    this.controller = controller;
 
@@ -563,14 +529,26 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 //    this.countryListComboBox.addActionListener(controller);
   }
 
+  /**
+   * TODO java doc
+   * @param b
+   */
   public void toggleUndo(boolean b){
     undoMenuItem.setEnabled(b);
   }
 
+  /**
+   * TODO Javadoc
+   * @param b
+   */
   public void toggleRedo(boolean b) {
     redoMenuItem.setEnabled(b);
   }
 
+  /**
+   * TODO Javadoc
+   * @param b
+   */
   public void toggleAdjustments(boolean b) {
     blurMenuItem.setEnabled(b);
     sharpenMenuItem.setEnabled(b);
@@ -581,7 +559,15 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     saveMenuItem.setEnabled(b);
   }
 
-  public void updateImageMenu(boolean b) {
-    //TODO
+  /**
+   * TODO Javadoc.
+   * @param imageName
+   */
+  public void updateImageMenu(String imageName) {
+    // Add all adjustments item to this menu:
+    imageMenuItem = new JMenuItem(imageName, KeyEvent.VK_Z); // If the person hits "Z", it goes here
+    imageMenuItem.getAccessibleContext().setAccessibleDescription(imageName);
+    imageMenuItem.setActionCommand(imageName);
+    menuImages.add(imageMenuItem);
   }
 }
