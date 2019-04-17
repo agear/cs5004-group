@@ -116,6 +116,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   }
 
 
+  //TODO adjustment menu items should be setEnabled(false) if no image is loaded.
   /**
    * Adds each particular item to the Adjustment Menu, such as blur and greyscale.
    */
@@ -231,14 +232,14 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
     undoMenuItem.getAccessibleContext().setAccessibleDescription("Undo last command");
     undoMenuItem.setActionCommand("undo");
-    //TODO
+    //TODO Undo should only be enabled if the the undo stack is not empty
     undoMenuItem.setEnabled(false);
     menuEdit.add(undoMenuItem);
 
     redoMenuItem = new JMenuItem("Redo", KeyEvent.VK_X);
     redoMenuItem.getAccessibleContext().setAccessibleDescription("Redo last command");
     redoMenuItem.setActionCommand("redo");
-    //TODO
+    //TODO Redo should only be enabled if the redo stack is not empty
     redoMenuItem.setEnabled(false);
     menuEdit.add(redoMenuItem);
 
