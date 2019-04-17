@@ -2,6 +2,8 @@ package imageprocessing.controller;
 
 import java.io.IOException;
 
+import imageprocessing.view.IView;
+
 /**
  * The controller parses input, and determines what the model and view should do with
  * what the user wants based on the input file. It passes control around.
@@ -14,4 +16,5 @@ public interface IController {
    *     that doesn't exist.
    */
   void goGo() throws IOException;
+  void setView(IView view);
 }

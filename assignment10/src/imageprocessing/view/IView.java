@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 import imageprocessing.controller.ControllerImpl;
+import imageprocessing.controller.Features;
 
 /**
  * The user interface of the image processing package. To be implemented in v3.0.
@@ -16,7 +17,7 @@ public interface IView {
   in order for the controller to tell the model which actions to take based on
   what happened in the view.
    */
-  void setListener(ActionListener controller);
+  void setListeners(ActionListener controller);
 
   void displayImage(BufferedImage image);
 
@@ -42,7 +43,9 @@ public interface IView {
 
   void toggleAdjustments(boolean b);
 
-  void updateImageMenu(String imageName);
+//  void updateImageMenu(String imageName);
 
   void setSize(int width, int height);
+
+  void addFeatures(Features features);
 }

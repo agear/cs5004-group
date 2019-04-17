@@ -23,7 +23,8 @@ public class ProgramRunner {
     IModel model = new ModelImpl();
     FileReader in = new FileReader(args[0]);
     IView view = new ViewImpl();
-    IController controller = new ControllerImpl(model, view, in);
+    IController controller = new ControllerImpl(model, in);
+    controller.setView(view);
     //controller.goGo();
   }
 }

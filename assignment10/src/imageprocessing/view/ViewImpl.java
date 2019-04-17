@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.BorderFactory;
 
+import imageprocessing.controller.Features;
 import imageprocessing.model.image.IImage;
 import imageprocessing.model.image.Image;
 import imageprocessing.controller.ControllerImpl;
@@ -33,7 +34,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   private JMenu menuFile, menuEdit, menuAdj, menuDraw, menuImages;
   private JMenuItem blurMenuItem, sharpenMenuItem, ditherMenuItem,
   mosaicMenuItem, sepiaMenuItem, greyscaleMenuItem, flagMenuItem, checkerBoardMenuItem,
-  rainbowMenuItem, loadMenuItem, saveMenuItem, undoMenuItem, redoMenuItem, image1MenuItem, image2MenuItem, imageMenuItem;
+  rainbowMenuItem, loadMenuItem, saveMenuItem, undoMenuItem, redoMenuItem, quitMenuItem;
   private JScrollPane imageScrollPane;
 
   private JPanel imagePanel;
@@ -108,10 +109,14 @@ public void setSize(int width, int height) {
 
     // Add each category
     prepareFileMenuItems();
+    System.out.println("File menu..OK!");
     prepareEditMenuItems();
+    System.out.println("Edit menu..OK!");
     prepareAdjustmentMenuItems();
+    System.out.println("Adjustment menu..OK!");
     prepareDrawMenuItems();
-    prepareImagesMenuItems();
+    System.out.println("Draw menu..OK!");
+//    prepareImagesMenuItems();
 
     // Add the menu bar to the frame at the top.
     mainFrame.setJMenuBar(menuBar);
@@ -122,69 +127,9 @@ public void setSize(int width, int height) {
 
   }
 
-
-  //TODO adjustment menu items should be setEnabled(false) if no image is loaded.
-  /**
-   * Adds each particular item to the Adjustment Menu, such as blur and greyscale.
-   */
-  private void prepareAdjustmentMenuItems() {
-
-    // Build the first menu (Adjustments):
-    menuAdj = new JMenu("Adjustments");
-
-    // If the user types "A" for "A"djustments (VK_A), this menu opens up:
-    menuAdj.setMnemonic(KeyEvent.VK_A);
-
-    // Gets the AccessibleContext associated with this JMenuBar.
-    menuAdj.getAccessibleContext().setAccessibleDescription("Change the image.");
-
-    // Add all adjustments item to this menu:
-    blurMenuItem = new JMenuItem("Blur", KeyEvent.VK_B); // If the person hits "b", it goes here
-    // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
-    blurMenuItem.getAccessibleContext().setAccessibleDescription("Blur your image");
-    blurMenuItem.setActionCommand("blur");
-    menuAdj.add(blurMenuItem);
-
-    sharpenMenuItem = new JMenuItem("Sharpen", KeyEvent.VK_S);
-    sharpenMenuItem.getAccessibleContext().setAccessibleDescription("Sharpen your image");
-    sharpenMenuItem.setActionCommand("sharpen");
-    menuAdj.add(sharpenMenuItem);
-
-    // Add a separator to categorize types of adjustments
-    menuAdj.addSeparator();
-
-    ditherMenuItem = new JMenuItem("Dither", KeyEvent.VK_D);
-    ditherMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in dither");
-    ditherMenuItem.setActionCommand("dither");
-    menuAdj.add(ditherMenuItem);
-
-    mosaicMenuItem = new JMenuItem("Mosaic", KeyEvent.VK_M);
-    mosaicMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in dither");
-    mosaicMenuItem.setActionCommand("mosaic");
-    menuAdj.add(mosaicMenuItem);
-
-    // Add a seperator to categorize types of adjustments
-    menuAdj.addSeparator();
-
-
-    sepiaMenuItem = new JMenuItem("Sepia", KeyEvent.VK_S);
-    sepiaMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in sepia");
-    sepiaMenuItem.setActionCommand("sepia");
-    menuAdj.add(sepiaMenuItem);
-
-    greyscaleMenuItem = new JMenuItem("Greyscale", KeyEvent.VK_G);
-    greyscaleMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in greyscale");
-    greyscaleMenuItem.setActionCommand("greyscale");
-    menuAdj.add(greyscaleMenuItem);
-
-
-    // Add this new menu to the bar.
-    menuBar.add(menuAdj);
-
-  }
-
   //TODO Copied an pasted -- Update comments
   private void prepareFileMenuItems() {
+    System.out.println("Preparing file menu....");
     // Build the first menu (File):
     menuFile = new JMenu("File");
 
@@ -194,28 +139,32 @@ public void setSize(int width, int height) {
     // Gets the AccessibleContext associated with this JMenuBar.
     menuFile.getAccessibleContext().setAccessibleDescription("Open or save an image");
 
-    // Add all adjustments item to this menu:
+    // Add load item to this menu:
     loadMenuItem = new JMenuItem("Load", KeyEvent.VK_L); // If the person hits "L", it goes here
     loadMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_L, ActionEvent.ALT_MASK)); //
     loadMenuItem.getAccessibleContext().setAccessibleDescription("Load an image");
 
-    loadMenuItem.addActionListener(controller);
+//    loadMenuItem.addActionListener(controller);
     JPanel fileloadPanel = new JPanel();
     menuFile.add(loadMenuItem);
-    loadMenuItem.setActionCommand("load");
-    //TODO???
-
-
+//    loadMenuItem.setActionCommand("load");
 
 
     saveMenuItem = new JMenuItem("Save", KeyEvent.VK_S);
     saveMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.ALT_MASK)); //
     saveMenuItem.getAccessibleContext().setAccessibleDescription("Save image");
-    saveMenuItem.addActionListener(controller);
+//    saveMenuItem.addActionListener(controller);
     JPanel filesavePanel = new JPanel();
     menuFile.add(saveMenuItem);
-    saveMenuItem.setActionCommand("save");
+//    saveMenuItem.setActionCommand("save");
 
+    // Separate quit
+    menuFile.addSeparator();
+
+    quitMenuItem = new JMenuItem("Quit", KeyEvent.VK_Q);
+    quitMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_Q, ActionEvent.ALT_MASK));
+    quitMenuItem.getAccessibleContext().setAccessibleDescription("Quit");
+    menuFile.add(quitMenuItem);
 
     // Add this new menu to the bar.
     menuBar.add(menuFile);
@@ -239,14 +188,16 @@ public void setSize(int width, int height) {
     // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
     undoMenuItem.getAccessibleContext().setAccessibleDescription("Undo last command");
     undoMenuItem.setActionCommand("undo");
-    //TODO Undo should only be enabled if the the undo stack is not empty
+
+    //Undo is only be enabled if the the undo stack is not empty
     undoMenuItem.setEnabled(false);
     menuEdit.add(undoMenuItem);
 
     redoMenuItem = new JMenuItem("Redo", KeyEvent.VK_X);
     redoMenuItem.getAccessibleContext().setAccessibleDescription("Redo last command");
-    redoMenuItem.setActionCommand("redo");
-    //TODO Redo should only be enabled if the redo stack is not empty
+//    redoMenuItem.setActionCommand("redo");
+
+    //Redo is only be enabled if the redo stack is not empty
     redoMenuItem.setEnabled(false);
     menuEdit.add(redoMenuItem);
 
@@ -254,6 +205,66 @@ public void setSize(int width, int height) {
     // Add this new menu to the bar.
     menuBar.add(menuEdit);
   }
+
+  /**
+   * Adds each particular item to the Adjustment Menu, such as blur and greyscale.
+   */
+  private void prepareAdjustmentMenuItems() {
+
+    // Build the first menu (Adjustments):
+    menuAdj = new JMenu("Adjustments");
+
+    // If the user types "A" for "A"djustments (VK_A), this menu opens up:
+    menuAdj.setMnemonic(KeyEvent.VK_A);
+
+    // Gets the AccessibleContext associated with this JMenuBar.
+    menuAdj.getAccessibleContext().setAccessibleDescription("Change the image.");
+
+    // Add all adjustments item to this menu:
+    blurMenuItem = new JMenuItem("Blur", KeyEvent.VK_B); // If the person hits "b", it goes here
+    // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
+    blurMenuItem.getAccessibleContext().setAccessibleDescription("Blur your image");
+//    blurMenuItem.setActionCommand("blur");
+    menuAdj.add(blurMenuItem);
+
+    sharpenMenuItem = new JMenuItem("Sharpen", KeyEvent.VK_S);
+    sharpenMenuItem.getAccessibleContext().setAccessibleDescription("Sharpen your image");
+//    sharpenMenuItem.setActionCommand("sharpen");
+    menuAdj.add(sharpenMenuItem);
+
+    // Add a separator to categorize types of adjustments
+    menuAdj.addSeparator();
+
+    ditherMenuItem = new JMenuItem("Dither", KeyEvent.VK_D);
+    ditherMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in dither");
+//    ditherMenuItem.setActionCommand("dither");
+    menuAdj.add(ditherMenuItem);
+
+    mosaicMenuItem = new JMenuItem("Mosaic", KeyEvent.VK_M);
+    mosaicMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in dither");
+//    mosaicMenuItem.setActionCommand("mosaic");
+    menuAdj.add(mosaicMenuItem);
+
+    // Add a seperator to categorize types of adjustments
+    menuAdj.addSeparator();
+
+
+    sepiaMenuItem = new JMenuItem("Sepia", KeyEvent.VK_S);
+    sepiaMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in sepia");
+//    sepiaMenuItem.setActionCommand("sepia");
+    menuAdj.add(sepiaMenuItem);
+
+    greyscaleMenuItem = new JMenuItem("Greyscale", KeyEvent.VK_G);
+    greyscaleMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in greyscale");
+//    greyscaleMenuItem.setActionCommand("greyscale");
+    menuAdj.add(greyscaleMenuItem);
+
+
+    // Add this new menu to the bar.
+    menuBar.add(menuAdj);
+
+  }
+
 
   //TODO copied and pasted--update comments.
   private void prepareDrawMenuItems() {
@@ -286,6 +297,8 @@ public void setSize(int width, int height) {
 
 
   //TODO copied and pasted--update comments.
+  //TODO Commented out the add.(menuImages) at the end ot get rid of this functionality for now with
+  // out breaking anything else hopefully...
   private void prepareImagesMenuItems() {
     // Build the first menu (File):
     menuImages = new JMenu("Images");
@@ -298,7 +311,7 @@ public void setSize(int width, int height) {
             "Image menu");
 
     // Add this new menu to the bar.
-    menuBar.add(menuImages);
+//    menuBar.add(menuImages);
   }
 
   /**
@@ -506,33 +519,33 @@ public void setSize(int width, int height) {
   /**
    * TODO javadoc.
    */
-  public void setListener(ActionListener controller) {
+  public void setListeners(ActionListener controller) {
 //    this.controller = controller;
 
-    //File Menu
-    this.loadMenuItem.addActionListener(controller);
-    this.saveMenuItem.addActionListener(controller);
-
-    //Edit Menu
-    this.undoMenuItem.addActionListener(controller);
-    this.redoMenuItem.addActionListener(controller);
-
-    //Adjustment Menu
-    this.blurMenuItem.addActionListener(controller);
-    this.sharpenMenuItem.addActionListener(controller);
-    this.ditherMenuItem.addActionListener(controller);
-    this.mosaicMenuItem.addActionListener(controller);
-    this.sepiaMenuItem.addActionListener(controller);
-    this.greyscaleMenuItem.addActionListener(controller);
+//    //File Menu
+//    this.loadMenuItem.addActionListener(controller);
+//    this.saveMenuItem.addActionListener(controller);
+//
+//    //Edit Menu
+//    this.undoMenuItem.addActionListener(controller);
+//    this.redoMenuItem.addActionListener(controller);
+//
+//    //Adjustment Menu
+//    this.blurMenuItem.addActionListener(controller);
+//    this.sharpenMenuItem.addActionListener(controller);
+//    this.ditherMenuItem.addActionListener(controller);
+//    this.mosaicMenuItem.addActionListener(controller);
+//    this.sepiaMenuItem.addActionListener(controller);
+//    this.greyscaleMenuItem.addActionListener(controller);
 
     //Draw Menu
     this.flagMenuItem.addActionListener(controller); //TODO this section will probably be deleted when we figure out how to do dialog boxes correctly
     this.rainbowMenuItem.addActionListener(controller);
     this.checkerBoardMenuItem.addActionListener(controller);
 
-    //Image Menu
-    this.image1MenuItem.addActionListener(controller);
-    this.image2MenuItem.addActionListener(controller);
+//    //Image Menu
+//    this.image1MenuItem.addActionListener(controller);
+//    this.image2MenuItem.addActionListener(controller);
 //    this.countryListComboBox.addActionListener(controller);
   }
 
@@ -566,17 +579,41 @@ public void setSize(int width, int height) {
     saveMenuItem.setEnabled(b);
   }
 
-  /**
-   * TODO Javadoc.
-   * @param imageName
-   */
-  public void updateImageMenu(String imageName) {
-    // Add all adjustments item to this menu:
-    this.imageMenuItem = new JMenuItem(imageName, KeyEvent.VK_Z); // If the person hits "Z", it goes here
-    this.imageMenuItem.getAccessibleContext().setAccessibleDescription(imageName);
-    this.imageMenuItem.setActionCommand(imageName);
-    this.imageMenuItem.addActionListener(controller);
-    menuImages.add(this.imageMenuItem);
+//  /**
+//   * TODO Javadoc.
+//   * @param imageName
+//   */
+//  public void updateImageMenu(String imageName) {
+//    // Add all adjustments item to this menu:
+//    this.imageMenuItem = new JMenuItem(imageName, KeyEvent.VK_Z); // If the person hits "Z", it goes here
+//    this.imageMenuItem.getAccessibleContext().setAccessibleDescription(imageName);
+//    this.imageMenuItem.setActionCommand(imageName);
 //    this.imageMenuItem.addActionListener(controller);
+//    menuImages.add(this.imageMenuItem);
+////    this.imageMenuItem.addActionListener(controller);
+//  }
+
+  @Override
+  public void addFeatures(Features features) {
+
+    //File menu action listeners
+    loadMenuItem.addActionListener(l->features.load());
+    saveMenuItem.addActionListener(l->features.save());
+    quitMenuItem.addActionListener(l->features.quit());
+
+    //Edit menu action listeners
+    undoMenuItem.addActionListener(l->features.undo());
+    redoMenuItem.addActionListener(l->features.redo());
+
+    //Adjustment menu action listeners
+    blurMenuItem.addActionListener(l->features.blur());
+    sharpenMenuItem.addActionListener(l->features.sharpen());
+    ditherMenuItem.addActionListener(l->features.dither());
+    mosaicMenuItem.addActionListener(l->features.mosaic(20));
+    sepiaMenuItem.addActionListener(l->features.sepia());
+    greyscaleMenuItem.addActionListener(l->features.greyscale());
+
+    //Draw menu action listeners
+
   }
 }
