@@ -93,6 +93,7 @@ public void setSize(int width, int height) {
     imagePanel.setSize(width +100, height+100);
 //    mainFrame.pack();
 }
+
   /**
    * Creates the adjustment menu, which has each type of adjustment of the image that the
    * user can click on to change the current image, and the File menu, which has
@@ -571,9 +572,11 @@ public void setSize(int width, int height) {
    */
   public void updateImageMenu(String imageName) {
     // Add all adjustments item to this menu:
-    imageMenuItem = new JMenuItem(imageName, KeyEvent.VK_Z); // If the person hits "Z", it goes here
-    imageMenuItem.getAccessibleContext().setAccessibleDescription(imageName);
-    imageMenuItem.setActionCommand(imageName);
-    menuImages.add(imageMenuItem);
+    this.imageMenuItem = new JMenuItem(imageName, KeyEvent.VK_Z); // If the person hits "Z", it goes here
+    this.imageMenuItem.getAccessibleContext().setAccessibleDescription(imageName);
+    this.imageMenuItem.setActionCommand(imageName);
+    this.imageMenuItem.addActionListener(controller);
+    menuImages.add(this.imageMenuItem);
+//    this.imageMenuItem.addActionListener(controller);
   }
 }
