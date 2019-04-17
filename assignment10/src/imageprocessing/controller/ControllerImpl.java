@@ -25,7 +25,7 @@ public class ControllerImpl implements IController, ActionListener {
   IModel model;
   IView view;
 
-  int flagCount,rainbowCount,checkerboardCount;
+  int flagCount, rainbowCount, checkerboardCount;
   String currentImage;
   Stack<String> undoStack;
   Stack<String> redoStack;
@@ -272,8 +272,7 @@ public class ControllerImpl implements IController, ActionListener {
         System.out.println("Controller: " + path);
         try {
           this.model.load(path, path);
-        }
-        catch (IOException exception) {
+        } catch (IOException exception) {
           throw new IllegalArgumentException("There was a problem loading that image.");
         }
         this.currentImage = path;
@@ -286,6 +285,7 @@ public class ControllerImpl implements IController, ActionListener {
 
 
       case "undo":
+        //TODO Not sure if this if statement is still necessary
         if (undoStack.empty()) {
           System.out.println("Nothing to undo");
           break;
@@ -301,7 +301,7 @@ public class ControllerImpl implements IController, ActionListener {
         updateUndoRedo();
         break;
       case "redo":
-        //TODO doesn't seem to completely work yet..not sure why.
+        //TODO Not sure if this if statement is still necessary
         if (redoStack.empty()) {
           System.out.println("Nothing to redo");
           break;
@@ -477,7 +477,6 @@ public class ControllerImpl implements IController, ActionListener {
         break;
 
 
-
       case "blur":
         //TODO should this be in a higher order function since this is basically going to be the
         // same template for all adjustments? applyAdjustment(e->applyBlur) ???
@@ -492,8 +491,7 @@ public class ControllerImpl implements IController, ActionListener {
           view.displayImage(buffer);
           this.redoStack.clear();
           updateUndoRedo();
-        }
-        catch (NullPointerException exc) {
+        } catch (NullPointerException exc) {
           System.out.println("Can't blur the background image. Must load your own image first.");
         }
         break;
@@ -511,8 +509,7 @@ public class ControllerImpl implements IController, ActionListener {
           view.displayImage(buffer);
           this.redoStack.clear();
           updateUndoRedo();
-        }
-        catch (NullPointerException exc) {
+        } catch (NullPointerException exc) {
           System.out.println("Can't sharpen the background image. Must load your own image first.");
         }
         break;
@@ -530,8 +527,7 @@ public class ControllerImpl implements IController, ActionListener {
           view.displayImage(buffer);
           this.redoStack.clear();
           updateUndoRedo();
-        }
-        catch (NullPointerException exc) {
+        } catch (NullPointerException exc) {
           System.out.println("Can't dither the background image. Must load your own image first.");
         }
         break;
@@ -562,8 +558,7 @@ public class ControllerImpl implements IController, ActionListener {
           view.displayImage(buffer);
           this.redoStack.clear();
           updateUndoRedo();
-        }
-        catch (NullPointerException exc) {
+        } catch (NullPointerException exc) {
           System.out.println("Can't sepia the background image. Must load your own image first.");
         }
         break;
@@ -581,8 +576,7 @@ public class ControllerImpl implements IController, ActionListener {
           view.displayImage(buffer);
           this.redoStack.clear();
           updateUndoRedo();
-        }
-        catch (NullPointerException exc) {
+        } catch (NullPointerException exc) {
           System.out.println("Can't greyscale the background image. Must load your own image first.");
         }
         break;
@@ -594,20 +588,19 @@ public class ControllerImpl implements IController, ActionListener {
   private void updateUndoRedo() {
     if (this.undoStack.empty()) {
       view.toggleUndo(false);
-    }
-    else {
+    } else {
       view.toggleUndo(true);
     }
-    if (this.redoStack.empty()){
+    if (this.redoStack.empty()) {
       view.toggleRedo(false);
-    }
-    else {
+    } else {
       view.toggleRedo(true);
     }
   }
 
-  /** Converts a string from the view into a Country -- parsing user input to pass
-   * to the model.
+  /**
+   * Converts a string from the view into a Country -- parsing user input to pass to the model.
+   *
    * @param input The name of the country from the button
    * @return The name of the country in a Country enum
    * @throws IllegalArgumentException If the country in the button isn't found
@@ -632,8 +625,10 @@ public class ControllerImpl implements IController, ActionListener {
   }
 
 
-  /** Converts a string from the view into an Orientation -- parsing user input to pass
-   * to the model.
+  /**
+   * Converts a string from the view into an Orientation -- parsing user input to pass to the
+   * model.
+   *
    * @param input The name of the orientation from the view
    * @return The name of the orientation in an Orientation enum
    * @throws IllegalArgumentException If the orientation in the button isn't found
