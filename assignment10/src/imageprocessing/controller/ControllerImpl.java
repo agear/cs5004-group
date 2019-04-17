@@ -61,6 +61,8 @@ public class ControllerImpl implements IController, ActionListener {
       System.out.println("There's an exception, idk why");
     }
 
+    // Adjustment options should not be available until an image is loaded.
+    this.view.toggleAdjustments(false);
     //TODO Based on the Lecture code: ??
 //    this.view.display();
   }
@@ -281,6 +283,9 @@ public class ControllerImpl implements IController, ActionListener {
 
         // Displays the image in the view.
         this.view.displayImage(buffered);
+
+        // Since you have opened an image you can no apply adjustments
+        this.view.toggleAdjustments(true);
         break;
 
 
@@ -306,10 +311,14 @@ public class ControllerImpl implements IController, ActionListener {
           System.out.println("Nothing to redo");
           break;
         }
+        // Start by pushing the current image onto the undo stack.
         this.undoStack.push(this.currentImage);
+        // Next make the current image the top item on the redo stack.
         this.currentImage = this.redoStack.pop();
+        // Update the display.
         BufferedImage bufferedR = this.model.getImage(this.currentImage);
         this.view.displayImage(bufferedR);
+        // Update the undo/redo state.
         updateUndoRedo();
         break;
 
