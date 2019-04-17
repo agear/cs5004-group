@@ -283,7 +283,7 @@ public void setSize(int width, int height) {
 
     rainbowMenuItem = new JMenuItem("Rainbow", KeyEvent.VK_R);
     rainbowMenuItem.getAccessibleContext().setAccessibleDescription("Draws Rainbow");
-    rainbowMenuItem.setActionCommand("rainbow");
+//    rainbowMenuItem.setActionCommand("rainbow");
     menuDraw.add(rainbowMenuItem);
 
     checkerBoardMenuItem = new JMenuItem("Checkerboard", KeyEvent.VK_C);
@@ -614,6 +614,7 @@ public void setSize(int width, int height) {
     greyscaleMenuItem.addActionListener(l->features.greyscale());
 
     //Draw menu action listeners
+    rainbowMenuItem.addActionListener(l->features.rainbow());
 
   }
 }

@@ -400,69 +400,69 @@ public class ControllerImpl implements IController, ActionListener, Features {
 //        }
         break;
 
-      case "rainbow":
-        String chosenRainbowOrientation = view.rainbowDialog();
-
-        // If they click 'cancel', do not continue prompting them.
-        if (chosenRainbowOrientation == null) {
-          return;
-        }
-
-        Orientation chosenOrientation = stringToOrientation(chosenRainbowOrientation);
-
-        chosenWidth = view.widthDialog();
-
-        // If they click 'cancel', do not make anything.
-        if (chosenWidth == 0) {
-          return;
-        }
-
-        int chosenHeight = view.heightDialog();
-
-        // If they click 'cancel', do not make anything.
-        if (chosenHeight == 0) {
-          return;
-        }
-
-        model.drawRainbow(chosenHeight, chosenWidth, chosenOrientation);
-        this.rainbowCount++;
-
-        // Load the flag into the open images in the model, and save it as a file.
-//        try {
-
-          BufferedImage bufferedRainbow;
-          // If this is the first flag, the name of it is "flag"
-          if (this.rainbowCount == 1) {
-            bufferedRainbow = this.model.getImage("rainbow");
-            view.displayImage(bufferedRainbow);
-            this.currentImage = "rainbow";
-            this.undoStack.push(currentImage);
-//            updateUndoRedo();
-            this.view.toggleAdjustments(true);
-//            model.save("rainbow");
-//            this.view.updateImageMenu("rainbow");
-          }
-
-          // If this isn't the first flag, the name is "flag" with a number appended
-          else {
-            bufferedRainbow = this.model.getImage("rainbow-" + (rainbowCount - 1));
-            view.displayImage(bufferedRainbow);
-            this.currentImage = "rainbow-" + (rainbowCount - 1);
-            this.undoStack.push(currentImage);
-//            updateUndoRedo();
-            this.view.toggleAdjustments(true);
-//            model.save("rainbow-" + (rainbowCount - 1));
-//            this.view.updateImageMenu("rainbow-" + (rainbowCount - 1));
-          }
-
+//      case "rainbow":
+//        String chosenRainbowOrientation = view.rainbowDialog();
+//
+//        // If they click 'cancel', do not continue prompting them.
+//        if (chosenRainbowOrientation == null) {
+//          return;
 //        }
 //
-//        // This is thrown if the name of the flag file to be saved is illegal.
-//        catch (IOException exception) {
-//          throw new IllegalArgumentException("There was an error saving your rainbow into a file.");
+//        Orientation chosenOrientation = stringToOrientation(chosenRainbowOrientation);
+//
+//        chosenWidth = view.widthDialog();
+//
+//        // If they click 'cancel', do not make anything.
+//        if (chosenWidth == 0) {
+//          return;
 //        }
-
-        break;
+//
+//        int chosenHeight = view.heightDialog();
+//
+//        // If they click 'cancel', do not make anything.
+//        if (chosenHeight == 0) {
+//          return;
+//        }
+//
+//        model.drawRainbow(chosenHeight, chosenWidth, chosenOrientation);
+//        this.rainbowCount++;
+//
+//        // Load the flag into the open images in the model, and save it as a file.
+////        try {
+//
+//          BufferedImage bufferedRainbow;
+//          // If this is the first flag, the name of it is "flag"
+//          if (this.rainbowCount == 1) {
+//            bufferedRainbow = this.model.getImage("rainbow");
+//            view.displayImage(bufferedRainbow);
+//            this.currentImage = "rainbow";
+//            this.undoStack.push(currentImage);
+////            updateUndoRedo();
+//            this.view.toggleAdjustments(true);
+////            model.save("rainbow");
+////            this.view.updateImageMenu("rainbow");
+//          }
+//
+//          // If this isn't the first flag, the name is "flag" with a number appended
+//          else {
+//            bufferedRainbow = this.model.getImage("rainbow-" + (rainbowCount - 1));
+//            view.displayImage(bufferedRainbow);
+//            this.currentImage = "rainbow-" + (rainbowCount - 1);
+//            this.undoStack.push(currentImage);
+////            updateUndoRedo();
+//            this.view.toggleAdjustments(true);
+////            model.save("rainbow-" + (rainbowCount - 1));
+////            this.view.updateImageMenu("rainbow-" + (rainbowCount - 1));
+//          }
+//
+////        }
+////
+////        // This is thrown if the name of the flag file to be saved is illegal.
+////        catch (IOException exception) {
+////          throw new IllegalArgumentException("There was an error saving your rainbow into a file.");
+////        }
+//
+//        break;
 
       case "checkerboard":
         int checkerboardSize = view.checkerboardDialog();
@@ -865,4 +865,66 @@ public class ControllerImpl implements IController, ActionListener, Features {
     this.redoStack.clear();
     updateUndoRedo();
   }
+
+  //Draw menu functions
+
+  /**
+   * //TODO javadoc.
+//   * @param chosenWidth
+//   * @param chosenHeight
+//   * @param orientation
+   */
+  //public void rainbow(int chosenWidth, int chosenHeight, String orientation) {
+  public void rainbow() {
+    String chosenRainbowOrientation = view.rainbowDialog();
+
+    // If they click 'cancel', do not continue prompting them.
+    if (chosenRainbowOrientation == null) {
+      return;
+    }
+
+    Orientation chosenOrientation = stringToOrientation(chosenRainbowOrientation);
+
+    int chosenWidth = view.widthDialog();
+
+    // If they click 'cancel', do not make anything.
+    if (chosenWidth == 0) {
+      return;
+    }
+
+    int chosenHeight = view.heightDialog();
+
+    // If they click 'cancel', do not make anything.
+    if (chosenHeight == 0) {
+      return;
+    }
+
+    model.drawRainbow(chosenHeight, chosenWidth, chosenOrientation);
+    this.rainbowCount++;
+
+    // Load the flag into the open images in the model
+
+    BufferedImage bufferedRainbow;
+    // If this is the first flag, the name of it is "flag"
+    if (this.rainbowCount == 1) {
+      bufferedRainbow = this.model.getImage("rainbow");
+      view.displayImage(bufferedRainbow);
+      this.currentImage = "rainbow";
+      this.undoStack.push(currentImage);
+      this.view.toggleAdjustments(true);
+    }
+
+    // If this isn't the first flag, the name is "flag" with a number appended
+    else {
+      bufferedRainbow = this.model.getImage("rainbow-" + (rainbowCount - 1));
+      view.displayImage(bufferedRainbow);
+      this.currentImage = "rainbow-" + (rainbowCount - 1);
+      this.undoStack.push(currentImage);
+      this.view.toggleAdjustments(true);
+    }
+
+
+
+  }
+
 }

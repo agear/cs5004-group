@@ -19,4 +19,7 @@ public interface Features {
   void greyscale();
 
   //Draw menu functions
+//  void rainbow(int chosenWidth, int chosenHeight, String orientation);
+  void rainbow();
+
 }
