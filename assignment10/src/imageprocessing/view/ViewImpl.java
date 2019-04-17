@@ -609,7 +609,7 @@ public void setSize(int width, int height) {
     blurMenuItem.addActionListener(l->features.blur());
     sharpenMenuItem.addActionListener(l->features.sharpen());
     ditherMenuItem.addActionListener(l->features.dither());
-    mosaicMenuItem.addActionListener(l->features.mosaic(20));
+    mosaicMenuItem.addActionListener(l->features.mosaic(Integer.parseInt(JOptionPane.showInputDialog("Enter a number to use as the seed:"))));
     sepiaMenuItem.addActionListener(l->features.sepia());
     greyscaleMenuItem.addActionListener(l->features.greyscale());
 
