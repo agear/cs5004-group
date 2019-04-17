@@ -112,7 +112,7 @@ public class ControllerImpl implements IController, ActionListener {
 
           // Load the file name as the image name:
           this.model.load(filename, imageName);
-          this.currentImage = imageName;
+          this.currentImage = filename;
           break;
 
         // Each of the next cases is a 'verb' to apply to the next image
@@ -269,9 +269,9 @@ public class ControllerImpl implements IController, ActionListener {
       case "load":
         this.view.openLoadDialogue();
         String path = this.view.getFilePath();
-        System.out.println("Controller: " + path);
         try {
           this.model.load(path, path);
+          this.currentImage = path;
         }
         catch (IOException exception) {
           throw new IllegalArgumentException("There was a problem loading that image.");
@@ -283,6 +283,14 @@ public class ControllerImpl implements IController, ActionListener {
         // Displays the image in the view.
         this.view.displayImage(buffered);
         break;
+
+      case "save":
+        try {
+          this.model.save(this.currentImage);
+        }
+        catch (IOException exception) {
+          System.out.println("Image could not be saved.");
+        }
 
 
       case "undo":
@@ -307,9 +315,8 @@ public class ControllerImpl implements IController, ActionListener {
         this.view.displayImage(bufferedR);
         break;
 
-        /* If it is a flag, get the type of flag, and the width of the flag. Display the flag
-      and save the image.
-      */
+      /* If it is a flag, get the type of flag, and the width of the flag. Display the flag
+      and save the image. */
       case "flag":
 
         String chosenFlagString = view.flagDialog();
@@ -484,11 +491,24 @@ public class ControllerImpl implements IController, ActionListener {
 
         break;
       case "mosaic":
-        //TODO should this be in a higher order function since this is basically going to be the
-        // same template for all adjustments? applyAdjustment(e->applyBlur) ???
-        System.out.println("mosaic has been received by the controller");
+
+
+        // Prompt the user for how many seeds they want.
+        int seedNumber = view.seedDialog();
+
+        if (seedNumber == 0) {
+          return;
+        }
+        System.out.println("Current image:" + currentImage);
         this.undoStack.push(currentImage);
-        this.model.applyMosaic(currentImage, 100);
+        System.out.println("Current image:" + currentImage);
+        try {
+          this.model.applyMosaic(currentImage, seedNumber);
+        }
+        catch (NullPointerException exception) {
+          System.out.println("You can't save the background image. Load your own first.");
+          return;
+        }
         this.currentImage = this.currentImage + "-mosaic";
         BufferedImage bufferM = this.model.getImage(currentImage);
         view.displayImage(bufferM);

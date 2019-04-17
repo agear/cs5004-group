@@ -33,4 +33,8 @@ public interface IView {
   int heightDialog();
 
   int checkerboardDialog();
+
+  int seedDialog();
+
+
 }

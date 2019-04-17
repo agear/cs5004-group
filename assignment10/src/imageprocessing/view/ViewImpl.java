@@ -363,53 +363,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     }
   }
 
-  /**
-   * Invoked when an action occurs.
-   */
-//  @Override
-//  public void actionPerformed(ActionEvent e) {
-//
-//    switch (e.getActionCommand()) {
-//      case "load": {
-//        final JFileChooser fchooser = new JFileChooser(".");
-//        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif", "png");
-//        fchooser.setFileFilter(filter);
-//        int retvalue = fchooser.showOpenDialog(ViewImpl.this);
-//        if (retvalue == JFileChooser.APPROVE_OPTION) {
-//          File f = fchooser.getSelectedFile();
-//          fileOpenDisplay.setText(f.getAbsolutePath());
-//          String path = f.getAbsolutePath();
-//          System.out.println(path);
-//          try {
-//            //TODO command should be sent to controller which then loads the image into the model
-//            // and returns the buffered image from the model, for display
-//            loadMenuItem.setActionCommand("load "+path);
-//            System.out.println("load "+path);
-//            IImage image = new Image(path);
-//            BufferedImage buffered = image.convertToBufferedImage(path);
-//            displayImage(buffered);
-//          }
-//          catch (IOException exception) {
-//            throw new IllegalArgumentException("No such element");
-//          }
-////          displayImage(path);
-//        }
-//      }
-//      break;
-//      case "Save file": {
-//        final JFileChooser fchooser = new JFileChooser(".");
-//        int retvalue = fchooser.showSaveDialog(ViewImpl.this);
-//        if (retvalue == JFileChooser.APPROVE_OPTION) {
-//          File f = fchooser.getSelectedFile();
-//          fileSaveDisplay.setText(f.getAbsolutePath());
-//        }
-//      }
-//      case "flag": {
-//        countryListComboBox.setVisible(true);
-//      }
-//    }
-//  }
-
 
   public String flagDialog() {
 
@@ -518,6 +471,35 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
       return 0;
     }
   }
+
+  public int seedDialog() {
+
+    // Initialize numbers to display to user to choose.
+    String[] stringNumberList = new String[1250];
+    int j = 0;
+    for (int i = 1; i < stringNumberList.length - 1; i++ ) {
+      stringNumberList[j] = Integer.toString(i);
+      j++;
+    }
+
+    // Presents the user with a list of 1000 numbers to choose from.
+    heightComboBox = new JComboBox(stringNumberList);
+    heightComboBox.setSelectedIndex(stringNumberList.length-1);
+    String input = (String)JOptionPane.showInputDialog(null,
+            "How many seeds should your mosaic use?",
+            "the more seeds, the closer to the original", JOptionPane.QUESTION_MESSAGE,
+            null, stringNumberList, stringNumberList[0]);
+
+    try {
+      return Integer.valueOf(input);
+    }
+
+    // If they cancel the operation, it's no big deal.
+    catch (NumberFormatException e) {
+      return 0;
+    }
+  }
+
 
 
 
