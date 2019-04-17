@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.BorderFactory;
+import javax.swing.text.NumberFormatter;
 
 import imageprocessing.controller.Features;
 import imageprocessing.model.image.IImage;
@@ -279,16 +280,13 @@ public void setSize(int width, int height) {
     flagMenuItem = new JMenuItem("Flag", KeyEvent.VK_F); // If the person hits "F", it goes here
     flagMenuItem.getAccessibleContext().setAccessibleDescription("Draws Flag");
     menuDraw.add(flagMenuItem);
-    flagMenuItem.setActionCommand("flag");
 
     rainbowMenuItem = new JMenuItem("Rainbow", KeyEvent.VK_R);
     rainbowMenuItem.getAccessibleContext().setAccessibleDescription("Draws Rainbow");
-//    rainbowMenuItem.setActionCommand("rainbow");
     menuDraw.add(rainbowMenuItem);
 
     checkerBoardMenuItem = new JMenuItem("Checkerboard", KeyEvent.VK_C);
     checkerBoardMenuItem.getAccessibleContext().setAccessibleDescription("Draws Checkerboard");
-    checkerBoardMenuItem.setActionCommand("checkerboard");
     menuDraw.add(checkerBoardMenuItem);
 
     // Add this new menu to the bar.
@@ -515,39 +513,39 @@ public void setSize(int width, int height) {
 
 
 
-  @Override
-  /**
-   * TODO javadoc.
-   */
-  public void setListeners(ActionListener controller) {
-//    this.controller = controller;
-
-//    //File Menu
-//    this.loadMenuItem.addActionListener(controller);
-//    this.saveMenuItem.addActionListener(controller);
+//  @Override
+//  /**
+//   * TODO javadoc.
+//   */
+//  public void setListeners(ActionListener controller) {
+////    this.controller = controller;
 //
-//    //Edit Menu
-//    this.undoMenuItem.addActionListener(controller);
-//    this.redoMenuItem.addActionListener(controller);
+////    //File Menu
+////    this.loadMenuItem.addActionListener(controller);
+////    this.saveMenuItem.addActionListener(controller);
+////
+////    //Edit Menu
+////    this.undoMenuItem.addActionListener(controller);
+////    this.redoMenuItem.addActionListener(controller);
+////
+////    //Adjustment Menu
+////    this.blurMenuItem.addActionListener(controller);
+////    this.sharpenMenuItem.addActionListener(controller);
+////    this.ditherMenuItem.addActionListener(controller);
+////    this.mosaicMenuItem.addActionListener(controller);
+////    this.sepiaMenuItem.addActionListener(controller);
+////    this.greyscaleMenuItem.addActionListener(controller);
 //
-//    //Adjustment Menu
-//    this.blurMenuItem.addActionListener(controller);
-//    this.sharpenMenuItem.addActionListener(controller);
-//    this.ditherMenuItem.addActionListener(controller);
-//    this.mosaicMenuItem.addActionListener(controller);
-//    this.sepiaMenuItem.addActionListener(controller);
-//    this.greyscaleMenuItem.addActionListener(controller);
-
-    //Draw Menu
-    this.flagMenuItem.addActionListener(controller); //TODO this section will probably be deleted when we figure out how to do dialog boxes correctly
-    this.rainbowMenuItem.addActionListener(controller);
-    this.checkerBoardMenuItem.addActionListener(controller);
-
-//    //Image Menu
-//    this.image1MenuItem.addActionListener(controller);
-//    this.image2MenuItem.addActionListener(controller);
-//    this.countryListComboBox.addActionListener(controller);
-  }
+////    //Draw Menu
+////    this.flagMenuItem.addActionListener(controller); //TODO this section will probably be deleted when we figure out how to do dialog boxes correctly
+////    this.rainbowMenuItem.addActionListener(controller);
+////    this.checkerBoardMenuItem.addActionListener(controller);
+//
+////    //Image Menu
+////    this.image1MenuItem.addActionListener(controller);
+////    this.image2MenuItem.addActionListener(controller);
+////    this.countryListComboBox.addActionListener(controller);
+//  }
 
   /**
    * TODO java doc
@@ -593,6 +591,8 @@ public void setSize(int width, int height) {
 ////    this.imageMenuItem.addActionListener(controller);
 //  }
 
+
+
   @Override
   public void addFeatures(Features features) {
 
@@ -614,7 +614,9 @@ public void setSize(int width, int height) {
     greyscaleMenuItem.addActionListener(l->features.greyscale());
 
     //Draw menu action listeners
+    flagMenuItem.addActionListener(l->features.flag());
     rainbowMenuItem.addActionListener(l->features.rainbow());
+    checkerBoardMenuItem.addActionListener(l->features.checkerboard());
 
   }
 }

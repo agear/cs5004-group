@@ -337,68 +337,68 @@ public class ControllerImpl implements IController, ActionListener, Features {
         /* If it is a flag, get the type of flag, and the width of the flag. Display the flag
       and save the image.
       */
-      case "flag":
-
-        String chosenFlagString = view.flagDialog();
-
-        // If they click 'cancel', do not continue prompting them.
-        if (chosenFlagString == null) {
-          return;
-        }
-
-        // Convert the string to a Country (which is what our model is expecting)
-        Country chosenFlag = stringToCountry(chosenFlagString);
-
-        int chosenWidth = view.widthDialog();
-
-        // If they click 'cancel', do not make anything.
-        if (chosenWidth == 0) {
-          return;
-        }
-
-        System.out.println("In the controller, the user has chosen this width:" + chosenWidth);
-
-        model.drawFlag(chosenWidth, chosenFlag);
-        this.flagCount++;
-
-        // Load the flag into the open images in the model, and save it as a file.
-//        try {
-
-          BufferedImage bufferedFlag;
-          //TODO this logic overwrites a file called "flag" if it already exists (i.e. from a
-          // previous session. Ditto for the numbered versions etc -- get rid of the model.save unless
-          // a user actually clicks save a names the file-- "flag" should only be for internal representation
-          // If this is the first flag, the name of it is "flag"
-          if (this.flagCount == 1) {
-            bufferedFlag = this.model.getImage("flag");
-            view.displayImage(bufferedFlag);
-            this.currentImage = "flag";
-            this.undoStack.push(currentImage);
-            this.view.toggleAdjustments(true);
-//            updateUndoRedo();
-//            model.save("flag");
-//            this.view.updateImageMenu("flag");
-          }
-
-          // If this isn't the first flag, the name is "flag" with a number appended
-          else {
-            bufferedFlag = this.model.getImage("flag-" + (flagCount - 1));
-            view.displayImage(bufferedFlag);
-            this.currentImage = "flag-" + (flagCount - 1);
-            this.undoStack.push(currentImage);
-//            updateUndoRedo();
-            this.view.toggleAdjustments(true);
-//            model.save("flag-" + (flagCount - 1));
-//            this.view.updateImageMenu("flag-"+ (flagCount - 1));
-          }
-
+//      case "flag":
+//
+//        String chosenFlagString = view.flagDialog();
+//
+//        // If they click 'cancel', do not continue prompting them.
+//        if (chosenFlagString == null) {
+//          return;
 //        }
-
-//        // This is thrown if the name of the flag file to be saved is illegal.
-//        catch (IOException exception) {
-//          throw new IllegalArgumentException("There was an error saving your flag into a file.");
+//
+//        // Convert the string to a Country (which is what our model is expecting)
+//        Country chosenFlag = stringToCountry(chosenFlagString);
+//
+//        int chosenWidth = view.widthDialog();
+//
+//        // If they click 'cancel', do not make anything.
+//        if (chosenWidth == 0) {
+//          return;
 //        }
-        break;
+//
+//        System.out.println("In the controller, the user has chosen this width:" + chosenWidth);
+//
+//        model.drawFlag(chosenWidth, chosenFlag);
+//        this.flagCount++;
+//
+//        // Load the flag into the open images in the model, and save it as a file.
+////        try {
+//
+//          BufferedImage bufferedFlag;
+//          //TODO this logic overwrites a file called "flag" if it already exists (i.e. from a
+//          // previous session. Ditto for the numbered versions etc -- get rid of the model.save unless
+//          // a user actually clicks save a names the file-- "flag" should only be for internal representation
+//          // If this is the first flag, the name of it is "flag"
+//          if (this.flagCount == 1) {
+//            bufferedFlag = this.model.getImage("flag");
+//            view.displayImage(bufferedFlag);
+//            this.currentImage = "flag";
+//            this.undoStack.push(currentImage);
+//            this.view.toggleAdjustments(true);
+////            updateUndoRedo();
+////            model.save("flag");
+////            this.view.updateImageMenu("flag");
+//          }
+//
+//          // If this isn't the first flag, the name is "flag" with a number appended
+//          else {
+//            bufferedFlag = this.model.getImage("flag-" + (flagCount - 1));
+//            view.displayImage(bufferedFlag);
+//            this.currentImage = "flag-" + (flagCount - 1);
+//            this.undoStack.push(currentImage);
+////            updateUndoRedo();
+//            this.view.toggleAdjustments(true);
+////            model.save("flag-" + (flagCount - 1));
+////            this.view.updateImageMenu("flag-"+ (flagCount - 1));
+//          }
+//
+////        }
+//
+////        // This is thrown if the name of the flag file to be saved is illegal.
+////        catch (IOException exception) {
+////          throw new IllegalArgumentException("There was an error saving your flag into a file.");
+////        }
+//        break;
 
 //      case "rainbow":
 //        String chosenRainbowOrientation = view.rainbowDialog();
@@ -464,54 +464,54 @@ public class ControllerImpl implements IController, ActionListener, Features {
 //
 //        break;
 
-      case "checkerboard":
-        int checkerboardSize = view.checkerboardDialog();
-
-        // If they click 'cancel', do not make anything.
-        if (checkerboardSize == 0) {
-          return;
-        }
-
-        model.drawCheckerBoard(checkerboardSize);
-        this.checkerboardCount++;
-
-        // Load the checkerboard into the open images in the model, and save it as a file.
-//        try {
-
-          BufferedImage bufferedCheckerboard;
-          // If this is the first checkerboard, the name of it is "checkerboard"
-          if (this.checkerboardCount == 1) {
-            bufferedCheckerboard = this.model.getImage("checkerboard");
-            view.displayImage(bufferedCheckerboard);
-            this.currentImage = "checkerboard";
-            this.undoStack.push(currentImage);
-//            updateUndoRedo();
-            this.view.toggleAdjustments(true);
-
-//            model.save("checkerboard");
-//            this.view.updateImageMenu("checkerboard");
-          }
-
-          // If this isn't the first checkerboard, the name is "checkerboard" with a number appended
-          else {
-            bufferedCheckerboard = this.model.getImage("checkerboard-" + (checkerboardCount - 1));
-            view.displayImage(bufferedCheckerboard);
-            this.currentImage = "checkerboard-" + (checkerboardCount - 1);
-            this.undoStack.push(currentImage);
-//            updateUndoRedo();
-            this.view.toggleAdjustments(true);
-//            model.save("checkerboard-" + (checkerboardCount - 1));
-//            this.view.updateImageMenu("checkerboard" + (checkerboardCount -1));
-          }
-
+//      case "checkerboard":
+//        int checkerboardSize = view.checkerboardDialog();
+//
+//        // If they click 'cancel', do not make anything.
+//        if (checkerboardSize == 0) {
+//          return;
 //        }
 //
-//        // This is thrown if the name of the flag file to be saved is illegal.
-//        catch (IOException exception) {
-//          throw new IllegalArgumentException("There was an error saving your checkerboard into a file.");
-//        }
-
-        break;
+//        model.drawCheckerBoard(checkerboardSize);
+//        this.checkerboardCount++;
+//
+//        // Load the checkerboard into the open images in the model, and save it as a file.
+////        try {
+//
+//          BufferedImage bufferedCheckerboard;
+//          // If this is the first checkerboard, the name of it is "checkerboard"
+//          if (this.checkerboardCount == 1) {
+//            bufferedCheckerboard = this.model.getImage("checkerboard");
+//            view.displayImage(bufferedCheckerboard);
+//            this.currentImage = "checkerboard";
+//            this.undoStack.push(currentImage);
+////            updateUndoRedo();
+//            this.view.toggleAdjustments(true);
+//
+////            model.save("checkerboard");
+////            this.view.updateImageMenu("checkerboard");
+//          }
+//
+//          // If this isn't the first checkerboard, the name is "checkerboard" with a number appended
+//          else {
+//            bufferedCheckerboard = this.model.getImage("checkerboard-" + (checkerboardCount - 1));
+//            view.displayImage(bufferedCheckerboard);
+//            this.currentImage = "checkerboard-" + (checkerboardCount - 1);
+//            this.undoStack.push(currentImage);
+////            updateUndoRedo();
+//            this.view.toggleAdjustments(true);
+////            model.save("checkerboard-" + (checkerboardCount - 1));
+////            this.view.updateImageMenu("checkerboard" + (checkerboardCount -1));
+//          }
+//
+////        }
+////
+////        // This is thrown if the name of the flag file to be saved is illegal.
+////        catch (IOException exception) {
+////          throw new IllegalArgumentException("There was an error saving your checkerboard into a file.");
+////        }
+//
+//        break;
 
 
 //      case "blur":
@@ -869,21 +869,19 @@ public class ControllerImpl implements IController, ActionListener, Features {
   //Draw menu functions
 
   /**
-   * //TODO javadoc.
-//   * @param chosenWidth
-//   * @param chosenHeight
-//   * @param orientation
+   * TODO Javadoc
    */
-  //public void rainbow(int chosenWidth, int chosenHeight, String orientation) {
-  public void rainbow() {
-    String chosenRainbowOrientation = view.rainbowDialog();
+  public void flag() {
+
+    String chosenFlagString = view.flagDialog();
 
     // If they click 'cancel', do not continue prompting them.
-    if (chosenRainbowOrientation == null) {
+    if (chosenFlagString == null) {
       return;
     }
 
-    Orientation chosenOrientation = stringToOrientation(chosenRainbowOrientation);
+    // Convert the string to a Country (which is what our model is expecting)
+    Country chosenFlag = stringToCountry(chosenFlagString);
 
     int chosenWidth = view.widthDialog();
 
@@ -892,20 +890,65 @@ public class ControllerImpl implements IController, ActionListener, Features {
       return;
     }
 
-    int chosenHeight = view.heightDialog();
+    System.out.println("In the controller, the user has chosen this width:" + chosenWidth);
 
-    // If they click 'cancel', do not make anything.
-    if (chosenHeight == 0) {
-      return;
+    model.drawFlag(chosenWidth, chosenFlag);
+    this.flagCount++;
+
+    // Load the flag into the open images in the model, and save it as a file.
+    BufferedImage bufferedFlag;
+    if (this.flagCount == 1) {
+      bufferedFlag = this.model.getImage("flag");
+      view.displayImage(bufferedFlag);
+      this.currentImage = "flag";
+      this.undoStack.push(currentImage);
+      this.view.toggleAdjustments(true);
     }
 
-    model.drawRainbow(chosenHeight, chosenWidth, chosenOrientation);
-    this.rainbowCount++;
+    // If this isn't the first flag, the name is "flag" with a number appended
+    else {
+      bufferedFlag = this.model.getImage("flag-" + (flagCount - 1));
+      view.displayImage(bufferedFlag);
+      this.currentImage = "flag-" + (flagCount - 1);
+      this.undoStack.push(currentImage);
+      this.view.toggleAdjustments(true);
+    }
+
+  }
+  /**
+   * //TODO javadoc.
+   */
+  public void rainbow() {
+    String chosenRainbowOrientation = view.rainbowDialog();
+
+        // If they click 'cancel', do not continue prompting them.
+        if (chosenRainbowOrientation == null) {
+          return;
+        }
+
+        Orientation chosenOrientation = stringToOrientation(chosenRainbowOrientation);
+
+        int chosenWidth = view.widthDialog();
+
+        // If they click 'cancel', do not make anything.
+        if (chosenWidth == 0) {
+          return;
+        }
+
+        int chosenHeight = view.heightDialog();
+
+        // If they click 'cancel', do not make anything.
+        if (chosenHeight == 0) {
+          return;
+        }
+
+        model.drawRainbow(chosenHeight, chosenWidth, chosenOrientation);
+        this.rainbowCount++;
 
     // Load the flag into the open images in the model
 
     BufferedImage bufferedRainbow;
-    // If this is the first flag, the name of it is "flag"
+    // If this is the first rainbow, the name of it is "rainbow"
     if (this.rainbowCount == 1) {
       bufferedRainbow = this.model.getImage("rainbow");
       view.displayImage(bufferedRainbow);
@@ -914,7 +957,7 @@ public class ControllerImpl implements IController, ActionListener, Features {
       this.view.toggleAdjustments(true);
     }
 
-    // If this isn't the first flag, the name is "flag" with a number appended
+    // If this isn't the first rainbow, the name is "rainbow" with a number appended
     else {
       bufferedRainbow = this.model.getImage("rainbow-" + (rainbowCount - 1));
       view.displayImage(bufferedRainbow);
@@ -922,8 +965,39 @@ public class ControllerImpl implements IController, ActionListener, Features {
       this.undoStack.push(currentImage);
       this.view.toggleAdjustments(true);
     }
+  }
+
+  public void checkerboard() {
+    int checkerboardSize = view.checkerboardDialog();
+
+    // If they click 'cancel', do not make anything.
+    if (checkerboardSize == 0) {
+      return;
+    }
+
+    model.drawCheckerBoard(checkerboardSize);
+    this.checkerboardCount++;
 
 
+    BufferedImage bufferedCheckerboard;
+    // If this is the first checkerboard, the name of it is "checkerboard"
+    if (this.checkerboardCount == 1) {
+      bufferedCheckerboard = this.model.getImage("checkerboard");
+      view.displayImage(bufferedCheckerboard);
+      this.currentImage = "checkerboard";
+      this.undoStack.push(currentImage);
+      this.view.toggleAdjustments(true);
+    }
+
+    // If this isn't the first checkerboard, the name is "checkerboard" with a number appended
+    else {
+      bufferedCheckerboard = this.model.getImage("checkerboard-" + (checkerboardCount - 1));
+      view.displayImage(bufferedCheckerboard);
+      this.currentImage = "checkerboard-" + (checkerboardCount - 1);
+      this.undoStack.push(currentImage);
+      this.view.toggleAdjustments(true);
+
+    }
 
   }
 
