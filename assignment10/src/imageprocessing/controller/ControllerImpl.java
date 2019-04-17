@@ -276,7 +276,7 @@ public class ControllerImpl implements IController, ActionListener {
         catch (IOException exception) {
           throw new IllegalArgumentException("There was a problem loading that image.");
         }
-
+        this.currentImage = path;
         // Creates a BufferedImage of the image specified by the path.
         BufferedImage buffered = this.model.getImage(path);
 
@@ -481,7 +481,38 @@ public class ControllerImpl implements IController, ActionListener {
         catch (NullPointerException exc) {
           System.out.println("Can't blur the background image. Must load your own image first.");
         }
-
+        break;
+      case "sharpen":
+        //TODO should this be in a higher order function since this is basically going to be the
+        // same template for all adjustments? applyAdjustment(e->applyBlur) ???
+        System.out.println("sharpen has been received by the controller");
+        this.undoStack.push(currentImage);
+        System.out.println("current image:" + this.currentImage);
+        try {
+          this.model.applySharpen(currentImage);
+          this.currentImage = this.currentImage + "-sharpen";
+          BufferedImage buffer = this.model.getImage(currentImage);
+          view.displayImage(buffer);
+        }
+        catch (NullPointerException exc) {
+          System.out.println("Can't sharpen the background image. Must load your own image first.");
+        }
+        break;
+      case "dither":
+        //TODO should this be in a higher order function since this is basically going to be the
+        // same template for all adjustments? applyAdjustment(e->applyBlur) ???
+        System.out.println("dither has been received by the controller");
+        this.undoStack.push(currentImage);
+        System.out.println("current image:" + this.currentImage);
+        try {
+          this.model.applyDither(currentImage);
+          this.currentImage = this.currentImage + "-dither";
+          BufferedImage buffer = this.model.getImage(currentImage);
+          view.displayImage(buffer);
+        }
+        catch (NullPointerException exc) {
+          System.out.println("Can't dither the background image. Must load your own image first.");
+        }
         break;
       case "mosaic":
         //TODO should this be in a higher order function since this is basically going to be the
@@ -492,6 +523,38 @@ public class ControllerImpl implements IController, ActionListener {
         this.currentImage = this.currentImage + "-mosaic";
         BufferedImage bufferM = this.model.getImage(currentImage);
         view.displayImage(bufferM);
+        break;
+      case "sepia":
+        //TODO should this be in a higher order function since this is basically going to be the
+        // same template for all adjustments? applyAdjustment(e->applyBlur) ???
+        System.out.println("sepia has been received by the controller");
+        this.undoStack.push(currentImage);
+        System.out.println("current image:" + this.currentImage);
+        try {
+          this.model.applySepia(currentImage);
+          this.currentImage = this.currentImage + "-sepia";
+          BufferedImage buffer = this.model.getImage(currentImage);
+          view.displayImage(buffer);
+        }
+        catch (NullPointerException exc) {
+          System.out.println("Can't sepia the background image. Must load your own image first.");
+        }
+        break;
+      case "greyscale":
+        //TODO should this be in a higher order function since this is basically going to be the
+        // same template for all adjustments? applyAdjustment(e->applyBlur) ???
+        System.out.println("greyscale has been received by the controller");
+        this.undoStack.push(currentImage);
+        System.out.println("current image:" + this.currentImage);
+        try {
+          this.model.applyGreyscale(currentImage);
+          this.currentImage = this.currentImage + "-greyscale";
+          BufferedImage buffer = this.model.getImage(currentImage);
+          view.displayImage(buffer);
+        }
+        catch (NullPointerException exc) {
+          System.out.println("Can't greyscale the background image. Must load your own image first.");
+        }
         break;
       default:
         System.out.println(e.getActionCommand() + " was received by the controller");
