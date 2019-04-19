@@ -34,6 +34,8 @@ public class ControllerImpl implements IController, Features {
   Stack<String> undoStack;
   Stack<String> redoStack;
 
+  boolean isSaved;
+
 
   /**
    * Initializes the controller of the imageprocessing package. The controller takes input from the
@@ -51,6 +53,7 @@ public class ControllerImpl implements IController, Features {
     this.checkerboardCount = 0;
     this.rainbowCount = 0;
     this.currentImage = "./res/welcome.png";
+    this.isSaved = false;
 
   }
 
@@ -427,6 +430,7 @@ public class ControllerImpl implements IController, Features {
     BufferedImage output = model.getImage(currentImage);
 
     ImageIO.write(output, "png", new FileOutputStream(spath));
+    this.isSaved = true;
 
   }
 
@@ -452,7 +456,7 @@ public class ControllerImpl implements IController, Features {
   public void quit() throws IOException {
 
     // If there are unsaved changes, as the user if they want to save the current image
-    if (!undoStack.empty()) {
+    if (!undoStack.empty() && isSaved == false ) {
 
       // Show the dialog box, which returns true if they want to save and false otherwise
       if (view.openUnsavedChanges()) {
@@ -484,6 +488,8 @@ public class ControllerImpl implements IController, Features {
     this.view.displayImage(bufferedU);
     // Update the undo/redo state.
     updateUndoRedo();
+
+    this.isSaved = false;
   }
 
   /**
@@ -500,6 +506,7 @@ public class ControllerImpl implements IController, Features {
     this.view.displayImage(bufferedR);
     // Update the undo/redo state.
     updateUndoRedo();
+    this.isSaved = false;
   }
 
   /**
@@ -538,6 +545,7 @@ public class ControllerImpl implements IController, Features {
     // If you apply an adjustment, the redo stack is cleared.
     this.redoStack.clear();
     updateUndoRedo();
+    this.isSaved = false;
   }
 
   /**
@@ -561,6 +569,7 @@ public class ControllerImpl implements IController, Features {
     // If you apply an adjustment, the redo stack is cleared.
     this.redoStack.clear();
     updateUndoRedo();
+    this.isSaved = false;
   }
 
   /**
@@ -583,6 +592,7 @@ public class ControllerImpl implements IController, Features {
     // If you apply an adjustment, the redo stack is cleared.
     this.redoStack.clear();
     updateUndoRedo();
+    this.isSaved = false;
   }
 
   /**
@@ -606,6 +616,7 @@ public class ControllerImpl implements IController, Features {
     // If you apply an adjustment, the redo stack is cleared.
     this.redoStack.clear();
     updateUndoRedo();
+    this.isSaved = false;
   }
 
   /**
@@ -628,6 +639,7 @@ public class ControllerImpl implements IController, Features {
     // If you apply an adjustment, the redo stack is cleared.
     this.redoStack.clear();
     updateUndoRedo();
+    this.isSaved = false;
   }
 
   /**
@@ -650,6 +662,7 @@ public class ControllerImpl implements IController, Features {
     // If you apply an adjustment, the redo stack is cleared.
     this.redoStack.clear();
     updateUndoRedo();
+    this.isSaved = false;
   }
 
 

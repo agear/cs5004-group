@@ -26,9 +26,9 @@ public class ProgramRunner {
     IController controller = new ControllerImpl(model, in);
     controller.setView(view);
 
-    if ( args.length > 0 ) {
-      controller.goGo();
-    }
+//    if ( args.length > 0 ) {
+//      controller.goGo();
+//    }
 
 
   }

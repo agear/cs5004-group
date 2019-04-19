@@ -644,6 +644,5 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     flagMenuItem.addActionListener(l->features.flag());
     rainbowMenuItem.addActionListener(l->features.rainbow());
     checkerBoardMenuItem.addActionListener(l->features.checkerboard());
-
   }
 }
