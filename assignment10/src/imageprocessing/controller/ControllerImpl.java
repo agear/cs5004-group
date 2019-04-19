@@ -397,7 +397,6 @@ public class ControllerImpl implements IController, Features {
     // When the user clicks on the 'load' button, load the image in the model
     view.openLoadDialogue();
     String lpath = view.getFilePath();
-    System.out.println(lpath);
     try {
       this.model.load(lpath, lpath);
     } catch (IOException exception) {
@@ -422,8 +421,10 @@ public class ControllerImpl implements IController, Features {
       // Since you have opened an image you can now apply adjustments
       this.view.toggleAdjustments(true);
     }
+
+    // Operation has been cancelled by user
     catch (NullPointerException e) {
-      System.out.println("Operation cancelled.");
+      return;
     }
 
   }
@@ -443,8 +444,10 @@ public class ControllerImpl implements IController, Features {
     } catch (IOException exception) {
       view.errorDialog();
     }
+
+    // Operation has been cancelled by user
     catch (NullPointerException exception) {
-      System.out.println("Operation cancelled.");
+      return;
     }
 
   }
@@ -454,7 +457,7 @@ public class ControllerImpl implements IController, Features {
    * @param script the list of commands that the user has written
    */
   public void batchWrite(String script) {
-    System.out.println(script);
+    System.out.println(script); //TODO delete?
     Scanner s = new Scanner(script);
     try {
       this.goUniversal(s);
@@ -468,7 +471,6 @@ public class ControllerImpl implements IController, Features {
     // When the user clicks on the 'save' button, save
     view.openSaveDialogue();
     String spath = view.getFilePath();
-    System.out.println("Controller : " + spath);
 
     BufferedImage output = model.getImage(currentImage);
 
@@ -484,7 +486,6 @@ public class ControllerImpl implements IController, Features {
    * @throws IOException When the input or output paths are illegal
    */
   private void saveToPath(String file, String spath) throws IOException {
-    System.out.println("Saving " + file+ " is happening in controller to path:"+spath);
     BufferedImage output = model.getImage(file);
     ImageIO.write(output, "png", new FileOutputStream(spath));
   }
@@ -505,7 +506,6 @@ public class ControllerImpl implements IController, Features {
 
       // Show the dialog box, which returns true if they want to save and false otherwise
       if (view.openUnsavedChanges()) {
-        System.out.println("Save");
         this.save();
         System.exit(0);
       }
@@ -599,7 +599,6 @@ public class ControllerImpl implements IController, Features {
    */
   public void sharpen() {
 
-    System.out.println("Calling sharpen function");
     // Push the current image to the undo stack before anything else
     this.undoStack.push(currentImage);
 

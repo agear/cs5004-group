@@ -45,9 +45,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
    * Initializes the window and all containers of the imageprocessing GUI.
    */
   public ViewImpl() throws IOException {
-    System.out.println("Trying to set up ...");
     prepareGui("./res/welcome.png");
-    System.out.println("Initialization complete.");
   }
 
 
@@ -96,20 +94,15 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
    * 'administrative' type capabilities.
    */
   private void prepareMenuBar() {
-    System.out.println("Trying to set up the menu ..."); //TODO can we delete debugging statements like this now?
 
     // Create the menu bar:
     menuBar = new JMenuBar();
 
     // Add each category
     prepareFileMenuItems();
-    System.out.println("File menu..OK!");
     prepareEditMenuItems();
-    System.out.println("Edit menu..OK!");
     prepareAdjustmentMenuItems();
-    System.out.println("Adjustment menu..OK!");
     prepareDrawMenuItems();
-    System.out.println("Draw menu..OK!");
 
     // Add the menu bar to the frame at the top.
     mainFrame.setJMenuBar(menuBar);
@@ -122,7 +115,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
    * Creates the File menu, which contains Load, Save, Batch Load, and Quit.
    */
   private void prepareFileMenuItems() {
-    System.out.println("Preparing file menu....");
 
     // If the user types "F" for "F"ile (VK_F), this menu opens up
     menuFile = new JMenu("File");
@@ -372,7 +364,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     if (retValue == JFileChooser.APPROVE_OPTION) {
       File f = fchooser.getSelectedFile();
       path = f.getAbsolutePath();
-      System.out.println("In the View, user has selected this path: " + path);
     }
   }
 
@@ -409,7 +400,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
           File f = fchooser.getSelectedFile();
           fileSaveDisplay.setText(f.getAbsoluteFile().getAbsolutePath());
           path = f.getAbsoluteFile().getAbsolutePath();
-          System.out.println("In the View, user has chosen to save to this path: \n" + path);
         }
   }
 
@@ -566,7 +556,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   public void errorDialog() {
     JOptionPane.showMessageDialog(this.imagePanel, "There was an error.",
             "don't kill the messenger", JOptionPane.ERROR_MESSAGE);
-    System.out.println("??");
   }
 
 
@@ -616,7 +605,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
         features.save();
       }
       catch (IOException e) {
-        System.out.println("Couldn't save the file"); //TODO Popup alert instead of print to terminal.
+        this.errorDialog();
+        System.out.println("Couldn't save the file");
       }
     });
     batchLoadMenuItem.addActionListener(l->features.batchLoad());
@@ -630,7 +620,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
         features.quit();
       }
       catch (IOException e) {
-      System.out.println("Couldn't save the file");
+        this.errorDialog();
+        System.out.println("Couldn't save the file");
     }
   });
 
