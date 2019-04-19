@@ -96,20 +96,20 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
    * 'administrative' type capabilities.
    */
   private void prepareMenuBar() {
-    System.out.println("Trying to set up the menu ..."); //TODO can we delete debugging statements like this now?
+//    System.out.println("Trying to set up the menu ..."); //TODO can we delete debugging statements like this now?
 
     // Create the menu bar:
     menuBar = new JMenuBar();
 
     // Add each category
     prepareFileMenuItems();
-    System.out.println("File menu..OK!");
+//    System.out.println("File menu..OK!");
     prepareEditMenuItems();
-    System.out.println("Edit menu..OK!");
+//    System.out.println("Edit menu..OK!");
     prepareAdjustmentMenuItems();
-    System.out.println("Adjustment menu..OK!");
+//    System.out.println("Adjustment menu..OK!");
     prepareDrawMenuItems();
-    System.out.println("Draw menu..OK!");
+//    System.out.println("Draw menu..OK!");
 
     // Add the menu bar to the frame at the top.
     mainFrame.setJMenuBar(menuBar);
@@ -122,7 +122,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
    * Creates the File menu, which contains Load, Save, Batch Load, and Quit.
    */
   private void prepareFileMenuItems() {
-    System.out.println("Preparing file menu....");
+//    System.out.println("Preparing file menu....");
 
     // If the user types "F" for "F"ile (VK_F), this menu opens up
     menuFile = new JMenu("File");
@@ -185,7 +185,9 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
             "Edit menu");
 
     // Add all edit item to this menu:
-    undoMenuItem = new JMenuItem("Undo", KeyEvent.VK_U);
+    undoMenuItem = new JMenuItem("Undo", KeyEvent.VK_Z);
+    quitMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_Z, ActionEvent.ALT_MASK));
+
     undoMenuItem.getAccessibleContext().setAccessibleDescription("Undo last command");
     undoMenuItem.setActionCommand("undo");
 
