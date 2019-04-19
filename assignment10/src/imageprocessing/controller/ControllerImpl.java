@@ -1,7 +1,5 @@
 package imageprocessing.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,7 +21,7 @@ import imageprocessing.view.IView;
  * and it controls how and when the model is used. It also controls what must be shown by the view
  * and when. This controller applies filters and transformations onto any sort of image.
  */
-public class ControllerImpl implements IController, ActionListener, Features {
+public class ControllerImpl implements IController, Features {
   final Readable in;
   //  final Appendable out;
   IModel model;
@@ -294,121 +292,6 @@ public class ControllerImpl implements IController, ActionListener, Features {
     }
   }
 
-
-  /** When the view has an action happen to it, this method is triggered because the controller
-   * is a listener to many objects in the view. This method sends data to the model when events
-   * are triggered to cause that, in order to process images.
-   * @param e The event that occurred in the view
-   * @throws IllegalArgumentException When //TODO why would this ever be thrown?
-   */
-  @Override
-  public void actionPerformed(ActionEvent e) throws IllegalArgumentException {
-    switch (e.getActionCommand()) {
-
-      // If the save button is clicked, prompt the user for where to save the file
-      case "save":
-        this.view.openSaveDialogue();
-        String spath = this.view.getFilePath();
-        break;
-
-        /*
-        If the sharpen button is clicked, add current image to stack, sharpen it,
-        and save it to open images in model
-         */
-      case "sharpen":
-        this.undoStack.push(currentImage);
-        updateUndoRedo();
-
-        // If they try to sharpen the background image, then throw an exception
-        try {
-          this.model.applySharpen(currentImage);
-          this.currentImage = this.currentImage + "-sharpen";
-          BufferedImage buffer = this.model.getImage(currentImage);
-          view.displayImage(buffer);
-          this.redoStack.clear();
-          updateUndoRedo();
-        } catch (NullPointerException exc) {
-          System.out.println("Can't sharpen the background image. Must load your own image first.");
-        }
-        break;
-
-      /*
-      If the dither button is clicked, add current image to stack, process it in the model,
-      display it in the view, and save it to open images in model
-       */
-      case "dither":
-        this.undoStack.push(currentImage);
-        updateUndoRedo();
-        try {
-          this.model.applyDither(currentImage);
-          this.currentImage = this.currentImage + "-dither";
-          BufferedImage buffer = this.model.getImage(currentImage);
-          view.displayImage(buffer);
-          this.redoStack.clear();
-          updateUndoRedo();
-        } catch (NullPointerException exc) {
-          System.out.println("Can't dither the background image. Must load your own image first.");
-        }
-        break;
-
-      /*
-      If the mosaic button is clicked, add current image to stack, process it in the model,
-      display it in the view, and save it to open images in model
-       */
-      case "mosaic":
-        this.undoStack.push(currentImage);
-        updateUndoRedo();
-
-        // TODO why is the seed hardcoded? i thought there's a popup?
-        this.model.applyMosaic(currentImage, 100);
-        this.currentImage = this.currentImage + "-mosaic";
-        BufferedImage bufferM = this.model.getImage(currentImage);
-        view.displayImage(bufferM);
-        this.redoStack.clear();
-        updateUndoRedo();
-        break;
-
-      /*
-      If the sepia button is clicked, add current image to stack, process it in the model,
-      display it in the view, and save it to open images in model
-       */
-      case "sepia":
-        this.undoStack.push(currentImage);
-        updateUndoRedo();
-        try {
-          this.model.applySepia(currentImage);
-          this.currentImage = this.currentImage + "-sepia";
-          BufferedImage buffer = this.model.getImage(currentImage);
-          view.displayImage(buffer);
-          this.redoStack.clear();
-          updateUndoRedo();
-        } catch (NullPointerException exc) {
-          System.out.println("Can't sepia the background image. Must load your own image first.");
-        }
-        break;
-
-      /*
-      If the greyscale button is clicked, add current image to stack, process it in the model,
-      display it in the view, and save it to open images in model
-       */
-      case "greyscale":
-        this.undoStack.push(currentImage);
-        updateUndoRedo();
-        try {
-          this.model.applyGreyscale(currentImage);
-          this.currentImage = this.currentImage + "-greyscale";
-          BufferedImage buffer = this.model.getImage(currentImage);
-          view.displayImage(buffer);
-          this.redoStack.clear();
-          updateUndoRedo();
-        } catch (NullPointerException exc) {
-          System.out.println("Can't greyscale the background image. Must load your own image first.");
-        }
-        break;
-    }
-  }
-
-
   /**
    * Converts a string from the view into a Country -- parsing user input to pass to the model.
    *
@@ -478,7 +361,7 @@ public class ControllerImpl implements IController, ActionListener, Features {
     this.currentImage = lpath;
     // Creates a BufferedImage of the image specified by the path.
     BufferedImage buffered = this.model.getImage(lpath);
-    // Supposed to rezie the window to the size of the new image. //TODO Doesn't work properly.
+    // Supposed to resize the window to the size of the new image. //TODO Doesn't work properly.
     view.setSize(buffered.getWidth(), buffered.getHeight());
     // Displays the image in the view.
     view.displayImage(buffered);
@@ -506,35 +389,25 @@ public class ControllerImpl implements IController, ActionListener, Features {
 
   }
 
+  public void batchWrite(String script) {
+    System.out.println(script);
+    Scanner s = new Scanner(script);
+    try {
+      this.goUniversal(s);
+    } catch (IOException exception) {
+      throw new IllegalArgumentException("There was a problem with your script.");
+    }
+  }
 
   public void save() throws IOException {
     // When the user clicks on the 'save' button, save
     view.openSaveDialogue();
     String spath = view.getFilePath();
     System.out.println("Controller : "+ spath);
-//    File ofile = new File(spath);
 
     BufferedImage output = model.getImage(currentImage);
 
-//    String extension = filename.substring(filename.indexOf(".") + 1);
     ImageIO.write(output, "png", new FileOutputStream(spath));
-
-//    this.model.save();
-//    try {
-//      this.model.load(lpath, lpath);
-//    } catch (IOException exception) {
-//      throw new IllegalArgumentException("There was a problem loading that image.");
-//    }
-//    this.currentImage = lpath;
-//    // Creates a BufferedImage of the image specified by the path.
-//    BufferedImage buffered = this.model.getImage(lpath);
-//    // Supposed to rezie the window to the size of the new image. //TODO Doesn't work properly.
-//    view.setSize(buffered.getWidth(), buffered.getHeight());
-//    // Displays the image in the view.
-//    view.displayImage(buffered);
-
-    // Since you have opened an image you can now apply adjustments
-    this.view.toggleAdjustments(true);
 
   }
 
@@ -543,6 +416,9 @@ public class ControllerImpl implements IController, ActionListener, Features {
    * //TODO should we have a popup that says 'Save current image? [Yes] [No]" ?
    */
   public void quit() {
+    if (!undoStack.empty()) {
+      view.openUnsavedChanges();
+    }
     System.exit(0);
   }
 

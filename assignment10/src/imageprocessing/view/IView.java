@@ -28,6 +28,8 @@ public interface IView {
 
   void openSaveDialogue();
 
+  void openUnsavedChanges();
+
   String getFilePath();
 
   String flagDialog();

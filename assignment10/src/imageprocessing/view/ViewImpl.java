@@ -36,7 +36,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   private JMenuItem blurMenuItem, sharpenMenuItem, ditherMenuItem,
   mosaicMenuItem, sepiaMenuItem, greyscaleMenuItem, flagMenuItem, checkerBoardMenuItem,
   rainbowMenuItem, loadMenuItem, saveMenuItem, undoMenuItem, redoMenuItem, quitMenuItem,
-          batchLoadMenuItem;
+          batchLoadMenuItem, batchWriteMenuItem;
   private JScrollPane imageScrollPane;
 
   private JPanel imagePanel;
@@ -84,7 +84,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     prepareScrollPane(file);
 
     mainFrame.pack();
-    mainFrame.setBackground(Color.red);
+//    mainFrame.setBackground(Color.red);
     mainFrame.setVisible(true);
 
   }
@@ -152,6 +152,12 @@ public void setSize(int width, int height) {
     batchLoadMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.ALT_MASK));
     batchLoadMenuItem.getAccessibleContext().setAccessibleDescription("Load batch script");
     menuFile.add(batchLoadMenuItem);
+
+    // Write a batch script
+    batchWriteMenuItem = new JMenuItem("Write Batch Script", KeyEvent.VK_B);
+    batchWriteMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.ALT_MASK));
+    batchWriteMenuItem.getAccessibleContext().setAccessibleDescription("Write batch script");
+    menuFile.add(batchWriteMenuItem);
 
 
     // Separate quit
@@ -320,7 +326,7 @@ public void setSize(int width, int height) {
     imagePanel.setLayout(new GridLayout(1,0, 10, 10));
     imagePanel.setMaximumSize(null);
     fileSaveDisplay = new JLabel("File path will appear here");
-    imagePanel.add(fileSaveDisplay);
+//    imagePanel.add(fileSaveDisplay);
     mainFrame.add(imagePanel);
 
 
@@ -373,6 +379,10 @@ public void setSize(int width, int height) {
   }
 
   //TODO have you tested w/ .gif images? would they work?
+
+  /**
+   * TODO Javadoc
+   */
   public void openLoadDialogue() {
 
     // Creates a JFileChooser options, which opens a dialog box that lets the user choose a file.
@@ -392,7 +402,9 @@ public void setSize(int width, int height) {
     }
   }
 
-
+  /**
+   * TODO Javadoc.
+   */
   public void openSaveDialogue() {
 
         final JFileChooser fchooser = new JFileChooser(".");
@@ -403,6 +415,16 @@ public void setSize(int width, int height) {
           path = f.getAbsoluteFile().getAbsolutePath();
           System.out.println("In the View, user has chosen to save to this path: \n" + path);
         }
+  }
+
+  // TODO figure this out.
+  public void openUnsavedChanges() {
+    final JPopupMenu popup = new JPopupMenu("Are you sure?");
+
+
+    final String[] options = {"Quit without save", "Save changes"};
+    JButton quit = new JButton("Quit");
+//    return true;
   }
 
   /**
@@ -531,42 +553,6 @@ public void setSize(int width, int height) {
   }
 
 
-
-
-//  @Override
-//  /**
-//   * TODO javadoc.
-//   */
-//  public void setListeners(ActionListener controller) {
-////    this.controller = controller;
-//
-////    //File Menu
-////    this.loadMenuItem.addActionListener(controller);
-////    this.saveMenuItem.addActionListener(controller);
-////
-////    //Edit Menu
-////    this.undoMenuItem.addActionListener(controller);
-////    this.redoMenuItem.addActionListener(controller);
-////
-////    //Adjustment Menu
-////    this.blurMenuItem.addActionListener(controller);
-////    this.sharpenMenuItem.addActionListener(controller);
-////    this.ditherMenuItem.addActionListener(controller);
-////    this.mosaicMenuItem.addActionListener(controller);
-////    this.sepiaMenuItem.addActionListener(controller);
-////    this.greyscaleMenuItem.addActionListener(controller);
-//
-////    //Draw Menu
-////    this.flagMenuItem.addActionListener(controller); //TODO this section will probably be deleted when we figure out how to do dialog boxes correctly
-////    this.rainbowMenuItem.addActionListener(controller);
-////    this.checkerBoardMenuItem.addActionListener(controller);
-//
-////    //Image Menu
-////    this.image1MenuItem.addActionListener(controller);
-////    this.image2MenuItem.addActionListener(controller);
-////    this.countryListComboBox.addActionListener(controller);
-//  }
-
   /**
    * TODO java doc
    * @param b
@@ -597,19 +583,6 @@ public void setSize(int width, int height) {
     saveMenuItem.setEnabled(b);
   }
 
-//  /**
-//   * TODO Javadoc.
-//   * @param imageName
-//   */
-//  public void updateImageMenu(String imageName) {
-//    // Add all adjustments item to this menu:
-//    this.imageMenuItem = new JMenuItem(imageName, KeyEvent.VK_Z); // If the person hits "Z", it goes here
-//    this.imageMenuItem.getAccessibleContext().setAccessibleDescription(imageName);
-//    this.imageMenuItem.setActionCommand(imageName);
-//    this.imageMenuItem.addActionListener(controller);
-//    menuImages.add(this.imageMenuItem);
-////    this.imageMenuItem.addActionListener(controller);
-//  }
 
 
 
@@ -627,6 +600,7 @@ public void setSize(int width, int height) {
       }
     });
     batchLoadMenuItem.addActionListener(l->features.batchLoad());
+    batchWriteMenuItem.addActionListener(l->features.batchWrite(JOptionPane.showInputDialog("Script:"))); //TODO needs a bigger text box
     quitMenuItem.addActionListener(l->features.quit());
 
     //Edit menu action listeners
@@ -637,7 +611,7 @@ public void setSize(int width, int height) {
     blurMenuItem.addActionListener(l->features.blur());
     sharpenMenuItem.addActionListener(l->features.sharpen());
     ditherMenuItem.addActionListener(l->features.dither());
-    mosaicMenuItem.addActionListener(l->features.mosaic(Integer.parseInt(JOptionPane.showInputDialog("Enter a number to use as the seed:"))));
+    mosaicMenuItem.addActionListener(l->features.mosaic(Integer.parseInt(JOptionPane.showInputDialog("Enter a number to use as the seed:")))); //TODO should this be the same as the other number selectors to avoid exceptions?/Better way to do this
     sepiaMenuItem.addActionListener(l->features.sepia());
     greyscaleMenuItem.addActionListener(l->features.greyscale());
 
