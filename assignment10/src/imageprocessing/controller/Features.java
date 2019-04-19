@@ -44,16 +44,53 @@ public interface Features {
   void redo();
 
   //Adjustment menu functions
+
+  /**
+   * Applies a blur adjustment to an image.
+   */
   void blur();
+
+  /**
+   * Applies a sharpen adjustment to an image.
+   */
   void sharpen();
+
+  /**
+   * Applies a dither adjustment to an image.
+   */
   void dither();
+
+  /**
+   * Applies a mosiac adjustment to an image.
+   * @param seed The number of seeds/clusters to mosaic
+   */
   void mosaic(int seed);
+
+  /**
+   * Applies a sepia adjustment to an image.
+   */
   void sepia();
+
+  /**
+   * Applies a greyscale adjustment to an image.
+   */
   void greyscale();
 
   //Draw menu functions
+
+  /**
+   * Draws a flag object.
+   */
   void flag();
+
+  /**
+   * Draws a rainbow object.
+   */
   void rainbow();
+
+  /**
+   * Draws a checkerboard object.
+   */
   void checkerboard();
 
 }

@@ -8,10 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.*;
-import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.BorderFactory;
-import javax.swing.text.NumberFormatter;
 
 import imageprocessing.controller.Features;
 import imageprocessing.model.image.IImage;
@@ -573,16 +570,16 @@ public void setSize(int width, int height) {
   }
 
   /**
-   * TODO Javadoc
-   * @param b
+   * Allows or disallows the redo button to be clicked.
+   * @param b If b is //TODO i'm not sure how set enabled works
    */
   public void toggleRedo(boolean b) {
     redoMenuItem.setEnabled(b);
   }
 
   /**
-   * TODO Javadoc
-   * @param b
+   * Allows or disallows the adjustment menu items to be clicked.
+   * @param b If b is //TODO i'm not sure how set enabled works
    */
   public void toggleAdjustments(boolean b) {
     blurMenuItem.setEnabled(b);
@@ -593,22 +590,6 @@ public void setSize(int width, int height) {
     greyscaleMenuItem.setEnabled(b);
     saveMenuItem.setEnabled(b);
   }
-
-//  /**
-//   * TODO Javadoc.
-//   * @param imageName
-//   */
-//  public void updateImageMenu(String imageName) {
-//    // Add all adjustments item to this menu:
-//    this.imageMenuItem = new JMenuItem(imageName, KeyEvent.VK_Z); // If the person hits "Z", it goes here
-//    this.imageMenuItem.getAccessibleContext().setAccessibleDescription(imageName);
-//    this.imageMenuItem.setActionCommand(imageName);
-//    this.imageMenuItem.addActionListener(controller);
-//    menuImages.add(this.imageMenuItem);
-////    this.imageMenuItem.addActionListener(controller);
-//  }
-
-
 
   @Override
   public void addFeatures(Features features) {
