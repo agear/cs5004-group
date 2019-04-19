@@ -625,8 +625,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
       JOptionPane.showConfirmDialog(null, new JScrollPane(ta));
       features.batchWrite(ta.getText());
     });
-    //TODO
-    // Goal: return ta.getText()
     quitMenuItem.addActionListener(l-> {
       try {
         features.quit();
