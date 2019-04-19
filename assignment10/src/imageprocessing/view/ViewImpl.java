@@ -46,6 +46,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
    */
   public ViewImpl() throws IOException {
     System.out.println("Trying to set up ...");
+    //TODO different initial background for startup?
     prepareGui("./res/welcome.jpeg");
     System.out.println("Initialization complete.");
   }
@@ -79,6 +80,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
   }
 
+
   /** Sets the size of the image so that the image panel is 100 pixels wider and taller
    * than the input width and height specifications.
    * @param width The desired width
@@ -88,6 +90,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     imagePanel.setSize(width +100, height+100);
 }
 
+//TODO Delete debug statements
   /**
    * Creates the adjustment menu, which has each type of adjustment of the image that the
    * user can click on to change the current image, and the File menu, which has
@@ -108,7 +111,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     System.out.println("Adjustment menu..OK!");
     prepareDrawMenuItems();
     System.out.println("Draw menu..OK!");
-//    prepareImagesMenuItems();
 
     // Add the menu bar to the frame at the top.
     mainFrame.setJMenuBar(menuBar);
@@ -221,12 +223,10 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     blurMenuItem = new JMenuItem("Blur", KeyEvent.VK_B); // If the person hits "b", it goes here
     // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
     blurMenuItem.getAccessibleContext().setAccessibleDescription("Blur your image");
-//    blurMenuItem.setActionCommand("blur");
     menuAdj.add(blurMenuItem);
 
     sharpenMenuItem = new JMenuItem("Sharpen", KeyEvent.VK_S);
     sharpenMenuItem.getAccessibleContext().setAccessibleDescription("Sharpen your image");
-//    sharpenMenuItem.setActionCommand("sharpen");
     menuAdj.add(sharpenMenuItem);
 
     // Add a separator to categorize types of adjustments
@@ -234,12 +234,10 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
     ditherMenuItem = new JMenuItem("Dither", KeyEvent.VK_D);
     ditherMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in dither");
-//    ditherMenuItem.setActionCommand("dither");
     menuAdj.add(ditherMenuItem);
 
     mosaicMenuItem = new JMenuItem("Mosaic", KeyEvent.VK_M);
     mosaicMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in dither");
-//    mosaicMenuItem.setActionCommand("mosaic");
     menuAdj.add(mosaicMenuItem);
 
     // Add a seperator to categorize types of adjustments
@@ -248,7 +246,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
     sepiaMenuItem = new JMenuItem("Sepia", KeyEvent.VK_S);
     sepiaMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in sepia");
-//    sepiaMenuItem.setActionCommand("sepia");
     menuAdj.add(sepiaMenuItem);
 
     greyscaleMenuItem = new JMenuItem("Greyscale", KeyEvent.VK_G);
@@ -353,6 +350,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     imagePanel.repaint();
     this.mainFrame.add(imagePanel);
   }
+
 
   /** Returns the most previously loaded filepath of this View.
    * @return the filepath stored in the view
@@ -605,12 +603,15 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
         features.save();
       }
       catch (IOException e) {
-        System.out.println("Couldn't save the file");
+        System.out.println("Couldn't save the file"); //TODO Popup alert instead of print to terminal.
       }
     });
     batchLoadMenuItem.addActionListener(l->features.batchLoad());
+    JTextArea ta = new JTextArea(20, 20);
     batchWriteMenuItem.addActionListener(l->features.batchWrite(
-            JOptionPane.showInputDialog("Script:"))); //TODO needs a bigger text box
+            JOptionPane.showConfirmDialog(null, new JScrollPane(ta)));
+    //TODO
+    // Goal: return ta.getText()
     quitMenuItem.addActionListener(l->features.quit());
 
     //Edit menu action listeners

@@ -424,6 +424,19 @@ public class ControllerImpl implements IController, Features {
 
   }
 
+  /** TODO Implement in the controller.
+   * For saving during batch processing
+   * @param file
+   * @throws IOException
+   */
+  private void saveToPath(String file, String spath) throws IOException {
+    BufferedImage output = model.getImage(file);
+    ImageIO.write(output, "png", new FileOutputStream(spath));
+  }
+
+  private void loadFromPath() throws IOException {
+
+  }
   /**
    * When the user clicks the quit button, the program exits, without saving anything.
    * //TODO should we have a popup that says 'Save current image? [Yes] [No]" ?
