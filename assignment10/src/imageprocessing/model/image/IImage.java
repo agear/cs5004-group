@@ -1,7 +1,6 @@
 package imageprocessing.model.image;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import imageprocessing.model.adjustment.Filter;

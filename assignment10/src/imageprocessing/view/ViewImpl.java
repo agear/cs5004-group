@@ -46,8 +46,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
    */
   public ViewImpl() throws IOException {
     System.out.println("Trying to set up ...");
-    //TODO different initial background for startup?
-    prepareGui("./res/welcome.jpeg");
+    prepareGui("./res/welcome.png");
     System.out.println("Initialization complete.");
   }
 
@@ -225,7 +224,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     blurMenuItem.getAccessibleContext().setAccessibleDescription("Blur your image");
     menuAdj.add(blurMenuItem);
 
-    sharpenMenuItem = new JMenuItem("Sharpen", KeyEvent.VK_S);
+    sharpenMenuItem = new JMenuItem("Sharpen");
     sharpenMenuItem.getAccessibleContext().setAccessibleDescription("Sharpen your image");
     menuAdj.add(sharpenMenuItem);
 
@@ -244,7 +243,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     menuAdj.addSeparator();
 
 
-    sepiaMenuItem = new JMenuItem("Sepia", KeyEvent.VK_S);
+    sepiaMenuItem = new JMenuItem("Sepia");
     sepiaMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in sepia");
     menuAdj.add(sepiaMenuItem);
 
@@ -419,13 +418,21 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   }
 
   // TODO figure this out.
-  public void openUnsavedChanges() {
-    final JPopupMenu popup = new JPopupMenu("Are you sure?");
+  public boolean openUnsavedChanges() {
+
+    int result = JOptionPane.showConfirmDialog(
+            null,
+            "You have unsaved changes. Do you want to save your work?",
+            "no wait don't go",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
 
 
-    final String[] options = {"Quit without save", "Save changes"};
-    JButton quit = new JButton("Quit");
-//    return true;
+    if (result == JOptionPane.YES_OPTION) {
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -608,11 +615,20 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     });
     batchLoadMenuItem.addActionListener(l->features.batchLoad());
     JTextArea ta = new JTextArea(20, 20);
-    batchWriteMenuItem.addActionListener(l->features.batchWrite(
-            JOptionPane.showConfirmDialog(null, new JScrollPane(ta))));
+    batchWriteMenuItem.addActionListener(l->{
+      JOptionPane.showConfirmDialog(null, new JScrollPane(ta));
+      features.batchWrite(ta.getText());
+    });
     //TODO
     // Goal: return ta.getText()
-    quitMenuItem.addActionListener(l->features.quit());
+    quitMenuItem.addActionListener(l-> {
+      try {
+        features.quit();
+      }
+      catch (IOException e) {
+      System.out.println("Couldn't save the file");
+    }
+  });
 
     //Edit menu action listeners
     undoMenuItem.addActionListener(l->features.undo());
@@ -622,7 +638,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     blurMenuItem.addActionListener(l->features.blur());
     sharpenMenuItem.addActionListener(l->features.sharpen());
     ditherMenuItem.addActionListener(l->features.dither());
-    mosaicMenuItem.addActionListener(l->features.mosaic(Integer.parseInt(JOptionPane.showInputDialog("Enter a number to use as the seed:")))); //TODO should this be the same as the other number selectors to avoid exceptions?/Better way to do this
+    mosaicMenuItem.addActionListener(l->features.mosaic(Integer.parseInt(
+            JOptionPane.showInputDialog("Enter a number to use as the seed:")))); //TODO should this be the same as the other number selectors to avoid exceptions?/Better way to do this
     sepiaMenuItem.addActionListener(l->features.sepia());
     greyscaleMenuItem.addActionListener(l->features.greyscale());
 

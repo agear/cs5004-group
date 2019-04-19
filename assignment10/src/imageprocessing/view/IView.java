@@ -1,10 +1,7 @@
 package imageprocessing.view;
 
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
-import imageprocessing.controller.ControllerImpl;
 import imageprocessing.controller.Features;
 
 /**
@@ -35,9 +32,8 @@ public interface IView {
   void openSaveDialogue();
 
   /** Returns the most previously loaded filepath of this View.
-   * @return the filepath stored in the view
    */
-  void openUnsavedChanges();
+  boolean openUnsavedChanges();
 
   String getFilePath();
 

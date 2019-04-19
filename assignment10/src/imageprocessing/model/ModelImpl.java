@@ -107,6 +107,7 @@ public class ModelImpl implements IModel {
       return null;
     }
   }
+
   /**
    * Creates a filtered version of the current image with a blur using a built-in kernel.
    * Doesn't mutate the image.

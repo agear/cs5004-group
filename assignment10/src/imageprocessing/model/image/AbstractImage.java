@@ -210,9 +210,10 @@ public abstract class AbstractImage extends ImageUtil {
   }
 
   /**
-   *
-   * @param filename
-   * @throws IOException
+   * This converts an abstract image into a Buffered Image, so it is readable
+   * by public Java libraries.
+   * @param filename the name of the file to be converted
+   * @throws IOException if the file cannot be found
    */
   public BufferedImage convertToBufferedImage(String filename) throws IOException {
     return this.convertImageToBufferedImage(this.get3Ddata(), this.getWidth(), this.getHeight(), filename);
