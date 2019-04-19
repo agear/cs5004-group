@@ -23,7 +23,7 @@ public interface Features {
   /**
    * Exits the program.
    */
-  void quit();
+  void quit() throws IOException;
 
 
   /**

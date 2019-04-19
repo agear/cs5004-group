@@ -33,7 +33,7 @@ public interface IView {
 
   /** Returns the most previously loaded filepath of this View.
    */
-  void openUnsavedChanges();
+  boolean openUnsavedChanges();
 
   String getFilePath();
 

@@ -50,7 +50,7 @@ public class ControllerImpl implements IController, Features {
     this.flagCount = 0;
     this.checkerboardCount = 0;
     this.rainbowCount = 0;
-    this.currentImage = "./res/welcome.jpeg";
+    this.currentImage = "./res/welcome.png";
 
   }
 
@@ -447,13 +447,26 @@ public class ControllerImpl implements IController, Features {
 
   /**
    * When the user clicks the quit button, the program exits, without saving anything.
-   * //TODO should we have a popup that says 'Save current image? [Yes] [No]" ?
+   * @throws IOException if the place they want to save it to doesn't exist
    */
-  public void quit() {
+  public void quit() throws IOException {
+
+    // If there are unsaved changes, as the user if they want to save the current image
     if (!undoStack.empty()) {
-      view.openUnsavedChanges();
+
+      // Show the dialog box, which returns true if they want to save and false otherwise
+      if (view.openUnsavedChanges()) {
+        System.out.println("Save");
+        this.save();
+        System.exit(0);
+      }
+      else {
+        System.exit(0);
+      }
     }
-    System.exit(0);
+    else {
+      System.exit(0);
+    }
   }
 
 
