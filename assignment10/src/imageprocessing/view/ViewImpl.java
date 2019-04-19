@@ -54,6 +54,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
    */
   public ViewImpl() throws IOException {
     System.out.println("Trying to set up ...");
+    //TODO different initial background for startup?
     prepareGui("./res/welcome.jpeg");
     System.out.println("Initialization complete.");
   }
@@ -84,15 +85,20 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     prepareScrollPane(file);
 
     mainFrame.pack();
-//    mainFrame.setBackground(Color.red);
     mainFrame.setVisible(true);
 
   }
 
-public void setSize(int width, int height) {
+  /**
+   * TODO Figure out how to get this to update dynamically? Or delete...
+   * @param width
+   * @param height
+   */
+  public void setSize(int width, int height) {
     imagePanel.setSize(width +100, height+100);
 }
 
+//TODO Delete debug statements
   /**
    * Creates the adjustment menu, which has each type of adjustment of the image that the
    * user can click on to change the current image, and the File menu, which has
@@ -113,7 +119,6 @@ public void setSize(int width, int height) {
     System.out.println("Adjustment menu..OK!");
     prepareDrawMenuItems();
     System.out.println("Draw menu..OK!");
-//    prepareImagesMenuItems();
 
     // Add the menu bar to the frame at the top.
     mainFrame.setJMenuBar(menuBar);
@@ -226,12 +231,10 @@ public void setSize(int width, int height) {
     blurMenuItem = new JMenuItem("Blur", KeyEvent.VK_B); // If the person hits "b", it goes here
     // menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_1, ActionEvent.ALT_MASK)); //
     blurMenuItem.getAccessibleContext().setAccessibleDescription("Blur your image");
-//    blurMenuItem.setActionCommand("blur");
     menuAdj.add(blurMenuItem);
 
     sharpenMenuItem = new JMenuItem("Sharpen", KeyEvent.VK_S);
     sharpenMenuItem.getAccessibleContext().setAccessibleDescription("Sharpen your image");
-//    sharpenMenuItem.setActionCommand("sharpen");
     menuAdj.add(sharpenMenuItem);
 
     // Add a separator to categorize types of adjustments
@@ -239,12 +242,10 @@ public void setSize(int width, int height) {
 
     ditherMenuItem = new JMenuItem("Dither", KeyEvent.VK_D);
     ditherMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in dither");
-//    ditherMenuItem.setActionCommand("dither");
     menuAdj.add(ditherMenuItem);
 
     mosaicMenuItem = new JMenuItem("Mosaic", KeyEvent.VK_M);
     mosaicMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in dither");
-//    mosaicMenuItem.setActionCommand("mosaic");
     menuAdj.add(mosaicMenuItem);
 
     // Add a seperator to categorize types of adjustments
@@ -253,12 +254,10 @@ public void setSize(int width, int height) {
 
     sepiaMenuItem = new JMenuItem("Sepia", KeyEvent.VK_S);
     sepiaMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in sepia");
-//    sepiaMenuItem.setActionCommand("sepia");
     menuAdj.add(sepiaMenuItem);
 
     greyscaleMenuItem = new JMenuItem("Greyscale", KeyEvent.VK_G);
     greyscaleMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in greyscale");
-//    greyscaleMenuItem.setActionCommand("greyscale");
     menuAdj.add(greyscaleMenuItem);
 
 
@@ -356,11 +355,17 @@ public void setSize(int width, int height) {
     this.mainFrame.add(imagePanel);
   }
 
+  /**
+   *
+   * @return
+   */
   public String getFilePath(){
     return path;
   }
 
-
+  /**
+   * TODO Java doc
+   */
   public void openBatchLoadDialogue() {
     // Creates a JFileChooser options, which opens a dialog box that lets the user choose a file.
     final JFileChooser fchooser = new JFileChooser(".");
@@ -377,8 +382,6 @@ public void setSize(int width, int height) {
       System.out.println("In the View, user has selected this path: " + path);
     }
   }
-
-  //TODO have you tested w/ .gif images? would they work?
 
   /**
    * TODO Javadoc
@@ -596,11 +599,11 @@ public void setSize(int width, int height) {
         features.save();
       }
       catch (IOException e) {
-        System.out.println("Couldn't save the file");
+        System.out.println("Couldn't save the file"); //TODO Popup alert instead of print to terminal.
       }
     });
     batchLoadMenuItem.addActionListener(l->features.batchLoad());
-    batchWriteMenuItem.addActionListener(l->features.batchWrite(JOptionPane.showInputDialog("Script:"))); //TODO needs a bigger text box
+    batchWriteMenuItem.addActionListener(l->features.batchWrite(JOptionPane.showInputDialog("Script:"))); //TODO needs a bigger text box to avoid overflow errors with long scripts"
     quitMenuItem.addActionListener(l->features.quit());
 
     //Edit menu action listeners
