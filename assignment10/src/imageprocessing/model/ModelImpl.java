@@ -64,9 +64,13 @@ public class ModelImpl implements IModel {
   @Override
   public void load(String ifile, String title) throws IOException {
 
-    //TODO if you click Load, then cancel, you get a null pointer here
-    IImage i = new Image(ifile);
-    this.openImages.put(isDuplicate(title), i);
+    try {
+      IImage i = new Image(ifile);
+      this.openImages.put(isDuplicate(title), i);
+    }
+    catch (NullPointerException e) {
+      System.out.println("Operation cancelled.");
+    }
   }
 
   /**
@@ -83,6 +87,10 @@ public class ModelImpl implements IModel {
 
   }
 
+  /** Converts an image an Image in our model architecture into a BufferedImage.
+   * @param title The name of the image to be converted
+   * @return The BufferedImage version of that image
+   */
   public BufferedImage getImage(String title) {
 
     IImage currentImage = this.openImages.get(title);
@@ -93,7 +101,10 @@ public class ModelImpl implements IModel {
     }
     catch (IOException e) {
       return null;
-//      throw new IOException("Couldn't find");}
+    }
+    catch (NullPointerException e)  {
+      System.out.println("Operation cancelled.");
+      return null;
     }
   }
   /**

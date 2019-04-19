@@ -141,8 +141,12 @@ public class MockModel implements IModel {
     this.code += " flag " + width + " " + c;
   }
 
+  /** Converts an image an Image in our model architecture into a BufferedImage.
+   * @param title The name of the image to be converted
+   * @return The BufferedImage version of that image
+   */
   @Override
-  public BufferedImage getImage(String image) {
+  public BufferedImage getImage(String title) {
     return null;
   }
 }

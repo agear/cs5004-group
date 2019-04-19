@@ -299,10 +299,9 @@ public class ControllerImpl implements IController, ActionListener, Features {
    * is a listener to many objects in the view. This method sends data to the model when events
    * are triggered to cause that, in order to process images.
    * @param e The event that occurred in the view
-   * @throws IllegalArgumentException When //TODO why would this ever be thrown?
    */
   @Override
-  public void actionPerformed(ActionEvent e) throws IllegalArgumentException {
+  public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand()) {
 
       // If the save button is clicked, prompt the user for where to save the file
@@ -479,12 +478,18 @@ public class ControllerImpl implements IController, ActionListener, Features {
     // Creates a BufferedImage of the image specified by the path.
     BufferedImage buffered = this.model.getImage(lpath);
     // Supposed to rezie the window to the size of the new image. //TODO Doesn't work properly.
-    view.setSize(buffered.getWidth(), buffered.getHeight());
-    // Displays the image in the view.
-    view.displayImage(buffered);
+    try {
+      view.setSize(buffered.getWidth(), buffered.getHeight());
 
-    // Since you have opened an image you can now apply adjustments
-    this.view.toggleAdjustments(true);
+      // Displays the image in the view.
+      view.displayImage(buffered);
+
+      // Since you have opened an image you can now apply adjustments
+      this.view.toggleAdjustments(true);
+    }
+    catch (NullPointerException e) {
+      System.out.println("Operation cancelled.");
+    }
 
   }
 
@@ -492,7 +497,7 @@ public class ControllerImpl implements IController, ActionListener, Features {
    * When the user clicks on the batch load button, allow them to choose the .txt file to
    * load up with a list of commands, and then process the file via the model.
    */
-  public void batchLoad() {
+  public void batchLoad() throws IllegalArgumentException {
 
     // When the user clicks on the 'batch load' button, get the script and run it
     view.openBatchLoadDialogue();
@@ -502,6 +507,9 @@ public class ControllerImpl implements IController, ActionListener, Features {
       this.goBatch(lpath);
     } catch (IOException exception) {
       throw new IllegalArgumentException("There was a problem loading that file.");
+    }
+    catch (NullPointerException exception) {
+      System.out.println("Operation cancelled.");
     }
 
   }

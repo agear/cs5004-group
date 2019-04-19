@@ -29,7 +29,10 @@ public interface IModel {
    */
   void save(String title) throws IOException;
 
-  //TODO Javadoc.
+  /** Converts an image an Image in our model architecture into a BufferedImage.
+   * @param title The name of the image to be converted
+   * @return The BufferedImage version of that image
+   */
   BufferedImage getImage(String title);
 
   /**
