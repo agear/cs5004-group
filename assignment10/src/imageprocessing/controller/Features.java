@@ -1,5 +1,7 @@
 package imageprocessing.controller;
 
+import java.io.IOException;
+
 /**
  * This interface has each //TODO can you javadoc this? I haven't wrapped my mind around the features architecture :(
  */
@@ -15,7 +17,7 @@ public interface Features {
   /**
    * TODO figure out how we are doing this and then javadoc it
    */
-  void save();
+  void save() throws IOException;
 
 
   /**

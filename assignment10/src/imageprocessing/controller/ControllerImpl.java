@@ -4,11 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.Stack;
+
+import javax.imageio.ImageIO;
 
 import imageprocessing.model.IModel;
 import imageprocessing.model.image.Country;
@@ -504,8 +507,35 @@ public class ControllerImpl implements IController, ActionListener, Features {
   }
 
 
-  public void save() {
-    //TODO
+  public void save() throws IOException {
+    // When the user clicks on the 'save' button, save
+    view.openSaveDialogue();
+    String spath = view.getFilePath();
+    System.out.println("Controller : "+ spath);
+//    File ofile = new File(spath);
+
+    BufferedImage output = model.getImage(currentImage);
+
+//    String extension = filename.substring(filename.indexOf(".") + 1);
+    ImageIO.write(output, "png", new FileOutputStream(spath));
+
+//    this.model.save();
+//    try {
+//      this.model.load(lpath, lpath);
+//    } catch (IOException exception) {
+//      throw new IllegalArgumentException("There was a problem loading that image.");
+//    }
+//    this.currentImage = lpath;
+//    // Creates a BufferedImage of the image specified by the path.
+//    BufferedImage buffered = this.model.getImage(lpath);
+//    // Supposed to rezie the window to the size of the new image. //TODO Doesn't work properly.
+//    view.setSize(buffered.getWidth(), buffered.getHeight());
+//    // Displays the image in the view.
+//    view.displayImage(buffered);
+
+    // Since you have opened an image you can now apply adjustments
+    this.view.toggleAdjustments(true);
+
   }
 
   /**
