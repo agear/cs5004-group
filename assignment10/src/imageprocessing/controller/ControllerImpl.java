@@ -365,9 +365,19 @@ public class ControllerImpl implements IController, Features {
     view.setSize(buffered.getWidth(), buffered.getHeight());
     // Displays the image in the view.
     view.displayImage(buffered);
+    // Supposed to rezie the window to the size of the new image. //TODO Doesn't work properly.
+    try {
+      view.setSize(buffered.getWidth(), buffered.getHeight());
 
-    // Since you have opened an image you can now apply adjustments
-    this.view.toggleAdjustments(true);
+      // Displays the image in the view.
+      view.displayImage(buffered);
+
+      // Since you have opened an image you can now apply adjustments
+      this.view.toggleAdjustments(true);
+    }
+    catch (NullPointerException e) {
+      System.out.println("Operation cancelled.");
+    }
 
   }
 
@@ -375,7 +385,7 @@ public class ControllerImpl implements IController, Features {
    * When the user clicks on the batch load button, allow them to choose the .txt file to
    * load up with a list of commands, and then process the file via the model.
    */
-  public void batchLoad() {
+  public void batchLoad() throws IllegalArgumentException {
 
     // When the user clicks on the 'batch load' button, get the script and run it
     view.openBatchLoadDialogue();
@@ -385,6 +395,9 @@ public class ControllerImpl implements IController, Features {
       this.goBatch(lpath);
     } catch (IOException exception) {
       throw new IllegalArgumentException("There was a problem loading that file.");
+    }
+    catch (NullPointerException exception) {
+      System.out.println("Operation cancelled.");
     }
 
   }

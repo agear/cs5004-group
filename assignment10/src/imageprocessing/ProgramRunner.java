@@ -25,6 +25,8 @@ public class ProgramRunner {
     IView view = new ViewImpl();
     IController controller = new ControllerImpl(model, in);
     controller.setView(view);
+
+    // TODO should we do like: if # args == 1, then controller.goGo() ?
     //controller.goGo();
   }
 }
