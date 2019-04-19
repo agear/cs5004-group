@@ -73,21 +73,6 @@ public class ModelImpl implements IModel {
     }
   }
 
-  //TODO delete probably:
-//  /**
-//   * Saves an image to the computer in a file. I.e., write the image to a file.
-//   *
-//   * @param title The goal name of the output file (+.png)
-//   * @throws IOException If there is an error with the specified file name
-//   */
-//  @Override
-//  public void save(String title) throws IOException {
-//
-//    IImage currentImage = this.openImages.get(title);
-//    currentImage.writeImageToFile(title + ".png");
-//
-//  }
-
   /** Converts an image an Image in our model architecture into a BufferedImage.
    * @param title The name of the image to be converted
    * @return The BufferedImage version of that image

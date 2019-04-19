@@ -15,7 +15,8 @@ public interface Features {
 
 
   /**
-   * TODO figure out how we are doing this and then javadoc it
+   * Saves the image to a file.
+   * @throws IOException if the image path has a problem
    */
   void save() throws IOException;
 
@@ -34,7 +35,7 @@ public interface Features {
 
 
   /**
-   * TODO javadoc
+   * Allows the user to write a script in the GUI.
    */
   void batchWrite(String script);
 

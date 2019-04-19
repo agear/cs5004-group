@@ -1,13 +1,29 @@
 package imageprocessing.view;
 
 // Import packages needed for Swing.
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.ActionEvent;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.*;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JComboBox;
+import javax.swing.JScrollPane;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import imageprocessing.controller.Features;
@@ -19,7 +35,7 @@ import imageprocessing.model.image.Image;
 /**
  * The user interface of the image processing package, a simple GUI with a menu bar on the top
  * and a main image displayed in the background. The menu bar has these items: File, Edit,
- * Adjustments, Draw, and Images. //todo are we still doing the images thing?
+ * Adjustments, Draw.
  */
 public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
@@ -28,16 +44,26 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
   // Fields required for menu:
   private JMenuBar menuBar;
-  private JMenu menuFile, menuEdit, menuAdj, menuDraw, menuImages;
-  private JMenuItem blurMenuItem, sharpenMenuItem, ditherMenuItem,
-  mosaicMenuItem, sepiaMenuItem, greyscaleMenuItem, flagMenuItem, checkerBoardMenuItem,
-  rainbowMenuItem, loadMenuItem, saveMenuItem, undoMenuItem, redoMenuItem, quitMenuItem,
-          batchLoadMenuItem, batchWriteMenuItem;
+  private JMenuItem blurMenuItem;
+  private JMenuItem sharpenMenuItem;
+  private JMenuItem ditherMenuItem;
+  private JMenuItem mosaicMenuItem;
+  private JMenuItem sepiaMenuItem;
+  private JMenuItem greyscaleMenuItem;
+  private JMenuItem flagMenuItem;
+  private JMenuItem checkerBoardMenuItem;
+  private JMenuItem rainbowMenuItem;
+  private JMenuItem loadMenuItem;
+  private JMenuItem saveMenuItem;
+  private JMenuItem undoMenuItem;
+  private JMenuItem redoMenuItem;
+  private JMenuItem quitMenuItem;
+  private JMenuItem batchLoadMenuItem;
+  private JMenuItem batchWriteMenuItem;
   private JScrollPane imageScrollPane;
 
   private JPanel imagePanel;
   private JLabel fileSaveDisplay;
-  JComboBox countryListComboBox, widthComboBox, rainbowComboBox, heightComboBox;
   private String path;
 
 
@@ -84,10 +110,9 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
    * @param height The desired height
    */
   public void setSize(int width, int height) {
-    imagePanel.setSize(width +100, height+100);
-}
+    imagePanel.setSize(width + 100, height + 100);
+  }
 
-//TODO Delete debug statements
   /**
    * Creates the adjustment menu, which has each type of adjustment of the image that the
    * user can click on to change the current image, and the File menu, which has
@@ -117,14 +142,14 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   private void prepareFileMenuItems() {
 
     // If the user types "F" for "F"ile (VK_F), this menu opens up
-    menuFile = new JMenu("File");
+    JMenu menuFile = new JMenu("File");
     menuFile.setMnemonic(KeyEvent.VK_F);
 
     // Sets the AccessibleContext associated with this JMenuBar.
     menuFile.getAccessibleContext().setAccessibleDescription("Open or save an image");
 
     // Add load item to this menu:
-    loadMenuItem = new JMenuItem("Load", KeyEvent.VK_L); // If the person hits "L", it goes here
+    loadMenuItem = new JMenuItem("Load", KeyEvent.VK_L); // If the person hits "L",  goes here
     loadMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_L, ActionEvent.META_MASK)); //
     loadMenuItem.getAccessibleContext().setAccessibleDescription("Load an image");
     menuFile.add(loadMenuItem);
@@ -145,7 +170,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     // Separate quit, and add Quit as a menu item
     // Write a batch script
     batchWriteMenuItem = new JMenuItem("Write Batch Script", KeyEvent.VK_W);
-    batchWriteMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_W, ActionEvent.META_MASK));
+    batchWriteMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_W,
+            ActionEvent.META_MASK));
     batchWriteMenuItem.getAccessibleContext().setAccessibleDescription("Write batch script");
     menuFile.add(batchWriteMenuItem);
 
@@ -167,7 +193,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
    */
   private void prepareEditMenuItems() {
     // Build the first menu (File):
-    menuEdit = new JMenu("Edit");
+    JMenu menuEdit = new JMenu("Edit");
 
     // If the user types "E" for "E"dit (VK_F), this menu opens up:
     menuEdit.setMnemonic(KeyEvent.VK_E);
@@ -206,7 +232,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   private void prepareAdjustmentMenuItems() {
 
     // Build the adjustments menu
-    menuAdj = new JMenu("Adjustments");
+    JMenu menuAdj = new JMenu("Adjustments");
 
     // If the user types "A" for "A"djustments (VK_A), this menu opens up:
     menuAdj.setMnemonic(KeyEvent.VK_A);
@@ -244,7 +270,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     menuAdj.add(sepiaMenuItem);
 
     greyscaleMenuItem = new JMenuItem("Greyscale", KeyEvent.VK_G);
-    greyscaleMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in greyscale");
+    greyscaleMenuItem.getAccessibleContext().setAccessibleDescription("Make your image in "
+            + "greyscale");
     menuAdj.add(greyscaleMenuItem);
 
     // Add this new menu to the bar.
@@ -257,7 +284,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
    * Creates the Draw menu section, which includes Rainbow, Checkerboard, and Flag.
    */
   private void prepareDrawMenuItems() {
-    menuDraw = new JMenu("Draw");
+    JMenu menuDraw = new JMenu("Draw");
     menuDraw.setMnemonic(KeyEvent.VK_D);
 
     // Gets the AccessibleContext associated with this JMenuBar.
@@ -280,20 +307,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     menuBar.add(menuDraw);
   }
 
-
-  private void prepareImagesMenuItems() {
-    // Build the Images menu
-    menuImages = new JMenu("Images");
-
-    // If the user types "F" for "F"ile (VK_F), this menu opens up:
-    menuImages.setMnemonic(KeyEvent.VK_I);
-
-    // Gets the AccessibleContext associated with this JMenuBar.
-    menuImages.getAccessibleContext().setAccessibleDescription(
-            "Image menu");
-
-  }
-
   /**
    * Creates the scrollable panel to hold an image.
    */
@@ -305,7 +318,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     imagePanel.setLayout(new GridLayout(1,0, 10, 10));
     imagePanel.setMaximumSize(null);
     fileSaveDisplay = new JLabel("File path will appear here");
-//    imagePanel.add(fileSaveDisplay);
     mainFrame.add(imagePanel);
 
 
@@ -346,7 +358,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   /** Returns the most previously loaded filepath of this View.
    * @return the filepath stored in the view
    */
-  public String getFilePath(){
+  public String getFilePath() {
     return path;
   }
 
@@ -381,7 +393,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     final JFileChooser fchooser = new JFileChooser(".");
 
     // Limits the options to just .jpg, .gif, and .png images.
-    FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG, GIF and PNG Images", "jpg","gif","png");
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG, GIF and"
+            + "PNG Images", "jpg","gif","png");
     fchooser.setFileFilter(filter);
 
     // The return value is the path that the user chooses.
@@ -398,13 +411,13 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
    */
   public void openSaveDialogue() {
 
-        final JFileChooser fchooser = new JFileChooser(".");
-        int retvalue = fchooser.showSaveDialog(ViewImpl.this);
-        if (retvalue == JFileChooser.APPROVE_OPTION) {
-          File f = fchooser.getSelectedFile();
-          fileSaveDisplay.setText(f.getAbsoluteFile().getAbsolutePath());
-          path = f.getAbsoluteFile().getAbsolutePath();
-        }
+    final JFileChooser fchooser = new JFileChooser(".");
+    int retvalue = fchooser.showSaveDialog(ViewImpl.this);
+    if (retvalue == JFileChooser.APPROVE_OPTION) {
+      File f = fchooser.getSelectedFile();
+      fileSaveDisplay.setText(f.getAbsoluteFile().getAbsolutePath());
+      path = f.getAbsoluteFile().getAbsolutePath();
+    }
   }
 
 
@@ -421,11 +434,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
             JOptionPane.QUESTION_MESSAGE);
 
 
-    if (result == JOptionPane.YES_OPTION) {
-      return true;
-    }
+    return (result == JOptionPane.YES_OPTION);
 
-    return false;
   }
 
   /**
@@ -435,8 +445,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   public String flagDialog() {
 
     final String[] countryList = { "Greece", "France", "Switzerland" };
-    countryListComboBox = new JComboBox(countryList);
-    countryListComboBox.setSelectedIndex(countryList.length-1);
+    JComboBox countryListComboBox = new JComboBox(countryList);
+    countryListComboBox.setSelectedIndex(countryList.length - 1);
     String input = (String)JOptionPane.showInputDialog(null, "What country?",
                 "Choose your country carefully", JOptionPane.QUESTION_MESSAGE,
             null, countryList, countryList[0]);
@@ -450,8 +460,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
    */
   public String rainbowDialog() {
     final String[] orientationList = { "Horizontal", "Vertical" };
-    rainbowComboBox = new JComboBox(orientationList);
-    rainbowComboBox.setSelectedIndex(orientationList.length-1);
+    JComboBox rainbowComboBox = new JComboBox(orientationList);
+    rainbowComboBox.setSelectedIndex(orientationList.length - 1);
     String input = (String)JOptionPane.showInputDialog(null, "What orientation?",
             "makin' a rainbow", JOptionPane.QUESTION_MESSAGE,
             null, orientationList, orientationList[0]);
@@ -473,8 +483,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     }
 
     // Presents the user with a list of 1000 numbers to choose from.
-    widthComboBox = new JComboBox(stringNumberList);
-    widthComboBox.setSelectedIndex(stringNumberList.length-1);
+    JComboBox widthComboBox = new JComboBox(stringNumberList);
+    widthComboBox.setSelectedIndex(stringNumberList.length - 1);
     String input = (String)JOptionPane.showInputDialog(null,
             "What width (px)?",
             "Selecting the width for your image.", JOptionPane.QUESTION_MESSAGE,
@@ -505,8 +515,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     }
 
     // Presents the user with a list of 1000 numbers to choose from.
-    heightComboBox = new JComboBox(stringNumberList);
-    heightComboBox.setSelectedIndex(stringNumberList.length-1);
+    JComboBox heightComboBox = new JComboBox(stringNumberList);
+    heightComboBox.setSelectedIndex(stringNumberList.length - 1);
     String input = (String)JOptionPane.showInputDialog(null, "What height?",
             "Selecting the height for your image.", JOptionPane.QUESTION_MESSAGE,
             null, stringNumberList, stringNumberList[0]);
@@ -537,8 +547,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     }
 
     // Presents the user with a list of 1000 numbers to choose from.
-    heightComboBox = new JComboBox(stringNumberList);
-    heightComboBox.setSelectedIndex(stringNumberList.length-1);
+    JComboBox heightComboBox = new JComboBox(stringNumberList);
+    heightComboBox.setSelectedIndex(stringNumberList.length - 1);
     String input = (String)JOptionPane.showInputDialog(null,
             "How big do you want each square to be?",
             "popping the question", JOptionPane.QUESTION_MESSAGE,
@@ -565,46 +575,46 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
   /**
    * Allows or disallows the undo button to be clicked on.
-   * @param b If b is //TODO i'm not sure how set enabled works
+   * @param isClickable If the undo button should be clicked on or not
    */
-  public void toggleUndo(boolean b){
-    undoMenuItem.setEnabled(b);
+  public void toggleUndo(boolean isClickable) {
+    undoMenuItem.setEnabled(isClickable);
   }
 
   /**
    * Allows or disallows the redo button to be clicked on.
-   * @param b If b is //TODO i'm not sure how set enabled works
+   * @param isClickable If the redo button should be clicked on or not
    */
-  public void toggleRedo(boolean b) {
-    redoMenuItem.setEnabled(b);
+  public void toggleRedo(boolean isClickable) {
+    redoMenuItem.setEnabled(isClickable);
   }
 
   /**
    * Allows or disallows the adjustment menu items to be clicked.
-   * @param b If b is //TODO i'm not sure how set enabled works
+   * @param isClickable if the button should be clickable or not
    */
-  public void toggleAdjustments(boolean b) {
-    blurMenuItem.setEnabled(b);
-    sharpenMenuItem.setEnabled(b);
-    ditherMenuItem.setEnabled(b);
-    mosaicMenuItem.setEnabled(b);
-    sepiaMenuItem.setEnabled(b);
-    greyscaleMenuItem.setEnabled(b);
-    saveMenuItem.setEnabled(b);
+  public void toggleAdjustments(boolean isClickable) {
+    blurMenuItem.setEnabled(isClickable);
+    sharpenMenuItem.setEnabled(isClickable);
+    ditherMenuItem.setEnabled(isClickable);
+    mosaicMenuItem.setEnabled(isClickable);
+    sepiaMenuItem.setEnabled(isClickable);
+    greyscaleMenuItem.setEnabled(isClickable);
+    saveMenuItem.setEnabled(isClickable);
   }
 
 
 
   /**
    * Adds every menu item as listeners to the features interface.
-   * @param features //TODO i don't know what the feature interface does tbh
+   * @param features The features interface which implements our model
    */
   @Override
   public void addFeatures(Features features) {
 
     //File menu action listeners
-    loadMenuItem.addActionListener(l->features.load());
-    saveMenuItem.addActionListener(l->{
+    loadMenuItem.addActionListener(l -> features.load());
+    saveMenuItem.addActionListener(l -> {
       try {
         features.save();
       }
@@ -613,13 +623,13 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
         System.out.println("Couldn't save the file");
       }
     });
-    batchLoadMenuItem.addActionListener(l->features.batchLoad());
+    batchLoadMenuItem.addActionListener(l -> features.batchLoad());
     JTextArea ta = new JTextArea(20, 20);
-    batchWriteMenuItem.addActionListener(l->{
+    batchWriteMenuItem.addActionListener(l -> {
       JOptionPane.showConfirmDialog(null, new JScrollPane(ta));
       features.batchWrite(ta.getText());
     });
-    quitMenuItem.addActionListener(l-> {
+    quitMenuItem.addActionListener(l -> {
       try {
         features.quit();
       }
@@ -630,29 +640,29 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   });
 
     //Edit menu action listeners
-    undoMenuItem.addActionListener(l->features.undo());
-    redoMenuItem.addActionListener(l->features.redo());
+    undoMenuItem.addActionListener(l -> features.undo());
+    redoMenuItem.addActionListener(l -> features.redo());
 
     //Adjustment menu action listeners
-    blurMenuItem.addActionListener(l->features.blur());
-    sharpenMenuItem.addActionListener(l->features.sharpen());
-    ditherMenuItem.addActionListener(l->features.dither());
-    mosaicMenuItem.addActionListener(l->{
-      try {features.mosaic(Integer.parseInt(JOptionPane.showInputDialog("Enter a number to use as the seed:")));
-    }
+    blurMenuItem.addActionListener(l -> features.blur());
+    sharpenMenuItem.addActionListener(l -> features.sharpen());
+    ditherMenuItem.addActionListener(l -> features.dither());
+    mosaicMenuItem.addActionListener(l -> {
+      try {
+        features.mosaic(Integer.parseInt(JOptionPane.showInputDialog(
+                "Enter a number to use as the seed:")));
+      }
       catch (NumberFormatException e) {
-      errorDialog();
+        errorDialog();
       }
     });
 
-    //TODO hi alex! please do a try catch block for parseInt. catch NumberFormatException
-    // When catched, execute this code: view.errorDialog();
-    sepiaMenuItem.addActionListener(l->features.sepia());
-    greyscaleMenuItem.addActionListener(l->features.greyscale());
+    sepiaMenuItem.addActionListener(l -> features.sepia());
+    greyscaleMenuItem.addActionListener(l -> features.greyscale());
 
     //Draw menu action listeners
-    flagMenuItem.addActionListener(l->features.flag());
-    rainbowMenuItem.addActionListener(l->features.rainbow());
-    checkerBoardMenuItem.addActionListener(l->features.checkerboard());
+    flagMenuItem.addActionListener(l -> features.flag());
+    rainbowMenuItem.addActionListener(l -> features.rainbow());
+    checkerBoardMenuItem.addActionListener(l -> features.checkerboard());
   }
 }

@@ -95,7 +95,7 @@ public interface IView {
 
   /**
    * Adds every menu item as listeners to the features interface.
-   * @param features //TODO i don't know what the feature interface does tbh
+   * @param features The features interface which implements our model
    */
   void addFeatures(Features features);
 

@@ -407,11 +407,9 @@ public class ControllerImpl implements IController, Features {
     this.currentImage = lpath;
     // Creates a BufferedImage of the image specified by the path.
     BufferedImage buffered = this.model.getImage(lpath);
-    // Supposed to resize the window to the size of the new image. //TODO Doesn't work properly.
     view.setSize(buffered.getWidth(), buffered.getHeight());
     // Displays the image in the view.
     view.displayImage(buffered);
-    // Supposed to rezie the window to the size of the new image. //TODO Doesn't work properly.
     try {
       view.setSize(buffered.getWidth(), buffered.getHeight());
 
@@ -457,7 +455,6 @@ public class ControllerImpl implements IController, Features {
    * @param script the list of commands that the user has written
    */
   public void batchWrite(String script) {
-    System.out.println(script); //TODO delete?
     Scanner s = new Scanner(script);
     try {
       this.goUniversal(s);
@@ -467,6 +464,9 @@ public class ControllerImpl implements IController, Features {
     }
   }
 
+  /**When the user clicks on the 'save' button, save the image.
+   * @throws IOException If there is something wrong with the image path
+   */
   public void save() throws IOException {
     // When the user clicks on the 'save' button, save
     view.openSaveDialogue();
@@ -492,7 +492,6 @@ public class ControllerImpl implements IController, Features {
 
   //TODO This is to get IO out of the model per Amit. Still have to figure it out.
   private void loadFromPath(String filename) throws IOException {
-//TODO UncommentedEmptyMethodBody: This method does not contain any code. Should it be doing something? Or can it be removed? If you need to keep it, add a comment to the body explaining why it is empty. Error is between cols 50 and 3
   }
 
   /**
@@ -502,7 +501,7 @@ public class ControllerImpl implements IController, Features {
   public void quit() throws IOException {
 
     // If there are unsaved changes, as the user if they want to save the current image
-    if (!undoStack.empty() && isSaved == false ) {
+    if (!undoStack.empty() && !isSaved ) {
 
       // Show the dialog box, which returns true if they want to save and false otherwise
       if (view.openUnsavedChanges()) {
@@ -716,7 +715,6 @@ public class ControllerImpl implements IController, Features {
   }
 
 
-  //TODO should there be undo/redo stack manipulation in the draw() functions?
   /**
    * When the user clicks 'flag' button, find out from the user via dialogs in the view
    * what country flag they want, and the width in pixels of the flag they want. Then,
@@ -774,7 +772,7 @@ public class ControllerImpl implements IController, Features {
   public void rainbow() {
     String chosenRainbowOrientation = view.rainbowDialog();
 
-        // If they click 'cancel', do not continue prompting them.
+    // If they click 'cancel', do not continue prompting them.
     if (chosenRainbowOrientation == null) {
       return;
     }

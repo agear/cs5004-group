@@ -1,4 +1,3 @@
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -8,7 +7,6 @@ import java.io.StringReader;
 
 import imageprocessing.controller.ControllerImpl;
 import imageprocessing.controller.IController;
-import imageprocessing.model.IModel;
 import imageprocessing.model.MockModel;
 import imageprocessing.view.IView;
 import imageprocessing.view.ViewImpl;
@@ -17,7 +15,7 @@ import imageprocessing.view.ViewImpl;
  * Tests for the image processing class.
  */
 public class TestImage {
- //TODO test if controller works with View (mock view?)
+  //TODO test if controller works with View (mock view?)
   @Test
   public void testController() throws IOException {
     MockModel m = new MockModel();

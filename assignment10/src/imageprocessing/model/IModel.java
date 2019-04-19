@@ -21,14 +21,7 @@ public interface IModel {
    */
   void load(String ifile, String title) throws IOException;
 
-  //TODO delete probably:
-//  /**
-//   * Saves an image to the computer in a file. I.e., write the image to a file.
-//   *
-//   * @param title The goal name of the output file (+.png)
-//   * @throws IOException If there is an error with the specified file name
-//   */
-//  void save(String title) throws IOException;
+
 
   /** Converts an image an Image in our model architecture into a BufferedImage.
    * @param title The name of the image to be converted
