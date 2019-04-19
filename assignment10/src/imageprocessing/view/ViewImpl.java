@@ -32,7 +32,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   private JMenuItem blurMenuItem, sharpenMenuItem, ditherMenuItem,
   mosaicMenuItem, sepiaMenuItem, greyscaleMenuItem, flagMenuItem, checkerBoardMenuItem,
   rainbowMenuItem, loadMenuItem, saveMenuItem, undoMenuItem, redoMenuItem, quitMenuItem,
-          batchLoadMenuItem;
+          batchLoadMenuItem, batchWriteMenuItem;
   private JScrollPane imageScrollPane;
 
   private JPanel imagePanel;
@@ -75,7 +75,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
     // Adjustments to the design of the GUI
     mainFrame.pack();
-    mainFrame.setBackground(Color.red); //TODO can we delete this?
     mainFrame.setVisible(true);
 
   }
@@ -151,6 +150,14 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     menuFile.add(batchLoadMenuItem);
 
     // Separate quit, and add Quit as a menu item
+    // Write a batch script
+    batchWriteMenuItem = new JMenuItem("Write Batch Script", KeyEvent.VK_B);
+    batchWriteMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.ALT_MASK));
+    batchWriteMenuItem.getAccessibleContext().setAccessibleDescription("Write batch script");
+    menuFile.add(batchWriteMenuItem);
+
+
+    // Separate quit
     menuFile.addSeparator();
 
     quitMenuItem = new JMenuItem("Quit", KeyEvent.VK_Q);
@@ -310,7 +317,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     imagePanel.setLayout(new GridLayout(1,0, 10, 10));
     imagePanel.setMaximumSize(null);
     fileSaveDisplay = new JLabel("File path will appear here");
-    imagePanel.add(fileSaveDisplay);
+//    imagePanel.add(fileSaveDisplay);
     mainFrame.add(imagePanel);
 
 
@@ -376,8 +383,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     }
   }
 
-  //TODO have you tested w/ .gif images? would they work?
-
   /**
    * Prompts the user to choose a .jpg, .gif, or .png image to load in the view.
    * It returns the path that the user has chosen for the controller to process.
@@ -413,6 +418,16 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
           path = f.getAbsoluteFile().getAbsolutePath();
           System.out.println("In the View, user has chosen to save to this path: \n" + path);
         }
+  }
+
+  // TODO figure this out.
+  public void openUnsavedChanges() {
+    final JPopupMenu popup = new JPopupMenu("Are you sure?");
+
+
+    final String[] options = {"Quit without save", "Save changes"};
+    JButton quit = new JButton("Quit");
+//    return true;
   }
 
   /**
@@ -542,6 +557,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     }
   }
 
+
   /**
    * Allows or disallows the undo button to be clicked on.
    * @param b If b is //TODO i'm not sure how set enabled works
@@ -576,6 +592,9 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
    * Adds every menu item as listeners to the features interface.
    * @param features //TODO i don't know what the feature interface does tbh
    */
+
+
+
   @Override
   public void addFeatures(Features features) {
 
@@ -590,6 +609,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
       }
     });
     batchLoadMenuItem.addActionListener(l->features.batchLoad());
+    batchWriteMenuItem.addActionListener(l->features.batchWrite(JOptionPane.showInputDialog("Script:"))); //TODO needs a bigger text box
     quitMenuItem.addActionListener(l->features.quit());
 
     //Edit menu action listeners
@@ -600,7 +620,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     blurMenuItem.addActionListener(l->features.blur());
     sharpenMenuItem.addActionListener(l->features.sharpen());
     ditherMenuItem.addActionListener(l->features.dither());
-    mosaicMenuItem.addActionListener(l->features.mosaic(Integer.parseInt(JOptionPane.showInputDialog("Enter a number to use as the seed:"))));
+    mosaicMenuItem.addActionListener(l->features.mosaic(Integer.parseInt(JOptionPane.showInputDialog("Enter a number to use as the seed:")))); //TODO should this be the same as the other number selectors to avoid exceptions?/Better way to do this
     sepiaMenuItem.addActionListener(l->features.sepia());
     greyscaleMenuItem.addActionListener(l->features.greyscale());
 

@@ -32,6 +32,12 @@ public interface Features {
    */
   void batchLoad();
 
+
+  /**
+   * TODO javadoc
+   */
+  void batchWrite(String script);
+
   //Edit menu functions
 
 
