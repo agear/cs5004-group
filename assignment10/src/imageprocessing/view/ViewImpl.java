@@ -609,7 +609,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
       }
     });
     batchLoadMenuItem.addActionListener(l->features.batchLoad());
-    batchWriteMenuItem.addActionListener(l->features.batchWrite(JOptionPane.showInputDialog("Script:"))); //TODO needs a bigger text box
+    batchWriteMenuItem.addActionListener(l->features.batchWrite(
+            JOptionPane.showInputDialog("Script:"))); //TODO needs a bigger text box
     quitMenuItem.addActionListener(l->features.quit());
 
     //Edit menu action listeners
