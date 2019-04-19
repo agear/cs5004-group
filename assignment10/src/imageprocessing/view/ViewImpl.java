@@ -644,8 +644,13 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     blurMenuItem.addActionListener(l->features.blur());
     sharpenMenuItem.addActionListener(l->features.sharpen());
     ditherMenuItem.addActionListener(l->features.dither());
-    mosaicMenuItem.addActionListener(l->features.mosaic(Integer.parseInt(
-            JOptionPane.showInputDialog("Enter a number to use as the seed:"))));
+    mosaicMenuItem.addActionListener(l->{
+      try {features.mosaic(Integer.parseInt(JOptionPane.showInputDialog("Enter a number to use as the seed:")));
+    }
+      catch (NumberFormatException e) {
+      errorDialog();
+      }
+    });
 
     //TODO hi alex! please do a try catch block for parseInt. catch NumberFormatException
     // When catched, execute this code: view.errorDialog();
