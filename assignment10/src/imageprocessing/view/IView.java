@@ -70,19 +70,19 @@ public interface IView {
 
   /**
    * Allows or disallows the undo button to be clicked on.
-   * @param b If b is //TODO i'm not sure how set enabled works
+   * @param b If true, enable undo menu item. False to disable.
    */
   void toggleUndo(boolean b);
 
   /**
    * Allows or disallows the redo button to be clicked on.
-   * @param b If b is //TODO i'm not sure how set enabled works
+   * @param b If true, enable redo menu item. False to disable.
    */
   void toggleRedo(boolean b);
 
   /**
    * Allows or disallows the adjustment menu items to be clicked.
-   * @param b If b is //TODO i'm not sure how set enabled works
+   * @param b If true, enable adjustment menu items and save item. False to disable.
    */
   void toggleAdjustments(boolean b);
 
