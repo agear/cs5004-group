@@ -125,27 +125,27 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
     // Add load item to this menu:
     loadMenuItem = new JMenuItem("Load", KeyEvent.VK_L); // If the person hits "L", it goes here
-    loadMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_L, ActionEvent.ALT_MASK)); //
+    loadMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_L, ActionEvent.META_MASK)); //
     loadMenuItem.getAccessibleContext().setAccessibleDescription("Load an image");
     menuFile.add(loadMenuItem);
 
     // Add save item to this menu:
     saveMenuItem = new JMenuItem("Save", KeyEvent.VK_S);
-    saveMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.ALT_MASK));
+    saveMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.META_MASK));
     saveMenuItem.getAccessibleContext().setAccessibleDescription("Save image");
     menuFile.add(saveMenuItem);
 
     // Separate batch load, and add Load batch script option
     menuFile.addSeparator();
     batchLoadMenuItem = new JMenuItem("Load Batch Script", KeyEvent.VK_B);
-    batchLoadMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.ALT_MASK));
+    batchLoadMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_B, ActionEvent.META_MASK));
     batchLoadMenuItem.getAccessibleContext().setAccessibleDescription("Load batch script");
     menuFile.add(batchLoadMenuItem);
 
     // Separate quit, and add Quit as a menu item
     // Write a batch script
-    batchWriteMenuItem = new JMenuItem("Write Batch Script", KeyEvent.VK_B);
-    batchWriteMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.ALT_MASK));
+    batchWriteMenuItem = new JMenuItem("Write Batch Script", KeyEvent.VK_W);
+    batchWriteMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_W, ActionEvent.META_MASK));
     batchWriteMenuItem.getAccessibleContext().setAccessibleDescription("Write batch script");
     menuFile.add(batchWriteMenuItem);
 
@@ -154,7 +154,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     menuFile.addSeparator();
 
     quitMenuItem = new JMenuItem("Quit", KeyEvent.VK_Q);
-    quitMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_Q, ActionEvent.ALT_MASK));
+    quitMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_Q, ActionEvent.META_MASK));
     quitMenuItem.getAccessibleContext().setAccessibleDescription("Quit");
     menuFile.add(quitMenuItem);
 
@@ -178,7 +178,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
     // Add all edit item to this menu:
     undoMenuItem = new JMenuItem("Undo", KeyEvent.VK_Z);
-    quitMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_Z, ActionEvent.ALT_MASK));
+    undoMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_Z, ActionEvent.META_MASK));
 
     undoMenuItem.getAccessibleContext().setAccessibleDescription("Undo last command");
     undoMenuItem.setActionCommand("undo");
@@ -188,6 +188,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     menuEdit.add(undoMenuItem);
 
     redoMenuItem = new JMenuItem("Redo", KeyEvent.VK_R);
+    redoMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_Z, ActionEvent.SHIFT_MASK));
+
     redoMenuItem.getAccessibleContext().setAccessibleDescription("Redo last command");
 
     //Redo is only be enabled if the redo stack is not empty
