@@ -646,6 +646,12 @@ public class ControllerImpl implements IController, Features {
    */
   public void mosaic(int seed) {
 
+    if (seed < 1 ) {
+      view.errorDialog();
+      System.out.println("Not enough seeds");
+      return;
+    }
+
     // Push the current image to the undo stack before anything else
     this.undoStack.push(currentImage);
 
