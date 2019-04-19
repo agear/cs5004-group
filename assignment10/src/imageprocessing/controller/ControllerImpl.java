@@ -441,6 +441,7 @@ public class ControllerImpl implements IController, Features {
     ImageIO.write(output, "png", new FileOutputStream(spath));
   }
 
+  //TODO This is to get IO out of the model. Still have to figure it out.
   private void loadFromPath() throws IOException {
 //TODO UncommentedEmptyMethodBody: This method does not contain any code. Should it be doing something? Or can it be removed? If you need to keep it, add a comment to the body explaining why it is empty. Error is between cols 50 and 3
   }
