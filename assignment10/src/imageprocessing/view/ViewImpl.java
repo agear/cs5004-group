@@ -609,7 +609,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     batchLoadMenuItem.addActionListener(l->features.batchLoad());
     JTextArea ta = new JTextArea(20, 20);
     batchWriteMenuItem.addActionListener(l->features.batchWrite(
-            JOptionPane.showConfirmDialog(null, new JScrollPane(ta)));
+            JOptionPane.showConfirmDialog(null, new JScrollPane(ta))));
     //TODO
     // Goal: return ta.getText()
     quitMenuItem.addActionListener(l->features.quit());
