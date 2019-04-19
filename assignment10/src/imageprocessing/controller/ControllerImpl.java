@@ -27,7 +27,9 @@ public class ControllerImpl implements IController, Features {
   IModel model;
   IView view;
 
-  int flagCount, rainbowCount, checkerboardCount;
+  int flagCount;
+  int rainbowCount;
+  int checkerboardCount;
   String currentImage;
   Stack<String> undoStack;
   Stack<String> redoStack;
@@ -402,6 +404,10 @@ public class ControllerImpl implements IController, Features {
 
   }
 
+
+  /** Processes a script that the user writes while the program is running.
+   * @param script the list of commands that the user has written
+   */
   public void batchWrite(String script) {
     System.out.println(script);
     Scanner s = new Scanner(script);
@@ -416,7 +422,7 @@ public class ControllerImpl implements IController, Features {
     // When the user clicks on the 'save' button, save
     view.openSaveDialogue();
     String spath = view.getFilePath();
-    System.out.println("Controller : "+ spath);
+    System.out.println("Controller : " + spath);
 
     BufferedImage output = model.getImage(currentImage);
 
@@ -425,9 +431,10 @@ public class ControllerImpl implements IController, Features {
   }
 
   /** TODO Implement in the controller.
-   * For saving during batch processing
-   * @param file
-   * @throws IOException
+   * For saving during batch processing.
+   * @param file The input file path
+   * @param spath the output file path
+   * @throws IOException When the input or output paths are illegal
    */
   private void saveToPath(String file, String spath) throws IOException {
     BufferedImage output = model.getImage(file);
@@ -435,8 +442,9 @@ public class ControllerImpl implements IController, Features {
   }
 
   private void loadFromPath() throws IOException {
-
+//TODO UncommentedEmptyMethodBody: This method does not contain any code. Should it be doing something? Or can it be removed? If you need to keep it, add a comment to the body explaining why it is empty. Error is between cols 50 and 3
   }
+
   /**
    * When the user clicks the quit button, the program exits, without saving anything.
    * //TODO should we have a popup that says 'Save current image? [Yes] [No]" ?
@@ -502,29 +510,28 @@ public class ControllerImpl implements IController, Features {
    * When the user clicks 'blur' button, add the current image to undo stack, apply
    * the adjustment with the model, and display it. Clear the redo stack.
    */
-  public void blur(){
+  public void blur() {
+    // Push the current image to the undo stack before anything else
+    this.undoStack.push(currentImage);
 
-        // Push the current image to the undo stack before anything else
-        this.undoStack.push(currentImage);
+    // Apply the blur to the model.
+    this.model.applyBlur(currentImage);
 
-        // Apply the blur to the model.
-        this.model.applyBlur(currentImage);
+    // Update and display the current image.
+    this.currentImage = this.currentImage + "-blur";
+    BufferedImage buffer = this.model.getImage(currentImage);
+    view.displayImage(buffer);
 
-        // Update and display the current image.
-        this.currentImage = this.currentImage + "-blur";
-        BufferedImage buffer = this.model.getImage(currentImage);
-        view.displayImage(buffer);
-
-        // If you apply an adjustment, the redo stack is cleared.
-        this.redoStack.clear();
-        updateUndoRedo();
+    // If you apply an adjustment, the redo stack is cleared.
+    this.redoStack.clear();
+    updateUndoRedo();
   }
 
   /**
    * When the user clicks 'sharpen' button, add the current image to undo stack, apply
    * the adjustment with the model, and display it. Clear the redo stack.
    */
-  public void sharpen(){
+  public void sharpen() {
 
     System.out.println("Calling sharpen function");
     // Push the current image to the undo stack before anything else
@@ -547,7 +554,7 @@ public class ControllerImpl implements IController, Features {
    * When the user clicks 'dither' button, add the current image to undo stack, apply
    * the adjustment with the model, and display it. Clear the redo stack.
    */
-  public void dither(){
+  public void dither() {
 
     // Push the current image to the undo stack before anything else
     this.undoStack.push(currentImage);
@@ -570,7 +577,7 @@ public class ControllerImpl implements IController, Features {
    * the adjustment with the model, and display it. Clear the redo stack.
    * @param seed the number of seeds (clusters) of the mosaic (user-specified)
    */
-  public void mosaic(int seed){
+  public void mosaic(int seed) {
 
     // Push the current image to the undo stack before anything else
     this.undoStack.push(currentImage);
@@ -592,7 +599,7 @@ public class ControllerImpl implements IController, Features {
    * When the user clicks 'sepia' button, add the current image to undo stack, apply
    * the adjustment with the model, and display it. Clear the redo stack.
    */
-  public void sepia(){
+  public void sepia() {
 
     // Push the current image to the undo stack before anything else
     this.undoStack.push(currentImage);
@@ -614,7 +621,7 @@ public class ControllerImpl implements IController, Features {
    * When the user clicks 'greyscale' button, add the current image to undo stack, apply
    * the adjustment with the model, and display it. Clear the redo stack.
    */
-  public void greyscale(){
+  public void greyscale() {
 
     // Push the current image to the undo stack before anything else
     this.undoStack.push(currentImage);
@@ -692,28 +699,28 @@ public class ControllerImpl implements IController, Features {
     String chosenRainbowOrientation = view.rainbowDialog();
 
         // If they click 'cancel', do not continue prompting them.
-        if (chosenRainbowOrientation == null) {
-          return;
-        }
+    if (chosenRainbowOrientation == null) {
+      return;
+    }
 
-        Orientation chosenOrientation = stringToOrientation(chosenRainbowOrientation);
+    Orientation chosenOrientation = stringToOrientation(chosenRainbowOrientation);
 
-        int chosenWidth = view.widthDialog();
+    int chosenWidth = view.widthDialog();
 
-        // If they click 'cancel', do not make anything.
-        if (chosenWidth == 0) {
-          return;
-        }
+    // If they click 'cancel', do not make anything.
+    if (chosenWidth == 0) {
+      return;
+    }
 
-        int chosenHeight = view.heightDialog();
+    int chosenHeight = view.heightDialog();
 
-        // If they click 'cancel', do not make anything.
-        if (chosenHeight == 0) {
-          return;
-        }
+    // If they click 'cancel', do not make anything.
+    if (chosenHeight == 0) {
+      return;
+    }
 
-        model.drawRainbow(chosenHeight, chosenWidth, chosenOrientation);
-        this.rainbowCount++;
+    model.drawRainbow(chosenHeight, chosenWidth, chosenOrientation);
+    this.rainbowCount++;
 
     // Load the flag into the open images in the model
 

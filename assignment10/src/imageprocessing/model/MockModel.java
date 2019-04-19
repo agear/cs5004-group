@@ -6,6 +6,10 @@ import java.io.IOException;
 import imageprocessing.model.image.Country;
 import imageprocessing.model.image.Orientation;
 
+/**
+ * This class is only for testing the Model and Controller relationship,
+ * to make sure that the controller is sending the correct methods to the model.
+ */
 public class MockModel implements IModel {
   public String code;
 

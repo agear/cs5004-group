@@ -2,7 +2,6 @@ package imageprocessing.model.image;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -135,9 +134,18 @@ public class ImageUtil {
     ImageIO.write(output, extension, new FileOutputStream(filename));
   }
 
-  public static BufferedImage convertImageToBufferedImage(int[][][] rgb, int width, int height, String
-          filename)
-          throws IOException {
+  /** Converts an Image as we store it in Imageprocessing class into a buffered image
+   * so that it is usable with public Java libraries.
+   * @param rgb 3d array of channels of Image
+   * @param width width in pixels of image
+   * @param height height in pixels of image
+   * @param filename filepath of image
+   * @return BufferedImage version of the image
+   * @throws IOException if the image cannot be found
+   */
+  public static BufferedImage convertImageToBufferedImage(int[][][] rgb,
+                                                          int width, int height, String
+          filename) throws IOException {
 
     BufferedImage output = new BufferedImage(
             width,
