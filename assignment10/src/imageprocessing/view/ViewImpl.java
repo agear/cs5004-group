@@ -35,7 +35,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   private JMenu menuFile, menuEdit, menuAdj, menuDraw, menuImages;
   private JMenuItem blurMenuItem, sharpenMenuItem, ditherMenuItem,
   mosaicMenuItem, sepiaMenuItem, greyscaleMenuItem, flagMenuItem, checkerBoardMenuItem,
-  rainbowMenuItem, loadMenuItem, saveMenuItem, undoMenuItem, redoMenuItem, quitMenuItem;
+  rainbowMenuItem, loadMenuItem, saveMenuItem, undoMenuItem, redoMenuItem, quitMenuItem,
+          batchLoadMenuItem;
   private JScrollPane imageScrollPane;
 
   private JPanel imagePanel;
@@ -84,16 +85,13 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     prepareScrollPane(file);
 
     mainFrame.pack();
-//    mainFrame.mi
     mainFrame.setBackground(Color.red);
     mainFrame.setVisible(true);
-
 
   }
 
 public void setSize(int width, int height) {
     imagePanel.setSize(width +100, height+100);
-//    mainFrame.pack();
 }
 
   /**
@@ -103,7 +101,6 @@ public void setSize(int width, int height) {
    */
   private void prepareMenuBar() {
     System.out.println("Trying to set up the menu ...");
-
 
     // Create the menu bar:
     menuBar = new JMenuBar();
@@ -124,8 +121,6 @@ public void setSize(int width, int height) {
     mainFrame.add(menuBar, BorderLayout.NORTH);
     menuBar.setVisible(true);
 
-    System.out.println("Menu has been set up.");
-
   }
 
   //TODO Copied an pasted -- Update comments
@@ -137,27 +132,28 @@ public void setSize(int width, int height) {
     // If the user types "F" for "F"ile (VK_F), this menu opens up:
     menuFile.setMnemonic(KeyEvent.VK_F);
 
-    // Gets the AccessibleContext associated with this JMenuBar.
+    // Sets the AccessibleContext associated with this JMenuBar.
     menuFile.getAccessibleContext().setAccessibleDescription("Open or save an image");
 
     // Add load item to this menu:
     loadMenuItem = new JMenuItem("Load", KeyEvent.VK_L); // If the person hits "L", it goes here
     loadMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_L, ActionEvent.ALT_MASK)); //
     loadMenuItem.getAccessibleContext().setAccessibleDescription("Load an image");
-
-//    loadMenuItem.addActionListener(controller);
-    JPanel fileloadPanel = new JPanel();
     menuFile.add(loadMenuItem);
-//    loadMenuItem.setActionCommand("load");
 
 
     saveMenuItem = new JMenuItem("Save", KeyEvent.VK_S);
-    saveMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.ALT_MASK)); //
+    saveMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.ALT_MASK));
     saveMenuItem.getAccessibleContext().setAccessibleDescription("Save image");
-//    saveMenuItem.addActionListener(controller);
-    JPanel filesavePanel = new JPanel();
     menuFile.add(saveMenuItem);
-//    saveMenuItem.setActionCommand("save");
+
+    // Separate batch load
+    menuFile.addSeparator();
+    batchLoadMenuItem = new JMenuItem("Load Batch Script", KeyEvent.VK_B);
+    batchLoadMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.ALT_MASK));
+    batchLoadMenuItem.getAccessibleContext().setAccessibleDescription("Load batch script");
+    menuFile.add(batchLoadMenuItem);
+
 
     // Separate quit
     menuFile.addSeparator();
@@ -267,7 +263,9 @@ public void setSize(int width, int height) {
   }
 
 
-  //TODO copied and pasted--update comments.
+  /**
+   * TODO add javadoc and change comments
+   */
   private void prepareDrawMenuItems() {
     // Build the first menu (File):
     menuDraw = new JMenu("Draw");
@@ -353,6 +351,25 @@ public void setSize(int width, int height) {
     return path;
   }
 
+
+  public void openBatchLoadDialogue() {
+    // Creates a JFileChooser options, which opens a dialog box that lets the user choose a file.
+    final JFileChooser fchooser = new JFileChooser(".");
+
+    // Limits the options to just .txt files
+    FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt files", "txt");
+    fchooser.setFileFilter(filter);
+
+    // The return value is the path that the user chooses.
+    int retValue = fchooser.showOpenDialog(ViewImpl.this);
+    if (retValue == JFileChooser.APPROVE_OPTION) {
+      File f = fchooser.getSelectedFile();
+      path = f.getAbsolutePath();
+      System.out.println("In the View, user has selected this path: " + path);
+    }
+  }
+
+  //TODO have you tested w/ .gif images? would they work?
   public void openLoadDialogue() {
 
     // Creates a JFileChooser options, which opens a dialog box that lets the user choose a file.
@@ -599,6 +616,7 @@ public void setSize(int width, int height) {
     //File menu action listeners
     loadMenuItem.addActionListener(l->features.load());
     saveMenuItem.addActionListener(l->features.save());
+    batchLoadMenuItem.addActionListener(l->features.batchLoad());
     quitMenuItem.addActionListener(l->features.quit());
 
     //Edit menu action listeners

@@ -5,6 +5,7 @@ public interface Features {
   void load();
   void save();
   void quit();
+  void batchLoad();
 
   //Edit menu functions
   void undo();

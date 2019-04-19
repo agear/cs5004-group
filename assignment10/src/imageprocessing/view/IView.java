@@ -23,6 +23,8 @@ public interface IView {
 
   void openLoadDialogue();
 
+  void openBatchLoadDialogue();
+
   void openSaveDialogue();
 
   String getFilePath();

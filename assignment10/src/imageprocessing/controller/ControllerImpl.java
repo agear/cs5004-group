@@ -3,6 +3,7 @@ package imageprocessing.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -49,22 +50,6 @@ public class ControllerImpl implements IController, ActionListener, Features {
     this.rainbowCount = 0;
     this.currentImage = "./res/welcome.jpeg";
 
-    /*
-     During initialization, the controller passes itself as the listener for all the view’s buttons.
-     The effect of this design is that when the program is run and the button is clicked,
-     a method inside the controller is called.
-     Thus the controller gets control over what to do next.
-     */
-//    try {
-//      view.addFeatures(this);
-//    } catch (NullPointerException e) {
-//      System.out.println("There's an exception, idk why");
-//    }
-
-    // Adjustment options should not be available until an image is loaded.
-//    this.view.toggleAdjustments(false);
-//    //TODO Based on the Lecture code: ??
-//    this.view.display();
   }
 
   public void setView(IView v) {
@@ -73,17 +58,37 @@ public class ControllerImpl implements IController, ActionListener, Features {
     view.toggleAdjustments(false);
   }
 
+  public void goBatch(String inputFilePath) throws IOException {
+    File file = new File(inputFilePath);
+    Scanner scan = new Scanner(file);
+    this.goUniversal(scan);
+  }
+
   /**
-   * The goGo method gives control to the controller (this class) until the program ends. It parses
-   * a text file, and has a switch-case design to determine which model method should be run to
-   * complete the user's intended action.
+   * The goGo method gives control to the controller (this class) until the program ends. It sends
+   * the input stream to goUniversal, which parses a text file, and has a switch-case design to
+   * determine which model method should be run to complete the user's intended action.
    *
    * @throws IOException              If the input file to be parsed can not be found
    * @throws IllegalArgumentException If the input has an unrecognized command
    * @throws NullPointerException     If the model can't be found
    */
   public void goGo() throws IOException, IllegalArgumentException, NullPointerException {
+    Scanner scan = new Scanner(this.in);
+    this.goUniversal(scan);
+  }
 
+  /**
+   * The goGo method gives control to the controller (this class) until the program ends. It parses
+   * any type of text input, and has a switch-case design to determine which model method should be
+   * run to complete the user's intended action.
+   *
+   * @throws IOException              If the input file to be parsed can not be found
+   * @throws IllegalArgumentException If the input has an unrecognized command
+   * @throws NullPointerException     If the model can't be found
+   */
+  private void goUniversal(Scanner scan) throws IOException, IllegalArgumentException,
+          NullPointerException {
     // Checks that the specified model is not null (if it is, throws null pointer exception)
     Objects.requireNonNull(model);
 
@@ -91,8 +96,9 @@ public class ControllerImpl implements IController, ActionListener, Features {
     String command;
     String imageName;
 
+
     // Parse the input file
-    Scanner scan = new Scanner(this.in);
+    //Scanner scan = new Scanner(filepath);
     while (scan.hasNext()) {
       command = scan.next();
 
@@ -141,10 +147,10 @@ public class ControllerImpl implements IController, ActionListener, Features {
           } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Must specify the name of the image to adjust.");
           }
-
-
           this.model.applyBlur(imageName);
           break;
+
+
         case "sharpen":
           try {
             imageName = scan.next();
@@ -153,6 +159,8 @@ public class ControllerImpl implements IController, ActionListener, Features {
           }
           this.model.applySharpen(imageName);
           break;
+
+
         case "sepia":
           try {
             imageName = scan.next();
@@ -161,6 +169,8 @@ public class ControllerImpl implements IController, ActionListener, Features {
           }
           this.model.applySepia(imageName);
           break;
+
+
         case "greyscale":
           try {
             imageName = scan.next();
@@ -169,6 +179,8 @@ public class ControllerImpl implements IController, ActionListener, Features {
           }
           this.model.applyGreyscale(imageName);
           break;
+
+
         case "mosaic":
           try {
             imageName = scan.next();
@@ -186,6 +198,8 @@ public class ControllerImpl implements IController, ActionListener, Features {
 
           this.model.applyMosaic(imageName, seed);
           break;
+
+
         case "checkerboard":
           int squareSize;
           try {
@@ -263,7 +277,7 @@ public class ControllerImpl implements IController, ActionListener, Features {
 
         default:
           throw new IllegalArgumentException("Sorry, that command hasn't been installed yet."
-                  + "Maybe in version 4.0?");
+                  + " Maybe in version 4.0?");
       }
     }
   }
@@ -273,272 +287,17 @@ public class ControllerImpl implements IController, ActionListener, Features {
   public void actionPerformed(ActionEvent e) throws IllegalArgumentException {
     switch (e.getActionCommand()) {
 
-//      // When the user clicks on the 'load' button, load the image in the model
-//      case "load":
-//        this.view.openLoadDialogue();
-//        String lpath = this.view.getFilePath();
-//        System.out.println("Controller: " + lpath);
-//        try {
-//          this.model.load(lpath, lpath);
-//        } catch (IOException exception) {
-//          throw new IllegalArgumentException("There was a problem loading that image.");
-//        }
-//        this.currentImage = lpath;
-//        // Creates a BufferedImage of the image specified by the path.
-//        BufferedImage buffered = this.model.getImage(lpath);
-//        this.view.setSize(buffered.getWidth(), buffered.getHeight());
-//        // Displays the image in the view.
-//        this.view.displayImage(buffered);
-//
-//        // Update the open images menu
-//        this.view.updateImageMenu(lpath);
-//        // Since you have opened an image you can now apply adjustments
-//        this.view.toggleAdjustments(true);
-//        break;
       case "save":
         this.view.openSaveDialogue();
         String spath = this.view.getFilePath();
         System.out.println("Controller save path: " + spath);
         break;
 
-//      case "undo":
-//        //TODO Not sure if this if statement is still necessary
-//        if (undoStack.empty()) {
-//          System.out.println("Nothing to undo");
-//          break;
-//        }
-//        // Start by pushing the current image onto the redo stack.
-//        this.redoStack.push(this.currentImage);
-//        // Next make the current image the top item on the undo stack.
-//        this.currentImage = this.undoStack.pop();
-//        // Update the display.
-//        BufferedImage bufferedU = this.model.getImage(this.currentImage);
-//        this.view.displayImage(bufferedU);
-//        // Update the undo/redo state.
-//        updateUndoRedo();
-//        break;
-//      case "redo":
-//        //TODO Not sure if this if statement is still necessary
-//        if (redoStack.empty()) {
-//          System.out.println("Nothing to redo");
-//          break;
-//        }
-//        // Start by pushing the current image onto the undo stack.
-//        this.undoStack.push(this.currentImage);
-//        // Next make the current image the top item on the redo stack.
-//        this.currentImage = this.redoStack.pop();
-//        // Update the display.
-//        BufferedImage bufferedR = this.model.getImage(this.currentImage);
-//        this.view.displayImage(bufferedR);
-//        // Update the undo/redo state.
-//        updateUndoRedo();
-//        break;
-
-        /* If it is a flag, get the type of flag, and the width of the flag. Display the flag
-      and save the image.
-      */
-//      case "flag":
-//
-//        String chosenFlagString = view.flagDialog();
-//
-//        // If they click 'cancel', do not continue prompting them.
-//        if (chosenFlagString == null) {
-//          return;
-//        }
-//
-//        // Convert the string to a Country (which is what our model is expecting)
-//        Country chosenFlag = stringToCountry(chosenFlagString);
-//
-//        int chosenWidth = view.widthDialog();
-//
-//        // If they click 'cancel', do not make anything.
-//        if (chosenWidth == 0) {
-//          return;
-//        }
-//
-//        System.out.println("In the controller, the user has chosen this width:" + chosenWidth);
-//
-//        model.drawFlag(chosenWidth, chosenFlag);
-//        this.flagCount++;
-//
-//        // Load the flag into the open images in the model, and save it as a file.
-////        try {
-//
-//          BufferedImage bufferedFlag;
-//          //TODO this logic overwrites a file called "flag" if it already exists (i.e. from a
-//          // previous session. Ditto for the numbered versions etc -- get rid of the model.save unless
-//          // a user actually clicks save a names the file-- "flag" should only be for internal representation
-//          // If this is the first flag, the name of it is "flag"
-//          if (this.flagCount == 1) {
-//            bufferedFlag = this.model.getImage("flag");
-//            view.displayImage(bufferedFlag);
-//            this.currentImage = "flag";
-//            this.undoStack.push(currentImage);
-//            this.view.toggleAdjustments(true);
-////            updateUndoRedo();
-////            model.save("flag");
-////            this.view.updateImageMenu("flag");
-//          }
-//
-//          // If this isn't the first flag, the name is "flag" with a number appended
-//          else {
-//            bufferedFlag = this.model.getImage("flag-" + (flagCount - 1));
-//            view.displayImage(bufferedFlag);
-//            this.currentImage = "flag-" + (flagCount - 1);
-//            this.undoStack.push(currentImage);
-////            updateUndoRedo();
-//            this.view.toggleAdjustments(true);
-////            model.save("flag-" + (flagCount - 1));
-////            this.view.updateImageMenu("flag-"+ (flagCount - 1));
-//          }
-//
-////        }
-//
-////        // This is thrown if the name of the flag file to be saved is illegal.
-////        catch (IOException exception) {
-////          throw new IllegalArgumentException("There was an error saving your flag into a file.");
-////        }
-//        break;
-
-//      case "rainbow":
-//        String chosenRainbowOrientation = view.rainbowDialog();
-//
-//        // If they click 'cancel', do not continue prompting them.
-//        if (chosenRainbowOrientation == null) {
-//          return;
-//        }
-//
-//        Orientation chosenOrientation = stringToOrientation(chosenRainbowOrientation);
-//
-//        chosenWidth = view.widthDialog();
-//
-//        // If they click 'cancel', do not make anything.
-//        if (chosenWidth == 0) {
-//          return;
-//        }
-//
-//        int chosenHeight = view.heightDialog();
-//
-//        // If they click 'cancel', do not make anything.
-//        if (chosenHeight == 0) {
-//          return;
-//        }
-//
-//        model.drawRainbow(chosenHeight, chosenWidth, chosenOrientation);
-//        this.rainbowCount++;
-//
-//        // Load the flag into the open images in the model, and save it as a file.
-////        try {
-//
-//          BufferedImage bufferedRainbow;
-//          // If this is the first flag, the name of it is "flag"
-//          if (this.rainbowCount == 1) {
-//            bufferedRainbow = this.model.getImage("rainbow");
-//            view.displayImage(bufferedRainbow);
-//            this.currentImage = "rainbow";
-//            this.undoStack.push(currentImage);
-////            updateUndoRedo();
-//            this.view.toggleAdjustments(true);
-////            model.save("rainbow");
-////            this.view.updateImageMenu("rainbow");
-//          }
-//
-//          // If this isn't the first flag, the name is "flag" with a number appended
-//          else {
-//            bufferedRainbow = this.model.getImage("rainbow-" + (rainbowCount - 1));
-//            view.displayImage(bufferedRainbow);
-//            this.currentImage = "rainbow-" + (rainbowCount - 1);
-//            this.undoStack.push(currentImage);
-////            updateUndoRedo();
-//            this.view.toggleAdjustments(true);
-////            model.save("rainbow-" + (rainbowCount - 1));
-////            this.view.updateImageMenu("rainbow-" + (rainbowCount - 1));
-//          }
-//
-////        }
-////
-////        // This is thrown if the name of the flag file to be saved is illegal.
-////        catch (IOException exception) {
-////          throw new IllegalArgumentException("There was an error saving your rainbow into a file.");
-////        }
-//
-//        break;
-
-//      case "checkerboard":
-//        int checkerboardSize = view.checkerboardDialog();
-//
-//        // If they click 'cancel', do not make anything.
-//        if (checkerboardSize == 0) {
-//          return;
-//        }
-//
-//        model.drawCheckerBoard(checkerboardSize);
-//        this.checkerboardCount++;
-//
-//        // Load the checkerboard into the open images in the model, and save it as a file.
-////        try {
-//
-//          BufferedImage bufferedCheckerboard;
-//          // If this is the first checkerboard, the name of it is "checkerboard"
-//          if (this.checkerboardCount == 1) {
-//            bufferedCheckerboard = this.model.getImage("checkerboard");
-//            view.displayImage(bufferedCheckerboard);
-//            this.currentImage = "checkerboard";
-//            this.undoStack.push(currentImage);
-////            updateUndoRedo();
-//            this.view.toggleAdjustments(true);
-//
-////            model.save("checkerboard");
-////            this.view.updateImageMenu("checkerboard");
-//          }
-//
-//          // If this isn't the first checkerboard, the name is "checkerboard" with a number appended
-//          else {
-//            bufferedCheckerboard = this.model.getImage("checkerboard-" + (checkerboardCount - 1));
-//            view.displayImage(bufferedCheckerboard);
-//            this.currentImage = "checkerboard-" + (checkerboardCount - 1);
-//            this.undoStack.push(currentImage);
-////            updateUndoRedo();
-//            this.view.toggleAdjustments(true);
-////            model.save("checkerboard-" + (checkerboardCount - 1));
-////            this.view.updateImageMenu("checkerboard" + (checkerboardCount -1));
-//          }
-//
-////        }
-////
-////        // This is thrown if the name of the flag file to be saved is illegal.
-////        catch (IOException exception) {
-////          throw new IllegalArgumentException("There was an error saving your checkerboard into a file.");
-////        }
-//
-//        break;
-
-
-//      case "blur":
-//        //TODO should this be in a higher order function since this is basically going to be the
-//        // same template for all adjustments? applyAdjustment(e->applyBlur) ???
-//        System.out.println("blur has been received by the controller");
-//        this.undoStack.push(currentImage);
-//        updateUndoRedo();
-//        System.out.println("current image:" + this.currentImage);
-//        try {
-//          this.model.applyBlur(currentImage);
-//          this.currentImage = this.currentImage + "-blur";
-//          BufferedImage buffer = this.model.getImage(currentImage);
-//          view.displayImage(buffer);
-//          this.redoStack.clear();
-//          updateUndoRedo();
-//        } catch (NullPointerException exc) {
-//          System.out.println("Can't blur the background image. Must load your own image first.");
-//        }
-//        break;
       case "sharpen":
         //TODO should this be in a higher order function since this is basically going to be the
         // same template for all adjustments? applyAdjustment(e->applyBlur) ???
-        System.out.println("sharpen has been received by the controller");
         this.undoStack.push(currentImage);
         updateUndoRedo();
-        System.out.println("current image:" + this.currentImage);
         try {
           this.model.applySharpen(currentImage);
           this.currentImage = this.currentImage + "-sharpen";
@@ -677,7 +436,6 @@ public class ControllerImpl implements IController, ActionListener, Features {
 
   // File menu functions
   public void load() {
-    System.out.println("Calling load function");
     // When the user clicks on the 'load' button, load the image in the model
     view.openLoadDialogue();
     String lpath = view.getFilePath();
@@ -699,6 +457,25 @@ public class ControllerImpl implements IController, ActionListener, Features {
     this.view.toggleAdjustments(true);
 
   }
+
+  public void batchLoad() {
+    System.out.println("Calling batch load function");
+
+    // When the user clicks on the 'load' button, get the script and run it
+    view.openBatchLoadDialogue();
+
+    String lpath = view.getFilePath();
+    System.out.println("User chose: " + lpath);
+    try {
+      this.goBatch(lpath);
+    } catch (IOException exception) {
+      throw new IllegalArgumentException("There was a problem loading that file.");
+    }
+    // Since you have opened an image you can now apply adjustments
+    this.view.toggleAdjustments(true);
+
+  }
+
 
   public void save() {
     //TODO

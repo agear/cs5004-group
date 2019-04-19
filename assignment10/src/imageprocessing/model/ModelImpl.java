@@ -63,6 +63,8 @@ public class ModelImpl implements IModel {
    */
   @Override
   public void load(String ifile, String title) throws IOException {
+
+    //TODO if you click Load, then cancel, you get a null pointer here
     IImage i = new Image(ifile);
     this.openImages.put(isDuplicate(title), i);
   }
