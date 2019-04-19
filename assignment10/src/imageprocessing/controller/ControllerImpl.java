@@ -106,6 +106,7 @@ public class ControllerImpl implements IController, Features {
     // Initialize command and object of command
     String command;
     String imageName;
+    String path;
 
     // Parse the input file
     while (scan.hasNext()) {
@@ -283,8 +284,13 @@ public class ControllerImpl implements IController, Features {
           } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Must specify the name of the image to save.");
           }
+          try {
+            path = scan.next();
+          } catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Must specify a path to save the image");
+          }
 
-          model.save(imageName);
+          saveToPath(imageName, path);
           break;
 
         default:
@@ -430,19 +436,20 @@ public class ControllerImpl implements IController, Features {
 
   }
 
-  /** TODO Implement in the controller.
+  /**
    * For saving during batch processing.
    * @param file The input file path
    * @param spath the output file path
    * @throws IOException When the input or output paths are illegal
    */
   private void saveToPath(String file, String spath) throws IOException {
+    System.out.println("Saving " + file+ " is happening in controller to path:"+spath);
     BufferedImage output = model.getImage(file);
     ImageIO.write(output, "png", new FileOutputStream(spath));
   }
 
-  //TODO This is to get IO out of the model. Still have to figure it out.
-  private void loadFromPath() throws IOException {
+  //TODO This is to get IO out of the model per Amit. Still have to figure it out.
+  private void loadFromPath(String filename) throws IOException {
 //TODO UncommentedEmptyMethodBody: This method does not contain any code. Should it be doing something? Or can it be removed? If you need to keep it, add a comment to the body explaining why it is empty. Error is between cols 50 and 3
   }
 
