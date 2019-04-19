@@ -34,6 +34,8 @@ public class ControllerImpl implements IController, Features {
   Stack<String> undoStack;
   Stack<String> redoStack;
 
+  boolean isSaved;
+
 
   /**
    * Initializes the controller of the imageprocessing package. The controller takes input from the
@@ -51,6 +53,7 @@ public class ControllerImpl implements IController, Features {
     this.checkerboardCount = 0;
     this.rainbowCount = 0;
     this.currentImage = "./res/welcome.png";
+    this.isSaved = false;
 
   }
 
@@ -123,7 +126,8 @@ public class ControllerImpl implements IController, Features {
           try {
             filename = scan.next();
           } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("Must specify the path of the file to load.");
+            view.errorDialog();
+            return;
           }
 
           // Get the image name:
@@ -145,7 +149,9 @@ public class ControllerImpl implements IController, Features {
           try {
             imageName = scan.next();
           } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("Must specify the name of the image to adjust.");
+            view.errorDialog();
+            System.out.println("Must specify the name of the image to adjust.");
+            return;
           }
 
           this.model.applyDither(imageName);
@@ -156,7 +162,9 @@ public class ControllerImpl implements IController, Features {
           try {
             imageName = scan.next();
           } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("Must specify the name of the image to adjust.");
+            view.errorDialog();
+            System.out.println("Must specify the name of the image to adjust.");
+            return;
           }
           this.model.applyBlur(imageName);
           break;
@@ -166,7 +174,9 @@ public class ControllerImpl implements IController, Features {
           try {
             imageName = scan.next();
           } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("Must specify the name of the image to adjust.");
+            view.errorDialog();
+            System.out.println("Must specify the name of the image to adjust.");
+            return;
           }
           this.model.applySharpen(imageName);
           break;
@@ -176,7 +186,9 @@ public class ControllerImpl implements IController, Features {
           try {
             imageName = scan.next();
           } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("Must specify the name of the image to adjust.");
+            view.errorDialog();
+            System.out.println("Must specify the name of the image to adjust.");
+            return;
           }
           this.model.applySepia(imageName);
           break;
@@ -186,7 +198,9 @@ public class ControllerImpl implements IController, Features {
           try {
             imageName = scan.next();
           } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("Must specify the name of the image to adjust.");
+            view.errorDialog();
+            System.out.println("Must specify the name of the image to adjust.");
+            return;
           }
           this.model.applyGreyscale(imageName);
           break;
@@ -196,7 +210,9 @@ public class ControllerImpl implements IController, Features {
           try {
             imageName = scan.next();
           } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("Must specify the name of the image to adjust.");
+            view.errorDialog();
+            System.out.println("Must specify the name of the image to adjust.");
+            return;
           }
 
           // The next number is the number of seeds for the mosaic
@@ -204,7 +220,9 @@ public class ControllerImpl implements IController, Features {
           try {
             seed = Integer.parseInt(scan.next());
           } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("Must specify number of seeds for mosaic'ing.");
+            view.errorDialog();
+            System.out.println("Must specify number of seeds for mosaic'ing.");
+            return;
           }
 
 
@@ -217,7 +235,9 @@ public class ControllerImpl implements IController, Features {
           try {
             squareSize = Integer.parseInt(scan.next());
           } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("Must specify the size of the squares.");
+            view.errorDialog();
+            System.out.println("Must specify the size of the squares.");
+            return;
           }
           this.model.drawCheckerBoard(squareSize);
           break;
@@ -227,7 +247,9 @@ public class ControllerImpl implements IController, Features {
           try {
             country = scan.next().toLowerCase();
           } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("Must specify the name of the country to generate.");
+            view.errorDialog();
+            System.out.println("Must specify the name of the country to generate.");
+            return;
           }
 
           // Get the width of the flag:
@@ -235,7 +257,9 @@ public class ControllerImpl implements IController, Features {
           try {
             fWidth = Integer.parseInt(scan.next());
           } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("Must specify the size of the flag to generate.");
+            view.errorDialog();
+            System.out.println("Must specify the size of the flag to generate.");
+            return;
           }
 
           // Only France, Greece, and Switzerland are included in this package.
@@ -246,9 +270,11 @@ public class ControllerImpl implements IController, Features {
           } else if (country.equals("greece")) {
             this.model.drawFlag(fWidth, Country.GREECE);
           } else {
-            throw new IllegalArgumentException("Sorry, that country (" + country
+            view.errorDialog();
+            System.out.println("Sorry, that country (" + country
                     + ") hasn't been installed yet."
                     + "Maybe in version 4.0?");
+            return;
           }
           break;
 
@@ -263,8 +289,10 @@ public class ControllerImpl implements IController, Features {
             rHeight = Integer.parseInt(scan.next());
             rWidth = Integer.parseInt(scan.next());
           } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("Must specify the rainbow's orientation, "
-                    + "width, and height.");
+            view.errorDialog();
+            System.out.println(("Must specify the rainbow's orientation, "
+                    + "width, and height."));
+            return;
           }
 
           if (orientation.equals("horizontal")) {
@@ -272,8 +300,10 @@ public class ControllerImpl implements IController, Features {
           } else if (orientation.equals("vertical")) {
             this.model.drawRainbow(rHeight, rWidth, Orientation.VERTICAL);
           } else {
-            throw new IllegalArgumentException("Sorry, that orientation hasn't been installed yet."
+            view.errorDialog();
+            System.out.println("Sorry, that orientation hasn't been installed yet."
                     + "Maybe in version 4.0?");
+            return;
           }
           break;
 
@@ -282,7 +312,9 @@ public class ControllerImpl implements IController, Features {
           try {
             imageName = scan.next();
           } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("Must specify the name of the image to save.");
+            view.errorDialog();
+            System.out.println("Must specify the name of the image to save.");
+            return;
           }
           try {
             path = scan.next();
@@ -294,8 +326,8 @@ public class ControllerImpl implements IController, Features {
           break;
 
         default:
-          throw new IllegalArgumentException("Sorry, that command hasn't been installed yet."
-                  + " Maybe in version 4.0?");
+          view.errorDialog();
+          return;
       }
     }
   }
@@ -317,7 +349,10 @@ public class ControllerImpl implements IController, Features {
       } else if (input.equals("Greece")) {
         return Country.GREECE;
       }
-      throw new IllegalArgumentException("Country not installed yet. Bonus pack is $19.99.");
+      else {
+        view.errorDialog();
+        return null;
+      }
     }
 
     // If the user hits 'cancel' , it's no big deal!
@@ -342,7 +377,9 @@ public class ControllerImpl implements IController, Features {
       } else if (input.equals("Vertical")) {
         return Orientation.VERTICAL;
       }
-      throw new IllegalArgumentException("Orientation not installed yet. Bonus pack is $14.99.");
+      view.errorDialog();
+      System.out.println("Orientation not installed yet. Bonus pack is $14.99.");
+      return null;
     }
 
     // If the user hits 'cancel' , it's no big deal!
@@ -364,7 +401,9 @@ public class ControllerImpl implements IController, Features {
     try {
       this.model.load(lpath, lpath);
     } catch (IOException exception) {
-      throw new IllegalArgumentException("There was a problem loading that image.");
+      view.errorDialog();
+      System.out.println("There was a problem loading that image.");
+      return;
     }
     this.currentImage = lpath;
     // Creates a BufferedImage of the image specified by the path.
@@ -402,7 +441,7 @@ public class ControllerImpl implements IController, Features {
     try {
       this.goBatch(lpath);
     } catch (IOException exception) {
-      throw new IllegalArgumentException("There was a problem loading that file.");
+      view.errorDialog();
     }
     catch (NullPointerException exception) {
       System.out.println("Operation cancelled.");
@@ -420,7 +459,8 @@ public class ControllerImpl implements IController, Features {
     try {
       this.goUniversal(s);
     } catch (IOException exception) {
-      throw new IllegalArgumentException("There was a problem with your script.");
+      view.errorDialog();
+      System.out.println("Error - file is not found.");
     }
   }
 
@@ -433,6 +473,7 @@ public class ControllerImpl implements IController, Features {
     BufferedImage output = model.getImage(currentImage);
 
     ImageIO.write(output, "png", new FileOutputStream(spath));
+    this.isSaved = true;
 
   }
 
@@ -460,7 +501,7 @@ public class ControllerImpl implements IController, Features {
   public void quit() throws IOException {
 
     // If there are unsaved changes, as the user if they want to save the current image
-    if (!undoStack.empty()) { //TODO realized this approach wont work because regluar save doesn't (and shouldn't) clear the undo stack
+    if (!undoStack.empty() && isSaved == false ) {
 
       // Show the dialog box, which returns true if they want to save and false otherwise
       if (view.openUnsavedChanges()) {
@@ -492,6 +533,8 @@ public class ControllerImpl implements IController, Features {
     this.view.displayImage(bufferedU);
     // Update the undo/redo state.
     updateUndoRedo();
+
+    this.isSaved = false;
   }
 
   /**
@@ -508,6 +551,7 @@ public class ControllerImpl implements IController, Features {
     this.view.displayImage(bufferedR);
     // Update the undo/redo state.
     updateUndoRedo();
+    this.isSaved = false;
   }
 
   /**
@@ -546,6 +590,7 @@ public class ControllerImpl implements IController, Features {
     // If you apply an adjustment, the redo stack is cleared.
     this.redoStack.clear();
     updateUndoRedo();
+    this.isSaved = false;
   }
 
   /**
@@ -569,6 +614,7 @@ public class ControllerImpl implements IController, Features {
     // If you apply an adjustment, the redo stack is cleared.
     this.redoStack.clear();
     updateUndoRedo();
+    this.isSaved = false;
   }
 
   /**
@@ -591,6 +637,7 @@ public class ControllerImpl implements IController, Features {
     // If you apply an adjustment, the redo stack is cleared.
     this.redoStack.clear();
     updateUndoRedo();
+    this.isSaved = false;
   }
 
   /**
@@ -614,6 +661,7 @@ public class ControllerImpl implements IController, Features {
     // If you apply an adjustment, the redo stack is cleared.
     this.redoStack.clear();
     updateUndoRedo();
+    this.isSaved = false;
   }
 
   /**
@@ -636,6 +684,7 @@ public class ControllerImpl implements IController, Features {
     // If you apply an adjustment, the redo stack is cleared.
     this.redoStack.clear();
     updateUndoRedo();
+    this.isSaved = false;
   }
 
   /**
@@ -658,6 +707,7 @@ public class ControllerImpl implements IController, Features {
     // If you apply an adjustment, the redo stack is cleared.
     this.redoStack.clear();
     updateUndoRedo();
+    this.isSaved = false;
   }
 
 

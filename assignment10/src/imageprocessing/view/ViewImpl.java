@@ -287,8 +287,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   }
 
 
-  //TODO Commented out the add.(menuImages) at the end ot get rid of this functionality for now with
-  // out breaking anything else hopefully...
   private void prepareImagesMenuItems() {
     // Build the Images menu
     menuImages = new JMenu("Images");
@@ -300,8 +298,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     menuImages.getAccessibleContext().setAccessibleDescription(
             "Image menu");
 
-    // Add this new menu to the bar.
-//    menuBar.add(menuImages);
   }
 
   /**
@@ -419,7 +415,10 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
         }
   }
 
-  // TODO figure this out.
+
+  /** Shows a dialog box which prompts user to save changes before they quit.
+   * @return true if the user wants to save changes, false otherwise
+   */
   public boolean openUnsavedChanges() {
 
     int result = JOptionPane.showConfirmDialog(
@@ -450,7 +449,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
                 "Choose your country carefully", JOptionPane.QUESTION_MESSAGE,
             null, countryList, countryList[0]);
 
-    System.out.println("In view, this was selected: " + input);
     return input;
   }
 
@@ -564,6 +562,15 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     }
   }
 
+  /**
+   * Throws up a popup to the user that something went wrong.
+   */
+  public void errorDialog() {
+    JOptionPane.showMessageDialog(this.imagePanel, "There was an error.",
+            "don't kill the messenger", JOptionPane.ERROR_MESSAGE);
+    System.out.println("??");
+  }
+
 
   /**
    * Allows or disallows the undo button to be clicked on.
@@ -595,13 +602,12 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     saveMenuItem.setEnabled(b);
   }
 
+
+
   /**
    * Adds every menu item as listeners to the features interface.
    * @param features //TODO i don't know what the feature interface does tbh
    */
-
-
-
   @Override
   public void addFeatures(Features features) {
 
@@ -639,7 +645,10 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     sharpenMenuItem.addActionListener(l->features.sharpen());
     ditherMenuItem.addActionListener(l->features.dither());
     mosaicMenuItem.addActionListener(l->features.mosaic(Integer.parseInt(
-            JOptionPane.showInputDialog("Enter a number to use as the seed:")))); //TODO should this be the same as the other number selectors to avoid exceptions?/Better way to do this
+            JOptionPane.showInputDialog("Enter a number to use as the seed:"))));
+
+    //TODO hi alex! please do a try catch block for parseInt. catch NumberFormatException
+    // When catched, execute this code: view.errorDialog();
     sepiaMenuItem.addActionListener(l->features.sepia());
     greyscaleMenuItem.addActionListener(l->features.greyscale());
 
@@ -647,6 +656,5 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     flagMenuItem.addActionListener(l->features.flag());
     rainbowMenuItem.addActionListener(l->features.rainbow());
     checkerBoardMenuItem.addActionListener(l->features.checkerboard());
-
   }
 }

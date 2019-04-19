@@ -98,4 +98,9 @@ public interface IView {
    * @param features //TODO i don't know what the feature interface does tbh
    */
   void addFeatures(Features features);
+
+  /**
+   * Throws up a popup to the user that something went wrong.
+   */
+  public void errorDialog();
 }
