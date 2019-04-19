@@ -42,7 +42,6 @@ public class ControllerImpl implements IController, ActionListener, Features {
   public ControllerImpl(IModel model, Readable in) {
     this.in = in;
     this.model = model;
-//    this.view = view;
     this.undoStack = new Stack<>();
     this.redoStack = new Stack<>();
     this.flagCount = 0;
@@ -52,12 +51,20 @@ public class ControllerImpl implements IController, ActionListener, Features {
 
   }
 
+  /** Adds a GUI view class from the MVC architecture for this controller to communicate with.
+   * @param v The view to associate with this controller
+   */
   public void setView(IView v) {
     view = v; // provide view with all the callbacks
     view.addFeatures(this);
     view.toggleAdjustments(false);
   }
 
+  /** Takes as input a path, selected by the user in the view GUI filechooser, and processes the
+   * text file as a batch process.
+   * @param inputFilePath The .txt file path
+   * @throws IOException If the .txt file can not be found
+   */
   public void goBatch(String inputFilePath) throws IOException {
     File file = new File(inputFilePath);
     Scanner scan = new Scanner(file);
@@ -65,9 +72,9 @@ public class ControllerImpl implements IController, ActionListener, Features {
   }
 
   /**
-   * The goGo method gives control to the controller (this class) until the program ends. It sends
-   * the input stream to goUniversal, which parses a text file, and has a switch-case design to
-   * determine which model method should be run to complete the user's intended action.
+   * The goGo method initializes a batch process with a command line argument. It sends
+   * the input stream to goUniversal, which parses the input text file and gets the model
+   * to process the input.
    *
    * @throws IOException              If the input file to be parsed can not be found
    * @throws IllegalArgumentException If the input has an unrecognized command
@@ -79,9 +86,9 @@ public class ControllerImpl implements IController, ActionListener, Features {
   }
 
   /**
-   * The goGo method gives control to the controller (this class) until the program ends. It parses
-   * any type of text input, and has a switch-case design to determine which model method should be
-   * run to complete the user's intended action.
+   * This method ives control to the controller (this class) until the program ends. It parses
+   * any type of text input via a Scanner object, and has a switch-case design to determine which
+   * model methods should be run to complete the user's intended action(s).
    *
    * @throws IOException              If the input file to be parsed can not be found
    * @throws IllegalArgumentException If the input has an unrecognized command
@@ -89,6 +96,7 @@ public class ControllerImpl implements IController, ActionListener, Features {
    */
   private void goUniversal(Scanner scan) throws IOException, IllegalArgumentException,
           NullPointerException {
+
     // Checks that the specified model is not null (if it is, throws null pointer exception)
     Objects.requireNonNull(model);
 
@@ -96,9 +104,7 @@ public class ControllerImpl implements IController, ActionListener, Features {
     String command;
     String imageName;
 
-
     // Parse the input file
-    //Scanner scan = new Scanner(filepath);
     while (scan.hasNext()) {
       command = scan.next();
 
@@ -140,6 +146,7 @@ public class ControllerImpl implements IController, ActionListener, Features {
 
           this.model.applyDither(imageName);
           break;
+
         case "blur":
 
           try {
@@ -188,6 +195,7 @@ public class ControllerImpl implements IController, ActionListener, Features {
             throw new IllegalArgumentException("Must specify the name of the image to adjust.");
           }
 
+          // The next number is the number of seeds for the mosaic
           int seed;
           try {
             seed = Integer.parseInt(scan.next());
@@ -218,6 +226,7 @@ public class ControllerImpl implements IController, ActionListener, Features {
             throw new IllegalArgumentException("Must specify the name of the country to generate.");
           }
 
+          // Get the width of the flag:
           int fWidth;
           try {
             fWidth = Integer.parseInt(scan.next());
@@ -283,21 +292,31 @@ public class ControllerImpl implements IController, ActionListener, Features {
   }
 
 
+  /** When the view has an action happen to it, this method is triggered because the controller
+   * is a listener to many objects in the view. This method sends data to the model when events
+   * are triggered to cause that, in order to process images.
+   * @param e The event that occurred in the view
+   * @throws IllegalArgumentException When //TODO why would this ever be thrown?
+   */
   @Override
   public void actionPerformed(ActionEvent e) throws IllegalArgumentException {
     switch (e.getActionCommand()) {
 
+      // If the save button is clicked, prompt the user for where to save the file
       case "save":
         this.view.openSaveDialogue();
         String spath = this.view.getFilePath();
-        System.out.println("Controller save path: " + spath);
         break;
 
+        /*
+        If the sharpen button is clicked, add current image to stack, sharpen it,
+        and save it to open images in model
+         */
       case "sharpen":
-        //TODO should this be in a higher order function since this is basically going to be the
-        // same template for all adjustments? applyAdjustment(e->applyBlur) ???
         this.undoStack.push(currentImage);
         updateUndoRedo();
+
+        // If they try to sharpen the background image, then throw an exception
         try {
           this.model.applySharpen(currentImage);
           this.currentImage = this.currentImage + "-sharpen";
@@ -309,13 +328,14 @@ public class ControllerImpl implements IController, ActionListener, Features {
           System.out.println("Can't sharpen the background image. Must load your own image first.");
         }
         break;
+
+      /*
+      If the dither button is clicked, add current image to stack, process it in the model,
+      display it in the view, and save it to open images in model
+       */
       case "dither":
-        //TODO should this be in a higher order function since this is basically going to be the
-        // same template for all adjustments? applyAdjustment(e->applyBlur) ???
-        System.out.println("dither has been received by the controller");
         this.undoStack.push(currentImage);
         updateUndoRedo();
-        System.out.println("current image:" + this.currentImage);
         try {
           this.model.applyDither(currentImage);
           this.currentImage = this.currentImage + "-dither";
@@ -327,12 +347,16 @@ public class ControllerImpl implements IController, ActionListener, Features {
           System.out.println("Can't dither the background image. Must load your own image first.");
         }
         break;
+
+      /*
+      If the mosaic button is clicked, add current image to stack, process it in the model,
+      display it in the view, and save it to open images in model
+       */
       case "mosaic":
-        //TODO should this be in a higher order function since this is basically going to be the
-        // same template for all adjustments? applyAdjustment(e->applyBlur) ???
-        System.out.println("mosaic has been received by the controller");
         this.undoStack.push(currentImage);
         updateUndoRedo();
+
+        // TODO why is the seed hardcoded? i thought there's a popup?
         this.model.applyMosaic(currentImage, 100);
         this.currentImage = this.currentImage + "-mosaic";
         BufferedImage bufferM = this.model.getImage(currentImage);
@@ -340,13 +364,14 @@ public class ControllerImpl implements IController, ActionListener, Features {
         this.redoStack.clear();
         updateUndoRedo();
         break;
+
+      /*
+      If the sepia button is clicked, add current image to stack, process it in the model,
+      display it in the view, and save it to open images in model
+       */
       case "sepia":
-        //TODO should this be in a higher order function since this is basically going to be the
-        // same template for all adjustments? applyAdjustment(e->applyBlur) ???
-        System.out.println("sepia has been received by the controller");
         this.undoStack.push(currentImage);
         updateUndoRedo();
-        System.out.println("current image:" + this.currentImage);
         try {
           this.model.applySepia(currentImage);
           this.currentImage = this.currentImage + "-sepia";
@@ -358,13 +383,14 @@ public class ControllerImpl implements IController, ActionListener, Features {
           System.out.println("Can't sepia the background image. Must load your own image first.");
         }
         break;
+
+      /*
+      If the greyscale button is clicked, add current image to stack, process it in the model,
+      display it in the view, and save it to open images in model
+       */
       case "greyscale":
-        //TODO should this be in a higher order function since this is basically going to be the
-        // same template for all adjustments? applyAdjustment(e->applyBlur) ???
-        System.out.println("greyscale has been received by the controller");
         this.undoStack.push(currentImage);
         updateUndoRedo();
-        System.out.println("current image:" + this.currentImage);
         try {
           this.model.applyGreyscale(currentImage);
           this.currentImage = this.currentImage + "-greyscale";
@@ -376,8 +402,6 @@ public class ControllerImpl implements IController, ActionListener, Features {
           System.out.println("Can't greyscale the background image. Must load your own image first.");
         }
         break;
-      default:
-        System.out.println(e.getActionCommand() + " was received by the controller");
     }
   }
 
@@ -434,7 +458,10 @@ public class ControllerImpl implements IController, ActionListener, Features {
 
   }
 
-  // File menu functions
+  /**
+   * When the user clicks on the 'load' button, get the path they specified in the
+   * filechooser, add it to the saved images folder in the model, and display the image.
+   */
   public void load() {
     // When the user clicks on the 'load' button, load the image in the model
     view.openLoadDialogue();
@@ -458,21 +485,21 @@ public class ControllerImpl implements IController, ActionListener, Features {
 
   }
 
+  /**
+   * When the user clicks on the batch load button, allow them to choose the .txt file to
+   * load up with a list of commands, and then process the file via the model.
+   */
   public void batchLoad() {
-    System.out.println("Calling batch load function");
 
-    // When the user clicks on the 'load' button, get the script and run it
+    // When the user clicks on the 'batch load' button, get the script and run it
     view.openBatchLoadDialogue();
 
     String lpath = view.getFilePath();
-    System.out.println("User chose: " + lpath);
     try {
       this.goBatch(lpath);
     } catch (IOException exception) {
       throw new IllegalArgumentException("There was a problem loading that file.");
     }
-    // Since you have opened an image you can now apply adjustments
-    this.view.toggleAdjustments(true);
 
   }
 
@@ -481,12 +508,19 @@ public class ControllerImpl implements IController, ActionListener, Features {
     //TODO
   }
 
+  /**
+   * When the user clicks the quit button, the program exits, without saving anything.
+   * //TODO should we have a popup that says 'Save current image? [Yes] [No]" ?
+   */
   public void quit() {
     System.exit(0);
   }
 
-  // Edit menu functions
 
+  /**
+   * When the user pressed 'undo', save the current image on the redo stack,
+   * and display the top of the undo stack.
+   */
   public void undo() {
     // Start by pushing the current image onto the redo stack.
     this.redoStack.push(this.currentImage);
@@ -499,6 +533,10 @@ public class ControllerImpl implements IController, ActionListener, Features {
     updateUndoRedo();
   }
 
+  /**
+   * When the user clicks redo, put the current image on the undo stack, and display
+   * the image on the top of the redo stack.
+   */
   public void redo() {
     // Start by pushing the current image onto the undo stack.
     this.undoStack.push(this.currentImage);
@@ -527,11 +565,13 @@ public class ControllerImpl implements IController, ActionListener, Features {
     }
   }
 
-// Adjustment menu functions
 
+  /**
+   * When the user clicks 'blur' button, add the current image to undo stack, apply
+   * the adjustment with the model, and display it. Clear the redo stack.
+   */
   public void blur(){
 
-        System.out.println("Calling blur function");
         // Push the current image to the undo stack before anything else
         this.undoStack.push(currentImage);
 
@@ -548,6 +588,10 @@ public class ControllerImpl implements IController, ActionListener, Features {
         updateUndoRedo();
   }
 
+  /**
+   * When the user clicks 'sharpen' button, add the current image to undo stack, apply
+   * the adjustment with the model, and display it. Clear the redo stack.
+   */
   public void sharpen(){
 
     System.out.println("Calling sharpen function");
@@ -567,9 +611,12 @@ public class ControllerImpl implements IController, ActionListener, Features {
     updateUndoRedo();
   }
 
+  /**
+   * When the user clicks 'dither' button, add the current image to undo stack, apply
+   * the adjustment with the model, and display it. Clear the redo stack.
+   */
   public void dither(){
 
-    System.out.println("Calling dither function");
     // Push the current image to the undo stack before anything else
     this.undoStack.push(currentImage);
 
@@ -586,9 +633,13 @@ public class ControllerImpl implements IController, ActionListener, Features {
     updateUndoRedo();
   }
 
+  /**
+   * When the user clicks 'mosaic' button, add the current image to undo stack, apply
+   * the adjustment with the model, and display it. Clear the redo stack.
+   * @param seed the number of seeds (clusters) of the mosaic (user-specified)
+   */
   public void mosaic(int seed){
 
-    System.out.println("Calling mosaic function");
     // Push the current image to the undo stack before anything else
     this.undoStack.push(currentImage);
 
@@ -605,9 +656,12 @@ public class ControllerImpl implements IController, ActionListener, Features {
     updateUndoRedo();
   }
 
+  /**
+   * When the user clicks 'sepia' button, add the current image to undo stack, apply
+   * the adjustment with the model, and display it. Clear the redo stack.
+   */
   public void sepia(){
 
-    System.out.println("Calling sepia function");
     // Push the current image to the undo stack before anything else
     this.undoStack.push(currentImage);
 
@@ -624,9 +678,12 @@ public class ControllerImpl implements IController, ActionListener, Features {
     updateUndoRedo();
   }
 
+  /**
+   * When the user clicks 'greyscale' button, add the current image to undo stack, apply
+   * the adjustment with the model, and display it. Clear the redo stack.
+   */
   public void greyscale(){
 
-    System.out.println("Calling greyscale function");
     // Push the current image to the undo stack before anything else
     this.undoStack.push(currentImage);
 
@@ -643,10 +700,12 @@ public class ControllerImpl implements IController, ActionListener, Features {
     updateUndoRedo();
   }
 
-  //Draw menu functions
 
+  //TODO should there be undo/redo stack manipulation in the draw() functions?
   /**
-   * TODO Javadoc
+   * When the user clicks 'flag' button, find out from the user via dialogs in the view
+   * what country flag they want, and the width in pixels of the flag they want. Then,
+   * draw, display, and save the flag.
    */
   public void flag() {
 
@@ -666,8 +725,6 @@ public class ControllerImpl implements IController, ActionListener, Features {
     if (chosenWidth == 0) {
       return;
     }
-
-    System.out.println("In the controller, the user has chosen this width:" + chosenWidth);
 
     model.drawFlag(chosenWidth, chosenFlag);
     this.flagCount++;
@@ -692,8 +749,12 @@ public class ControllerImpl implements IController, ActionListener, Features {
     }
 
   }
+
+
   /**
-   * //TODO javadoc.
+   * When the user clicks 'rainbow' button, find out from the user via dialogs in the view
+   * what orientation they want, and the height and width in pixels they want. Then,
+   * draw, display, and save the rainbow.
    */
   public void rainbow() {
     String chosenRainbowOrientation = view.rainbowDialog();
@@ -744,6 +805,12 @@ public class ControllerImpl implements IController, ActionListener, Features {
     }
   }
 
+
+  /**
+   * When the user clicks 'checkerboard' button, find out from the user via dialogs in the view
+   * what the height and width in pixels of each square they want. Then,
+   * draw, display, and save the checkerboard.
+   */
   public void checkerboard() {
     int checkerboardSize = view.checkerboardDialog();
 
