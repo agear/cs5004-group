@@ -67,7 +67,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   private void prepareGui(String file) throws IOException {
     /// always call the constructor of JFrame: it contains important initialization.
     mainFrame = new JFrame("Image Processing Software");
-
     // setSize creates a frame with a specific size in the center of the screen.
 //    mainFrame.setSize(400,400);
     mainFrame.setLocationRelativeTo(null);
@@ -320,7 +319,11 @@ public void setSize(int width, int height) {
     imagePanel.setBorder(BorderFactory.createTitledBorder("Current image"));
     imagePanel.setLayout(new GridLayout(1,0, 10, 10));
     imagePanel.setMaximumSize(null);
+    fileSaveDisplay = new JLabel("File path will appear here");
+    imagePanel.add(fileSaveDisplay);
     mainFrame.add(imagePanel);
+
+
 
     IImage image = new Image(file);
     BufferedImage buffered = image.convertToBufferedImage(file);
@@ -615,7 +618,14 @@ public void setSize(int width, int height) {
 
     //File menu action listeners
     loadMenuItem.addActionListener(l->features.load());
-    saveMenuItem.addActionListener(l->features.save());
+    saveMenuItem.addActionListener(l->{
+      try {
+        features.save();
+      }
+      catch (IOException e) {
+        System.out.println("Couldn't save the file");
+      }
+    });
     batchLoadMenuItem.addActionListener(l->features.batchLoad());
     quitMenuItem.addActionListener(l->features.quit());
 
