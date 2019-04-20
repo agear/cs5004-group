@@ -17,7 +17,6 @@ import imageprocessing.view.ViewImpl;
  * Tests for the image processing class.
  */
 public class TestImage {
- //TODO test if controller works with View (mock view?)
   @Test
   public void testController() throws IOException {
     MockModel m = new MockModel();
