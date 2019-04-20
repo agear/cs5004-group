@@ -41,10 +41,9 @@ public class ImageUtil {
   }
 
   /**
-   * Read an image file and return the contents as an array.
+   * Read a  BufferedImage and return the contents as an array.
    *
-   * @param filename the path of the file. Look at the ImageIO documentation to
-   *                 see which file formats are supported.
+   * @param input a BufferedImage object
    * @return the image as a 3D array of integer values
    */
   public static int[][][] readBufferedImage(BufferedImage input) throws IOException {
