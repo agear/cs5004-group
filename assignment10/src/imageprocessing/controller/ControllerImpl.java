@@ -408,9 +408,30 @@ public class ControllerImpl implements IController, Features {
     }
     this.currentImage = lpath;
     // Creates a BufferedImage of the image specified by the path.
-    BufferedImage buffered = this.model.getImage(lpath);
-    // Displays the image in the view.
-    view.displayImage(buffered);
+    try {
+      BufferedImage buffered = this.model.getImage(lpath);
+      view.setSize(buffered.getWidth(), buffered.getHeight());
+      // Displays the image in the view.
+      view.displayImage(buffered);
+      try {
+        view.setSize(buffered.getWidth(), buffered.getHeight());
+
+        // Displays the image in the view.
+        view.displayImage(buffered);
+
+        // Since you have opened an image you can now apply adjustments
+        this.view.toggleAdjustments(true);
+      }
+
+      // Operation has been cancelled by user
+      catch (NullPointerException e) {
+        return;
+      }
+    }
+    catch (NullPointerException e) {
+      return;
+    }
+
   }
 
   /**
