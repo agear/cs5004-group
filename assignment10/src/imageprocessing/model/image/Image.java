@@ -19,12 +19,8 @@ public class Image extends AbstractImage implements IImage {
 
     int[][][] imageRGBMap = this.readBufferedImage(filename);
     super.data = new Pixel[imageRGBMap.length][imageRGBMap[0].length];
-//    super.width = this.getWidth(filename);
     super.width = filename.getWidth();
-//    super.height = this.getHeight(filename);
     super.height = filename.getHeight();
-    // Initialize data field to input length
-    //this.data = new Pixel[data.length][data[0].length];
 
     // Loop through input, creating pixels and creating data field
     for (int i = 0; i < super.data.length; i++) {
@@ -37,11 +33,6 @@ public class Image extends AbstractImage implements IImage {
       }
     }
   }
-
-//  public Image(BufferedImage file) throws IOException {
-//
-//    int[][][] imageRGBMap = this.readImage(file);
-//  }
 
 
   /**

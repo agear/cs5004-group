@@ -1,11 +1,11 @@
 package imageprocessing.view;
 
 // Import packages needed for Swing.
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
-
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,36 +14,28 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
 import javax.swing.JLabel;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JComboBox;
+import javax.swing.JMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.JMenuBar;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import imageprocessing.controller.Features;
-import imageprocessing.model.image.IImage;
-import imageprocessing.model.image.Image;
-
-
 
 /**
- * The user interface of the image processing package, a simple GUI with a menu bar on the top
- * and a main image displayed in the background. The menu bar has these items: File, Edit,
-<<<<<<< HEAD
- * Adjustments, and Draw.
-=======
- * Adjustments, Draw.
->>>>>>> 3f55c33f0426a5069b9cb0b73438dc6c8987a924
+ * The user interface of the image processing package, a simple GUI with a menu bar on the top and a
+ * main image displayed in the background. The menu bar has these items: File, Edit, Adjustments,
+ * and Draw.
  */
-public class ViewImpl extends JFrame implements IView { //}, ActionListener {
+public class ViewImpl extends JFrame implements IView {
 
   // Global fields required for setup.
   private JFrame mainFrame;
@@ -81,8 +73,10 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   }
 
 
-  /** Creates the Java Swing GUI -- a simple border layout with the image in the center
-   * of the screen and a menu bar with options on top.
+  /**
+   * Creates the Java Swing GUI -- a simple border layout with the image in the center of the screen
+   * and a menu bar with options on top.
+   *
    * @param file The file to initialize the background image of the window to.
    * @throws IOException If that file can not be found
    */
@@ -110,9 +104,11 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   }
 
 
-  /** Sets the size of the image so that the image panel is 100 pixels wider and taller
-   * than the input width and height specifications.
-   * @param width The desired width
+  /**
+   * Sets the size of the image so that the image panel is 100 pixels wider and taller than the
+   * input width and height specifications.
+   *
+   * @param width  The desired width
    * @param height The desired height
    */
   public void setSize(int width, int height) {
@@ -120,9 +116,9 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   }
 
   /**
-   * Creates the adjustment menu, which has each type of adjustment of the image that the
-   * user can click on to change the current image, and the File menu, which has
-   * 'administrative' type capabilities.
+   * Creates the adjustment menu, which has each type of adjustment of the image that the user can
+   * click on to change the current image, and the File menu, which has 'administrative' type
+   * capabilities.
    */
   private void prepareMenuBar() {
 
@@ -156,27 +152,27 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
     // Add load item to this menu:
     loadMenuItem = new JMenuItem("Load", KeyEvent.VK_L); // If the person hits "L",  goes here
-    loadMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_L, ActionEvent.META_MASK)); //
+    loadMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.META_MASK)); //
     loadMenuItem.getAccessibleContext().setAccessibleDescription("Load an image");
     menuFile.add(loadMenuItem);
 
     // Add save item to this menu:
     saveMenuItem = new JMenuItem("Save", KeyEvent.VK_S);
-    saveMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.META_MASK));
+    saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.META_MASK));
     saveMenuItem.getAccessibleContext().setAccessibleDescription("Save image");
     menuFile.add(saveMenuItem);
 
     // Separate batch load, and add Load batch script option
     menuFile.addSeparator();
     batchLoadMenuItem = new JMenuItem("Load Batch Script", KeyEvent.VK_B);
-    batchLoadMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_B, ActionEvent.META_MASK));
+    batchLoadMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.META_MASK));
     batchLoadMenuItem.getAccessibleContext().setAccessibleDescription("Load batch script");
     menuFile.add(batchLoadMenuItem);
 
     // Separate quit, and add Quit as a menu item
     // Write a batch script
     batchWriteMenuItem = new JMenuItem("Write Batch Script", KeyEvent.VK_W);
-    batchWriteMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_W,
+    batchWriteMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W,
             ActionEvent.META_MASK));
     batchWriteMenuItem.getAccessibleContext().setAccessibleDescription("Write batch script");
     menuFile.add(batchWriteMenuItem);
@@ -186,7 +182,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     menuFile.addSeparator();
 
     quitMenuItem = new JMenuItem("Quit", KeyEvent.VK_Q);
-    quitMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_Q, ActionEvent.META_MASK));
+    quitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.META_MASK));
     quitMenuItem.getAccessibleContext().setAccessibleDescription("Quit");
     menuFile.add(quitMenuItem);
 
@@ -210,7 +206,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
     // Add all edit item to this menu:
     undoMenuItem = new JMenuItem("Undo", KeyEvent.VK_Z);
-    undoMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_Z, ActionEvent.META_MASK));
+    undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ActionEvent.META_MASK));
 
     undoMenuItem.getAccessibleContext().setAccessibleDescription("Undo last command");
     undoMenuItem.setActionCommand("undo");
@@ -220,7 +216,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     menuEdit.add(undoMenuItem);
 
     redoMenuItem = new JMenuItem("Redo", KeyEvent.VK_R);
-    redoMenuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_Z, ActionEvent.SHIFT_MASK));
+    redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ActionEvent.SHIFT_MASK));
 
     redoMenuItem.getAccessibleContext().setAccessibleDescription("Redo last command");
 
@@ -321,7 +317,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     // Creates the panel, adds a title, alters the size
     imagePanel = new JPanel();
     imagePanel.setBorder(BorderFactory.createTitledBorder("Current image"));
-    imagePanel.setLayout(new GridLayout(1,0, 10, 10));
+    imagePanel.setLayout(new GridLayout(1, 0, 10, 10));
     imagePanel.setMaximumSize(null);
     fileSaveDisplay = new JLabel("File path will appear here");
     mainFrame.add(imagePanel);
@@ -338,7 +334,9 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   }
 
 
-  /** Adds an image on the display and removes the current image on display.
+  /**
+   * Adds an image on the display and removes the current image on display.
+   *
    * @param image The image to be displayed
    */
   public void displayImage(BufferedImage image) {
@@ -360,7 +358,9 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   }
 
 
-  /** Returns the most previously loaded filepath of this View.
+  /**
+   * Returns the most previously loaded filepath of this View.
+   *
    * @return the filepath stored in the view
    */
   public String getFilePath() {
@@ -369,8 +369,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
 
   /**
-   * Prompts the user to choose a .txt file in memory which has a series of
-   * batch-processing commands.
+   * Prompts the user to choose a .txt file in memory which has a series of batch-processing
+   * commands.
    */
   public void openBatchLoadDialogue() {
     // Creates a JFileChooser options, which opens a dialog box that lets the user choose a file.
@@ -389,8 +389,8 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   }
 
   /**
-   * Prompts the user to choose a .jpg, .gif, or .png image to load in the view.
-   * It returns the path that the user has chosen for the controller to process.
+   * Prompts the user to choose a .jpg, .gif, or .png image to load in the view. It returns the path
+   * that the user has chosen for the controller to process.
    */
   public void openLoadDialogue() {
 
@@ -399,7 +399,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
     // Limits the options to just .jpg, .gif, and .png images.
     FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG, GIF and"
-            + "PNG Images", "jpg","gif","png");
+            + "PNG Images", "jpg", "gif", "png");
     fchooser.setFileFilter(filter);
 
     // The return value is the path that the user chooses.
@@ -426,7 +426,9 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   }
 
 
-  /** Shows a dialog box which prompts user to save changes before they quit.
+  /**
+   * Shows a dialog box which prompts user to save changes before they quit.
+   *
    * @return true if the user wants to save changes, false otherwise
    */
   public boolean openUnsavedChanges() {
@@ -445,15 +447,16 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
   /**
    * Prompts the user to choose a country of which they want to make a flag of.
+   *
    * @return the country chosen
    */
   public String flagDialog() {
 
-    final String[] countryList = { "Greece", "France", "Switzerland" };
+    final String[] countryList = {"Greece", "France", "Switzerland"};
     JComboBox countryListComboBox = new JComboBox(countryList);
     countryListComboBox.setSelectedIndex(countryList.length - 1);
-    String input = (String)JOptionPane.showInputDialog(null, "What country?",
-                "Choose your country carefully", JOptionPane.QUESTION_MESSAGE,
+    String input = (String) JOptionPane.showInputDialog(null, "What country?",
+            "Choose your country carefully", JOptionPane.QUESTION_MESSAGE,
             null, countryList, countryList[0]);
 
     return input;
@@ -461,13 +464,14 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
   /**
    * Prompts the user to enter the orientation of the desired rainbow image they want drawn.
+   *
    * @return the chosen orientation
    */
   public String rainbowDialog() {
-    final String[] orientationList = { "Horizontal", "Vertical" };
+    final String[] orientationList = {"Horizontal", "Vertical"};
     JComboBox rainbowComboBox = new JComboBox(orientationList);
     rainbowComboBox.setSelectedIndex(orientationList.length - 1);
-    String input = (String)JOptionPane.showInputDialog(null, "What orientation?",
+    String input = (String) JOptionPane.showInputDialog(null, "What orientation?",
             "makin' a rainbow", JOptionPane.QUESTION_MESSAGE,
             null, orientationList, orientationList[0]);
     return input;
@@ -475,6 +479,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
   /**
    * Prompts the user to choose a width in pixels for their image (a flag or rainbow).
+   *
    * @return the width chosen
    */
   public int widthDialog() {
@@ -482,7 +487,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     // Initialize 1000 numbers to display to user to choose.
     String[] stringNumberList = new String[1000];
     int j = 0;
-    for (int i = 54; i < stringNumberList.length - 1; i++ ) {
+    for (int i = 54; i < stringNumberList.length - 1; i++) {
       stringNumberList[j] = Integer.toString(i);
       j++;
     }
@@ -490,7 +495,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     // Presents the user with a list of 1000 numbers to choose from.
     JComboBox widthComboBox = new JComboBox(stringNumberList);
     widthComboBox.setSelectedIndex(stringNumberList.length - 1);
-    String input = (String)JOptionPane.showInputDialog(null,
+    String input = (String) JOptionPane.showInputDialog(null,
             "What width (px)?",
             "Selecting the width for your image.", JOptionPane.QUESTION_MESSAGE,
             null, stringNumberList, stringNumberList[0]);
@@ -507,6 +512,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
   /**
    * Prompts the user to enter a height between 54 (minimum for a flag) and 1000.
+   *
    * @return the height that the user has selected
    */
   public int heightDialog() {
@@ -514,7 +520,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     // Initialize 1000 numbers to display to user to choose.
     String[] stringNumberList = new String[1000];
     int j = 0;
-    for (int i = 54; i < stringNumberList.length - 1; i++ ) {
+    for (int i = 54; i < stringNumberList.length - 1; i++) {
       stringNumberList[j] = Integer.toString(i);
       j++;
     }
@@ -522,7 +528,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     // Presents the user with a list of 1000 numbers to choose from.
     JComboBox heightComboBox = new JComboBox(stringNumberList);
     heightComboBox.setSelectedIndex(stringNumberList.length - 1);
-    String input = (String)JOptionPane.showInputDialog(null, "What height?",
+    String input = (String) JOptionPane.showInputDialog(null, "What height?",
             "Selecting the height for your image.", JOptionPane.QUESTION_MESSAGE,
             null, stringNumberList, stringNumberList[0]);
 
@@ -537,8 +543,9 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   }
 
   /**
-   * Prompts the user to select a number between 1 and 150 (a reasonable maximum), which
-   * will be the square size in pixels of the checkerboard they'd like to create.
+   * Prompts the user to select a number between 1 and 150 (a reasonable maximum), which will be the
+   * square size in pixels of the checkerboard they'd like to create.
+   *
    * @return the square size in pixels of the checkerboard
    */
   public int checkerboardDialog() {
@@ -546,7 +553,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     // Initialize 150 numbers to display to user to choose.
     String[] stringNumberList = new String[150];
     int j = 0;
-    for (int i = 1; i < stringNumberList.length - 1; i++ ) {
+    for (int i = 1; i < stringNumberList.length - 1; i++) {
       stringNumberList[j] = Integer.toString(i);
       j++;
     }
@@ -554,7 +561,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     // Presents the user with a list of 1000 numbers to choose from.
     JComboBox heightComboBox = new JComboBox(stringNumberList);
     heightComboBox.setSelectedIndex(stringNumberList.length - 1);
-    String input = (String)JOptionPane.showInputDialog(null,
+    String input = (String) JOptionPane.showInputDialog(null,
             "How big do you want each square to be?",
             "popping the question", JOptionPane.QUESTION_MESSAGE,
             null, stringNumberList, stringNumberList[0]);
@@ -580,6 +587,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
   /**
    * Allows or disallows the undo button to be clicked on.
+   *
    * @param isClickable If the undo button should be clicked on or not
    */
   public void toggleUndo(boolean isClickable) {
@@ -588,6 +596,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
   /**
    * Allows or disallows the redo button to be clicked on.
+   *
    * @param isClickable If the redo button should be clicked on or not
    */
   public void toggleRedo(boolean isClickable) {
@@ -596,6 +605,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
   /**
    * Allows or disallows the adjustment menu items to be clicked.
+   *
    * @param isClickable if the button should be clickable or not
    */
   public void toggleAdjustments(boolean isClickable) {
@@ -609,9 +619,9 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
   }
 
 
-
   /**
    * Adds every menu item as listeners to the features interface.
+   *
    * @param features The features interface which implements our model
    */
   @Override
@@ -622,8 +632,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     saveMenuItem.addActionListener(l -> {
       try {
         features.save();
-      }
-      catch (IOException e) {
+      } catch (IOException e) {
         this.errorDialog();
         System.out.println("Couldn't save the file");
       }
@@ -637,12 +646,11 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     quitMenuItem.addActionListener(l -> {
       try {
         features.quit();
-      }
-      catch (IOException e) {
+      } catch (IOException e) {
         this.errorDialog();
         System.out.println("Couldn't save the file");
-    }
-  });
+      }
+    });
 
     //Edit menu action listeners
     undoMenuItem.addActionListener(l -> features.undo());
@@ -656,8 +664,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
       try {
         features.mosaic(Integer.parseInt(JOptionPane.showInputDialog(
                 "Enter a number to use as the seed:")));
-      }
-      catch (NumberFormatException e) {
+      } catch (NumberFormatException e) {
         errorDialog();
       }
     });

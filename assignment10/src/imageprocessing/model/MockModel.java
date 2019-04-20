@@ -1,7 +1,6 @@
 package imageprocessing.model;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 import imageprocessing.model.image.Country;
 import imageprocessing.model.image.Orientation;
@@ -21,18 +20,6 @@ public class MockModel implements IModel {
   public String getCode() {
     return this.code.trim();
   }
-
-//  /**
-//   * Takes as input a filename and a name for the file in the internal organization.
-//   *
-//   * @param ifile The name of the file in the OS
-//   * @param title The name of the image in the imageprocessing package
-//   * @throws IOException If the ifile doesn't exist/can't be found
-//   */
-//  @Override
-//  public void loadFromPath(String ifile, String title) throws IOException {
-//    this.code += " load";
-//  }
 
   /**
    /**

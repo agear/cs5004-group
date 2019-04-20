@@ -47,9 +47,6 @@ public class ImageUtil {
    * @return the image as a 3D array of integer values
    */
   public static int[][][] readBufferedImage(BufferedImage input) throws IOException {
-//    BufferedImage input;
-//
-//    input = ImageIO.read(new FileInputStream(filename));
 
     int[][][] result = new int[input.getHeight()][input.getWidth()][3];
 

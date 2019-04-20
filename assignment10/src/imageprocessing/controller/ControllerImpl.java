@@ -140,7 +140,6 @@ public class ControllerImpl implements IController, Features {
           }
 
           // Load the file name as the image name:
-//          this.model.load(filename, imageName);
           loadFromPath(filename, imageName);
           this.currentImage = imageName;
           break;

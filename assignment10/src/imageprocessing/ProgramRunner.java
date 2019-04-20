@@ -21,16 +21,15 @@ public class ProgramRunner {
    */
   public static void main(String[] args) throws IOException {
     IModel model = new ModelImpl();
-    FileReader in = new FileReader(args[0]);
+    FileReader in = new FileReader(args[1]);
     IView view = new ViewImpl();
     IController controller = new ControllerImpl(model, in);
-    controller.setView(view);
 
-    //TODO command line stuff
-    //    if ( args.length > 0 ) {
-    //      controller.goGo();
-    //    }
-
+    if (args[0].equals("-script")) {
+      controller.goGo();
+    } else if (args[0].equals("-interactive")) {
+      controller.setView(view);
+    }
 
   }
 }
