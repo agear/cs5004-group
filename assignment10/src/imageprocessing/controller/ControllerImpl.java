@@ -2,6 +2,7 @@ package imageprocessing.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.NoSuchElementException;
@@ -139,7 +140,8 @@ public class ControllerImpl implements IController, Features {
           }
 
           // Load the file name as the image name:
-          this.model.load(filename, imageName);
+//          this.model.load(filename, imageName);
+          loadFromPath(filename, imageName);
           this.currentImage = imageName;
           break;
 
@@ -398,7 +400,7 @@ public class ControllerImpl implements IController, Features {
     view.openLoadDialogue();
     String lpath = view.getFilePath();
     try {
-      this.model.load(lpath, lpath);
+      loadFromPath(lpath, lpath);
     } catch (IOException exception) {
       view.errorDialog();
       System.out.println("There was a problem loading that image.");
@@ -407,26 +409,8 @@ public class ControllerImpl implements IController, Features {
     this.currentImage = lpath;
     // Creates a BufferedImage of the image specified by the path.
     BufferedImage buffered = this.model.getImage(lpath);
-    // Supposed to resize the window to the size of the new image. //TODO Doesn't work properly.
-    view.setSize(buffered.getWidth(), buffered.getHeight());
     // Displays the image in the view.
     view.displayImage(buffered);
-    // Supposed to rezie the window to the size of the new image. //TODO Doesn't work properly.
-    try {
-      view.setSize(buffered.getWidth(), buffered.getHeight());
-
-      // Displays the image in the view.
-      view.displayImage(buffered);
-
-      // Since you have opened an image you can now apply adjustments
-      this.view.toggleAdjustments(true);
-    }
-
-    // Operation has been cancelled by user
-    catch (NullPointerException e) {
-      return;
-    }
-
   }
 
   /**
@@ -457,7 +441,6 @@ public class ControllerImpl implements IController, Features {
    * @param script the list of commands that the user has written
    */
   public void batchWrite(String script) {
-    System.out.println(script); //TODO delete?
     Scanner s = new Scanner(script);
     try {
       this.goUniversal(s);
@@ -490,9 +473,12 @@ public class ControllerImpl implements IController, Features {
     ImageIO.write(output, "png", new FileOutputStream(spath));
   }
 
-  //TODO This is to get IO out of the model per Amit. Still have to figure it out.
-  private void loadFromPath(String filename) throws IOException {
-//TODO UncommentedEmptyMethodBody: This method does not contain any code. Should it be doing something? Or can it be removed? If you need to keep it, add a comment to the body explaining why it is empty. Error is between cols 50 and 3
+  private void loadFromPath(String path, String name) throws IOException {
+    BufferedImage input;
+
+    input = ImageIO.read(new FileInputStream(path));
+    this.model.passImage(input, name);
+    System.out.println("Loading "+name+" from "+path+ "inside controller");
   }
 
   /**

@@ -40,6 +40,32 @@ public class ImageUtil {
     return result;
   }
 
+  /**
+   * Read an image file and return the contents as an array.
+   *
+   * @param filename the path of the file. Look at the ImageIO documentation to
+   *                 see which file formats are supported.
+   * @return the image as a 3D array of integer values
+   */
+  public static int[][][] readBufferedImage(BufferedImage input) throws IOException {
+//    BufferedImage input;
+//
+//    input = ImageIO.read(new FileInputStream(filename));
+
+    int[][][] result = new int[input.getHeight()][input.getWidth()][3];
+
+    for (int i = 0; i < input.getHeight(); i++) {
+      for (int j = 0; j < input.getWidth(); j++) {
+        int color = input.getRGB(j, i);
+        Color c = new Color(color);
+        result[i][j][0] = c.getRed();
+        result[i][j][1] = c.getGreen();
+        result[i][j][2] = c.getBlue();
+      }
+    }
+    return result;
+  }
+
   /** Creates an uninitialized blank white image.
    *
    * @param width  The width in pixels of the image

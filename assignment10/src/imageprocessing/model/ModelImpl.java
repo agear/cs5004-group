@@ -55,38 +55,38 @@ public class ModelImpl implements IModel {
     return titleCopy;
   }
 
-  /** Takes as input a filename and a name for the file in the internal organization.
-   *
-   * @param ifile The name of the file in the OS
-   * @param title The name of the image in the imageprocessing package
-   * @throws IOException If the ifile doesn't exist/can't be found
-   */
-  @Override
-  public void load(String ifile, String title) throws IOException {
+//  /** Takes as input a filename and a name for the file in the internal organization.
+//   *
+//   * @param ifile The name of the file in the OS
+//   * @param title The name of the image in the imageprocessing package
+//   * @throws IOException If the ifile doesn't exist/can't be found
+//   */
+//  @Override
+//  public void load(String ifile, String title) throws IOException {
+//
+//    try {
+//      IImage i = new Image(ifile);
+//      this.openImages.put(isDuplicate(title), i);
+//    }
+//    catch (NullPointerException e) {
+//      System.out.println("Operation cancelled.");
+//    }
+//  }
 
+  /**
+   * Gets a BufferedImage from the controller and creates an Image object from it.
+   * @param input BufferedImage to create an image out of.
+   * @param name Name of the internal representation of the image.
+   */
+  public void passImage(BufferedImage input, String name) throws IOException{
     try {
-      IImage i = new Image(ifile);
-      this.openImages.put(isDuplicate(title), i);
+      IImage i = new Image(input);
+      this.openImages.put(isDuplicate(name), i);
     }
     catch (NullPointerException e) {
       System.out.println("Operation cancelled.");
     }
   }
-
-  //TODO delete probably:
-//  /**
-//   * Saves an image to the computer in a file. I.e., write the image to a file.
-//   *
-//   * @param title The goal name of the output file (+.png)
-//   * @throws IOException If there is an error with the specified file name
-//   */
-//  @Override
-//  public void save(String title) throws IOException {
-//
-//    IImage currentImage = this.openImages.get(title);
-//    currentImage.writeImageToFile(title + ".png");
-//
-//  }
 
   /** Converts an image an Image in our model architecture into a BufferedImage.
    * @param title The name of the image to be converted

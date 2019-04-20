@@ -15,7 +15,7 @@ public interface Features {
 
 
   /**
-   * TODO figure out how we are doing this and then javadoc it
+   * Saves an image to disk.
    */
   void save() throws IOException;
 
@@ -34,7 +34,7 @@ public interface Features {
 
 
   /**
-   * TODO javadoc
+   * Opens a dialog box where the user can type in and execute a batch script.
    */
   void batchWrite(String script);
 

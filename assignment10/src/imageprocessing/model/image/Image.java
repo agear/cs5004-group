@@ -1,5 +1,6 @@
 package imageprocessing.model.image;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
@@ -13,14 +14,15 @@ public class Image extends AbstractImage implements IImage {
    * @param filename The name of the file to be turned into an Image file
    * @throws IOException If the file cannot be found
    */
-  public Image(String filename) throws IOException {
+  public Image(BufferedImage filename) throws IOException {
 
 
-    int[][][] imageRGBMap = this.readImage(filename);
+    int[][][] imageRGBMap = this.readBufferedImage(filename);
     super.data = new Pixel[imageRGBMap.length][imageRGBMap[0].length];
-    super.width = this.getWidth(filename);
-    super.height = this.getHeight(filename);
-
+//    super.width = this.getWidth(filename);
+    super.width = filename.getWidth();
+//    super.height = this.getHeight(filename);
+    super.height = filename.getHeight();
     // Initialize data field to input length
     //this.data = new Pixel[data.length][data[0].length];
 
@@ -35,6 +37,11 @@ public class Image extends AbstractImage implements IImage {
       }
     }
   }
+
+//  public Image(BufferedImage file) throws IOException {
+//
+//    int[][][] imageRGBMap = this.readImage(file);
+//  }
 
 
   /**

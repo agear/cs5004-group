@@ -22,17 +22,17 @@ public class MockModel implements IModel {
     return this.code.trim();
   }
 
-  /**
-   * Takes as input a filename and a name for the file in the internal organization.
-   *
-   * @param ifile The name of the file in the OS
-   * @param title The name of the image in the imageprocessing package
-   * @throws IOException If the ifile doesn't exist/can't be found
-   */
-  @Override
-  public void load(String ifile, String title) throws IOException {
-    this.code += " load";
-  }
+//  /**
+//   * Takes as input a filename and a name for the file in the internal organization.
+//   *
+//   * @param ifile The name of the file in the OS
+//   * @param title The name of the image in the imageprocessing package
+//   * @throws IOException If the ifile doesn't exist/can't be found
+//   */
+//  @Override
+//  public void loadFromPath(String ifile, String title) throws IOException {
+//    this.code += " load";
+//  }
 
 //  /**
 //   * Saves an image to the computer in a file. I.e., write the image to a file.
@@ -44,6 +44,17 @@ public class MockModel implements IModel {
 //  public void save(String title) throws IOException {
 //    this.code += " save";
 //  }
+
+  /**
+   /**
+   * Gets a BufferedImage from the controller and creates an Image object from it.
+   * @param input BufferedImage to create an image out of.
+   * @param name Name of the internal representation of the image.
+   */
+  @Override
+  public void passImage(BufferedImage input, String name) {
+    this.code += " passImage";
+  }
 
   /**
    * Creates a filtered version of the current image with a blur using a built-in kernel. Doesn't

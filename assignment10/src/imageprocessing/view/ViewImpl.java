@@ -19,7 +19,7 @@ import imageprocessing.model.image.Image;
 /**
  * The user interface of the image processing package, a simple GUI with a menu bar on the top
  * and a main image displayed in the background. The menu bar has these items: File, Edit,
- * Adjustments, Draw, and Images. //todo are we still doing the images thing?
+ * Adjustments, and Draw.
  */
 public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
@@ -87,7 +87,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
     imagePanel.setSize(width +100, height+100);
 }
 
-//TODO Delete debug statements
   /**
    * Creates the adjustment menu, which has each type of adjustment of the image that the
    * user can click on to change the current image, and the File menu, which has
@@ -310,11 +309,12 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
 
     // Create the image in the background on display
-    IImage image = new Image(file);
-    BufferedImage buffered = image.convertToBufferedImage(file);
+    //TODO
+//    IImage image = new Image(file);
+//    BufferedImage buffered = image.convertToBufferedImage(file);
     JLabel imageLabel = new JLabel("");
     imageScrollPane = new JScrollPane(imageLabel);
-    imageLabel.setIcon(new ImageIcon(buffered));
+//    imageLabel.setIcon(new ImageIcon(buffered));
     imagePanel.add(imageScrollPane);
     imagePanel.setVisible(true);
 
@@ -565,7 +565,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
   /**
    * Allows or disallows the undo button to be clicked on.
-   * @param b If b is //TODO i'm not sure how set enabled works
+   * @param b If b is true Undo in enabled, else it is disabled.
    */
   public void toggleUndo(boolean b){
     undoMenuItem.setEnabled(b);
@@ -573,7 +573,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
   /**
    * Allows or disallows the redo button to be clicked on.
-   * @param b If b is //TODO i'm not sure how set enabled works
+   * @param b If b is true redo in enabled, else it is disabled.
    */
   public void toggleRedo(boolean b) {
     redoMenuItem.setEnabled(b);
@@ -581,7 +581,7 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
   /**
    * Allows or disallows the adjustment menu items to be clicked.
-   * @param b If b is //TODO i'm not sure how set enabled works
+   * @param b If b is true adjustment menu items and save are enabled, else they are disabled.
    */
   public void toggleAdjustments(boolean b) {
     blurMenuItem.setEnabled(b);
@@ -645,8 +645,6 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
       }
     });
 
-    //TODO hi alex! please do a try catch block for parseInt. catch NumberFormatException
-    // When catched, execute this code: view.errorDialog();
     sepiaMenuItem.addActionListener(l->features.sepia());
     greyscaleMenuItem.addActionListener(l->features.greyscale());
 
