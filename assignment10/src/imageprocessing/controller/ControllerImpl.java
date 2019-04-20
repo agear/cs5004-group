@@ -90,6 +90,7 @@ public class ControllerImpl implements IController, Features {
   public void goGo() throws IOException, IllegalArgumentException, NullPointerException {
     Scanner scan = new Scanner(this.in);
     this.goUniversal(scan);
+    quit();
   }
 
   /**
