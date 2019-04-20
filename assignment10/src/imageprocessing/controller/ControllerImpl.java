@@ -450,6 +450,9 @@ public class ControllerImpl implements IController, Features {
     }
   }
 
+  /**When the user clicks on the 'save' button, save the image.
+   * @throws IOException If there is something wrong with the image path
+   */
   public void save() throws IOException {
     // When the user clicks on the 'save' button, save
     view.openSaveDialogue();
@@ -488,7 +491,7 @@ public class ControllerImpl implements IController, Features {
   public void quit() throws IOException {
 
     // If there are unsaved changes, as the user if they want to save the current image
-    if (!undoStack.empty() && isSaved == false ) {
+    if (!undoStack.empty() && !isSaved ) {
 
       // Show the dialog box, which returns true if they want to save and false otherwise
       if (view.openUnsavedChanges()) {
@@ -702,7 +705,6 @@ public class ControllerImpl implements IController, Features {
   }
 
 
-  //TODO should there be undo/redo stack manipulation in the draw() functions?
   /**
    * When the user clicks 'flag' button, find out from the user via dialogs in the view
    * what country flag they want, and the width in pixels of the flag they want. Then,
@@ -760,7 +762,7 @@ public class ControllerImpl implements IController, Features {
   public void rainbow() {
     String chosenRainbowOrientation = view.rainbowDialog();
 
-        // If they click 'cancel', do not continue prompting them.
+    // If they click 'cancel', do not continue prompting them.
     if (chosenRainbowOrientation == null) {
       return;
     }

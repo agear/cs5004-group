@@ -34,17 +34,6 @@ public class MockModel implements IModel {
 //    this.code += " load";
 //  }
 
-//  /**
-//   * Saves an image to the computer in a file. I.e., write the image to a file.
-//   *
-//   * @param title The goal name of the output file (+.png)
-//   * @throws IOException If there is an error with the specified file name
-//   */
-//  @Override
-//  public void save(String title) throws IOException {
-//    this.code += " save";
-//  }
-
   /**
    /**
    * Gets a BufferedImage from the controller and creates an Image object from it.

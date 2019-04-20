@@ -15,7 +15,12 @@ public interface Features {
 
 
   /**
+<<<<<<< HEAD
    * Saves an image to disk.
+=======
+   * Saves the image to a file.
+   * @throws IOException if the image path has a problem
+>>>>>>> 3f55c33f0426a5069b9cb0b73438dc6c8987a924
    */
   void save() throws IOException;
 
@@ -34,7 +39,11 @@ public interface Features {
 
 
   /**
+<<<<<<< HEAD
    * Opens a dialog box where the user can type in and execute a batch script.
+=======
+   * Allows the user to write a script in the GUI.
+>>>>>>> 3f55c33f0426a5069b9cb0b73438dc6c8987a924
    */
   void batchWrite(String script);
 

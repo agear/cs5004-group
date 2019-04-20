@@ -17,6 +17,7 @@ public interface IModel {
    * @param input BufferedImage to create an image out of.
    * @param name Name of the internal representation of the image.
    */
+
   void passImage(BufferedImage input, String name) throws IOException;
 
   /** Converts an image an Image in our model architecture into a BufferedImage.
