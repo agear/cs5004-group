@@ -8,8 +8,10 @@ import java.awt.event.ActionEvent;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.JFrame;
@@ -326,12 +328,10 @@ public class ViewImpl extends JFrame implements IView { //}, ActionListener {
 
 
     // Create the image in the background on display
-    //TODO
-//    IImage image = new Image(file);
-//    BufferedImage buffered = image.convertToBufferedImage(file);
+    BufferedImage buffered = ImageIO.read(new FileInputStream(file));
     JLabel imageLabel = new JLabel("");
     imageScrollPane = new JScrollPane(imageLabel);
-//    imageLabel.setIcon(new ImageIcon(buffered));
+    imageLabel.setIcon(new ImageIcon(buffered));
     imagePanel.add(imageScrollPane);
     imagePanel.setVisible(true);
 

@@ -232,7 +232,6 @@ public class ModelImpl implements IModel {
    */
   @Override
   public void drawFlag(int width, Country c) {
-    System.out.println("Making a flag with width: " + width);
     Flag f = new Flag(width, c);
     String name = "flag";
     String outputName = isDuplicate(name);

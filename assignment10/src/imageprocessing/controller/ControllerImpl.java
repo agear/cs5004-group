@@ -502,7 +502,6 @@ public class ControllerImpl implements IController, Features {
 
     input = ImageIO.read(new FileInputStream(path));
     this.model.passImage(input, name);
-    System.out.println("Loading "+name+" from "+path+ "inside controller");
   }
 
   /**

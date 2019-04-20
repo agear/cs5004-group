@@ -42,7 +42,7 @@ public class MockModel implements IModel {
    */
   @Override
   public void passImage(BufferedImage input, String name) {
-    this.code += " passImage";
+    this.code += " load";
   }
 
   /**
